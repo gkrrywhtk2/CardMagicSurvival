@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Test_Sq : MonoBehaviour
@@ -11,6 +12,6 @@ public class Test_Sq : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("TEST");
     }
 }
