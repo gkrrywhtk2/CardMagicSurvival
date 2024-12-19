@@ -51,33 +51,16 @@ public class MobSpawnManager : MonoBehaviour
         int mob_id = 1;
         yield return new WaitForSeconds(spawnCooltime);
         MonsterSpawn(mob_id);
-        StartCoroutine(Spawn_Slime0());
+        StartCoroutine(Spawn_Slime1());
     }
     public void MonsterSpawn(int mob_id){
         
-         if (GameManager.instance == null)
-    {
-        Debug.LogError("GameManager.instance is null. Ensure GameManager is correctly initialized.");
-        return;
-    }
-
-    if (GameManager.instance.poolManager == null)
-    {
-        Debug.LogError("GameManager.instance.poolManager is null. Check PoolManager initialization.");
-        return;
-    }
-
-    GameObject monster = GameManager.instance.poolManager.Get(0);
-    if (monster == null)
-    {
-        Debug.LogError("Monster prefab from pool is null. Check PoolManager.");
-        return;
-    }
+        
 
 
 
 
-       // GameObject monster = GameManager.instance.poolManager.Get(0);
+        GameObject monster = GameManager.instance.poolManager.Get(0);
         monster.GetComponent<Monster>().Init(spawndata[mob_id]);
         monster.transform.position = spawnpoint[Random.Range(1, spawnpoint.Length)].position;
     }
