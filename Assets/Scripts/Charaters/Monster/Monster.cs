@@ -10,6 +10,7 @@ public class Monster : MonoBehaviour
     Collider2D coll;
     Animator anim;
     private Color originalColor;
+    public Color hitColor;
     public RuntimeAnimatorController[] animCon;
 
     [Header("Scaner")]
@@ -17,6 +18,7 @@ public class Monster : MonoBehaviour
      [Header("Stat")]
     bool isLive;//생존 상태
     bool nowHit;//피격 상태
+    float hittime = 0.1f;
     public float speed;
     public float health;
     public float maxHealth;
@@ -31,7 +33,8 @@ public class Monster : MonoBehaviour
         originalColor = sprite.color;
     }
      public void Init(MobSpawnData data)
-    {
+    {   
+       
         anim.runtimeAnimatorController = animCon[data.mob_id];
         speed = data.speed;
         maxHealth = data.maxHealth;
@@ -67,6 +70,7 @@ public class Monster : MonoBehaviour
         coll.enabled = true;
         rigid.simulated = true;
         isLive = true;
+         nowHit = false;
     }
 
      private void RandomizeAnimation()
@@ -77,5 +81,32 @@ public class Monster : MonoBehaviour
             float randomStartTime = Random.Range(0f, 1f);
             anim.Play(0, -1, randomStartTime);
         }
+    }
+    public void DamageCalculator(float damage){
+        health -= damage;
+        if(health <= 0){
+        death();
+        }else{
+        StartCoroutine(HitStop());
+        }
+    }
+    IEnumerator HitStop(){
+        //피격시 일시정지
+        nowHit = true;
+        Vector3 playerpos = GameManager.instance.playerMove.transform.position;
+        Vector3 dirvec = transform.position - playerpos;
+        rigid.AddForce(dirvec.normalized * 0.1f, ForceMode2D.Impulse);
+        sprite.color = hitColor;
+        yield return new WaitForSeconds(hittime);  // 0.1초 동안 빨갛게 변함
+        nowHit = false;
+        sprite.color = originalColor;
+    }
+
+    public void death(){
+       nowHit = true;
+        anim.SetBool("Dead", true);
+    }
+    public void destroy(){
+        gameObject.SetActive(false);
     }
 }

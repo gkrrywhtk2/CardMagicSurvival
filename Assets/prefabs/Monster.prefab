@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 2947549349639709582}
   - component: {fileID: 6092146014989209670}
   - component: {fileID: 8154650899129440113}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Monster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d548aa2f31e8e4c89a7bf9aabd5e7ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitColor: {r: 0.7647059, g: 0.22745098, b: 0.22745098, a: 1}
   animCon:
   - {fileID: 9100000, guid: 1255d02d820824bdb9482376e6005826, type: 2}
   - {fileID: 9100000, guid: 6e2dcb1f870a447829ab3d4851003ff4, type: 2}
