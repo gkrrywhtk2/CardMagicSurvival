@@ -4,7 +4,7 @@ using UnityEngine;
 public class AutoAttack : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public PlayerMove playerMove;
+    public Player_Main player;
     private float autoAttackMaxPoint = 100;
     public float autoAttackCurrentPoint = 0;
     private float autoAttackRecovery = 80;
@@ -12,7 +12,6 @@ public class AutoAttack : MonoBehaviour
     Scaner scaner;
     
     private void Awake() {
-        playerMove = GetComponent<PlayerMove>();
          anim = GetComponent<Animator>();
          scaner = GetComponent<Scaner>();
     }
@@ -21,7 +20,10 @@ public class AutoAttack : MonoBehaviour
         
     }
     private void AutoAttackPointUp(){
-    if(playerMove.inputVec.magnitude > 0.01f)
+
+    if(player.playerStatus.isLive != true)
+        return;
+    if(player.playerMove.inputVec.magnitude > 0.01f)
         return;
 
         autoAttackCurrentPoint += autoAttackRecovery * Time.fixedDeltaTime;

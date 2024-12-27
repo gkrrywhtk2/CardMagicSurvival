@@ -79,6 +79,7 @@ public class MobSpawnData
     public float health;
     public float maxHealth;
     public float speed;
+    public float damage;
 
 }
 

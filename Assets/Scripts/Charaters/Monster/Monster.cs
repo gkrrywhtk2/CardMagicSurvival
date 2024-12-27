@@ -15,6 +15,7 @@ public class Monster : MonoBehaviour
 
     [Header("Scaner")]
     public Rigidbody2D moveTarget;
+    public Player_Main player;
      [Header("Stat")]
     bool isLive;//생존 상태
     bool nowHit;//피격 상태
@@ -22,7 +23,7 @@ public class Monster : MonoBehaviour
     public float speed;
     public float health;
     public float maxHealth;
-    public float attackPower;
+    public float damage;
       private void Awake()
     {
        
@@ -39,6 +40,7 @@ public class Monster : MonoBehaviour
         speed = data.speed;
         maxHealth = data.maxHealth;
         health = maxHealth;
+        damage = data.damage;
         RandomizeAnimation();
     }
      private void FixedUpdate()
@@ -66,6 +68,7 @@ public class Monster : MonoBehaviour
     {
         //재생성 될때마다 초기화
         moveTarget = GameManager.instance.player.GetComponent<Rigidbody2D>();
+        player = GameManager.instance.player.GetComponent<Player_Main>();
         health = maxHealth;
         coll.enabled = true;
         rigid.simulated = true;
@@ -108,5 +111,11 @@ public class Monster : MonoBehaviour
     }
     public void destroy(){
         gameObject.SetActive(false);
+    }
+
+   private void OnCollisionStay2D(Collision2D other) {
+        if(other.gameObject.CompareTag("Player")){
+            player.playerCol.HitCalCulator(damage);
+        }
     }
 }

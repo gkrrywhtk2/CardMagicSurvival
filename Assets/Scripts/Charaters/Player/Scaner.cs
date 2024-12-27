@@ -13,7 +13,7 @@ public class Scaner : MonoBehaviour
      private void FixedUpdate()
     {
 
-        if (GameManager.instance.player.isLive != true)
+        if (GameManager.instance.player.playerStatus.isLive != true)
             return;
 
         attackTargets = Physics2D.CircleCastAll(transform.position, scanrange_Attack, Vector2.zero, 0, targetlayer);

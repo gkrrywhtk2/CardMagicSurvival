@@ -8,6 +8,7 @@ public class Player_Status : MonoBehaviour
     public float maxHealth = 100;
     private void Awake() {
         isLive = true;
+        health = maxHealth;
     }
     void Start()
     {

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
+    Player_Main player;
     public Vector2 inputVec;
     Rigidbody2D rigid;
     SpriteRenderer sprite;
@@ -14,6 +15,7 @@ public class PlayerMove : MonoBehaviour
         
     }
     private void Awake() {
+        player = GetComponent<Player_Main>();
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
          anim = GetComponent<Animator>();
@@ -25,6 +27,8 @@ public class PlayerMove : MonoBehaviour
         
     }
     void FixedUpdate() {
+        if(player.playerStatus.isLive != true)
+        return;
         Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
     }
