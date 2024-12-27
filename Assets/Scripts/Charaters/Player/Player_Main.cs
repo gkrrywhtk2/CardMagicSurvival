@@ -6,10 +6,12 @@ public class Player_Main : MonoBehaviour
    public PlayerMove playerMove;
    public Player_Status playerStatus;
    public Player_col playerCol;
+   public AutoAttack autoAttack;
    private void Awake() {
     playerMove = GetComponent<PlayerMove>();
     playerStatus = GetComponent<Player_Status>();
     playerCol = GetComponent<Player_col>();
+    autoAttack = GetComponent<AutoAttack>();
    }
 
 }

@@ -5,13 +5,14 @@ public class AutoAttack : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Player_Main player;
-    private float autoAttackMaxPoint = 100;
+    public float autoAttackMaxPoint = 100;
     public float autoAttackCurrentPoint = 0;
-    private float autoAttackRecovery = 80;
+    public float autoAttackRecovery = 80;
     Animator anim;
     Scaner scaner;
     
     private void Awake() {
+        player = GetComponent<Player_Main>();
          anim = GetComponent<Animator>();
          scaner = GetComponent<Scaner>();
     }
@@ -27,7 +28,7 @@ public class AutoAttack : MonoBehaviour
         return;
 
         autoAttackCurrentPoint += autoAttackRecovery * Time.fixedDeltaTime;
-        if(autoAttackCurrentPoint>= autoAttackMaxPoint){
+        if(autoAttackCurrentPoint>= autoAttackMaxPoint && scaner.nearestTarget != null){
             autoAttackCurrentPoint = 0;
             AutoAttack_exe();
             
