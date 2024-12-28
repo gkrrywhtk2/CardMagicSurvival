@@ -10,11 +10,13 @@ public class AutoAttack : MonoBehaviour
     public float autoAttackRecovery = 80;
     Animator anim;
     Scaner scaner;
+    SpriteRenderer sprite;
     
     private void Awake() {
         player = GetComponent<Player_Main>();
          anim = GetComponent<Animator>();
          scaner = GetComponent<Scaner>();
+         sprite = GetComponent<SpriteRenderer>();
     }
     private void FixedUpdate() {
         AutoAttackPointUp();
@@ -39,10 +41,17 @@ public class AutoAttack : MonoBehaviour
           if (scaner.nearestTarget == null)
             return;
 
+            
+
         anim.SetTrigger("attack");
         Vector3 targetPos = scaner.nearestTarget.position;
         Vector3 dir = targetPos - transform.position;
         dir = dir.normalized;
+        //
+        //공격방향으로 스프라이트 반전
+        sprite.flipX = dir.x < 0;
+
+        //
         float damage = 10;//임시
         int bulletNumber = 1;
         int per = 0;//관통 현재 0

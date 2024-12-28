@@ -240,7 +240,7 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.Utils
             {
                 for (var y = 0; y < 64; y++)
                 {
-                    var c = pixels[x + y * 256];
+                    var c = pixels[x + y * 576];
 
                     if (c.a > 0 && c != Color.white && c != Color.black)
                     {
@@ -270,6 +270,11 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.Utils
             if (colors.Count != 2 && colors.Count != 3)
             {
                 throw new NotSupportedException("Sprite should have 2 or 3 colors only (+black outline).");
+            }
+
+            if (!palette.Contains(paint))
+            {
+                paint = palette.OrderBy(i => ColorDiff.GetEuclidean(i, paint)).First();
             }
 
             var replacement = palette.GetRange(palette.IndexOf(paint) - 1, 3).OrderBy(i => ((Color) i).grayscale).ToList();

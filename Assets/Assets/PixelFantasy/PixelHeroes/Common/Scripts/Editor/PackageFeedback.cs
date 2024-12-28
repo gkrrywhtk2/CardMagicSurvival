@@ -5,20 +5,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.Editor
+namespace Assets.PixelFantasy.PixelHeroes.FantasyHeroes.Scripts.Editor
 {
     [InitializeOnLoad]
     internal static class PackageFeedback
     {
         private const string PackageId = "271664";
-        private const string PackageName = "Pixel Heroes Megapack";
-
-        //private const string PackageId = "250116";
-        //private const string PackageName = "Pixel Heroes: Fantasy Editor";
-
-        //private const string PackageId = "281115";
-        //private const string PackageName = "Pixel Heroes: Military Editor";
-
+        private const string PackageName = "Pixel Hero Maker [Megapack]";
+        
         private static readonly string PrefsKeyImportTime = $"PackageFeedback.ImportTime.{PackageId}";
         private static readonly string PrefsKeyReviewTime = $"PackageFeedback.ReviewTime.{PackageId}";
         private static readonly string PrefsKeySkipTime = $"PackageFeedback.SkipTime.{PackageId}";

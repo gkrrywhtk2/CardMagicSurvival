@@ -28,14 +28,21 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts
 
         public Texture2D Texture { get; private set; }
         private Dictionary<string, Sprite> _sprites;
+        //private string _hash;
 
         public void Awake()
         {
             Rebuild();
         }
 
-        public void Rebuild(string changed = null, bool forceMerge = false)
+        public void Rebuild(bool forceMerge = false)
         {
+            //var hash = $"{Head}.{Ears}.{Eyes}.{Body}.{Hair}.{Armor}.{Helmet}.{Weapon}.{Firearm}.{Shield}.{Cape}.{Back}.{Mask}.{Horns}";
+
+            //if (hash == _hash) return;
+
+            //_hash = hash;
+
             //var width = SpriteCollection.Layers[0].Textures[0].width;
             //var height = SpriteCollection.Layers[0].Textures[0].height;
             var width = 576;
@@ -45,43 +52,43 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts
 
             if (Head.Contains("Lizard")) Hair = Helmet = Mask = "";
             
-            if (Back != "") layers.Add("Back", dict["Back"].GetPixels(Back, null, changed));
-            if (Shield != "") layers.Add("Shield", dict["Shield"].GetPixels(Shield, null, changed));
+            if (Back != "") layers.Add("Back", dict["Back"].GetPixels(Back, null));
+            if (Shield != "") layers.Add("Shield", dict["Shield"].GetPixels(Shield, null));
             
             if (Body != "")
             {
-                layers.Add("Body", dict["Body"].GetPixels(Body, null, changed));
+                layers.Add("Body", dict["Body"].GetPixels(Body, null));
 
                 if (Firearm == "")
                 {
-                    var arms = dict["Arms"].GetPixels(Body, null, changed == "Body" ? "Arms" : changed).ToArray();
+                    var arms = dict["Arms"].GetPixels(Body, null).ToArray();
 
                     layers.Add("Arms", arms);
                 }
             }
 
-            if (Head != "") layers.Add("Head", dict["Head"].GetPixels(Head, null, changed));
-            if (Ears != "" && (Helmet == "" || Helmet.Contains("[ShowEars]"))) layers.Add("Ears", dict["Ears"].GetPixels(Ears, null, changed));
+            if (Head != "") layers.Add("Head", dict["Head"].GetPixels(Head, null));
+            if (Ears != "" && (Helmet == "" || Helmet.Contains("[ShowEars]"))) layers.Add("Ears", dict["Ears"].GetPixels(Ears, null));
 
             if (Armor != "")
             {
-                layers.Add("Armor", dict["Armor"].GetPixels(Armor, null, changed));
+                layers.Add("Armor", dict["Armor"].GetPixels(Armor, null));
 
                 if (Firearm == "")
                 {
-                    layers.Add("Bracers", dict["Bracers"].GetPixels(Armor, null, changed == "Armor" ? "Bracers" : changed));
+                    layers.Add("Bracers", dict["Bracers"].GetPixels(Armor, null));
                 }
             }
 
-            if (Eyes != "") layers.Add("Eyes", dict["Eyes"].GetPixels(Eyes, null, changed));
-            if (Hair != "") layers.Add("Hair", dict["Hair"].GetPixels(Hair, Helmet == "" ? null : layers["Head"], changed));
-            if (Cape != "") layers.Add("Cape", dict["Cape"].GetPixels(Cape, null, changed));
-            if (Helmet != "") layers.Add("Helmet", dict["Helmet"].GetPixels(Helmet, null, changed));
-            if (Weapon != "") layers.Add("Weapon", dict["Weapon"].GetPixels(Weapon, null, changed));
+            if (Eyes != "") layers.Add("Eyes", dict["Eyes"].GetPixels(Eyes, null));
+            if (Hair != "") layers.Add("Hair", dict["Hair"].GetPixels(Hair, Helmet == "" ? null : layers["Head"]));
+            if (Cape != "") layers.Add("Cape", dict["Cape"].GetPixels(Cape, null));
+            if (Helmet != "") layers.Add("Helmet", dict["Helmet"].GetPixels(Helmet, null));
+            if (Weapon != "") layers.Add("Weapon", dict["Weapon"].GetPixels(Weapon, null));
 
             if (Firearm != "")
             {
-                var firearm = dict["Firearm"].GetPixels(Firearm, null, changed).ToArray();
+                var firearm = dict["Firearm"].GetPixels(Firearm, null).ToArray();
 
                 if (Character.Firearm.Detached && !forceMerge)
                 {
@@ -101,12 +108,33 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts
                         }
                     }
                 }
+
+                if (Armor != "" || Body != "") // Replace gloves color.
+                {
+                    var index = 27 + 844 * width;
+                    var pixels = dict[Armor != "" ? "Bracers" : "Arms"].GetPixels(Armor != "" ? Armor : Body, null);
+
+                    if (pixels != null)
+                    {
+                        var replacement = pixels[index];
+
+                        if (replacement.a > 0)
+                        {
+                            var hand = new Color32(246, 202, 159, 255);
+
+                            for (var i = 0; i < firearm.Length; i++)
+                            {
+                                if (firearm[i].FastEquals(hand)) firearm[i] = replacement;
+                            }
+                        }
+                    }
+                }
                 
                 layers.Add("Firearm", firearm);
             }
 
-            if (Mask != "") layers.Add("Mask", dict["Mask"].GetPixels(Mask, null, changed));
-            if (Horns != "" && Helmet == "") layers.Add("Horns", dict["Horns"].GetPixels(Horns, null, changed));
+            if (Mask != "") layers.Add("Mask", dict["Mask"].GetPixels(Mask, null));
+            if (Horns != "" && Helmet == "") layers.Add("Horns", dict["Horns"].GetPixels(Horns, null));
 
             var order = SpriteCollection.Layers.Select(i => i.Name).ToList();
 
@@ -195,7 +223,7 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts
                     Character.Firearm.Renderer.enabled = true;
 
                     var texture = new Texture2D(64, 64) { filterMode = FilterMode.Point };
-                    var pixels = dict["Firearm"].GetPixels(Firearm, null, changed);
+                    var pixels = dict["Firearm"].GetPixels(Firearm, null);
                     
                     for (var x = 0; x < 64; x++)
                     {

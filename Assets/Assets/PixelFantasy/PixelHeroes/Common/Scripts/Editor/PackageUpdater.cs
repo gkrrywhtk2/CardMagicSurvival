@@ -5,19 +5,13 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.Editor
+namespace Assets.PixelFantasy.PixelHeroes.FantasyHeroes.Scripts.Editor
 {
     [InitializeOnLoad]
     internal static class PackageUpdater
     {
         private const string PackageId = "271664";
-        private const string CurrentVersion = "3.1";
-
-        //private const string PackageId = "250116";
-        //private const string CurrentVersion = "3.1";
-
-        //private const string PackageId = "281115";
-        //private const string CurrentVersion = "3.1";
+        private const string CurrentVersion = "3.2";
 
         private static readonly string PrefsKeyTime = $"PackageUpdater.Time.{PackageId}";
         private static readonly string PrefsKeySkip = $"PackageUpdater.Skip.{PackageId}";

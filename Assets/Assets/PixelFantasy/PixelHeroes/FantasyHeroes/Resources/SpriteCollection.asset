@@ -190,25 +190,19 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 7c80839753624db88f8f7d2bb4f04c50, type: 3}
     - {fileID: 2800000, guid: 42eefcdc2ff044549ac56b3397f15346, type: 3}
     - {fileID: 2800000, guid: 1d6bfb34491b4f2aaeb15552bc9edecb, type: 3}
+    - {fileID: 2800000, guid: 551e0900f7f1480791b83aa3a5c6f5c9, type: 3}
   - Name: Ears
     SpriteFolder: {fileID: 102900000, guid: d9a77a3de9a843be95b80795c28ef9b5, type: 3}
     Textures:
     - {fileID: 2800000, guid: 895bb649f10d443191462c128c2a62df, type: 3}
-    - {fileID: 2800000, guid: 38b0240cad3c403ba85ec93fc3650914, type: 3}
     - {fileID: 2800000, guid: 6cb2473b60b742d18414870b4724ecbe, type: 3}
     - {fileID: 2800000, guid: bf5fe1682404445e991480d53099003f, type: 3}
-    - {fileID: 2800000, guid: 48226f73efdd4892a28dcdcb5c118d2e, type: 3}
     - {fileID: 2800000, guid: 2fcbbfc76185423f95dc439af9f3b3fb, type: 3}
     - {fileID: 2800000, guid: 9e6b060e03b749fdb694636144300b35, type: 3}
-    - {fileID: 2800000, guid: b6136c7341504c42acfa7f2687308ee0, type: 3}
-    - {fileID: 2800000, guid: e319518a6db34c7fbf1197867d5e7362, type: 3}
     - {fileID: 2800000, guid: a49f02dd3d024d9a8678ef496534fe18, type: 3}
     - {fileID: 2800000, guid: 8831f9fb76aa4f73b1c34515b13a37f8, type: 3}
-    - {fileID: 2800000, guid: 3566adc4564d4996963f24f713df0f45, type: 3}
     - {fileID: 2800000, guid: 12cf484336754e7a94eedc79743090f9, type: 3}
     - {fileID: 2800000, guid: d817f62b0518490b8e2c64a5871de25a, type: 3}
-    - {fileID: 2800000, guid: 3f11f6803d8d4f21ab5a39b2e9eb0ec1, type: 3}
-    - {fileID: 2800000, guid: 1d465bd88aff4790a3f4b423663ac168, type: 3}
   - Name: Helmet
     SpriteFolder: {fileID: 102900000, guid: beae500df8de4f8e8c89b1b5890f559e, type: 3}
     Textures:

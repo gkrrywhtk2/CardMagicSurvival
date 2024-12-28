@@ -29,7 +29,7 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.CollectionScripts
             return icon;
         }
 
-        public Color32[] GetPixels(string data, Color32[] mask, string changed)
+        public Color32[] GetPixels(string data, Color32[] mask)
         {
             var match = Regex.Match(data, @"(?<Name>[\w\- \[\]]+)(?<Paint>#\w+)?(?:\/(?<H>[-\d]+):(?<S>[-\d]+):(?<V>[-\d]+))?");
             var name = match.Groups["Name"].Value;
@@ -52,23 +52,18 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.CollectionScripts
                 v = float.Parse(match.Groups["V"].Value, CultureInfo.InvariantCulture);
             }
 
-            var update = changed == null || changed == Name;
-
-            switch (changed)
-            {
-                case "Body" when Name == "Head":
-                case "Helmet" when Name == "Hair":
-                    update = true;
-                    break;
-            }
-
-            return GetPixels(index, paint, h, s, v, mask, update);
+            return GetPixels(index, paint, h, s, v, mask);
         }
 
-        public Color32[] GetPixels(int index, Color paint, float h, float s, float v, Color32[] mask, bool update)
-        {
-            if (!update && _pixels?.Length > 0 && mask == null) return _pixels;
+        private string _hash;
 
+        public Color32[] GetPixels(int index, Color paint, float h, float s, float v, Color32[] mask)
+        {
+            var hash = $"{index}.{paint}.{h}.{s}.{v}.{mask}";
+
+            if (hash == _hash) return _pixels;
+
+            _hash = hash;
             _pixels = Textures[index].GetPixels32();
 
             if (mask != null)

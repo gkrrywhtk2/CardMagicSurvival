@@ -58,7 +58,7 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.Editor
             }
             else if (texture.width != exampleTexture.width || texture.height != exampleTexture.height)
             {
-                EditorUtility.DisplayDialog("Error", $"Target texture should be {exampleTexture.width}x{exampleTexture.height}px.", "OK");
+                EditorUtility.DisplayDialog("Error", $"Target texture is {texture.width}x{texture.height} px but should be {exampleTexture.width}x{exampleTexture.height} px.", "OK");
             }
             else
             {

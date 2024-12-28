@@ -37,11 +37,11 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.EditorScripts
             Index = index;
         }
 
-        public Color32[] GetPixels(bool update)
+        public Color32[] GetPixels()
         {
             var mask = Mask != null && Mask.Index != -1 ? Mask.Content.Textures[Mask.Index].GetPixels32() : null;
 
-            return Content.GetPixels(Index, Color, Controls.Hue.value, Controls.Saturation.value, Controls.Brightness.value, mask, update);
+            return Content.GetPixels(Index, Color, Controls.Hue.value, Controls.Saturation.value, Controls.Brightness.value, mask);
         }
 
         public Color[] GetPixels(int x, int y, int blockWidth, int blockHeight)

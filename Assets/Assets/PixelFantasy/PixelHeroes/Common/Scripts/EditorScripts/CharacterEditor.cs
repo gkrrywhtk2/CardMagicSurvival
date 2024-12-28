@@ -54,85 +54,17 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.EditorScripts
                     layer.Controls.Next.onClick.AddListener(() => Switch(layer, +1));
                     layer.Controls.Hide.onClick.AddListener(() => Hide(layer));
                     layer.Controls.Paint.onClick.AddListener(() => Paint(layer));
-                    layer.Controls.Hue.onValueChanged.AddListener(value => Rebuild(layer));
-                    layer.Controls.Saturation.onValueChanged.AddListener(value => Rebuild(layer));
-                    layer.Controls.Brightness.onValueChanged.AddListener(value => Rebuild(layer));
-                    layer.Controls.OnSelectFixedColor = color => { layer.Color = color; Rebuild(layer); };
+                    layer.Controls.Hue.onValueChanged.AddListener(value => Rebuild());
+                    layer.Controls.Saturation.onValueChanged.AddListener(value => Rebuild());
+                    layer.Controls.Brightness.onValueChanged.AddListener(value => Rebuild());
+                    layer.Controls.OnSelectFixedColor = color => Repaint(layer, color);
                 }
             }
 
-            Rebuild(null);
+            Rebuild();
         }
 
-        public void Rebuild()
-        {
-            Rebuild(null);
-        }
-
-        public void Hide(LayerEditor layer)
-        {
-            layer.Hidden = !layer.Hidden;
-            Rebuild(layer);
-        }
-
-        public void Paint(LayerEditor layer)
-        {
-            #if UNITY_EDITOR
-
-            ColorPicker.Open(layer.Color);
-            ColorPicker.OnColorPicked = color =>
-            {
-                layer.Color = color;
-                Rebuild(layer);
-            };
-
-            #endif
-        }
-
-        public void Preset(string preset)
-        {
-            foreach (var layerName in new[] { "Head", "Ears", "Eyes", "Body", "Horns" })
-            {
-                var layer = Layers.Single(i => i.Name == layerName);
-                var dropdown = layer.Controls.Dropdown;
-
-                layer.Color = Color.white;
-                dropdown.value = dropdown.options.FindIndex(i => i.text == GetDisplayName(preset));
-            }
-
-            Layers.Single(i => i.Name == "Hair").Controls.Dropdown.value = 0;
-        }
-
-        private void Switch(LayerEditor layer, int direction)
-        {
-            layer.Switch(direction);
-            Rebuild(layer);
-        }
-
-        private void SetIndex(LayerEditor layer, int index)
-        {
-            if (layer.CanBeEmpty) index--;
-
-            layer.SetIndex(index);
-
-            if (layer.Name == "Body")
-            {
-                Layers.Single(i => i.Name == "Head").SetIndex(index);
-                Layers.Single(i => i.Name == "Ears").SetIndex(index);
-            }
-            else if (layer.Name == "Weapon" && index != -1)
-            {
-                Layers.Single(i => i.Name == "Firearm").Controls.Dropdown.value = -1;
-            }
-            else if (layer.Name == "Firearm" && index != -1)
-            {
-                Layers.Single(i => i.Name == "Weapon").Controls.Dropdown.value = -1;
-            }
-
-            Rebuild(layer);
-        }
-
-        private void Rebuild(LayerEditor layer)
+        private void Rebuild()
         {
             var layers = Layers.ToDictionary(i => i.Name, i => i.SpriteData);
 
@@ -150,7 +82,121 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.EditorScripts
             CharacterBuilder.Back = layers["Back"];
             CharacterBuilder.Mask = layers["Mask"];
             CharacterBuilder.Horns = layers["Horns"];
-            CharacterBuilder.Rebuild(layer?.Name);
+            CharacterBuilder.Rebuild();
+        }
+
+        public void Hide(LayerEditor layer)
+        {
+            layer.Hidden = !layer.Hidden;
+            Rebuild();
+        }
+
+        public void Paint(LayerEditor layer)
+        {
+            #if UNITY_EDITOR
+
+            ColorPicker.Open(layer.Color);
+            ColorPicker.OnColorPicked = color => { layer.Color = color; Rebuild(); };
+
+            #endif
+        }
+
+        public void Repaint(LayerEditor layer, Color color)
+        {
+            layer.Color = color;
+
+            if (layer.Name == "Body")
+            {
+                Layers.Single(i => i.Name == "Head").Color = color;
+                Layers.Single(i => i.Name == "Ears").Color = color;
+            }
+
+            if (layer.Name == "Head")
+            {
+                Layers.Single(i => i.Name == "Ears").Color = color;
+            }
+
+            Rebuild();
+        }
+
+        public void Preset(string preset)
+        {
+            var body = Layers.Single(i => i.Name == "Body");
+            var dropdown = body.Controls.Dropdown;
+            var index = dropdown.options.FindIndex(i => i.text == GetDisplayName(preset));
+
+            body.Color = Color.white;
+
+            if (index == -1)
+            {
+                dropdown.value = 0;
+            }
+            else if (index == dropdown.value)
+            {
+                dropdown.onValueChanged.Invoke(index);
+            }
+            else
+            {
+                dropdown.value = index;
+            }
+            
+            Layers.Single(i => i.Name == "Body").Color = Color.white;
+            Layers.Single(i => i.Name == "Head").Color = Color.white;
+            Layers.Single(i => i.Name == "Ears").Color = Color.white;
+            Layers.Single(i => i.Name == "Eyes").Color = Color.white;
+        }
+
+        private void Switch(LayerEditor layer, int direction)
+        {
+            layer.Switch(direction);
+            Rebuild();
+        }
+
+        private void SetIndex(LayerEditor layer, int index)
+        {
+            if (layer.CanBeEmpty) index--;
+
+            layer.SetIndex(index);
+
+            var caption = layer.Controls.Dropdown.options[layer.Controls.Dropdown.value].text;
+
+            if (layer.Name == "Body")
+            {
+                var head = Layers.Single(i => i.Name == "Head");
+                var ears = Layers.Single(i => i.Name == "Ears");
+                var eyes = Layers.Single(i => i.Name == "Eyes");
+                var hair = Layers.Single(i => i.Name == "Hair");
+
+                var headIndex = head.Controls.Dropdown.options.FindIndex(i => i.text == caption);
+                var earsIndex = ears.Controls.Dropdown.options.FindIndex(i => i.text == caption);
+                var eyesIndex = eyes.Controls.Dropdown.options.FindIndex(i => i.text == caption);
+
+                if (headIndex == -1) headIndex = 0;
+                if (earsIndex == -1) earsIndex = 0;
+                if (eyesIndex == -1) eyesIndex = 0;
+
+                head.Controls.Dropdown.value = headIndex;
+                ears.Controls.Dropdown.value = earsIndex;
+                eyes.Controls.Dropdown.value = eyesIndex;
+
+                head.Color = layer.Color;
+                ears.Color = layer.Color;
+
+                if (caption != "Human")
+                {
+                    hair.Controls.Dropdown.value = 0;
+                }
+            }
+            else if (layer.Name == "Weapon" && index != -1)
+            {
+                Layers.Single(i => i.Name == "Firearm").Controls.Dropdown.value = -1;
+            }
+            else if (layer.Name == "Firearm" && index != -1)
+            {
+                Layers.Single(i => i.Name == "Weapon").Controls.Dropdown.value = -1;
+            }
+
+            Rebuild();
         }
 
         private static string GetDisplayName(string fileName)
@@ -185,7 +231,17 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.EditorScripts
             if (path.StartsWith(Application.dataPath))
             {
                 path = "Assets" + path.Substring(Application.dataPath.Length);
+                
                 AssetDatabase.Refresh();
+
+                var importer = (TextureImporter) AssetImporter.GetAtPath(path);
+
+                importer.textureType = TextureImporterType.Sprite;
+                importer.maxTextureSize = 2048;
+                importer.SaveAndReimport();
+
+                AssetDatabase.Refresh();
+
                 SliceTextureRequest(path);
 
                 if (EditorUtility.DisplayDialog("Success", $"Texture saved and sliced:\n{path}\n\nDo you want to create Sprite Library Asset for it?", "Yes", "No"))
