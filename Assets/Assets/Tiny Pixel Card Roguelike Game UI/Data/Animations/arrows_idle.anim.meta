@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 90f69ec81570bfd45b70c56574b33a6e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 236116
+  packageName: Tiny Pixel Card Roguelike Game UI
+  packageVersion: 1.0
+  assetPath: Assets/Tiny Pixel Card Roguelike Game UI/Data/Animations/arrows_idle.anim
+  uploadId: 534827

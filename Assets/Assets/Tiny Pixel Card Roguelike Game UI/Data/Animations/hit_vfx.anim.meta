@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ddc94483c1bb2324fab01c90d925c4dd
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 236116
+  packageName: Tiny Pixel Card Roguelike Game UI
+  packageVersion: 1.0
+  assetPath: Assets/Tiny Pixel Card Roguelike Game UI/Data/Animations/hit_vfx.anim
+  uploadId: 534827
