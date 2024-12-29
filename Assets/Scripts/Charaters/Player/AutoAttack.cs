@@ -26,7 +26,7 @@ public class AutoAttack : MonoBehaviour
 
     if(player.playerStatus.isLive != true)
         return;
-    if(player.playerMove.inputVec.magnitude > 0.01f)
+    if(player.playerJoyStick.inputVec.magnitude > 0.01f)
         return;
 
         autoAttackCurrentPoint += autoAttackRecovery * Time.fixedDeltaTime;

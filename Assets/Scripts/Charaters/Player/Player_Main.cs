@@ -7,11 +7,13 @@ public class Player_Main : MonoBehaviour
    public Player_Status playerStatus;
    public Player_col playerCol;
    public AutoAttack autoAttack;
+  public JoyStick_P playerJoyStick;
    private void Awake() {
     playerMove = GetComponent<PlayerMove>();
     playerStatus = GetComponent<Player_Status>();
     playerCol = GetComponent<Player_col>();
     autoAttack = GetComponent<AutoAttack>();
+    playerJoyStick = GetComponent<JoyStick_P>();
    }
 
 }
