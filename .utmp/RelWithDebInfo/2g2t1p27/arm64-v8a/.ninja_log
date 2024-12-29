@@ -1,0 +1,12 @@
+# ninja log v5
+11	288	1735484521464289450	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	8852c4b17648de88
+290	458	1735484521624841143	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2g2t1p27/obj/arm64-v8a/libswappywrapper.so	89a48e13a95f83ce
+1	1021	1735484522190762441	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	624dfac5a6bb0f5e
+6	1095	1735484522269201125	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	993af2c981b8a91e
+4	1117	1735484522290753131	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	4eac879dc0e7b2e
+7	1172	1735484522345578634	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c05c303ddcd08705
+9	1258	1735484522430962023	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	19b70d9bba5c0ad7
+2	1302	1735484522475329157	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	14de2463a0043d3e
+5	1467	1735484522640033698	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	11d4a3545481bbdc
+0	1574	1735484522748162009	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	f335b07d528e3cd7
+1575	1709	1735484522877471131	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2g2t1p27/obj/arm64-v8a/libgame.so	8a37d65e4da90dd1
