@@ -42,6 +42,13 @@ public class DeckManager : MonoBehaviour
         
         }
     }
+    public void DrawCard(int fixedCard){
+                int cardId = deck[0]; // 덱 맨 위의 카드 ID 가져오기
+                deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
+
+                // 핸드 카드 초기화
+                magicCards[fixedCard].CardInit(cardDatas[cardId]);
+    }
 
     private void Start()
     {

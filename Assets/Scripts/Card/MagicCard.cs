@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,12 +10,16 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Transform previousParent; // 드래그 전 원래 부모 Transform
     private RectTransform rect;       // RectTransform 참조
     private CanvasGroup canvasGroup;  // CanvasGroup 참조
-    private Vector3 originalPosition; // 카드 원래 위치 저장
+    public Vector3 originalPosition; // 카드 원래 위치 저장
 
     [Header("Card Info")]
     public int cardId;       // 카드 ID
     public int cardCost;     // 카드 비용
     Image cardImage;  // 카드 이미지
+    public int fixedCardNumber;//012 어떤 위치의 카드인지
+
+    [Header("Object Connect")]
+    public TMP_Text costText;//코스트 숫자
 
     private void Awake()
     {
@@ -37,9 +42,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         cardId = data.cardId;
         cardCost = data.cardCost;
-        Debug.Log(cardId);
-        Debug.Log(cardCost);
         cardImage.sprite = data.cardImage;
+        costText.text = cardCost.ToString();
         
     }
 

@@ -30,6 +30,8 @@ public class Player_col : MonoBehaviour
     //몬스터로부터 피격시 호출
     if(nowHit == true)
         return;
+    if(playerStatus.isLive != true)
+        return;
     
     playerStatus.health -= damage;
     if(playerStatus.health <= 0){
@@ -47,7 +49,7 @@ public class Player_col : MonoBehaviour
     nowHit = false;
    }
    public void PlayerDeath(){
-    
+    GameManager.instance.player.playerStatus.isLive = false;
     GameManager.instance.restartButton.SetActive(true);
    }
    
