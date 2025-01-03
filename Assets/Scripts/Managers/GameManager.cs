@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         restartButton.gameObject.SetActive(false);
+        Application.targetFrameRate = 60;
     }
 
     public void GameRestart(){

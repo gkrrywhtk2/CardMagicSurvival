@@ -2040,6 +2040,7 @@ MonoBehaviour:
   cardCost: 0
   fixedCardNumber: 1
   costText: {fileID: 1533226654}
+  dropPoint: {fileID: 1421868884}
 --- !u!224 &782308976
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20621,6 +20622,7 @@ MonoBehaviour:
   cardCost: 0
   fixedCardNumber: 2
   costText: {fileID: 566638696}
+  dropPoint: {fileID: 1421868884}
 --- !u!224 &886443471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21531,6 +21533,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floating Joystick
       objectReference: {fileID: 0}
+    - target: {fileID: 8170153792821263252, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22009,6 +22015,7 @@ MonoBehaviour:
   cardCost: 0
   fixedCardNumber: 0
   costText: {fileID: 870102226}
+  dropPoint: {fileID: 1421868884}
 --- !u!225 &1296161776
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -22218,8 +22225,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 382, y: 782}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -1.5286, y: 0.6155}
+  m_SizeDelta: {x: 986.433, y: 1132.0305}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1421868883
 MonoBehaviour:
@@ -22247,8 +22254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

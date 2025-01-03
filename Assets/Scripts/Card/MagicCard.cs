@@ -20,6 +20,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     [Header("Object Connect")]
     public TMP_Text costText;//코스트 숫자
+    public Image dropPoint;
 
     private void Awake()
     {
@@ -59,6 +60,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         canvasGroup.alpha = 0.6f;          // 카드 투명도 조정
         canvasGroup.blocksRaycasts = false; // 레이캐스트 막기
+        dropPoint.raycastTarget = true;//드롭 포인트 활성화
     }
 
     /// <summary>
@@ -83,5 +85,6 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             transform.SetParent(previousParent);
             rect.position = originalPosition;
         }
+        dropPoint.raycastTarget = false;//드롭 포인트 활성화
     }
 }
