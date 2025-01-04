@@ -70,7 +70,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
             if(cardOn != true)
                 return;
-            if(GameManager.instance.cardOneTouch != true)
+            if(GameManager.instance.cardOneTouch == true)
                 return;
 
         GameManager.instance.cardOneTouch = true;

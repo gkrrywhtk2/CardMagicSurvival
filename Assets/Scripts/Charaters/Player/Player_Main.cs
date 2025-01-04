@@ -8,6 +8,8 @@ public class Player_Main : MonoBehaviour
    public Player_col playerCol;
    public AutoAttack autoAttack;
   public JoyStick_P playerJoyStick;
+  //
+  public Transform fireBallPoint;
    private void Awake() {
     playerMove = GetComponent<PlayerMove>();
     playerStatus = GetComponent<Player_Status>();
