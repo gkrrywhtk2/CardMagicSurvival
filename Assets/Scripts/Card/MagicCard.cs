@@ -17,10 +17,12 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public int cardCost;     // 카드 비용
     Image cardImage;  // 카드 이미지
     public int fixedCardNumber;//012 어떤 위치의 카드인지
+    public bool cardOn;
 
     [Header("Object Connect")]
     public TMP_Text costText;//코스트 숫자
-    public Image dropPoint;
+    public Image dropPoint;//드랍 포인트
+    public Image CoolTimeImage;//시계 방향 쿨타임 이미지
 
     private void Awake()
     {
@@ -30,11 +32,16 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         cardImage = GetComponent<Image>();
     }
 
+    private void Update(){
+        ClockCoolTime();
+    }
+
     /// <summary>
     /// 카드 데이터를 초기화하는 메서드
     /// </summary>
     public void CardInit(CardData data)
     {
+        cardOn = false;
         if (data == null)
         {
             Debug.LogError("CardData is null!");
@@ -46,6 +53,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         cardImage.sprite = data.cardImage;
         costText.text = cardCost.ToString();
         
+        
     }
 
     /// <summary>
@@ -53,6 +61,12 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
+            if(cardOn != true)
+                return;
+            if(GameManager.instance.cardOneTouch != false)
+                return;
+
+        GameManager.instance.cardOneTouch = true;
         previousParent = transform.parent; // 현재 부모 저장
         originalPosition = rect.position;  // 현재 위치 저장
         transform.SetParent(canvas);       // 드래그 중 부모를 Canvas로 설정
@@ -68,6 +82,9 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     public void OnDrag(PointerEventData eventData)
     {
+            if(cardOn != true)
+                    return;
+
         rect.position = eventData.position; // 드래그 위치로 이동
     }
 
@@ -76,6 +93,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     public void OnEndDrag(PointerEventData eventData)
     {
+
+        GameManager.instance.cardOneTouch = false;
         canvasGroup.alpha = 1.0f;          // 투명도 원복
         canvasGroup.blocksRaycasts = true; // 레이캐스트 다시 활성화
 
@@ -87,4 +106,37 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         dropPoint.raycastTarget = false;//드롭 포인트 활성화
     }
+
+    public void ClockCoolTime(){
+     // 현재 마나와 카드 비용 비율 계산
+    float mana = GameManager.instance.player.playerStatus.mana;
+    float value = Mathf.Clamp01(mana / cardCost);
+
+    // 쿨타임 UI 업데이트
+    CoolTimeImage.fillAmount = value;
+
+    // 카드 사용 가능 여부 업데이트
+    bool previousState = cardOn; // 이전 상태 저장
+    cardOn = value >= 1;
+
+    // 상태가 변경된 경우만 투명도 조정
+    
+        SetCardVisibility(cardOn);
+    
+}
+// 카드의 투명도 조정
+private void SetCardVisibility(bool isCardOn)
+{
+    Color currentColor = CoolTimeImage.color;
+
+    if (isCardOn) {
+        // 카드가 사용 가능하면 투명도 0 (안보이게)
+        currentColor.a = 0f;
+    } else {
+        // 카드가 사용 불가능하면 투명도 1 (보이게)
+        currentColor.a = 0.8f;
+    }
+
+    CoolTimeImage.color = currentColor;
+}
 }

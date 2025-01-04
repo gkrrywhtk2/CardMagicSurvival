@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player_Status : MonoBehaviour
 {
@@ -8,9 +9,14 @@ public class Player_Status : MonoBehaviour
     public bool isLive;
     public float health;
     public float maxHealth = 100;
+    public float mana;
+    public float maxMana = 10;
+    public float manaRecovery;
     [Header("Bar")]
     public Slider attackBar;
     public Slider hpBar;
+    public Slider manaBar;
+    public TMP_Text manaText;
 
     private void Awake() {
         isLive = true;
@@ -38,6 +44,23 @@ public class Player_Status : MonoBehaviour
         attackBar.value = autocurpoint/automaxpoint;
 
     }
+
+    private void ManaBarUpdate()
+    {
+        int currentMana = Mathf.FloorToInt(mana); // 정수로 변환
+        manaText.text = currentMana.ToString();
+        manaBar.value = mana / maxMana;
+
+        if (mana < maxMana)
+            return;
+
+        if (mana > maxMana)
+        {
+            mana = maxMana;
+            return;
+        }
+
+    }
     void Start()
     {
         
@@ -50,5 +73,11 @@ public class Player_Status : MonoBehaviour
             return;
         HpBarUpdate();
         AttackBarUpdate();
+        ManaBarUpdate();
+        ManaRecovery();
+    }
+
+    public void ManaRecovery(){
+        mana += manaRecovery * Time.deltaTime;
     }
 }

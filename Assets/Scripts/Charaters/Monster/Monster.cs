@@ -106,6 +106,7 @@ public class Monster : MonoBehaviour
     }
 
     public void death(){
+        isLive = false;
        nowHit = true;
         anim.SetBool("Dead", true);
     }
