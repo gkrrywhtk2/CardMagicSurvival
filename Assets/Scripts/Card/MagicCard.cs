@@ -23,6 +23,10 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public TMP_Text costText;//코스트 숫자
     public Image dropPoint;//드랍 포인트
     public Image CoolTimeImage;//시계 방향 쿨타임 이미지
+    public GameObject range;//스킬 범위 이미지 오브젝트
+    public bool rangeOn;
+    public bool cardReady;//drop 포인트위에 있을때 true
+    private bool lastRangeState = false; // 이전 상태를 저장할 변수
 
     private void Awake()
     {
@@ -42,6 +46,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void CardInit(CardData data)
     {
         cardOn = false;
+        cardReady = false;
         if (data == null)
         {
             Debug.LogError("CardData is null!");
@@ -52,6 +57,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         cardCost = data.cardCost;
         cardImage.sprite = data.cardImage;
         costText.text = cardCost.ToString();
+        rangeOn = data.isRangeCard;
+        range.GetComponent<RectTransform>().localScale = data.rangeScale;
         
         
     }
@@ -63,7 +70,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
             if(cardOn != true)
                 return;
-            if(GameManager.instance.cardOneTouch != false)
+            if(GameManager.instance.cardOneTouch != true)
                 return;
 
         GameManager.instance.cardOneTouch = true;
@@ -81,12 +88,24 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// 드래그 중 호출
     /// </summary>
     public void OnDrag(PointerEventData eventData)
-    {
-            if(cardOn != true)
-                    return;
+{
+    // 카드가 활성화된 상태일 때만 드래그를 진행
+    if (cardOn != true)
+        return;
 
-        rect.position = eventData.position; // 드래그 위치로 이동
+    // 드래그 위치로 이동
+    rect.position = eventData.position;
+
+    // 카드가 범위 카드인지, 그리고 dropPoint 위에 있는지 확인
+    bool shouldRangeBeActive = (rangeOn == true && cardReady == true);
+
+    // 범위 이미지의 활성 상태가 변경되었을 때만 SetActive 호출
+    if (shouldRangeBeActive != lastRangeState)
+    {
+        range.gameObject.SetActive(shouldRangeBeActive);
+        lastRangeState = shouldRangeBeActive;  // 상태 갱신
     }
+}
 
     /// <summary>
     /// 드래그 종료 시 호출
@@ -105,6 +124,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             rect.position = originalPosition;
         }
         dropPoint.raycastTarget = false;//드롭 포인트 활성화
+        range.gameObject.SetActive(false);//범위 이미지 비활성화
     }
 
     public void ClockCoolTime(){
@@ -139,4 +159,6 @@ private void SetCardVisibility(bool isCardOn)
 
     CoolTimeImage.color = currentColor;
 }
+
 }
+

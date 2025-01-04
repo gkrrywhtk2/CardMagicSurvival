@@ -1,10 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class DropPoint : MonoBehaviour,IDropHandler
+public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private Image           image;
     private RectTransform   rect;
@@ -16,6 +15,20 @@ public class DropPoint : MonoBehaviour,IDropHandler
     }
 
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        MagicCard card =  eventData.pointerDrag.GetComponent<MagicCard>();
+        card.cardReady = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+         if (eventData.pointerDrag != null){
+        MagicCard card =  eventData.pointerDrag.GetComponent<MagicCard>();
+        card.cardReady = false;
+         }
+      
+    }
     public void OnDrop(PointerEventData eventData)
     {
         if( eventData.pointerDrag != null )

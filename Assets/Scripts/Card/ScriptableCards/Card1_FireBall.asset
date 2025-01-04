@@ -18,3 +18,5 @@ MonoBehaviour:
   cardName: "\uD654\uC5FC\uAD6C"
   cardDesc: "\uC9C0\uC815\uD55C \uC704\uCE58 \uD654\uC5FC \uC6B4\uC11D \uB099\uD558"
   cardImage: {fileID: 3721825360947551877, guid: 18770bfef90b74367b1840f21e4093b5, type: 3}
+  isRangeCard: 1
+  rangeScale: {x: 5, y: 2, z: 0}
