@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class bullet : MonoBehaviour
@@ -8,6 +10,9 @@ public class bullet : MonoBehaviour
    public int effectId;//effectId는 effectpoolmanager에서 해당 불릿의 이펙트가 몇 번째 오브젝트인지를 의미함
    public enum bulletType{bullet, placement};
    public bulletType type;
+   //placement only 
+   public float duration;//placement타입 bullet의 지속시간
+    private HashSet<Monster> affectedEnemies = new HashSet<Monster>();
 
    Rigidbody2D rigid;
    private void Awake()
@@ -29,6 +34,11 @@ public class bullet : MonoBehaviour
             //Bullet의 관통 횟수가 남아있다면 Bullet을 dir * speed 의 속도로 발사.
             rigid.linearVelocity = dir * bulletspeed;
         }
+
+        if(type == bulletType.placement){
+            duration = 5f;//5초 임시
+            StartCoroutine(DurationTime());
+        }
     
     }
 
@@ -49,13 +59,47 @@ public class bullet : MonoBehaviour
         }
         }
         else if(type == bulletType.placement){
-            
+
+               // 몬스터와 충돌하면 도트 데미지 시작
+        Monster enemy = collision.GetComponent<Monster>();
+        if (enemy != null && !affectedEnemies.Contains(enemy))
+        {
+            affectedEnemies.Add(enemy);
+            StartCoroutine(ApplyDotDamage(enemy));
+        }
+
         }
        
+    }
+    
+     private IEnumerator ApplyDotDamage(Monster enemy)
+    {
+        while (affectedEnemies.Contains(enemy))
+        {
+            // 몬스터에게 도트 데미지 적용
+            enemy.DamageCalculator(damage);
+            
+            enemy.speed = 0.3f;
+            yield return new WaitForSeconds(1f); // 1초 간격으로 데미지
+        }
     }
 
      private void OnTriggerExit2D(Collider2D collision)
     {
+
+              // 독 지대를 벗어나면 도트 데미지 중지
+            if(type == bulletType.placement){
+            Monster enemy = collision.GetComponent<Monster>();
+        if (enemy != null && affectedEnemies.Contains(enemy))
+        {
+            affectedEnemies.Remove(enemy);
+        }
+        }
+        
+
+        if(type != bulletType.bullet)
+            return;
+
         if (collision.CompareTag("Wall"))
         {
 
@@ -63,6 +107,11 @@ public class bullet : MonoBehaviour
         }
 
 
+    }
+
+    IEnumerator DurationTime(){
+        yield return new WaitForSeconds(duration);
+        gameObject.SetActive(false);
     }
     
 }
