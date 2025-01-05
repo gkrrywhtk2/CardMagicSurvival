@@ -8,6 +8,8 @@ public class Player_Main : MonoBehaviour
    public Player_col playerCol;
    public AutoAttack autoAttack;
   public JoyStick_P playerJoyStick;
+
+  public Player_Effect playerEffect;
   //
   public Transform fireBallPoint;
    private void Awake() {
@@ -16,6 +18,7 @@ public class Player_Main : MonoBehaviour
     playerCol = GetComponent<Player_col>();
     autoAttack = GetComponent<AutoAttack>();
     playerJoyStick = GetComponent<JoyStick_P>();
+    playerEffect = GetComponent<Player_Effect>();
    }
 
 }

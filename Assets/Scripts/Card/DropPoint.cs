@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
@@ -65,6 +66,10 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             case 2:
         Card2_PosionPoison(eventData);
             return;
+
+            case 3:
+        Card3_ManaUp();
+            return;
             default:
             return;
         }
@@ -122,7 +127,21 @@ public void Card2_PosionPoison(PointerEventData eventData){
 
 }
 
+public void Card3_ManaUp(){
+    GameManager.instance.player.playerEffect.PlayManaUp();
+    StartCoroutine(ManaPlus());
 
+}
+
+    IEnumerator ManaPlus(){
+
+        float duration = 1.5f;
+        float plus = (GameManager.instance.player.playerStatus.manaRecovery);
+        GameManager.instance.player.playerStatus.manaRecoveryPlus = plus;
+        yield return new WaitForSeconds(duration);
+        GameManager.instance.player.playerStatus.manaRecoveryPlus  = 0;
+
+    }
 
     
 }

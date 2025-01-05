@@ -12,6 +12,7 @@ public class Player_Status : MonoBehaviour
     public float mana;
     public float maxMana = 10;
     public float manaRecovery;
+    public float manaRecoveryPlus;
     [Header("Bar")]
     public Slider attackBar;
     public Slider hpBar;
@@ -78,6 +79,6 @@ public class Player_Status : MonoBehaviour
     }
 
     public void ManaRecovery(){
-        mana += manaRecovery * Time.deltaTime;
+        mana += (manaRecovery+ manaRecoveryPlus) * Time.deltaTime;
     }
 }

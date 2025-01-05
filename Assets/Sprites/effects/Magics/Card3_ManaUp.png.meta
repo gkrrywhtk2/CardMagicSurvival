@@ -1,0 +1,574 @@
+fileFormatVersion: 2
+guid: a15888a9a1ce143529ca7c2d5fed9023
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3267784408321088903
+    second: Card3_ManaUp_0
+  - first:
+      213: 855182220294737359
+    second: Card3_ManaUp_1
+  - first:
+      213: -2310152377212686028
+    second: Card3_ManaUp_2
+  - first:
+      213: -8377468418471113653
+    second: Card3_ManaUp_3
+  - first:
+      213: -6380606164922135193
+    second: Card3_ManaUp_4
+  - first:
+      213: 5684453751761660400
+    second: Card3_ManaUp_5
+  - first:
+      213: -3478829595965776088
+    second: Card3_ManaUp_6
+  - first:
+      213: 896168285181631226
+    second: Card3_ManaUp_7
+  - first:
+      213: 2677058853384281153
+    second: Card3_ManaUp_8
+  - first:
+      213: -8263757199421335156
+    second: Card3_ManaUp_9
+  - first:
+      213: 2136045488776286132
+    second: Card3_ManaUp_10
+  - first:
+      213: 822679380500477294
+    second: Card3_ManaUp_11
+  - first:
+      213: 6502324141889926219
+    second: Card3_ManaUp_12
+  - first:
+      213: 3653474899882204206
+    second: Card3_ManaUp_13
+  - first:
+      213: -8202166629265106924
+    second: Card3_ManaUp_14
+  - first:
+      213: 4064746769792709458
+    second: Card3_ManaUp_15
+  - first:
+      213: -440066159912407825
+    second: Card3_ManaUp_16
+  - first:
+      213: -5195339901269976999
+    second: Card3_ManaUp_17
+  - first:
+      213: 4166418933467607631
+    second: Card3_ManaUp_18
+  - first:
+      213: -2423966902658419170
+    second: Card3_ManaUp_19
+  - first:
+      213: 3731760498551818811
+    second: Card3_ManaUp_20
+  - first:
+      213: 1657591365603978332
+    second: Card3_ManaUp_21
+  - first:
+      213: 297551907699140611
+    second: Card3_ManaUp_22
+  - first:
+      213: 5817925980559592671
+    second: Card3_ManaUp_23
+  - first:
+      213: -3808256017946402603
+    second: Card3_ManaUp_24
+  - first:
+      213: 2521899301309012558
+    second: Card3_ManaUp_25
+  - first:
+      213: 6970000004807222607
+    second: Card3_ManaUp_26
+  - first:
+      213: 7594454667801678250
+    second: Card3_ManaUp_27
+  - first:
+      213: 3895124910889509335
+    second: Card3_ManaUp_28
+  - first:
+      213: -3974651652962896759
+    second: Card3_ManaUp_29
+  - first:
+      213: 8753692646432337047
+    second: Card3_ManaUp_30
+  - first:
+      213: -579548916365444984
+    second: Card3_ManaUp_31
+  - first:
+      213: -2946071687739607598
+    second: Card3_ManaUp_32
+  - first:
+      213: 7704192044080135072
+    second: Card3_ManaUp_33
+  - first:
+      213: 8813293388921462935
+    second: Card3_ManaUp_34
+  - first:
+      213: 4324593530921728613
+    second: Card3_ManaUp_35
+  - first:
+      213: 6274696701724361932
+    second: Card3_ManaUp_36
+  - first:
+      213: -6103940223715251352
+    second: Card3_ManaUp_37
+  - first:
+      213: -559619205599019685
+    second: Card3_ManaUp_38
+  - first:
+      213: 6757291627258494277
+    second: Card3_ManaUp_39
+  - first:
+      213: 3134249751358046530
+    second: Card3_ManaUp_40
+  - first:
+      213: 3432258596867268557
+    second: Card3_ManaUp_41
+  - first:
+      213: 8390394708597328021
+    second: Card3_ManaUp_42
+  - first:
+      213: 5675551101334449150
+    second: Card3_ManaUp_43
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Card3_ManaUp_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78dd98c1b90895d20800000000000000
+      internalID: 3267784408321088903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcdc5eac2b73edb00800000000000000
+      internalID: 855182220294737359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 431b63317a0b0ffd0800000000000000
+      internalID: -2310152377212686028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4cc9ffebd04dbb80800000000000000
+      internalID: -8377468418471113653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76d0628bf788377a0800000000000000
+      internalID: -6380606164922135193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f9e3e7d19c33ee40800000000000000
+      internalID: 5684453751761660400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_6
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82f18520ae6b8bfc0800000000000000
+      internalID: -3478829595965776088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_7
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afad839ae44df6c00800000000000000
+      internalID: 896168285181631226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14cd8cee7d2d62520800000000000000
+      internalID: 2677058853384281153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_9
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c891a624c9c315d80800000000000000
+      internalID: -8263757199421335156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_10
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bf06960e02c4ad10800000000000000
+      internalID: 2136045488776286132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_11
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e65f4cea98eba6b00800000000000000
+      internalID: 822679380500477294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card3_ManaUp_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b44bbc33b55ec3a50800000000000000
+      internalID: 6502324141889926219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ccfd21c2ac1564a01ad09c27792002e0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Card3_ManaUp_0: 3267784408321088903
+      Card3_ManaUp_1: 855182220294737359
+      Card3_ManaUp_10: 2136045488776286132
+      Card3_ManaUp_11: 822679380500477294
+      Card3_ManaUp_12: 6502324141889926219
+      Card3_ManaUp_2: -2310152377212686028
+      Card3_ManaUp_3: -8377468418471113653
+      Card3_ManaUp_4: -6380606164922135193
+      Card3_ManaUp_5: 5684453751761660400
+      Card3_ManaUp_6: -3478829595965776088
+      Card3_ManaUp_7: 896168285181631226
+      Card3_ManaUp_8: 2677058853384281153
+      Card3_ManaUp_9: -8263757199421335156
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
