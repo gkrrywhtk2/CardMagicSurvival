@@ -53,13 +53,15 @@ public class AutoAttack : MonoBehaviour
 
         //
         float damage = 10;//임시
-        int bulletNumber = 1;
+        int bulletNumber = 0;
+        int effectNumber = 1;
         int per = 0;//관통 현재 0
         float bulletspeed = 6;
-        Transform bullet = GameManager.instance.poolManager.Get(bulletNumber).transform;
+        Transform bullet = GameManager.instance.effectPoolManager.Get(bulletNumber).transform;
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.right, dir);
         //bullet 오브젝트에 정보 전달.
-        bullet.GetComponent<bullet>().Init(damage, per, bulletspeed, dir);
+        global::bullet.bulletType type = global::bullet.bulletType.bullet;
+        bullet.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type);
     }
 }

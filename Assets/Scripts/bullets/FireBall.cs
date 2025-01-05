@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class FireBall : MonoBehaviour
 {
@@ -36,8 +37,17 @@ public class FireBall : MonoBehaviour
 
    public void Explode(){
     int effectNum = 3;
-    GameObject effect = GameManager.instance.poolManager.Get(effectNum);
+    GameObject effect = GameManager.instance.effectPoolManager.Get(effectNum);
     effect.transform.position = targetPosition;
+
+    //화염구 충돌 오브젝트 초기화
+    float damage = 20;
+    int per = -2;//infinity
+    float bulletspeed = 0;//null
+    Vector3 dir = Vector3.zero;//null
+    int effectNumber = -1;//null
+     global::bullet.bulletType type = global::bullet.bulletType.bullet;
+    effect.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type);
     gameObject.SetActive(false);
 
    }

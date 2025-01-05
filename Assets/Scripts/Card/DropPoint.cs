@@ -92,6 +92,23 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     fireball.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 }
 
+public void Card3_PosionPoison(PointerEventData eventData){
+     int splashEffect = 4;
+      int poisonEffect = 5;
+     GameObject poisonSplash = GameManager.instance.effectPoolManager.Get(splashEffect); 
+     GameObject poison_temp = GameManager.instance.effectPoolManager.Get(poisonEffect); 
+     bullet posion = poison_temp.GetComponent<bullet>();
+
+    
+
+      // 드랍 포인트를 목표로 초기화
+    Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
+    targetPosition.z = 0; // 2D 환경이라면 Z축을 고정
+
+    poisonSplash.transform.position = targetPosition;
+
+}
+
 
 
     

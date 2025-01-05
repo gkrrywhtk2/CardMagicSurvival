@@ -44,8 +44,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: New Layer 1
+  - name: SkillEffect
     uniqueID: 3895238123
+    locked: 0
+  - name: character
+    uniqueID: 1684437509
     locked: 0
   m_RenderingLayers:
   - Default

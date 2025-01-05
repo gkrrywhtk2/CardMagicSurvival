@@ -24,6 +24,12 @@ public class Monster : MonoBehaviour
     public float health;
     public float maxHealth;
     public float damage;
+
+    [Header("poison")]
+    public bool nowPoison;//현재 중독 상태이상인지 체크용
+    public float posionDamage;//독 데미지
+    public float dotDamageCoolTime;//이 시간초마다 도트 데미지 입음
+    public GameObject poisonEffect;//중독 상태일때 머리위에 독 표시
       private void Awake()
     {
        
@@ -41,6 +47,13 @@ public class Monster : MonoBehaviour
         maxHealth = data.maxHealth;
         health = maxHealth;
         damage = data.damage;
+
+        //중독 상태 초기화
+        nowPoison = false;
+        posionDamage = 0;
+        dotDamageCoolTime = 0;
+
+        //몬스터들 애니메이션 겹치지 않게끔.
         RandomizeAnimation();
     }
      private void FixedUpdate()
@@ -89,8 +102,10 @@ public class Monster : MonoBehaviour
         health -= damage;
         if(health <= 0){
         death();
-        }else{
+        }else if(nowPoison != true){
         StartCoroutine(HitStop());
+        }else if(nowPoison == true){
+            //여기 할 차례임
         }
     }
     IEnumerator HitStop(){
@@ -104,6 +119,15 @@ public class Monster : MonoBehaviour
         nowHit = false;
         sprite.color = originalColor;
     }
+
+    public void PoisonOn(float damage){
+        //몬스터 중독 상태 ON
+        nowPoison = true;
+    }
+
+     //IEnumerator PoisonDamage(){
+//
+    // }
 
     public void death(){
         isLive = false;

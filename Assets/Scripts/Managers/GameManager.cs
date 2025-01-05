@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("#ManagerConnect")]
     public ObjectPooling poolManager;//오브젝트 풀링
+    public EffectPooling effectPoolManager;//이펙트 풀링
     [Header("#GameControl")]
     public bool cardOneTouch;
 
