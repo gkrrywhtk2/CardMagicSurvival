@@ -8,6 +8,7 @@ public class AutoAttack : MonoBehaviour
     public float autoAttackMaxPoint = 100;
     public float autoAttackCurrentPoint = 0;
     public float autoAttackRecovery = 80;
+    public float autoAttackRecoveryPlus0 = 0;
     Animator anim;
     Scaner scaner;
     SpriteRenderer sprite;
@@ -29,7 +30,7 @@ public class AutoAttack : MonoBehaviour
     if(player.playerJoyStick.inputVec.magnitude > 0.01f)
         return;
 
-        autoAttackCurrentPoint += autoAttackRecovery * Time.fixedDeltaTime;
+        autoAttackCurrentPoint += (autoAttackRecovery + autoAttackRecoveryPlus0) * Time.fixedDeltaTime;
         if(autoAttackCurrentPoint>= autoAttackMaxPoint && scaner.nearestTarget != null){
             autoAttackCurrentPoint = 0;
             AutoAttack_exe();

@@ -15,6 +15,7 @@ public class DeckManager : MonoBehaviour
         deck.Add(1);
         deck.Add(2);
         deck.Add(3);
+         deck.Add(4);
     }
 
     public void DeckSetting()

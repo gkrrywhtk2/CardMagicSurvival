@@ -1,0 +1,395 @@
+fileFormatVersion: 2
+guid: b54012a8508ec426599dea3755a132a5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7456132114874847669
+    second: Card0_Con2_0
+  - first:
+      213: -3285402158490398862
+    second: Card0_Con2_1
+  - first:
+      213: -7866705292650924246
+    second: Card0_Con2_2
+  - first:
+      213: 7831489425013730468
+    second: Card0_Con2_3
+  - first:
+      213: -3554883619722948642
+    second: Card0_Con2_4
+  - first:
+      213: 5879186673606502736
+    second: Card0_Con2_5
+  - first:
+      213: 2964851627395129006
+    second: Card0_Con2_6
+  - first:
+      213: 39944135890479424
+    second: Card0_Con2_7
+  - first:
+      213: -3259895862317397665
+    second: Card0_Con2_8
+  - first:
+      213: -6015882776864990648
+    second: Card0_Con2_9
+  - first:
+      213: 3606111069074106286
+    second: Card0_Con2_10
+  - first:
+      213: -434068381442289146
+    second: Card0_Con2_11
+  - first:
+      213: -3346552261194369544
+    second: Card0_Con2_12
+  - first:
+      213: -6428537316833242801
+    second: Card0_Con2_13
+  - first:
+      213: 4734446590704582256
+    second: Card0_Con2_14
+  - first:
+      213: 3765492952708540357
+    second: Card0_Con2_15
+  - first:
+      213: 8270990991610587014
+    second: Card0_Con2_16
+  - first:
+      213: 3301000135951127092
+    second: Card0_Con2_17
+  - first:
+      213: 6785770999959603061
+    second: Card0_Con2_18
+  - first:
+      213: -3147197220066473924
+    second: Card0_Con2_19
+  - first:
+      213: 6893525022742760179
+    second: Card0_Con2_20
+  - first:
+      213: -4642564683201853144
+    second: Card0_Con2_21
+  - first:
+      213: 7144603585633984826
+    second: Card0_Con2_22
+  - first:
+      213: -882899316597569529
+    second: Card0_Con2_23
+  - first:
+      213: 7629785787656650362
+    second: Card0_Con2_24
+  - first:
+      213: -4282023154157125467
+    second: Card0_Con2_25
+  - first:
+      213: -568183868755487839
+    second: Card0_Con2_26
+  - first:
+      213: -7858273491525177425
+    second: Card0_Con2_27
+  - first:
+      213: 175741601427612207
+    second: Card0_Con2_28
+  - first:
+      213: 5946698893646204237
+    second: Card0_Con2_29
+  - first:
+      213: -2927539536793970794
+    second: Card0_Con2_30
+  - first:
+      213: 1251216377971669972
+    second: Card0_Con2_31
+  - first:
+      213: -3691831673433767930
+    second: Card0_Con2_32
+  - first:
+      213: -8375734034205218342
+    second: Card0_Con2_33
+  - first:
+      213: 6447319221060143097
+    second: Card0_Con2_34
+  - first:
+      213: -1984575296280933196
+    second: Card0_Con2_35
+  - first:
+      213: -4170943994079635812
+    second: Card0_Con2_36
+  - first:
+      213: 8084756972786321179
+    second: Card0_Con2_37
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Card0_Con2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b15f7977a0897760800000000000000
+      internalID: 7456132114874847669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card0_Con2_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27fc0e6c428e762d0800000000000000
+      internalID: -3285402158490398862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card0_Con2_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a273bd64739d3d290800000000000000
+      internalID: -7866705292650924246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card0_Con2_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4aceb28932a0fac60800000000000000
+      internalID: 7831489425013730468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card0_Con2_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edf0f84be248aaec0800000000000000
+      internalID: -3554883619722948642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card0_Con2_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 059a6806121179150800000000000000
+      internalID: 5879186673606502736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 773236a5196ea472ba6b2f2a88720737
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Card0_Con2_0: 7456132114874847669
+      Card0_Con2_1: -3285402158490398862
+      Card0_Con2_2: -7866705292650924246
+      Card0_Con2_3: 7831489425013730468
+      Card0_Con2_4: -3554883619722948642
+      Card0_Con2_5: 5879186673606502736
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

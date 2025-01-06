@@ -57,6 +57,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     public void CardUse(int cardId,PointerEventData eventData){
         switch(cardId){
             case 0:
+            Card0_Concentration();
             return;
 
             case 1:
@@ -73,6 +74,11 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             default:
             return;
         }
+    }
+
+     public void Card0_Concentration(){
+         GameManager.instance.player.playerEffect.PlayConcentration();
+         StartCoroutine(Concentration());
     }
    public void Card1_FireBall(PointerEventData eventData)
 {
@@ -142,6 +148,17 @@ public void Card3_ManaUp(){
         GameManager.instance.player.playerStatus.manaRecoveryPlus  = 0;
 
     }
+
+    IEnumerator Concentration(){
+        float duration = 1.5f;
+        float plus = (GameManager.instance.player.autoAttack.autoAttackRecovery);
+        GameManager.instance.player.autoAttack.autoAttackRecoveryPlus0 = (plus * 3);
+        yield return new WaitForSeconds(duration);
+        GameManager.instance.player.autoAttack.autoAttackRecoveryPlus0 = 0;
+
+    }
+
+   
 
     
 }

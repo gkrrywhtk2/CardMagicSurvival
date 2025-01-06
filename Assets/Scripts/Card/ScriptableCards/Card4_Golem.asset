@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48e815ae4f9cc4b55827773fccce780f, type: 3}
-  m_Name: Card0_SpeedUp
+  m_Name: Card4_Golem
   m_EditorClassIdentifier: 
-  cardId: 0
+  cardId: 4
   cardLevel: 0
-  cardCost: 3
-  cardName: "\uC9D1\uC911"
-  cardDesc: "\uC77C\uC2DC\uC801\uC73C\uB85C \uACF5\uACA9\uC18D\uB3C4 \uBE44\uC57D\uC801
-    \uC99D\uAC00"
-  cardImage: {fileID: -358679558903583799, guid: e42f805ee499a4098b1f6ee3f3856098, type: 3}
+  cardCost: 7
+  cardName: "\uC18C\uD658 : \uACE8\uB818"
+  cardDesc: "\uC804\uD22C\uB97C \uBCF4\uC870\uD558\uB294 \uACE8\uB818\uC744 \uC18C\uD658"
+  cardImage: {fileID: 5747720370608265589, guid: 9d2f406f4df384a0b942a557694be3d7, type: 3}
   isRangeCard: 0
   rangeScale: {x: 0, y: 0, z: 0}
