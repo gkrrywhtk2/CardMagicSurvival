@@ -7,7 +7,7 @@ public class bullet : MonoBehaviour
    public float damage;
    public int per;//관통 횟수
    public float bulletSpeed;
-   public int effectId;//effectId는 effectpoolmanager에서 해당 불릿의 이펙트가 몇 번째 오브젝트인지를 의미함
+   public int effectId;//effectId는 effectpoolmanager에서 해당 불릿의 이펙트가 몇 번째 오브젝트인지를 의미함(폭발 이펙트)
    public enum bulletType{bullet, placement};
    public bulletType type;
    //placement only 
