@@ -1,0 +1,664 @@
+fileFormatVersion: 2
+guid: c5252fc6eeba04f5ba66e89e7f2a6f62
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1104466350085116591
+    second: FireBres_0
+  - first:
+      213: -785294495560346908
+    second: FireBres_1
+  - first:
+      213: 8707389422956634529
+    second: FireBres_2
+  - first:
+      213: 2728543081145342393
+    second: FireBres_3
+  - first:
+      213: 7359074982838751424
+    second: FireBres_4
+  - first:
+      213: 8572911055078058826
+    second: FireBres_5
+  - first:
+      213: -5000202759281973586
+    second: FireBres_6
+  - first:
+      213: -3291822544314201021
+    second: FireBres_7
+  - first:
+      213: -5901366408639389445
+    second: FireBres_8
+  - first:
+      213: 3078024464307649664
+    second: FireBres_9
+  - first:
+      213: -3534394993957498082
+    second: FireBres_10
+  - first:
+      213: 4596652323103176148
+    second: FireBres_11
+  - first:
+      213: -2476003308028586790
+    second: FireBres_12
+  - first:
+      213: -6936377527056979159
+    second: FireBres_13
+  - first:
+      213: 4509356922636473110
+    second: FireBres_14
+  - first:
+      213: -4976548463600396023
+    second: FireBres_15
+  - first:
+      213: -8921262700020976784
+    second: FireBres_16
+  - first:
+      213: -3304763359402578855
+    second: FireBres_17
+  - first:
+      213: -5840455987420047487
+    second: FireBres_18
+  - first:
+      213: 5515195266222344583
+    second: FireBres_19
+  - first:
+      213: 8870555462673444616
+    second: FireBres_20
+  - first:
+      213: -27006452395995174
+    second: FireBres_21
+  - first:
+      213: 2091538600683828010
+    second: FireBres_22
+  - first:
+      213: 7075008248348787058
+    second: FireBres_23
+  - first:
+      213: -6087349939673007818
+    second: FireBres_24
+  - first:
+      213: -4670325225842276822
+    second: FireBres_25
+  - first:
+      213: -9197326229611644261
+    second: FireBres_26
+  - first:
+      213: -3865726748652809082
+    second: FireBres_27
+  - first:
+      213: -5081495901745824768
+    second: FireBres_28
+  - first:
+      213: -3304315432904479664
+    second: FireBres_29
+  - first:
+      213: 6141567962842323294
+    second: FireBres_30
+  - first:
+      213: -8561134134568765048
+    second: FireBres_31
+  - first:
+      213: -4064094790690771312
+    second: FireBres_32
+  - first:
+      213: -6769006482685026245
+    second: FireBres_33
+  - first:
+      213: -5947906630848553324
+    second: FireBres_34
+  - first:
+      213: 8094104991713299477
+    second: FireBres_35
+  - first:
+      213: 7139134358304615089
+    second: FireBres_36
+  - first:
+      213: -830095979853340022
+    second: FireBres_37
+  - first:
+      213: 2865243999554762830
+    second: FireBres_38
+  - first:
+      213: -6825888489909413621
+    second: FireBres_39
+  - first:
+      213: -8914765762308072120
+    second: FireBres_40
+  - first:
+      213: 3069535704312721282
+    second: FireBres_41
+  - first:
+      213: 1256085699890278672
+    second: FireBres_42
+  - first:
+      213: -1469618804520066450
+    second: FireBres_43
+  - first:
+      213: 4556745767862042932
+    second: FireBres_44
+  - first:
+      213: 9181170436113704600
+    second: FireBres_45
+  - first:
+      213: -2878680271092950554
+    second: FireBres_46
+  - first:
+      213: -3628293905306250648
+    second: FireBres_47
+  - first:
+      213: 6403056613001653769
+    second: FireBres_48
+  - first:
+      213: 1199833841803989439
+    second: FireBres_49
+  - first:
+      213: 2654983372451626653
+    second: FireBres_50
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FireBres_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e5b80c0a7af64b59b0ef2d136acc4cf
+      internalID: 1082243337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e332c110beb7a48b7b2cc958bc7fcbd7
+      internalID: -1155582195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48d4c27ed25424158a30373bde5d5736
+      internalID: 742170724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b838067df0044625903b508d1daeb87
+      internalID: -1406348010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cba0ca53ec0f44d7ae8d854f5e3b896
+      internalID: 815501335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2228d84e1496246ac8140f50c4689837
+      internalID: -43391781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_6
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cedb18c8982094f7e8e6178b57958b25
+      internalID: 1979334406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_7
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33c79e64c42d543b087c6736edd2b720
+      internalID: 90741325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 315510414311b4bb294c3dee2780092d
+      internalID: 574894851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_9
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4dd2c1c6015d41908b9a796e0b76752
+      internalID: -1634965250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_10
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43d76d38855c34d5e927309ad904c2c5
+      internalID: 1623846839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_11
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11162b14cfb4643e999c8e7707d17073
+      internalID: 1520312788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d6d0a53169e348ff8c48dc8f31690ff
+      internalID: 491557501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_13
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a88e6dab914c94917ae23c4a0a6873bc
+      internalID: -1993912904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_14
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62ebd7f3ac030444b896ea1c113951d3
+      internalID: -1296500158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireBres_15
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 641734346d99944e2aa546fc7f28871f
+      internalID: -1143402779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c130800f87f8e4722ab5763adb29912c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FireBres_0: 1082243337
+      FireBres_1: -1155582195
+      FireBres_10: 1623846839
+      FireBres_11: 1520312788
+      FireBres_12: 491557501
+      FireBres_13: -1993912904
+      FireBres_14: -1296500158
+      FireBres_15: -1143402779
+      FireBres_2: 742170724
+      FireBres_3: -1406348010
+      FireBres_4: 815501335
+      FireBres_5: -43391781
+      FireBres_6: 1979334406
+      FireBres_7: 90741325
+      FireBres_8: 574894851
+      FireBres_9: -1634965250
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
