@@ -20,3 +20,4 @@ MonoBehaviour:
   cardImage: {fileID: -7159746467839441242, guid: d824d9ce2fc5246f9b5b7591be9b1600, type: 3}
   isRangeCard: 0
   rangeScale: {x: 0, y: 0, z: 0}
+  nextcardImage: {fileID: 21300000, guid: a9dda65b0f365244586f782652d859ad, type: 3}

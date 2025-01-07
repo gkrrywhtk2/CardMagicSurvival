@@ -12,5 +12,6 @@ public class CardData : ScriptableObject
   public Sprite cardImage;
   public bool isRangeCard;
   public Vector3 rangeScale;
+  public Sprite nextcardImage;
 
 }

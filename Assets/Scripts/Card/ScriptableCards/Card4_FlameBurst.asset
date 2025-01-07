@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e815ae4f9cc4b55827773fccce780f, type: 3}
+  m_Name: Card4_FlameBurst
+  m_EditorClassIdentifier: 
+  cardId: 4
+  cardLevel: 0
+  cardCost: 4
+  cardName: "\uD654\uC5FC \uD3ED\uBC1C"
+  cardDesc: "\uC804\uBC29 \uD654\uC18D\uC131 \uD53C\uD574"
+  cardImage: {fileID: -4548353814425222452, guid: 5a59798ca55494e66959f5487290dd05, type: 3}
+  isRangeCard: 0
+  rangeScale: {x: 0, y: 0, z: 0}
+  nextcardImage: {fileID: 21300000, guid: e74f6c0849164be4e85724be68b15b96, type: 3}

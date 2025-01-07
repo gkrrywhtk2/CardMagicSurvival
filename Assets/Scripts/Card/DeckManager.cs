@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeckManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class DeckManager : MonoBehaviour
     public List<int> deck = new List<int>(); // 현재 덱
     public RectTransform[] boardPoints; // 카드 보드 포인트
     public MagicCard[] magicCards;      // 핸드 카드 총 3장
+    public Image nextcardImage;//다음 카드 이미지
 
     public void CardSelect()
     {
@@ -42,6 +44,7 @@ public class DeckManager : MonoBehaviour
                 magicCards[i].CardInit(cardDatas[cardId]);
         
         }
+        NextCardImageSetting();
     }
     public void DrawCard(int fixedCard){
                 int cardId = deck[0]; // 덱 맨 위의 카드 ID 가져오기
@@ -49,6 +52,11 @@ public class DeckManager : MonoBehaviour
 
                 // 핸드 카드 초기화
                 magicCards[fixedCard].CardInit(cardDatas[cardId]);
+                NextCardImageSetting();
+    }
+
+    public void NextCardImageSetting(){
+        nextcardImage.sprite = cardDatas[deck[0]].nextcardImage;
     }
 
     private void Start()
