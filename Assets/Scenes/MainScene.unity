@@ -22984,9 +22984,9 @@ GameObject:
   - component: {fileID: 1341856421}
   - component: {fileID: 1341856420}
   - component: {fileID: 1341856419}
-  - component: {fileID: 1341856424}
   - component: {fileID: 1341856423}
   - component: {fileID: 1341856422}
+  - component: {fileID: 1341856424}
   m_Layer: 0
   m_Name: Golem
   m_TagString: Untagged
@@ -23090,59 +23090,7 @@ Transform:
   - {fileID: 487943136}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1341856422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341856418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5afff542059164831ac938206b6f6c4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 10
-  attackRange: 2
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  attackCooldown: 1
-  damage: 10
-  attackReady: 0
-  attackPointRight: {fileID: 95297695}
-  attackPointLeft: {fileID: 487943136}
-  moveSpeed: 1
-  sprite: {fileID: 0}
-  anim: {fileID: 0}
---- !u!50 &1341856423
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341856418}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!58 &1341856424
+--- !u!58 &1341856422
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23176,8 +23124,53 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.5282802}
-  m_Radius: 0.5282799
+  m_Offset: {x: 0, y: 0.53960943}
+  m_Radius: 0.53960776
+--- !u!50 &1341856423
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341856418}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 5
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &1341856424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341856418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96791635885d4b1cadf845a74357904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAttackPoint: {fileID: 487943136}
+  rightAttackPoint: {fileID: 95297695}
+  moveSpeed: 1
+  damage: 0
+  attackCoolTime: 0
+  duration: 0
 --- !u!1 &1362184027
 GameObject:
   m_ObjectHideFlags: 0
@@ -25198,8 +25191,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1895840372}
+  - component: {fileID: 1895840373}
   m_Layer: 0
-  m_Name: CenerPivot
+  m_Name: CenerPivot_Scaner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25220,6 +25214,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1341856421}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1895840373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895840371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab6461f88ab3421493f5d7ca3bf214e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 3
+  attackRange: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  nearestTarget: {fileID: 0}
+  attackTarget: {fileID: 0}
 --- !u!1 &1923785254
 GameObject:
   m_ObjectHideFlags: 0
