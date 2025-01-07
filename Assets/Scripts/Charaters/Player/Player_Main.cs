@@ -10,6 +10,7 @@ public class Player_Main : MonoBehaviour
   public JoyStick_P playerJoyStick;
 
   public Player_Effect playerEffect;
+  public Dir_Front dirFront;
   //
   public Transform fireBallPoint;
    private void Awake() {
@@ -19,6 +20,7 @@ public class Player_Main : MonoBehaviour
     autoAttack = GetComponent<AutoAttack>();
     playerJoyStick = GetComponent<JoyStick_P>();
     playerEffect = GetComponent<Player_Effect>();
+    dirFront = GetComponentInChildren<Dir_Front>();
    }
 
 }

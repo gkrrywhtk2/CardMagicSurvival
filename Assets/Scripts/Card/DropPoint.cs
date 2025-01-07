@@ -11,10 +11,20 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     private RectTransform   rect;
     public DeckManager deckManager;
 
+    //flameburst 
+    public Coroutine flameBurstCorutine;
+    public bool flameburstOn;
+    public float flameburstTimer;
+    public float flameburstDuration = 5;
+
     private void Awake()
     {
         rect        = GetComponent<RectTransform>();
     }
+    private void Update(){
+      
+    }
+    
 
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -70,6 +80,9 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
             case 3:
         Card3_ManaUp();
+            return;
+            case 4:
+            Card4_FlameBurst();
             return;
             default:
             return;
@@ -158,7 +171,49 @@ public void Card3_ManaUp(){
 
     }
 
-   
+   public void Card4_FlameBurst()
+{
+    // 기존 Coroutine이 실행 중이면 중단
+    if (flameBurstCorutine != null)
+    {
+        StopCoroutine(flameBurstCorutine);
+    }
+
+    // 상태 초기화
+    flameburstOn = true;
+    flameburstTimer = 0;
+
+    // 새로운 Coroutine 시작
+    flameBurstCorutine = StartCoroutine(FlameBurstRoutine());
+}
+   private IEnumerator FlameBurstRoutine()
+{
+    float damage = 1f; // 고정 피해량
+    int flameburstObjectNum = 7; // 오브젝트 풀에서 가져올 ID
+
+    while (flameburstOn && flameburstTimer < flameburstDuration)
+    {
+        flameburstTimer += 0.2f; // 타이머 증가 (루프 주기와 일치)
+        
+        // FlameBurst 효과 생성
+        GameObject flame = GameManager.instance.effectPoolManager.Get(flameburstObjectNum);
+        flame.GetComponent<Melee>().Init(damage);
+
+        Vector2 skillPosition; //플레이어의 바로 앞 스킬이 연출될 좌표
+        float angle;//각도
+        //player의 dir_front에서 좌표 가져옴
+        skillPosition = GameManager.instance.player.dirFront.skillPosition;
+        angle = GameManager.instance.player.dirFront.angle;
+        flame.transform.position = skillPosition;
+        flame.transform.rotation = Quaternion.Euler(0, 0, angle);
+        yield return new WaitForSeconds(0.2f); // 0.2초 간격으로 효과 발생
+    }
+
+    // 종료 시 상태 정리
+    flameburstOn = false;
+    flameburstTimer = 0;
+    flameBurstCorutine = null;
+}
 
     
 }

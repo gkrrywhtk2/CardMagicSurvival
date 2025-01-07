@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardId: 4
   cardLevel: 0
-  cardCost: 7
-  cardName: "\uC18C\uD658 : \uACE8\uB818"
-  cardDesc: "\uC804\uD22C\uB97C \uBCF4\uC870\uD558\uB294 \uACE8\uB818\uC744 \uC18C\uD658"
-  cardImage: {fileID: 5747720370608265589, guid: 9d2f406f4df384a0b942a557694be3d7, type: 3}
+  cardCost: 4
+  cardName: "\uD654\uC5FC \uD3ED\uBC1C"
+  cardDesc: "\uC804\uBC29 \uD654\uC18D\uC131 \uD53C\uD574"
+  cardImage: {fileID: -4548353814425222452, guid: 5a59798ca55494e66959f5487290dd05, type: 3}
   isRangeCard: 0
   rangeScale: {x: 0, y: 0, z: 0}

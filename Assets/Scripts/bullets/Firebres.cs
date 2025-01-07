@@ -2,16 +2,11 @@ using UnityEngine;
 
 public class Firebres : MonoBehaviour
 {
-    Scaner scaner;
-
-     public Transform playerTransform; // 플레이어의 Transform
+    public Transform playerTransform; // 플레이어의 Transform
     public float skillOffset = 0.5f;  // 플레이어로부터 얼마나 떨어질지
 
     private Vector2 direction; // 스킬 방향 벡터
-
-    private void Awake() {
-        scaner = GetComponentInParent<Scaner>();
-    }
+    public Vector2 skillPosition; //플레이어의 바로 앞 스킬이 연출될 좌표
 
     void Update()
     {
@@ -22,7 +17,7 @@ public class Firebres : MonoBehaviour
             direction = direction.normalized;
 
             // 2. 스킬 위치 설정
-            Vector2 skillPosition = (Vector2)playerTransform.position + direction * skillOffset;
+            skillPosition = (Vector2)playerTransform.position + direction * skillOffset;
             transform.position = skillPosition;
 
             // 3. 스킬 회전 설정
