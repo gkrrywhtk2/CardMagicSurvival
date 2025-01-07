@@ -30,6 +30,7 @@ public class Summon : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        Init();
     }
 
     private void FixedUpdate() {
@@ -46,18 +47,30 @@ public class Summon : MonoBehaviour
       
     }
 
+      private void MoveToPlayer()
+    {
+    
+        Vector2 moveVec = scaner.moveTarget.position - rb.position;
+        Vector2 nextVec = moveVec.normalized * (moveSpeed + 2) * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + nextVec);
+        //rigid.velocity = Vector2.zero;
+    }
+
     public void Init(){
         duration = 10;
+        damage = 10;
+        attackCoolTime = 5;
     }
 
     public void StartAttack() {
     if (attackCorutine == null) {
-        attackCorutine = StartCoroutine(GolemAttack());
+        attackCorutine = StartCoroutine(GolemAttack(scaner.attackTarget.transform.position));
     }
     }
 
      private void MoveTowards(Vector2 targetPosition)
     {
+       
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
         rb.linearVelocity = direction * moveSpeed;
 
@@ -75,17 +88,21 @@ public class Summon : MonoBehaviour
     anim.SetBool("isMoving", false);
     }
 
-        IEnumerator GolemAttack(){
+        IEnumerator GolemAttack(Vector2 attackTarget){
 
             isAttacking = true;
-            anim.SetBool("isMoving", false);
+            StopMovement();
             yield return new WaitForSeconds(1f);//초기 공격 대기
             anim.SetTrigger("Attack");
         int poolingNum = 6;
         GameObject attackBox = GameManager.instance.effectPoolManager.Get(poolingNum);
         bullet attack = attackBox.GetComponent<bullet>();
 
+
+
         //위치 지정
+        Vector2 direction = (attackTarget - (Vector2)transform.position).normalized;
+        sprite.flipX = direction.x < 0;
         if(sprite.flipX == true){
             attackBox.GetComponent<Transform>().transform.position = leftAttackPoint.transform.position;
         }else{

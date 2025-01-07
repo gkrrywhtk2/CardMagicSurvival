@@ -542,7 +542,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 95297695}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AttackPoint_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1025,7 +1025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 211782762}
   - component: {fileID: 211782763}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1641,7 +1641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 487943136}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AttackPoint_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22987,7 +22987,7 @@ GameObject:
   - component: {fileID: 1341856423}
   - component: {fileID: 1341856422}
   - component: {fileID: 1341856424}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23059,7 +23059,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1684437509
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 4723107735738678597, guid: f33ded1711724dcd86d42be9eae82a85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -23120,7 +23120,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -23138,7 +23138,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 150
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -25192,7 +25192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1895840372}
   - component: {fileID: 1895840373}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CenerPivot_Scaner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25227,7 +25227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 3
-  attackRange: 1
+  attackRange: 1.5
   targetLayer:
     serializedVersion: 2
     m_Bits: 64

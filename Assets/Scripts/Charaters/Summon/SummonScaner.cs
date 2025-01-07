@@ -9,6 +9,8 @@ public class SummonScaner : MonoBehaviour
     public LayerMask targetLayer; // 탐지할 타겟 레이어
     public Transform nearestTarget; // 가장 가까운 타겟
     public Transform attackTarget; // 가장 가까운 공격 타겟
+     public Rigidbody2D moveTarget;
+    public Player_Main player;
 
      private void FixedUpdate(){
         nearestTarget = FindNearestTarget();

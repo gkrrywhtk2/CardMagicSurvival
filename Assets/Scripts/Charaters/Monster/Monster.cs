@@ -16,6 +16,7 @@ public class Monster : MonoBehaviour
     [Header("Scaner")]
     public Rigidbody2D moveTarget;
     public Player_Main player;
+   
      [Header("Stat")]
     bool isLive;//생존 상태
     bool nowHit;//피격 상태
@@ -58,8 +59,11 @@ public class Monster : MonoBehaviour
     }
      private void FixedUpdate()
     {
+       
         MoveToPlayer();
     }
+
+  
      private void MoveToPlayer()
     {
         if (isLive != true)
@@ -67,8 +71,8 @@ public class Monster : MonoBehaviour
         if (nowHit == true)
             return;
 
-        Vector2 dirVec = moveTarget.position - rigid.position;
-        Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
+        Vector2 moveVec = moveTarget.position - rigid.position;
+        Vector2 nextVec = moveVec.normalized * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
         //rigid.velocity = Vector2.zero;
     }
