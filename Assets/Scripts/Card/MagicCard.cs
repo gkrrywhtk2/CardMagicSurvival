@@ -147,10 +147,10 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             transform.SetParent(previousParent);
             if(cardDrawLock == true ){
                //rect.anchoredPosition = cardDrawStartPosition;
-                  Debug.Log("카드 드로우 지점으로");
+                 // Debug.Log("카드 드로우 지점으로");
             }else{
                 //rect.anchoredPosition = originalPosition;
-                  Debug.Log("오리진 포지션");
+                //  Debug.Log("오리진 포지션");
             }
               
             

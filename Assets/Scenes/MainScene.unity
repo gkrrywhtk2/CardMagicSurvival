@@ -2915,6 +2915,7 @@ GameObject:
   - component: {fileID: 782308978}
   - component: {fileID: 782308975}
   - component: {fileID: 782308977}
+  - component: {fileID: 782308980}
   m_Layer: 5
   m_Name: Card (1)
   m_TagString: Untagged
@@ -2970,7 +2971,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: 4.8}
+  m_AnchoredPosition: {x: -35, y: -100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &782308977
@@ -3023,6 +3024,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782308974}
   m_CullTransparentMesh: 1
+--- !u!95 &782308980
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782308974}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1f96e7f1a7a5247038355afd520f2742, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &783227502
 GameObject:
   m_ObjectHideFlags: 0
@@ -21583,6 +21606,7 @@ GameObject:
   - component: {fileID: 886443473}
   - component: {fileID: 886443470}
   - component: {fileID: 886443472}
+  - component: {fileID: 886443475}
   m_Layer: 5
   m_Name: Card (2)
   m_TagString: Untagged
@@ -21638,7 +21662,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30, y: 4.8}
+  m_AnchoredPosition: {x: -10, y: -100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &886443472
@@ -21691,6 +21715,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886443469}
   m_CullTransparentMesh: 1
+--- !u!95 &886443475
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886443469}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2f0e71cd059ce4b72880627a61f5c18e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &902407475
 GameObject:
   m_ObjectHideFlags: 0
@@ -25677,7 +25723,7 @@ MonoBehaviour:
   health: 0
   maxHealth: 100
   mana: 0
-  maxMana: 10
+  maxMana: 9
   manaRecovery: 0.5
   manaRecoveryPlus: 0
   attackBar: {fileID: 1230098894}

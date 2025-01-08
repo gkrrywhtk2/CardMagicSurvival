@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class DeckManager : MonoBehaviour
 {
@@ -21,31 +22,39 @@ public class DeckManager : MonoBehaviour
     }
 
     public void DeckSetting()
+{
+    StartCoroutine(DeckSettingCoroutine());
+}
+
+private IEnumerator DeckSettingCoroutine()
+{
+    // **1. Fisher-Yates 알고리즘을 사용해 덱 리스트를 섞음**
+    for (int i = deck.Count - 1; i > 0; i--)
     {
-        // **1. Fisher-Yates 알고리즘을 사용해 덱 리스트를 섞음**
-        for (int i = deck.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            int temp = deck[i];
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = temp;
-        }
-
-        // **2. 덱에서 3장 뽑아 핸드에 배치**
-        int handCount = 3;
-
-        for (int i = 0; i < handCount; i++)
-        {
-                int cardId = deck[0]; // 덱 맨 위의 카드 ID 가져오기
-                deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
-
-                // 핸드 카드 초기화
-                //Debug.Log(cardId);
-                magicCards[i].CardInit(cardDatas[cardId]);
-        
-        }
-        NextCardImageSetting();
+        int randomIndex = Random.Range(0, i + 1);
+        int temp = deck[i];
+        deck[i] = deck[randomIndex];
+        deck[randomIndex] = temp;
     }
+
+    // **2. 덱에서 3장 뽑아 핸드에 배치**
+    int handCount = 3;
+
+    for (int i = 0; i < handCount; i++)
+    {
+        int cardId = deck[0]; // 덱 맨 위의 카드 ID 가져오기
+        deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
+
+        // 핸드 카드 초기화
+        magicCards[i].CardInit(cardDatas[cardId]);
+
+        // 0.3초 지연
+        yield return new WaitForSeconds(0.3f);
+    }
+
+    // 마지막에 다음 카드 이미지 설정
+    NextCardImageSetting();
+}
     public void DrawCard(int fixedCard){
                 int cardId = deck[0]; // 덱 맨 위의 카드 ID 가져오기
                 deck.RemoveAt(0);    // 덱 맨 위의 카드 제거

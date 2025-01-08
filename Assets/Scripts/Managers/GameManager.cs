@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         restartButton.gameObject.SetActive(false);
         Application.targetFrameRate = 60;
+          Screen.fullScreen = true;//풀스크린
     }
 
     public void GameRestart(){

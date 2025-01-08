@@ -199,7 +199,7 @@ public void Card3_ManaUp(){
 }
    private IEnumerator FlameBurstRoutine()
 {
-    float damage = 1f; // 고정 피해량
+    float damage = 3f; // 고정 피해량
     int flameburstObjectNum = 7; // 오브젝트 풀에서 가져올 ID
 
     while (flameburstOn && flameburstTimer < flameburstDuration)
