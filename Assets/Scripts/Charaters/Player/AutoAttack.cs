@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -64,5 +65,7 @@ public class AutoAttack : MonoBehaviour
         //bullet 오브젝트에 정보 전달.
         global::bullet.bulletType type = global::bullet.bulletType.bullet;
         bullet.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type);
+        bullet.transform.position = player.playerCenterPivot.transform.position;
     }
+
 }

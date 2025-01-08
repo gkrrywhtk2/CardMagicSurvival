@@ -47,7 +47,17 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         {
             //카드 사용 알고리즘
             MagicCard card =  eventData.pointerDrag.GetComponent<MagicCard>();
-
+            card.CardLock();
+            
+            //사용 이펙트
+            if(card.rangeOn != true){
+            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
+                    targetPosition.z = 0; // 2D 환경이라면 Z축을 고정
+                    int cardUseEffectNum = 1;
+                GameObject effect = GameManager.instance.poolManager.Get(cardUseEffectNum);
+                effect.transform.position = targetPosition;
+            }
+                   
              //마나 소모
             float cost = card.cardCost;
             GameManager.instance.player.playerStatus.mana -= cost;
@@ -55,8 +65,9 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             //카드 사용 로직
             CardUse(card.cardId, eventData);
             //eventData.pointerDrag.transform.SetParent(transform);
-            eventData.pointerDrag.GetComponent<RectTransform>().position =  eventData.pointerDrag.GetComponent<MagicCard>().originalPosition;//원래 위치로
 
+            //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = eventData.pointerDrag.GetComponent<MagicCard>().cardDrawStartPosition;//원래 위치로
+           
             deckManager.deck.Add(card.cardId);//사용된 카드 덱 맨 아래로
             deckManager.DrawCard(card.fixedCardNumber);
 

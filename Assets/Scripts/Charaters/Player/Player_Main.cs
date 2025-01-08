@@ -13,6 +13,7 @@ public class Player_Main : MonoBehaviour
   public Dir_Front dirFront;
   //
   public Transform fireBallPoint;
+  public Transform playerCenterPivot;
    private void Awake() {
     playerMove = GetComponent<PlayerMove>();
     playerStatus = GetComponent<Player_Status>();

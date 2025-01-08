@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 
 public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -11,6 +12,9 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private RectTransform rect;       // RectTransform 참조
     private CanvasGroup canvasGroup;  // CanvasGroup 참조
     public Vector3 originalPosition; // 카드 원래 위치 저장
+    Animator anim;
+    public bool oneTimeDrawAnim;
+    public Vector3 cardDrawStartPosition;//카드 드로우 연출시 시작하는 위치
 
     [Header("Card Info")]
     public int cardId;       // 카드 ID
@@ -18,6 +22,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     Image cardImage;  // 카드 이미지
     public int fixedCardNumber;//012 어떤 위치의 카드인지
     public bool cardOn;
+    public bool cardDrawLock;//카드 드로우 애니메이션 연출시 카드 터치 금지용
 
     [Header("Object Connect")]
     public TMP_Text costText;//코스트 숫자
@@ -27,6 +32,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public bool rangeOn;
     public bool cardReady;//drop 포인트위에 있을때 true
     private bool lastRangeState = false; // 이전 상태를 저장할 변수
+    public Image manaCost;//마나 보석 이미지
+    
 
     private void Awake()
     {
@@ -34,6 +41,10 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         rect = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         cardImage = GetComponent<Image>();
+        originalPosition = rect.position;
+        anim = GetComponent<Animator>();
+          cardDrawLock = false;
+   
     }
 
     private void Update(){
@@ -43,6 +54,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// <summary>
     /// 카드 데이터를 초기화하는 메서드
     /// </summary>
+    
+   
     public void CardInit(CardData data)
     {
         cardOn = false;
@@ -59,6 +72,9 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         costText.text = cardCost.ToString();
         rangeOn = data.isRangeCard;
         range.GetComponent<RectTransform>().localScale = data.rangeScale;
+        CardAlpha1_Range();
+          CardDrawAni();
+         // StartCoroutine(CardDrawAnimation());
         
         
     }
@@ -68,20 +84,23 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
-            if(cardOn != true)
+            if(cardOn != true){
+                eventData.pointerDrag = null; // 카드가 비활성화 상태라면 드래그 호출 차단
                 return;
+            }
+             
             if(GameManager.instance.cardOneTouch == true)
                 return;
 
         GameManager.instance.cardOneTouch = true;
         previousParent = transform.parent; // 현재 부모 저장
-        originalPosition = rect.position;  // 현재 위치 저장
         transform.SetParent(canvas);       // 드래그 중 부모를 Canvas로 설정
         transform.SetAsLastSibling();      // 카드가 최상위에 렌더링되도록 설정
 
         canvasGroup.alpha = 0.6f;          // 카드 투명도 조정
         canvasGroup.blocksRaycasts = false; // 레이캐스트 막기
         dropPoint.raycastTarget = true;//드롭 포인트 활성화
+
     }
 
     /// <summary>
@@ -90,11 +109,15 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnDrag(PointerEventData eventData)
 {
     // 카드가 활성화된 상태일 때만 드래그를 진행
-    if (cardOn != true)
-        return;
+            if(cardOn != true){
+                 eventData.pointerDrag = null; // // 카드가 비활성화 상태라면 드래그 호출 차단
+                return;
+            }
+            
 
     // 드래그 위치로 이동
     rect.position = eventData.position;
+      anim.enabled = false; // 드래그 시작 시 애니메이션 멈춤
 
     // 카드가 범위 카드인지, 그리고 dropPoint 위에 있는지 확인
     bool shouldRangeBeActive = (rangeOn == true && cardReady == true);
@@ -102,6 +125,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // 범위 이미지의 활성 상태가 변경되었을 때만 SetActive 호출
     if (shouldRangeBeActive != lastRangeState)
     {
+        CardAlpha0_Range(shouldRangeBeActive);
         range.gameObject.SetActive(shouldRangeBeActive);
         lastRangeState = shouldRangeBeActive;  // 상태 갱신
     }
@@ -121,10 +145,20 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (transform.parent == canvas)
         {
             transform.SetParent(previousParent);
-            rect.position = originalPosition;
+            if(cardDrawLock == true ){
+               //rect.anchoredPosition = cardDrawStartPosition;
+                  Debug.Log("카드 드로우 지점으로");
+            }else{
+                //rect.anchoredPosition = originalPosition;
+                  Debug.Log("오리진 포지션");
+            }
+              
+            
         }
         dropPoint.raycastTarget = false;//드롭 포인트 활성화
         range.gameObject.SetActive(false);//범위 이미지 비활성화
+        CardAlpha1_Range();
+        anim.enabled = true; // 드래그 중지 시 애니메이션 연출 가능
     }
 
     public void ClockCoolTime(){
@@ -160,5 +194,72 @@ private void SetCardVisibility(bool isCardOn)
     CoolTimeImage.color = currentColor;
 }
 
+public void CardAlpha0_Range(bool shouldRangeBeActive){
+    //카드 드래그시 카드가 범위 카드라면 카드를 투명화
+    if(shouldRangeBeActive == true){
+        Color cardColor = cardImage.color;
+        Color manaColor = manaCost.color;
+        Color textColor = costText.color;
+
+        cardColor.a = 0;
+        manaColor.a = 0;
+        textColor.a = 0;
+
+        cardImage.color = cardColor;
+        manaCost.color = manaColor;
+         costText.color = textColor;
+    }else{
+         Color cardColor = cardImage.color;
+        Color manaColor = manaCost.color;
+        Color textColor = costText.color;
+
+        cardColor.a = 1;
+        manaColor.a = 1;
+        textColor.a = 1;
+
+
+        cardImage.color = cardColor;
+        manaCost.color = manaColor;
+         costText.color = textColor;
+    }
 }
+public void CardAlpha1_Range(){
+
+        Color cardColor = cardImage.color;
+        Color manaColor = manaCost.color;
+        Color textColor = costText.color;
+
+        cardColor.a = 1;
+        manaColor.a = 1;
+        textColor.a = 1;
+
+
+        cardImage.color = cardColor;
+        manaCost.color = manaColor;
+         costText.color = textColor;
+    }
+    public void CardDrawAni(){
+        
+            anim.ResetTrigger("Draw"); // 기존 트리거 초기화
+            anim.SetTrigger("Draw");   // 다시 트리거 발동
+       
+    }
+    IEnumerator CardDrawAnimation(){
+        yield return new WaitForSeconds(1);
+          anim.ResetTrigger("Draw"); // 기존 트리거 초기화
+            anim.SetTrigger("Draw");   // 다시 트리거 발동
+    }
+
+
+    public void CardLock(){
+        StartCoroutine(CardLockCorutine());
+    }
+    IEnumerator CardLockCorutine(){
+        cardDrawLock = true; 
+        yield return new WaitForSeconds(1);
+        cardDrawLock = false;
+    }
+}
+
+
 
