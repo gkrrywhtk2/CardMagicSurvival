@@ -65,7 +65,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FireMage_Move
-  m_Speed: 0.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3423174609328774574}
@@ -78,7 +78,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: dec71926123274bca8597e3afdb32f7e, type: 2}
+  m_Motion: {fileID: 7400000, guid: 734ac829fbb8d4a7d91d9f2aa315ef42, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -129,7 +129,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6ca30ce9556ed444ba557a9cc611fb5d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 990ab2af97f2342f481769512efb6e99, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -182,7 +182,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c03d4029e470f4c398348c1c63b4afcc, type: 2}
+  m_Motion: {fileID: 7400000, guid: 309eb3093e0e54fc0a9dd1666b5709d8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -275,7 +275,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 68bdadd4ebf1846babc0bba06aea9888, type: 2}
+  m_Motion: {fileID: 7400000, guid: 082e22365eec2445bb2b6901d6b5a85e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
