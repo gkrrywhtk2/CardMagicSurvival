@@ -28,8 +28,8 @@ public class AutoAttack : MonoBehaviour
 
     if(player.playerStatus.isLive != true)
         return;
-    if(player.playerJoyStick.inputVec.magnitude > 0.01f)
-        return;
+  //  if(player.playerJoyStick.inputVec.magnitude > 0.01f)
+       // return; ** 기본 공격 자동화로 인한 주석처리
 
         autoAttackCurrentPoint += (autoAttackRecovery + autoAttackRecoveryPlus0) * Time.fixedDeltaTime;
         if(autoAttackCurrentPoint>= autoAttackMaxPoint && scaner.nearestTarget != null){
@@ -45,20 +45,20 @@ public class AutoAttack : MonoBehaviour
 
             
 
-        anim.SetTrigger("attack");
+       // anim.SetTrigger("attack"); **기본 공격 자동화 테스트로 인한 주석 처리
         Vector3 targetPos = scaner.nearestTarget.position;
         Vector3 dir = targetPos - transform.position;
         dir = dir.normalized;
         //
         //공격방향으로 스프라이트 반전
-        sprite.flipX = dir.x < 0;
+       // sprite.flipX = dir.x < 0; **기본 공격 자동화 테스트로 인한 주석 처리
 
         //
         float damage = 10;//임시
         int bulletNumber = 0;
         int effectNumber = 1;
         int per = 0;//관통 현재 0
-        float bulletspeed = 6;
+        float bulletspeed = 12;
         Transform bullet = GameManager.instance.effectPoolManager.Get(bulletNumber).transform;
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.right, dir);
