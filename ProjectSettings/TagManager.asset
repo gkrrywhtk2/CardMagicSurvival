@@ -7,6 +7,8 @@ TagManager:
   - Monster
   - Bullet
   - Wall
+  - Ground
+  - Area
   layers:
   - Default
   - TransparentFX

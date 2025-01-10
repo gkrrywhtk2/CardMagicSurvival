@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public PlayerMove playerMove;//플레이어 오브젝트.
     public Player_Main player;
     public GameObject restartButton;
+    public GameObject playerGameObject;
 
     [Header("#ManagerConnect")]
     public ObjectPooling poolManager;//오브젝트 풀링
