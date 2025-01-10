@@ -11,12 +11,17 @@ public class GameManager : MonoBehaviour
     public Player_Main player;
     public GameObject restartButton;
     public GameObject playerGameObject;
+    public GameObject gameStartButton;//게임 시작 버튼
+
 
     [Header("#ManagerConnect")]
     public ObjectPooling poolManager;//오브젝트 풀링
     public EffectPooling effectPoolManager;//이펙트 풀링
+    public MobSpawnManager spawnManager;
+    public DeckManager deckManager;
     [Header("#GameControl")]
     public bool cardOneTouch;
+    public bool inGamePlay = false;//인게임 맵의 시간이 흐르고 있을때 ON 
 
 
  public void Awake()
@@ -25,6 +30,14 @@ public class GameManager : MonoBehaviour
         restartButton.gameObject.SetActive(false);
         Application.targetFrameRate = 60;
           Screen.fullScreen = true;//풀스크린
+    }
+
+    public void GameStart(){
+        gameStartButton.gameObject.SetActive(false);
+        inGamePlay = true;
+        deckManager.DeckSetting();
+        spawnManager.Spawn_Slime_0();
+        spawnManager.Spawn_Slime_1();
     }
 
     public void GameRestart(){

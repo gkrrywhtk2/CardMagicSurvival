@@ -9,6 +9,7 @@ public class Player_col : MonoBehaviour
     private float hitCoolTime = 0.5f;
     Animator ani;
     Rigidbody2D rigid;
+    CapsuleCollider2D capsuleCollider;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,6 +19,7 @@ public class Player_col : MonoBehaviour
     playerStatus = GetComponent<Player_Status>();
     ani = GetComponent<Animator>();
     rigid = GetComponent<Rigidbody2D>();
+    capsuleCollider = GetComponent<CapsuleCollider2D>();
 
 }
     // Update is called once per frame
@@ -37,7 +39,8 @@ public class Player_col : MonoBehaviour
     if(playerStatus.health <= 0){
 
         playerStatus.isLive = false;
-        rigid.bodyType = RigidbodyType2D.Static;
+        //rigid.bodyType = RigidbodyType2D.Static;
+        capsuleCollider.isTrigger = true;
         ani.SetTrigger("Death");
     }
     nowHit = true;

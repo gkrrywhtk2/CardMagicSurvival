@@ -72,6 +72,8 @@ public class Player_Status : MonoBehaviour
     {
         if(isLive != true)
             return;
+        if(GameManager.instance.inGamePlay != true)
+        return;
         HpBarUpdate();
         AttackBarUpdate();
         ManaBarUpdate();

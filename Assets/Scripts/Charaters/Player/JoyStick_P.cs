@@ -17,7 +17,9 @@ public class JoyStick_P : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
     }
      private void FixedUpdate(){
-       if(GameManager.instance.player.playerStatus.isLive != true)
+        if(GameManager.instance.player.playerStatus.isLive != true)
+        return;
+        if(GameManager.instance.inGamePlay != true)
         return;
 
     JoyStickMove();

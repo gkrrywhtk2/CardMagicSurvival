@@ -70,6 +70,10 @@ public class Monster : MonoBehaviour
             return;
         if (nowHit == true)
             return;
+        if(GameManager.instance.player.playerStatus.isLive != true)
+            return;
+        if(GameManager.instance.inGamePlay != true)
+        return;
 
         Vector2 moveVec = moveTarget.position - rigid.position;
         Vector2 nextVec = moveVec.normalized * speed * Time.fixedDeltaTime;

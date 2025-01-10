@@ -6,6 +6,7 @@ public class MobSpawnManager : MonoBehaviour
 {
     public MobSpawnData[] spawndata;//data of monster.
     public Transform[] spawnpoint;
+    public bool spawnAllow;// 스폰 허용, 웨이브 시작시 true, 웨이브 종료시 false
     public float spawnTime_slime_0;//슬라임0 스폰 쿨타임 f초 마다 실행
     public bool slime_0;//
      public float spawnTime_slime_1;//슬라임1 스폰 쿨타임
@@ -13,10 +14,9 @@ public class MobSpawnManager : MonoBehaviour
      private void Awake()
     {
         spawnpoint = GetComponentsInChildren<Transform>();
+        spawnAllow = true;
         spawnTime_slime_0 = 2f;
         spawnTime_slime_1 = 2f;
-        Spawn_Slime_0();
-        Spawn_Slime_1();
     }
 
     public void Spawn_Slime_0()
@@ -33,8 +33,11 @@ public class MobSpawnManager : MonoBehaviour
         float spawnCooltime = spawnTime_slime_0;
         int mob_id = 0;
         yield return new WaitForSeconds(spawnCooltime);
-        MonsterSpawn(mob_id);
-        StartCoroutine(Spawn_Slime0());
+            if(spawnAllow){
+                MonsterSpawn(mob_id);
+                StartCoroutine(Spawn_Slime0());
+            }
+      
     }
      public void Spawn_Slime_1()
     {
@@ -50,16 +53,12 @@ public class MobSpawnManager : MonoBehaviour
         float spawnCooltime = spawnTime_slime_1;
         int mob_id = 1;
         yield return new WaitForSeconds(spawnCooltime);
-        MonsterSpawn(mob_id);
-        StartCoroutine(Spawn_Slime1());
+            if(spawnAllow){
+                MonsterSpawn(mob_id);
+                StartCoroutine(Spawn_Slime1());
+            }
     }
     public void MonsterSpawn(int mob_id){
-        
-        
-
-
-
-
         GameObject monster = GameManager.instance.poolManager.Get(0);
         monster.GetComponent<Monster>().Init(spawndata[mob_id]);
         monster.transform.position = spawnpoint[Random.Range(1, spawnpoint.Length)].position;

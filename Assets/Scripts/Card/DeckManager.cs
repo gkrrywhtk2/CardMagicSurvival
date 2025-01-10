@@ -11,6 +11,12 @@ public class DeckManager : MonoBehaviour
     public MagicCard[] magicCards;      // 핸드 카드 총 3장
     public Image nextcardImage;//다음 카드 이미지
 
+
+    private void Start()
+    {
+        CardSelect(); // 초기 덱 선택
+      
+    }
     public void CardSelect()
     {
         // 초기 덱 세팅 (여기서는 0, 1, 2, 3을 예제로 사용)
@@ -18,7 +24,7 @@ public class DeckManager : MonoBehaviour
         deck.Add(1);
         deck.Add(2);
         deck.Add(3);
-         deck.Add(4);
+        deck.Add(4);
     }
 
     public void DeckSetting()
@@ -68,9 +74,5 @@ private IEnumerator DeckSettingCoroutine()
         nextcardImage.sprite = cardDatas[deck[0]].nextcardImage;
     }
 
-    private void Start()
-    {
-        CardSelect(); // 초기 덱 선택
-        DeckSetting(); // 덱 셋팅 및 핸드 배치
-    }
+  
 }

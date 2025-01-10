@@ -88,6 +88,11 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 eventData.pointerDrag = null; // 카드가 비활성화 상태라면 드래그 호출 차단
                 return;
             }
+
+            if(GameManager.instance.inGamePlay != true){
+                eventData.pointerDrag = null; 
+                return;
+            }
              
             if(GameManager.instance.cardOneTouch == true)
                 return;
@@ -111,6 +116,10 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // 카드가 활성화된 상태일 때만 드래그를 진행
             if(cardOn != true){
                  eventData.pointerDrag = null; // // 카드가 비활성화 상태라면 드래그 호출 차단
+                return;
+            }
+            if(GameManager.instance.inGamePlay != true){
+                eventData.pointerDrag = null; 
                 return;
             }
             
