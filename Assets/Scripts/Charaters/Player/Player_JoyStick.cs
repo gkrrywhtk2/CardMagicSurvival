@@ -12,6 +12,7 @@ public class JoyStick : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("어디서 출력되고있음 ? ");
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spr = GetComponent<SpriteRenderer>();
@@ -19,7 +20,7 @@ public class JoyStick : MonoBehaviour
      private void FixedUpdate(){
         if(GameManager.instance.player.playerStatus.isLive != true)
         return;
-        if(GameManager.instance.inGamePlay != true)
+        if(GameManager.instance.GamePlayState != true)
         return;
 
     JoyStickMove();

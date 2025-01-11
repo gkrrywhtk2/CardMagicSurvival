@@ -89,11 +89,15 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 return;
             }
 
-            if(GameManager.instance.inGamePlay != true){
+            if(GameManager.instance.GamePlayState != true){
                 eventData.pointerDrag = null; 
                 return;
             }
-             
+            if(GameManager.instance.waveOverState == true){
+                eventData.pointerDrag = null; 
+                return;
+            }
+        
             if(GameManager.instance.cardOneTouch == true)
                 return;
 
@@ -118,7 +122,11 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                  eventData.pointerDrag = null; // // 카드가 비활성화 상태라면 드래그 호출 차단
                 return;
             }
-            if(GameManager.instance.inGamePlay != true){
+            if(GameManager.instance.GamePlayState != true){
+                eventData.pointerDrag = null; 
+                return;
+            }
+            if(GameManager.instance.waveOverState == true){
                 eventData.pointerDrag = null; 
                 return;
             }

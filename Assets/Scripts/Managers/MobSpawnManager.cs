@@ -7,6 +7,7 @@ public class MobSpawnManager : MonoBehaviour
     public MobSpawnData[] spawndata;//data of monster.
     public Transform[] spawnpoint;
     public bool spawnAllow;// 스폰 허용, 웨이브 시작시 true, 웨이브 종료시 false
+    public int mobCount;//현재 남아있는 몬스터의 수
     public float spawnTime_slime_0;//슬라임0 스폰 쿨타임 f초 마다 실행
     public bool slime_0;//
      public float spawnTime_slime_1;//슬라임1 스폰 쿨타임
@@ -60,6 +61,7 @@ public class MobSpawnManager : MonoBehaviour
     }
     public void MonsterSpawn(int mob_id){
         GameObject monster = GameManager.instance.poolManager.Get(0);
+        mobCount++;
         monster.GetComponent<Monster>().Init(spawndata[mob_id]);
         monster.transform.position = spawnpoint[Random.Range(1, spawnpoint.Length)].position;
     }

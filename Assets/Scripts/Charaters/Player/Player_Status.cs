@@ -72,8 +72,6 @@ public class Player_Status : MonoBehaviour
     {
         if(isLive != true)
             return;
-        if(GameManager.instance.inGamePlay != true)
-        return;
         HpBarUpdate();
         AttackBarUpdate();
         ManaBarUpdate();
@@ -81,6 +79,11 @@ public class Player_Status : MonoBehaviour
     }
 
     public void ManaRecovery(){
+        if(GameManager.instance.GamePlayState != true)
+        return;
+        if(GameManager.instance.waveOverState == true)
+        return;
+
         mana += (manaRecovery+ manaRecoveryPlus) * Time.deltaTime;
     }
 }

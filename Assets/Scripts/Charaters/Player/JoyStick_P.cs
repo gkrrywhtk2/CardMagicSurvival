@@ -19,8 +19,9 @@ public class JoyStick_P : MonoBehaviour
      private void FixedUpdate(){
         if(GameManager.instance.player.playerStatus.isLive != true)
         return;
-        if(GameManager.instance.inGamePlay != true)
+        if(GameManager.instance.GamePlayState != true)
         return;
+        
 
     JoyStickMove();
      }

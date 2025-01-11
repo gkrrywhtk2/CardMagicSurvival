@@ -28,7 +28,9 @@ public class AutoAttack : MonoBehaviour
 
     if(player.playerStatus.isLive != true)
         return;
-    if(GameManager.instance.inGamePlay != true)
+    if(GameManager.instance.GamePlayState != true)
+        return;
+    if(GameManager.instance.waveOverState == true)
         return;
   //  if(player.playerJoyStick.inputVec.magnitude > 0.01f)
        // return; ** 기본 공격 자동화로 인한 주석처리

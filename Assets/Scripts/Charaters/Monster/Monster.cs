@@ -72,7 +72,7 @@ public class Monster : MonoBehaviour
             return;
         if(GameManager.instance.player.playerStatus.isLive != true)
             return;
-        if(GameManager.instance.inGamePlay != true)
+        if(GameManager.instance.GamePlayState != true)
         return;
 
         Vector2 moveVec = moveTarget.position - rigid.position;
@@ -139,10 +139,11 @@ public class Monster : MonoBehaviour
 
     public void death(){
         isLive = false;
-       nowHit = true;
+        nowHit = true;
         anim.SetBool("Dead", true);
     }
     public void destroy(){
+         GameManager.instance.spawnManager.mobCount--;
         gameObject.SetActive(false);
     }
 
