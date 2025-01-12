@@ -16,7 +16,7 @@ public class WaveManager : MonoBehaviour
 
     private void Update(){
         TimeDown();
-        Cheak_WaveClear();
+        //Cheak_WaveClear();웨이브는 개발중단 되었음
     }
 
     private void TimeDown()
@@ -25,16 +25,19 @@ public class WaveManager : MonoBehaviour
             return;
         if(waveTimeOver != false)
             return;
+        if(GameManager.instance.levelUpState == true)
+            return;
 
             waveGameTime -= Time.deltaTime;
 
         if (waveGameTime <= 0)
         {
-            WaveTimeOver();
+            //WaveTimeOver();
         }
 
     }
     public void WaveTimeOver(){
+        //웨이브는 개발 중단
           //몬스터 스폰 중지
             waveTimeOver = true;
             GameManager.instance.spawnManager.spawnAllow = false;
@@ -49,7 +52,7 @@ public class WaveManager : MonoBehaviour
         if(GameManager.instance.spawnManager.mobCount > 0)
             return;
         
-        GameManager.instance.waveOverState = true;//바꿔야함 웨이브 오버 스테이트로
+        GameManager.instance.levelUpState = true;//바꿔야함 웨이브 오버 스테이트로
         GameManager.instance.nextWaveButton.gameObject.SetActive(true);
     }
 

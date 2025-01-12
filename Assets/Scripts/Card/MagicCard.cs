@@ -93,7 +93,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 eventData.pointerDrag = null; 
                 return;
             }
-            if(GameManager.instance.waveOverState == true){
+            if(GameManager.instance.levelUpState == true){
                 eventData.pointerDrag = null; 
                 return;
             }
@@ -126,7 +126,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 eventData.pointerDrag = null; 
                 return;
             }
-            if(GameManager.instance.waveOverState == true){
+            if(GameManager.instance.levelUpState == true){
                 eventData.pointerDrag = null; 
                 return;
             }

@@ -20,6 +20,7 @@ public class Monster : MonoBehaviour
      [Header("Stat")]
     bool isLive;//생존 상태
     bool nowHit;//피격 상태
+    bool nowStop;//정지 상태
     float hittime = 0.1f;
     public float speed;
     public float health;
@@ -70,11 +71,13 @@ public class Monster : MonoBehaviour
             return;
         if (nowHit == true)
             return;
+        if(nowStop == true)
+            return;
         if(GameManager.instance.player.playerStatus.isLive != true)
             return;
         if(GameManager.instance.GamePlayState != true)
-        return;
-
+            return;
+        
         Vector2 moveVec = moveTarget.position - rigid.position;
         Vector2 nextVec = moveVec.normalized * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
@@ -94,7 +97,8 @@ public class Monster : MonoBehaviour
         coll.enabled = true;
         rigid.simulated = true;
         isLive = true;
-         nowHit = false;
+        nowHit = false;
+        nowStop = false;
     }
 
      private void RandomizeAnimation()
@@ -150,6 +154,22 @@ public class Monster : MonoBehaviour
    private void OnCollisionStay2D(Collision2D other) {
         if(other.gameObject.CompareTag("Player")){
             player.playerCol.HitCalCulator(damage);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.CompareTag("Stop")){
+            anim.speed = 0;
+            nowStop = true;
+            rigid.linearVelocity = Vector2.zero; // Rigidbody2D 정지
+            rigid.bodyType = RigidbodyType2D.Kinematic;// 물리적 반응 비활성화
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other) {
+         if(other.gameObject.CompareTag("Stop")){
+            anim.speed = 1;
+            nowStop = false;
+             rigid.bodyType = RigidbodyType2D.Dynamic;// 물리적 반응 비활성화
         }
     }
 }

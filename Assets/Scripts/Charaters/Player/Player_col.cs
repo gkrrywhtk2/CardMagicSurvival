@@ -34,6 +34,8 @@ public class Player_col : MonoBehaviour
         return;
     if(playerStatus.isLive != true)
         return;
+    if(GameManager.instance.levelUpState == true)
+        return;
     
     playerStatus.health -= damage;
     if(playerStatus.health <= 0){

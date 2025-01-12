@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Ground
   - Area
+  - Stop
   layers:
   - Default
   - TransparentFX

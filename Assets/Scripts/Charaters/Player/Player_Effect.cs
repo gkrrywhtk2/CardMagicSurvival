@@ -6,6 +6,8 @@ public class Player_Effect : MonoBehaviour
     public GameObject manaUp2;
     public GameObject ConcentEffect0;
     public GameObject ConcentEffect1;
+    public GameObject levelUpCircleTimeStop;
+    public Animator levelUpCircleTimeStopAnim;
 
     public void PlayManaUp()
     {
@@ -17,4 +19,5 @@ public class Player_Effect : MonoBehaviour
       ConcentEffect0.gameObject.SetActive(true);
       ConcentEffect1.gameObject.SetActive(true);
     }
+    
 }

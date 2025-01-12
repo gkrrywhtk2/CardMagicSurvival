@@ -13,10 +13,14 @@ public class Player_Status : MonoBehaviour
     public float maxMana = 10;
     public float manaRecovery;
     public float manaRecoveryPlus;
+    public float maxexp;
+    public float nowexp;
+    public int playLevel;
     [Header("Bar")]
     public Slider attackBar;
     public Slider hpBar;
     public Slider manaBar;
+    public Slider expBar;
     public TMP_Text manaText;
 
     private void Awake() {
@@ -38,6 +42,26 @@ public class Player_Status : MonoBehaviour
             return;
         }
 
+    }
+
+     private void ExpBarUpdate()
+    {
+        expBar.value = nowexp / maxexp;
+
+        if(nowexp >= maxexp){
+            nowexp = 0;
+            playLevel += 1;
+            LevelUpEvent();
+        }
+
+    }
+    public void LevelUpEvent(){
+        GameManager.instance.levelUpState = true;//바꿔야함 
+        GameManager.instance.spawnManager.spawnAllow = false;
+        GameManager.instance.player.GetComponent<Collider2D>().isTrigger = true;
+        GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
+        GameManager.instance.player.playerEffect.levelUpCircleTimeStop.transform.position = GameManager.instance.player.dirFront.playerTransform.position;
+        GameManager.instance.nextWaveButton.gameObject.SetActive(true);
     }
     private void AttackBarUpdate(){
         float automaxpoint = GameManager.instance.player.autoAttack.autoAttackMaxPoint;
@@ -76,12 +100,13 @@ public class Player_Status : MonoBehaviour
         AttackBarUpdate();
         ManaBarUpdate();
         ManaRecovery();
+        ExpBarUpdate();
     }
 
     public void ManaRecovery(){
         if(GameManager.instance.GamePlayState != true)
         return;
-        if(GameManager.instance.waveOverState == true)
+        if(GameManager.instance.levelUpState == true)
         return;
 
         mana += (manaRecovery+ manaRecoveryPlus) * Time.deltaTime;
