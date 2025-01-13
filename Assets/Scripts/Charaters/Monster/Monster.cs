@@ -149,19 +149,14 @@ public class Monster : MonoBehaviour
         GameObject expgem = GameManager.instance.poolManager.Get(5);
         expgem.transform.position = transform.position;
     }
-        // 2분의 1 확률로 expgem 드랍
+       
         anim.SetBool("Dead", true);
     }
-   public void aawwwdd()
-{
+   public void Deletemob(){
     GameManager.instance.spawnManager.mobCount--;
-
- 
     // 현재 오브젝트 비활성화
     gameObject.SetActive(false);
-}
-
-
+   }
    private void OnCollisionStay2D(Collision2D other) {
         if(other.gameObject.CompareTag("Player")){
             player.playerCol.HitCalCulator(damage);

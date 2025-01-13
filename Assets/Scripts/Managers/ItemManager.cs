@@ -16,7 +16,11 @@ public class ItemManager : MonoBehaviour
     }
     IEnumerator spawnItem(){
          List<ItemData> availableItems = GetAvailableItems(); // 사용 가능한 아이템 필터링
-
+        Vector3[] positon_0 = new Vector3[Points.Length];
+        for (int i = 0; i < Points.Length; i++)
+        {
+        positon_0[i] = Points[i].position;
+        }
         if (availableItems.Count < Points.Length)
         {
             Debug.LogWarning("생성할 수 있는 아이템의 개수가 부족합니다.");
@@ -36,7 +40,8 @@ public class ItemManager : MonoBehaviour
             // 아이템 생성
             items[i].gameObject.SetActive(true);
             items[i].Init(selectedItem);
-            items[i].transform.position = Points[i].transform.position;
+            items[i].transform.position = positon_0[i];
+           
             //CreateItem(selectedItem, Points[i].position);
 
             // 덱에 추가는 아이템 선택 후 사용
