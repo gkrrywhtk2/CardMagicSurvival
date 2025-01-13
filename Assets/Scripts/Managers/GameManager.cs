@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public MobSpawnManager spawnManager;
     public DeckManager deckManager;
     public WaveManager waveManager;
+    public ItemManager itemManager;
     [Header("#GameControl")]
     public bool cardOneTouch;
     public bool GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)

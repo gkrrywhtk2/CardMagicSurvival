@@ -61,6 +61,7 @@ public class Player_Status : MonoBehaviour
         GameManager.instance.player.GetComponent<Collider2D>().isTrigger = true;
         GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
         GameManager.instance.player.playerEffect.levelUpCircleTimeStop.transform.position = GameManager.instance.player.dirFront.playerTransform.position;
+        GameManager.instance.itemManager.SpawnItems_();
         GameManager.instance.nextWaveButton.gameObject.SetActive(true);
     }
     private void AttackBarUpdate(){
