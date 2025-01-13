@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         restartButton.gameObject.SetActive(false);
     }
 
-    public void NextWave(){
+    public void NextWave(int ItemID, int originid){
         nextWaveButton.gameObject.SetActive(false);
         waveManager.waveTimeOver = false;
         //waveManager.nowWave += 1;
@@ -60,8 +60,6 @@ public class GameManager : MonoBehaviour
         //waveManager.CountText.type = HUD.InfoType.Wave;
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
-        player.playerEffect.levelUpCircleTimeStop.transform.position = player.dirFront.playerTransform.position;
-        player.playerEffect.levelUpCircleTimeStopAnim.SetTrigger("Over");
       //  waveManager.battleIcon.gameObject.SetActive(true);
        // waveManager.mobIcon.gameObject.SetActive(false);
     }

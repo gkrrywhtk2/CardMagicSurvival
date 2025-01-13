@@ -6,6 +6,7 @@ public class Item : MonoBehaviour
 {
     [Header("#Main Info")]
     public int ItemID;
+    public int originItemID;
     public Rank itemrank;
     SpriteRenderer spr;
     
@@ -19,4 +20,10 @@ public class Item : MonoBehaviour
         spr.sprite = data.ItemSprite;
         this.itemrank = data.rank;
     } 
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Player"){
+            GameManager.instance.itemManager.ItemSelected(this.ItemID,originItemID);
+        }
+    }
 }

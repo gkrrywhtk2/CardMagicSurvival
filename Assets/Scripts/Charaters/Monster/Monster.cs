@@ -144,12 +144,23 @@ public class Monster : MonoBehaviour
     public void death(){
         isLive = false;
         nowHit = true;
+        if (Random.Range(0, 2) == 0) // 0 또는 1 반환, 50% 확률
+    {
+        GameObject expgem = GameManager.instance.poolManager.Get(5);
+        expgem.transform.position = transform.position;
+    }
+        // 2분의 1 확률로 expgem 드랍
         anim.SetBool("Dead", true);
     }
-    public void destroy(){
-         GameManager.instance.spawnManager.mobCount--;
-        gameObject.SetActive(false);
-    }
+   public void aawwwdd()
+{
+    GameManager.instance.spawnManager.mobCount--;
+
+ 
+    // 현재 오브젝트 비활성화
+    gameObject.SetActive(false);
+}
+
 
    private void OnCollisionStay2D(Collision2D other) {
         if(other.gameObject.CompareTag("Player")){

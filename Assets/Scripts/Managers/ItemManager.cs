@@ -26,21 +26,26 @@ public class ItemManager : MonoBehaviour
         // 아이템 위치에 생성
         for (int i = 0; i < Points.Length; i++)
         {
+            //0.5초마다 아이템 생성
+            yield return new WaitForSeconds(0.5f);
+
             // 랜덤 아이템 선택
             int randomIndex = Random.Range(0, availableItems.Count);
             ItemData selectedItem = availableItems[randomIndex];
 
             // 아이템 생성
-            items[i] = CreateItem(selectedItem, Points[i].position);
+            items[i].gameObject.SetActive(true);
+            items[i].Init(selectedItem);
+            items[i].transform.position = Points[i].transform.position;
+            //CreateItem(selectedItem, Points[i].position);
 
-            // 덱에 추가
-            deck.Add(selectedItem.ItemID);
+            // 덱에 추가는 아이템 선택 후 사용
+            //deck.Add(selectedItem.ItemID);
 
-            // 선택된 아이템은 다시 등장하지 않도록 리스트에서 제거
+            //생성된 아이템은 다시 등장하지 않도록 리스트에서 제거
             availableItems.RemoveAt(randomIndex);
 
-            //0.5초마다 아이템 생성
-            yield return new WaitForSeconds(0.5f);
+           
         }
     }
 
@@ -72,5 +77,15 @@ public class ItemManager : MonoBehaviour
         item.transform.position = position;
 
         return item;
+    }
+
+    public void ItemSelected(int ItemID, int originid){
+            GameManager.instance.player.playerEffect.levelUpCircleTimeStop.transform.position = GameManager.instance.player.dirFront.playerTransform.position;
+            GameManager.instance.player.playerEffect.levelUpCircleTimeStopAnim.SetTrigger("Over");
+            deck.Add(ItemID);
+            items[0].gameObject.SetActive(false);
+            items[1].gameObject.SetActive(false);
+            items[2].gameObject.SetActive(false);
+            GameManager.instance.NextWave(ItemID, originid);
     }
 }
