@@ -19,12 +19,17 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [Header("Card Info")]
     public int cardId;       // 카드 ID
     public int cardCost;     // 카드 비용
-    Image cardImage;  // 카드 이미지
+    public int cardRank;//{1,2,3}
     public int fixedCardNumber;//012 어떤 위치의 카드인지
     public bool cardOn;
     public bool cardDrawLock;//카드 드로우 애니메이션 연출시 카드 터치 금지용
 
     [Header("Object Connect")]
+     public Image cardImage;  // 카드 이미지
+    public Image[] stars;// 카드 등급 이미지
+    public Sprite star_True;
+    public Sprite star_False;
+
     public TMP_Text costText;//코스트 숫자
     public Image dropPoint;//드랍 포인트
     public Image CoolTimeImage;//시계 방향 쿨타임 이미지
@@ -40,7 +45,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // RectTransform 및 CanvasGroup 초기화
         rect = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-        cardImage = GetComponent<Image>();
+        //cardImage = GetComponent<Image>();
         originalPosition = rect.position;
         anim = GetComponent<Animator>();
           cardDrawLock = false;
@@ -56,7 +61,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     
    
-    public void CardInit(CardData data)
+    public void CardInit(CardData data,int rank)
     {
         cardOn = false;
         cardReady = false;
@@ -67,6 +72,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         cardId = data.cardId;
+        cardRank = rank;
+        RankImageSetting(cardRank);
         cardCost = data.cardCost;
         cardImage.sprite = data.cardImage;
         costText.text = cardCost.ToString();
@@ -254,6 +261,34 @@ public void CardAlpha1_Range(){
         cardImage.color = cardColor;
         manaCost.color = manaColor;
          costText.color = textColor;
+    }
+    public void RankImageSetting(int rank){
+    //카드 등급 이미지(별) 세팅
+
+    //초기화
+    stars[0].sprite = star_False;
+    stars[1].sprite = star_False;
+    stars[2].sprite = star_False;
+
+        switch(rank){
+            case 1:
+                stars[0].sprite = star_True;
+            break;
+
+            case 2:
+              stars[0].sprite = star_True;
+              stars[1].sprite = star_True;
+            break;
+
+            case 3:
+               stars[0].sprite = star_True;
+               stars[1].sprite = star_True;
+               stars[2].sprite = star_True;
+            break;
+
+            default:
+            break;
+        }
     }
     public void CardDrawAni(){
         
