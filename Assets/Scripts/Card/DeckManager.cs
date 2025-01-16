@@ -32,10 +32,13 @@ public class DeckManager : MonoBehaviour
     {
         // 초기 덱 세팅 (여기서는 0, 1, 2, 3을 예제로 사용)
         deck.Add(new Card(0, 1));
-          deck.Add(new Card(1, 2));
-            deck.Add(new Card(2, 3));
-              deck.Add(new Card(3, 1));
-                deck.Add(new Card(4, 1));
+        deck.Add(new Card(1, 2));
+        deck.Add(new Card(2, 3));
+        deck.Add(new Card(3, 1));
+        deck.Add(new Card(4, 1));
+         deck.Add(new Card(5, 1));
+          deck.Add(new Card(6, 2));
+           deck.Add(new Card(7, 3));
        
     }
 
