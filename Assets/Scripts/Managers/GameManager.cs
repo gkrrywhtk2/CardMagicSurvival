@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     public bool cardOneTouch;
     public bool GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)
     public bool levelUpState = false;//true시 이동만 가능
-
+    public GameObject backG;//background image
 
  public void Awake()
     {
@@ -52,14 +53,16 @@ public class GameManager : MonoBehaviour
 
     public void NextWave(int ItemID, int originid){
         nextWaveButton.gameObject.SetActive(false);
-        waveManager.waveTimeOver = false;
+        instance.GamePlayState = true;
+        backG.gameObject.SetActive(false);
+       // waveManager.waveTimeOver = false;
         //waveManager.nowWave += 1;
-        levelUpState = false;
+       //levelUpState = false;
        // waveManager.waveGameTime = 60;
-        spawnManager.spawnAllow = true;
+      //  spawnManager.spawnAllow = true;
         //waveManager.CountText.type = HUD.InfoType.Wave;
-        spawnManager.Spawn_Slime_0();
-        spawnManager.Spawn_Slime_1();
+       // spawnManager.Spawn_Slime_0();
+       // spawnManager.Spawn_Slime_1();
       //  waveManager.battleIcon.gameObject.SetActive(true);
        // waveManager.mobIcon.gameObject.SetActive(false);
     }

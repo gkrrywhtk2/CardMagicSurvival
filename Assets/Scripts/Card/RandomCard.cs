@@ -1,12 +1,10 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Collections;
-using UnityEngine.PlayerLoop;
 
 
-public class RandomCard : MonoBehaviour
+public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
 {
     public Card nowCard;
     public int cardId;
@@ -59,5 +57,19 @@ public class RandomCard : MonoBehaviour
         GameManager.instance.deckManager.TakeCardInfo(nowCard);
         //GameManager.instance. nextWaveButton 카드 선택시 다음 웨이브로 넘어가야할 차례
     }
+
+     public void OnEndDrag(PointerEventData eventData){
+        SendCardInfo();
+        Debug.Log($"OnBeginDrag called for {gameObject.name}");
+     }
+     public void OnBeginDrag(PointerEventData eventData){
+ Debug.Log($"OnEndDrag called for {gameObject.name}");
+
+     }
+      public void OnButtonClick()
+    {
+        Debug.Log("Button clicked!");
+    }
+    
 
 }

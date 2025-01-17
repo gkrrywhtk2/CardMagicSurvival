@@ -85,12 +85,18 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         
         
     }
+    public void Init_CardUpgrade(int rank){
+        cardRank = rank;
+        RankImageSetting(cardRank);
+
+    }
 
     /// <summary>
     /// 드래그 시작 시 호출
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
+         Debug.Log($"OnBeginDrag called for {gameObject.name}");
             if(cardOn != true){
                 eventData.pointerDrag = null; // 카드가 비활성화 상태라면 드래그 호출 차단
                 return;
