@@ -60,6 +60,9 @@ public class MobSpawnManager : MonoBehaviour
             }
     }
     public void MonsterSpawn(int mob_id){
+            if(GameManager.instance.GamePlayState == false)
+                return;
+
         GameObject monster = GameManager.instance.poolManager.Get(0);
         mobCount++;
         monster.GetComponent<Monster>().Init(spawndata[mob_id]);

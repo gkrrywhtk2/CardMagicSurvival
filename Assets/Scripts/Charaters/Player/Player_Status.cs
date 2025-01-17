@@ -56,13 +56,11 @@ public class Player_Status : MonoBehaviour
 
     }
     public void LevelUpEvent(){
-        GameManager.instance.levelUpState = true;//바꿔야함 
-        GameManager.instance.spawnManager.spawnAllow = false;
-        GameManager.instance.player.GetComponent<Collider2D>().isTrigger = true;
-        GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
-        GameManager.instance.player.playerEffect.levelUpCircleTimeStop.transform.position = GameManager.instance.player.dirFront.playerTransform.position;
-        GameManager.instance.itemManager.SpawnItems_();
-        GameManager.instance.nextWaveButton.gameObject.SetActive(true);
+        GameManager.instance.GamePlayState = false; //일시 정지 
+        //GameManager.instance.spawnManager.spawnAllow = false; //소환 중지를 gameplayerstae에 종속시켰음.
+        //GameManager.instance.itemManager.SpawnItems_(); 아이템 스폰 기능 짜쳐서 버림
+        GameManager.instance.deckManager.StartUpgradeEvent();//카드 랜덤 선택 이벤트
+
     }
     private void AttackBarUpdate(){
         float automaxpoint = GameManager.instance.player.autoAttack.autoAttackMaxPoint;

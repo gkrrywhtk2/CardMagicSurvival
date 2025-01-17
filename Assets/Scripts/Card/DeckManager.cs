@@ -21,11 +21,15 @@ public class DeckManager : MonoBehaviour
     public RectTransform[] boardPoints; // 카드 보드 포인트
     public MagicCard[] magicCards;      // 핸드 카드 총 3장
     public Image nextcardImage;//다음 카드 이미지
+    //Upgrade
+    private List<Card> candidatePool = new List<Card>(); // 랜덤 등장 카드 풀
+    public RandomCard[] randomCard;//랜덤 등장 카드
 
 
     private void Start()
     {
         CardSelect(); // 초기 덱 선택
+       
       
     }
     public void CardSelect()
@@ -93,5 +97,97 @@ for (int i = deck.Count - 1; i > 0; i--)
         nextcardImage.sprite = cardDatas[deck[0].ID].nextcardImage;
     }
 
+
+    public void StartUpgradeEvent(){
+        UpgradeEvent(deck, cardDatas);
+    }
+
+     public void UpgradeEvent(List<Card> deck, CardData[] allCards){
+         // 1. 후보 카드 풀 초기화
+        UpdateCandidatePool(deck, allCards);
+
+        //2. 후보 카드의 개수
+        int candidateCount = Mathf.Min(3, candidatePool.Count);
+        List<Card> selectedCards = new List<Card>();
+        //3. 랜덤 카드 선택(최대 3장)
+    
+            for (int i = 0; i < candidateCount; i++)
+            {
+            int randomIndex = Random.Range(0, candidatePool.Count);
+            selectedCards.Add(candidatePool[randomIndex]);
+            candidatePool.RemoveAt(randomIndex); // 선택된 카드는 후보 풀에서 임시 제거
+            }
+        
+        //selectedCard 개수에 따른 분기
+        switch (selectedCards.Count){
+            case 0:
+            break;
+
+            case 1:
+            randomCard[0].gameObject.SetActive(true);
+            randomCard[0].Init(selectedCards[0]);
+            break;
+
+            case 2:
+            randomCard[0].gameObject.SetActive(true);
+            randomCard[1].gameObject.SetActive(true);
+            randomCard[0].Init(selectedCards[0]);
+            randomCard[1].Init(selectedCards[1]);
+            break;
+
+            case 3:
+            randomCard[0].gameObject.SetActive(true);
+            randomCard[1].gameObject.SetActive(true);
+            randomCard[2].gameObject.SetActive(true);
+
+            randomCard[0].Init(selectedCards[0]);
+            randomCard[1].Init(selectedCards[1]);
+            randomCard[2].Init(selectedCards[2]);
+
+            break;
+        }
+
+
+
+        
+     }
+
+    private void UpdateCandidatePool(List<Card> deck, CardData[] allCards)
+{
+    // 기존 후보 풀 초기화
+    candidatePool.Clear();
+
+    // 1. 업그레이드 가능한 카드 추가
+    foreach (var card in deck)
+    {
+        if (card.Rank < 3) // 레벨 3 미만인 카드만 추가
+        {
+            //기존 카드보다 1레벨 높은 카드를 풀에 추가.
+            candidatePool.Add(new Card(card.ID, card.Rank + 1));
+        }
+    }
+
+    // 2. 신규 카드 추가
+    foreach (var cardData in allCards)
+    {
+        // 덱에 없는 카드만 추가
+        if (!deck.Exists(c => c.ID == cardData.cardId))
+        {
+            candidatePool.Add(new Card(cardData.cardId, 1)); // 신규 카드는 레벨 1으로 추가
+        }
+    }
+
+    Debug.Log($"후보 풀에 {candidatePool.Count}개의 카드가 업데이트되었습니다.");
+}
+
+    public void TakeCardInfo(Card card){
+        //우선 랜덤 카드 비활성화
+        randomCard[0].gameObject.SetActive(true);
+        randomCard[1].gameObject.SetActive(true);
+        randomCard[2].gameObject.SetActive(true);
+        //선택된 카드 덱에 추가
+        deck.Add(new Card(card.ID, card.Rank));
+        
+    }
   
 }
