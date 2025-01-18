@@ -24,6 +24,7 @@ public class DeckManager : MonoBehaviour
     //Upgrade
     private List<Card> candidatePool = new List<Card>(); // 랜덤 등장 카드 풀
     public RandomCard[] randomCard;//랜덤 등장 카드
+    public RectTransform[] randomCardPoints;//랜덤 생성 카드 생성 위치
 
 
     private void Start()
@@ -123,20 +124,26 @@ for (int i = deck.Count - 1; i > 0; i--)
 
             case 1:
             randomCard[0].gameObject.SetActive(true);
+            randomCard[0].transform.position = randomCardPoints[2].position;
             randomCard[0].Init(selectedCards[0]);
             break;
 
             case 2:
             randomCard[0].gameObject.SetActive(true);
+            randomCard[0].transform.position = randomCardPoints[1].position;
             randomCard[1].gameObject.SetActive(true);
+            randomCard[1].transform.position = randomCardPoints[3].position;
             randomCard[0].Init(selectedCards[0]);
             randomCard[1].Init(selectedCards[1]);
             break;
 
             case 3:
             randomCard[0].gameObject.SetActive(true);
+            randomCard[0].transform.position = randomCardPoints[0].position;
             randomCard[1].gameObject.SetActive(true);
+            randomCard[1].transform.position = randomCardPoints[2].position;
             randomCard[2].gameObject.SetActive(true);
+            randomCard[2].transform.position = randomCardPoints[4].position;
 
             randomCard[0].Init(selectedCards[0]);
             randomCard[1].Init(selectedCards[1]);
@@ -212,30 +219,26 @@ foreach (var cardData in allCards)
         if (existingCardInDeck.Rank < 3)
         {
             existingCardInDeck.Rank += 1;
-            return;
         }
     }
-    else//여기서 분기가 3갈래로 나눠지지 않고 있음
+    else//deck에 카드가 없다면 핸드를 찾아본다.
     {
-        // 신규 카드라면 덱에 추가
-        deck.Add(newCard);
-        return;
-    }
-
-    // 2. 핸드에서 같은 ID의 카드를 찾음
-    var existingCardInHand = System.Array.Find(magicCards, card => card.cardId == newCard.ID);
+        var existingCardInHand = System.Array.Find(magicCards, card => card.cardId == newCard.ID);
     Debug.Log(existingCardInHand);
-    if (existingCardInHand != null)
-    {
-        // 이미 존재하는 카드의 Rank를 올림
-        if (existingCardInHand.cardRank < 3)
+        if (existingCardInHand != null)
         {
+        // 이미 존재하는 카드의 Rank를 올림
+            if (existingCardInHand.cardRank < 3)
+            {
            // existingCardInHand.cardRank = Mathf.Min(existingCardInHand.cardRank + 1, 3);
            // existingCardInHand.RankImageSetting(existingCardInHand.cardRank); // Rank 이미지 업데이트
             existingCardInHand.Init_CardUpgrade(existingCardInHand.cardRank + 1);// 등급 업
-            return;
+            }
+        }
+        else{
+              // 신규 카드라면 덱에 추가
+        deck.Add(newCard);
         }
     }
-}
-  
+    }
 }

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Card5
   m_EditorClassIdentifier: 
   cardId: 5
-  cardLevel: 0
   cardCost: 4
+  rank: 0
   cardName: "\uC18C\uC6A9 \uB3CC\uC774"
   cardDesc: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uC801\uB4E4\uC744 \uB04C\uC5B4\uB2F9\uAE30\uB294
     \uB3CC\uD48D\uC9C0\uB300 \uC0DD\uC131"
