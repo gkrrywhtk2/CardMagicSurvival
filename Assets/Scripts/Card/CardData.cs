@@ -9,7 +9,9 @@ public class CardData : ScriptableObject
   public int cardCost;
   public CardRank rank;
   public string cardName;
-  public string cardDesc;
+  public string cardDescLv1;
+    public string cardDescLv2;
+      public string cardDescLv3;
   public Sprite cardImage;
   public bool isRangeCard;
   public Vector3 rangeScale;

@@ -58,7 +58,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     public void SendCardInfo(){
          //GameManager.instance.deckManager.TakeCardInfo(nowCard); 일단 대기
         //GameManager.instance. nextWaveButton 카드 선택시 다음 웨이브로 넘어가야할 차례
-      GameManager.instance.deckManager.RandomCardSelectedOutlineSetting(RandomCardNum);
+      GameManager.instance.deckManager.RandomCardSelectedSetting(RandomCardNum);
         
     }
 

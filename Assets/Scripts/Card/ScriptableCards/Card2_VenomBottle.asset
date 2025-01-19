@@ -16,7 +16,9 @@ MonoBehaviour:
   cardCost: 3
   rank: 0
   cardName: "\uB3C5\uBCD1"
-  cardDesc: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uB3C5 \uC9C0\uB300 \uC0DD\uC131"
+  cardDescLv1: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uB3C5 \uC9C0\uB300 \uC0DD\uC131"
+  cardDescLv2: "\uC9C0\uC18D \uC2DC\uAC04 +5\uCD08"
+  cardDescLv3: "\uBC94\uC704 2\uBC30"
   cardImage: {fileID: 6855937813290278861, guid: 5ae395b0c97e946a5be941ed6cb85645, type: 3}
   isRangeCard: 1
   rangeScale: {x: 2, y: 1, z: 0}

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Card7_
   m_EditorClassIdentifier: 
   cardId: 7
-  cardLevel: 0
   cardCost: 2
+  rank: 0
   cardName: "\uC8FC\uBB38\uB825 \uAC15\uD654"
-  cardDesc: "<n> \uCD08 \uAC04 \uACF5\uACA9\uB825 \uC99D\uAC00"
+  cardDescLv1: "\uC8FC\uBB38\uB825 200% \uC99D\uAC00"
+  cardDescLv2: "\uC99D\uAC00\uB7C9 2\uBC30"
+  cardDescLv3: "\uC9C0\uC18D \uC2DC\uAC04 +2\uCD08"
   cardImage: {fileID: 7720551446855922787, guid: 3c585a8571ae04b6cab2c5e266664477, type: 3}
   isRangeCard: 0
   rangeScale: {x: 0, y: 0, z: 0}
