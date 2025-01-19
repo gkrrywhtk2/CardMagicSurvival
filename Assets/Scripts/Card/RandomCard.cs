@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
 {
+    public int RandomCardNum;//012
     public Card nowCard;
     public int cardId;
     public int cardRank;
@@ -14,6 +15,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     public Sprite star_True;
     public Sprite star_False;
     public TMP_Text costText;//코스트 숫자
+    public GameObject outLine;//선택 되었을때 아웃라인
 
     public void Init(Card card){
         nowCard = card;
@@ -54,8 +56,10 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     }
 
     public void SendCardInfo(){
-        GameManager.instance.deckManager.TakeCardInfo(nowCard);
+         //GameManager.instance.deckManager.TakeCardInfo(nowCard); 일단 대기
         //GameManager.instance. nextWaveButton 카드 선택시 다음 웨이브로 넘어가야할 차례
+      GameManager.instance.deckManager.RandomCardSelectedOutlineSetting(RandomCardNum);
+        
     }
 
      public void OnEndDrag(PointerEventData eventData){

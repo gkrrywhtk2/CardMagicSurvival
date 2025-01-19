@@ -30,6 +30,9 @@ public class DeckManager : MonoBehaviour
     private void Start()
     {
         CardSelect(); // 초기 덱 선택
+        randomCard[0].RandomCardNum = 0;
+        randomCard[1].RandomCardNum = 1;
+        randomCard[2].RandomCardNum = 2;
        
       
     }
@@ -240,5 +243,16 @@ foreach (var cardData in allCards)
         deck.Add(newCard);
         }
     }
+    }
+
+    public void RandomCardSelectedOutlineSetting(int index){
+        //랜덤 카드 선택 표시
+
+        //초기화
+        randomCard[0].outLine.gameObject.SetActive(false);
+        randomCard[1].outLine.gameObject.SetActive(false);
+        randomCard[2].outLine.gameObject.SetActive(false);
+
+        randomCard[index].outLine.gameObject.SetActive(true);
     }
 }
