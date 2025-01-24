@@ -9,7 +9,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     public int RandomCardNum;//012
     public Card nowCard;
     public int cardId;
-    public int cardRank;
+    public int cardLevel;
    public Image cardImage;
     public Image[] stars;// 카드 등급 이미지
     public Sprite star_True;
@@ -20,34 +20,39 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     public void Init(Card card){
         nowCard = card;
         this.cardId = nowCard.ID;
-        this.cardRank = nowCard.Rank;
+        this.cardLevel = nowCard.Rank;
         CardData data =  GameManager.instance.deckManager.cardDatas[card.ID];
         cardImage.sprite = data.cardImage;
         costText.text = data.cardCost.ToString();
-        RankImageSetting(cardRank);
+        RankImageSetting(cardLevel);
     }
-     public void RankImageSetting(int rank){
-    //카드 등급 이미지(별) 세팅
+     public void RankImageSetting(int level){
+    //카드 레벨 이미지(별) 세팅
 
     //초기화
     stars[0].sprite = star_False;
     stars[1].sprite = star_False;
     stars[2].sprite = star_False;
-
-        switch(rank){
+    stars[0].GetComponent<Animator>().SetBool("Blank",false);
+    stars[1].GetComponent<Animator>().SetBool("Blank",false);
+    stars[2].GetComponent<Animator>().SetBool("Blank",false);
+        switch(level){
             case 1:
                 stars[0].sprite = star_True;
+                stars[0].GetComponent<Animator>().SetBool("Blank",true);//별 깜빡
             break;
 
             case 2:
               stars[0].sprite = star_True;
               stars[1].sprite = star_True;
+                stars[1].GetComponent<Animator>().SetBool("Blank",true);//별 깜빡
             break;
 
             case 3:
                stars[0].sprite = star_True;
                stars[1].sprite = star_True;
                stars[2].sprite = star_True;
+                 stars[2].GetComponent<Animator>().SetBool("Blank",true);//별 깜빡
             break;
 
             default:

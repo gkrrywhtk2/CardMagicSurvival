@@ -27,14 +27,8 @@ public class DeckManager : MonoBehaviour
     private List<Card> candidatePool = new List<Card>(); // 랜덤 등장 카드 풀
     public RandomCard[] randomCard;//랜덤 등장 카드
     public RectTransform[] randomCardPoints;//랜덤 생성 카드 생성 위치
-    public GameObject randomCardDescUI;//카드 설명 UI
+    public RandomCardDescPanel randomCardDescUI;//카드 설명 UI
     public GameObject arrow;//화살표 게임오브젝트
-    public TMP_Text randomCard_NameText;
-    public TMP_Text randomCard_DescText;
-    public TMP_Text randomCard_RankText;
-    public TMP_Text randomCard_newText;
-
-
 
     private void Start()
     {
@@ -272,23 +266,10 @@ foreach (var cardData in allCards)
         //카드 설명Ui 세팅
         randomCardDescUI.gameObject.SetActive(true);
         int ID = randomCard[index].cardId;
-        int RANK = randomCard[index].cardRank;
+        int LEVEL = randomCard[index].cardLevel;
         CardData data = cardDatas[ID];
-        randomCard_NameText.text = data.cardName + " " + "LV" + RANK.ToString();
+        randomCardDescUI.UISetting(data, LEVEL);
 
-        randomCard_newText.gameObject.SetActive(false);
-        switch(RANK){
-            case 1:
-            randomCard_DescText.text = data.cardDescLv1;
-            randomCard_newText.gameObject.SetActive(true);
-            break;
-            case 2:
-            randomCard_DescText.text = data.cardDescLv2;
-            break;
-            case 3:
-            randomCard_DescText.text = data.cardDescLv3;
-            break;
-        }
         
     }
 }
