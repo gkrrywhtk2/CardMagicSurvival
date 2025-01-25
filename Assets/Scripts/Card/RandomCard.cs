@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,6 +11,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     public int cardId;
     public int cardLevel;
    public Image cardImage;
+   public Image manaSprite;
     public Image[] stars;// 카드 등급 이미지
     public Sprite star_True;
     public Sprite star_False;
@@ -20,7 +20,8 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     public Image selectFill;//시계 방향 Fill 이미지
     private float Fill_Max = 2;//2초 지속되면 카드 선택
     private float Fill_now = 0;//카드 누르고 있는 시간
-    private bool touchOn = false;
+    private bool thisTouch = false;
+    public Animator create;
 
     private void Update(){
         FillUp();
@@ -28,19 +29,25 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
 
     }
     public void FillUp(){
-        if(touchOn == true)
-            Fill_now += Time.deltaTime;
-        }
-    
-    public void CardTouchDown(){
-        if(Input.touchCount > 1)
+        if(thisTouch == false)
             return;
 
-        touchOn = true;
+            Fill_now += Time.unscaledDeltaTime;
+    }
+        
+    
+    public void CardTouchDown(){
+
+        if(SingleEventTrigger.single.oneTouch == true)
+            return;
+
+            SingleEventTrigger.single.oneTouch = true;
+            thisTouch = true;
     }
     public void CardTouchUp(){
-         touchOn = false;
-         Fill_now = 0;
+        SingleEventTrigger.single.oneTouch = false;
+        thisTouch = false;
+        Fill_now = 0;
 
     }
     public void CardSelect(){
@@ -48,25 +55,42 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
         if(Fill_now >= Fill_Max){
             //선택한 카드 추가
             GameManager.instance.deckManager.TakeCardInfo(new Card(cardId,cardLevel));
-            //GameManager.instance.deckManager.EndCardUpgrade();
+            SingleEventTrigger.single.oneTouch = false;
+            thisTouch = false;
             return;
         }
     }
 
     public void Init(Card card){
-        touchOn = false;
+        SingleEventTrigger.single.oneTouch = false;
+        thisTouch = false;
         Fill_now = 0;
         nowCard = card;
         this.cardId = nowCard.ID;
         this.cardLevel = nowCard.Rank;
-        CardData data =  GameManager.instance.deckManager.cardDatas[card.ID];
+        CardData data =  GameManager.instance.deckManager.cardDatas[cardId];
+        cardImage.sprite = null;
+        stars[0].gameObject.SetActive(false);
+        stars[1].gameObject.SetActive(false);
+        stars[2].gameObject.SetActive(false);
+        manaSprite.gameObject.SetActive(false);
+        costText.gameObject.SetActive(false);
+        create.SetTrigger("Create");
+
+    }
+    public void ImageSetting(){
+        create.SetTrigger("Idle");
+        CardData data =  GameManager.instance.deckManager.cardDatas[cardId];
         cardImage.sprite = data.cardImage;
+        manaSprite.gameObject.SetActive(true);
         costText.text = data.cardCost.ToString();
         RankImageSetting(cardLevel);
     }
-     public void RankImageSetting(int level){
+    public void RankImageSetting(int level){
     //카드 레벨 이미지(별) 세팅
-
+        stars[0].gameObject.SetActive(true);
+        stars[1].gameObject.SetActive(true);
+        stars[2].gameObject.SetActive(true);
     //초기화
     stars[0].sprite = star_False;
     stars[1].sprite = star_False;
@@ -81,8 +105,8 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
             break;
 
             case 2:
-              stars[0].sprite = star_True;
-              stars[1].sprite = star_True;
+            stars[0].sprite = star_True;
+            stars[1].sprite = star_True;
                 stars[1].GetComponent<Animator>().SetBool("Blank",true);//별 깜빡
             break;
 

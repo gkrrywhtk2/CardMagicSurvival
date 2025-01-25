@@ -56,7 +56,7 @@ public class Player_Status : MonoBehaviour
 
     }
     public void LevelUpEvent(){
-        GameManager.instance.GamePlayState = false; //일시 정지 
+        GameManager.instance.Pause();
         //GameManager.instance.spawnManager.spawnAllow = false; //소환 중지를 gameplayerstae에 종속시켰음.
         //GameManager.instance.itemManager.SpawnItems_(); 아이템 스폰 기능 짜쳐서 버림
         GameManager.instance.deckManager.StartUpgradeEvent();//카드 랜덤 선택 이벤트

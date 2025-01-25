@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
+using NUnit.Framework.Constraints;
 
 public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -96,7 +97,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
-         Debug.Log($"OnBeginDrag called for {gameObject.name}");
+         //Debug.Log($"OnBeginDrag called for {gameObject.name}");
             if(cardOn != true){
                 eventData.pointerDrag = null; // 카드가 비활성화 상태라면 드래그 호출 차단
                 return;
@@ -230,43 +231,51 @@ public void CardAlpha0_Range(bool shouldRangeBeActive){
         Color cardColor = cardImage.color;
         Color manaColor = manaCost.color;
         Color textColor = costText.color;
+        Color starColor0 = stars[0].color;
+        Color starColor1 = stars[1].color;
+        Color starColor2 = stars[2].color;
 
         cardColor.a = 0;
         manaColor.a = 0;
         textColor.a = 0;
+        starColor0.a = 0;
+        starColor1.a = 0;
+        starColor2.a = 0;
 
         cardImage.color = cardColor;
         manaCost.color = manaColor;
-         costText.color = textColor;
+        costText.color = textColor;
+        stars[0].color = starColor0;
+        stars[1].color = starColor1;
+        stars[2].color = starColor2;
+        //카드 레벨 이미지도 투명화 
     }else{
-         Color cardColor = cardImage.color;
-        Color manaColor = manaCost.color;
-        Color textColor = costText.color;
-
-        cardColor.a = 1;
-        manaColor.a = 1;
-        textColor.a = 1;
-
-
-        cardImage.color = cardColor;
-        manaCost.color = manaColor;
-         costText.color = textColor;
+       CardAlpha1_Range();
     }
 }
 public void CardAlpha1_Range(){
 
-        Color cardColor = cardImage.color;
+       Color cardColor = cardImage.color;
         Color manaColor = manaCost.color;
         Color textColor = costText.color;
+        Color starColor0 = stars[0].color;
+        Color starColor1 = stars[1].color;
+        Color starColor2 = stars[2].color;
 
         cardColor.a = 1;
         manaColor.a = 1;
         textColor.a = 1;
+        starColor0.a = 1;
+        starColor1.a = 1;
+        starColor2.a = 1;
 
 
         cardImage.color = cardColor;
         manaCost.color = manaColor;
-         costText.color = textColor;
+        costText.color = textColor;
+        stars[0].color = starColor0;
+        stars[1].color = starColor1;
+        stars[2].color = starColor2;
     }
     public void RankImageSetting(int rank){
     //카드 등급 이미지(별) 세팅

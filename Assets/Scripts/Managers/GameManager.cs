@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+
+
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     public bool GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)
     public bool levelUpState = false;//true시 이동만 가능
     public GameObject backG;//background image
+    public FloatingJoystick joystick;//조이스틱
 
  public void Awake()
     {
@@ -65,5 +67,16 @@ public class GameManager : MonoBehaviour
        // spawnManager.Spawn_Slime_1();
       //  waveManager.battleIcon.gameObject.SetActive(true);
        // waveManager.mobIcon.gameObject.SetActive(false);
+    }
+
+    public void Pause(){
+        GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)
+        joystick.GetComponent<Image>().raycastTarget = false;
+        Time.timeScale = 0;
+    }
+    public void GamePlay(){
+        GamePlayState = true;
+        joystick.GetComponent<Image>().raycastTarget = true;
+        Time.timeScale = 1;
     }
 }

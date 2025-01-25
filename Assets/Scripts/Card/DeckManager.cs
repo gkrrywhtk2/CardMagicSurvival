@@ -212,9 +212,7 @@ foreach (var cardData in allCards)
         
         //선택된 카드 덱에 추가
         AddCard_ToHand(card);
-        //deck.Add(new Card(card.ID, card.Rank));
-        GameManager.instance.GamePlayState = true;
-        
+        GameManager.instance.GamePlay();
     }
 
    public void AddCard_ToHand(Card newCard)
