@@ -208,6 +208,8 @@ foreach (var cardData in allCards)
         randomCard[0].gameObject.SetActive(false);
         randomCard[1].gameObject.SetActive(false);
         randomCard[2].gameObject.SetActive(false);
+        randomCardDescUI.gameObject.SetActive(false);
+        
         //선택된 카드 덱에 추가
         AddCard_ToHand(card);
         //deck.Add(new Card(card.ID, card.Rank));
@@ -271,5 +273,14 @@ foreach (var cardData in allCards)
         randomCardDescUI.UISetting(data, LEVEL);
 
         
+    }
+
+    public void EndCardUpgrade(){
+        GameManager.instance.GamePlayState = true;
+        randomCard[0].gameObject.SetActive(false);
+         randomCard[1].gameObject.SetActive(false);
+          randomCard[2].gameObject.SetActive(false);
+          randomCardDescUI.gameObject.SetActive(false);
+          GameManager.instance.backG.SetActive(false);//검은 배경 비활성화
     }
 }

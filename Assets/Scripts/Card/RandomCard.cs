@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,8 +17,45 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     public Sprite star_False;
     public TMP_Text costText;//코스트 숫자
     public GameObject outLine;//선택 되었을때 아웃라인
+    public Image selectFill;//시계 방향 Fill 이미지
+    private float Fill_Max = 2;//2초 지속되면 카드 선택
+    private float Fill_now = 0;//카드 누르고 있는 시간
+    private bool touchOn = false;
+
+    private void Update(){
+        FillUp();
+        CardSelect();
+
+    }
+    public void FillUp(){
+        if(touchOn == true)
+            Fill_now += Time.deltaTime;
+        }
+    
+    public void CardTouchDown(){
+        if(Input.touchCount > 1)
+            return;
+
+        touchOn = true;
+    }
+    public void CardTouchUp(){
+         touchOn = false;
+         Fill_now = 0;
+
+    }
+    public void CardSelect(){
+        selectFill.fillAmount = Fill_now/Fill_Max;
+        if(Fill_now >= Fill_Max){
+            //선택한 카드 추가
+            GameManager.instance.deckManager.TakeCardInfo(new Card(cardId,cardLevel));
+            //GameManager.instance.deckManager.EndCardUpgrade();
+            return;
+        }
+    }
 
     public void Init(Card card){
+        touchOn = false;
+        Fill_now = 0;
         nowCard = card;
         this.cardId = nowCard.ID;
         this.cardLevel = nowCard.Rank;
