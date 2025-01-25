@@ -62,6 +62,8 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     }
 
     public void Init(Card card){
+        outLine.gameObject.SetActive(false);
+        create.gameObject.SetActive(true);
         SingleEventTrigger.single.oneTouch = false;
         thisTouch = false;
         Fill_now = 0;
@@ -69,23 +71,25 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
         this.cardId = nowCard.ID;
         this.cardLevel = nowCard.Rank;
         CardData data =  GameManager.instance.deckManager.cardDatas[cardId];
-        cardImage.sprite = null;
+        cardImage.gameObject.SetActive(false);
         stars[0].gameObject.SetActive(false);
         stars[1].gameObject.SetActive(false);
         stars[2].gameObject.SetActive(false);
         manaSprite.gameObject.SetActive(false);
         costText.gameObject.SetActive(false);
-        create.SetTrigger("Create");
 
     }
     public void ImageSetting(){
-        create.SetTrigger("Idle");
         CardData data =  GameManager.instance.deckManager.cardDatas[cardId];
+        cardImage.gameObject.SetActive(true);
         cardImage.sprite = data.cardImage;
         manaSprite.gameObject.SetActive(true);
+        costText.gameObject.SetActive(true);
         costText.text = data.cardCost.ToString();
         RankImageSetting(cardLevel);
+        create.gameObject.SetActive(false);
     }
+   
     public void RankImageSetting(int level){
     //카드 레벨 이미지(별) 세팅
         stars[0].gameObject.SetActive(true);

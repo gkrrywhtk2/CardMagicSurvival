@@ -157,8 +157,8 @@ for (int i = deck.Count - 1; i > 0; i--)
 
             break;
         }
-            int index = 0;//첫번째 randomCard
-            RandomCardSelectedSetting(index);
+           // int index = 0;//첫번째 randomCard
+         //   RandomCardSelectedSetting(index);
 
 
         
