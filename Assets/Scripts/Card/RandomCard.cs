@@ -48,10 +48,16 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
         SingleEventTrigger.single.oneTouch = false;
         thisTouch = false;
         Fill_now = 0;
+        selectFill.fillAmount = Fill_now/Fill_Max;
+        
 
     }
     public void CardSelect(){
-        selectFill.fillAmount = Fill_now/Fill_Max;
+        float value = Fill_now/Fill_Max;
+        if(value < 0.1f)
+            return;
+
+        selectFill.fillAmount = value;
         if(Fill_now >= Fill_Max){
             //선택한 카드 추가
             GameManager.instance.deckManager.TakeCardInfo(new Card(cardId,cardLevel));
@@ -62,6 +68,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     }
 
     public void Init(Card card){
+        selectFill.fillAmount = 0;
         outLine.gameObject.SetActive(false);
         create.gameObject.SetActive(true);
         SingleEventTrigger.single.oneTouch = false;
