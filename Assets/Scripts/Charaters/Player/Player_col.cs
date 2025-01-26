@@ -77,7 +77,7 @@ public class Player_col : MonoBehaviour
     GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
     GameManager.instance.player.joystickP.speed = 0;
     GameManager.instance.itemManager.SpawnItems_(rank);
-    yield return new WaitForSeconds(1);
+    yield return new WaitForSeconds(2);
      GameManager.instance.player.joystickP.speed = 3;
    
    }
