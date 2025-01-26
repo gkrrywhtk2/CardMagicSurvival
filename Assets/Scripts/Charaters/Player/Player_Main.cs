@@ -7,7 +7,7 @@ public class Player_Main : MonoBehaviour
    public Player_Status playerStatus;
    public Player_col playerCol;
    public AutoAttack autoAttack;
-  public JoyStick_P playerJoyStick;
+  public JoyStick_P joystickP;
 
   public Player_Effect playerEffect;
   public Dir_Front dirFront;
@@ -20,7 +20,7 @@ public class Player_Main : MonoBehaviour
     playerStatus = GetComponent<Player_Status>();
     playerCol = GetComponent<Player_col>();
     autoAttack = GetComponent<AutoAttack>();
-    playerJoyStick = GetComponent<JoyStick_P>();
+    joystickP = GetComponent<JoyStick_P>();
     playerEffect = GetComponent<Player_Effect>();
     dirFront = GetComponentInChildren<Dir_Front>();
    }

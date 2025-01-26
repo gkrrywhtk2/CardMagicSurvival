@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using RANK;
+
 
 public class Player_col : MonoBehaviour
 {
@@ -10,6 +13,7 @@ public class Player_col : MonoBehaviour
     Animator ani;
     Rigidbody2D rigid;
     CapsuleCollider2D capsuleCollider;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -56,6 +60,26 @@ public class Player_col : MonoBehaviour
    public void PlayerDeath(){
     GameManager.instance.player.playerStatus.isLive = false;
     GameManager.instance.restartButton.SetActive(true);
+   }
+
+   private void OnTriggerEnter2D(Collider2D collison) {
+    if(!collison.CompareTag("Gem_Item"))
+        return;
+
+    Gem_Item gem = collison.GetComponent<Gem_Item>();
+    gem.Gem_Point.gameObject.SetActive(false);
+    StartCoroutine(Get_Gem(gem.rank));
+   }
+
+
+   IEnumerator Get_Gem(Rank rank){
+    Debug.Log("충돌됨");
+    GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
+    GameManager.instance.player.joystickP.speed = 0;
+    GameManager.instance.itemManager.SpawnItems_(rank);
+    yield return new WaitForSeconds(1);
+     GameManager.instance.player.joystickP.speed = 3;
+   
    }
    
 }

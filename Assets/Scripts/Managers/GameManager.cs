@@ -79,4 +79,7 @@ public class GameManager : MonoBehaviour
         joystick.GetComponent<Image>().raycastTarget = true;
         Time.timeScale = 1;
     }
+    public void GemPause(){
+       
+    }
 }

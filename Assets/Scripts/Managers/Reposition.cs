@@ -42,7 +42,7 @@ public class Reposition : MonoBehaviour
         break;
     case "Monster":
 
-        Vector3 playerDir = GameManager.instance.player.playerJoyStick.inputVec;
+        Vector3 playerDir = GameManager.instance.player.joystickP.inputVec;
         if(coll.enabled){
             transform.Translate(playerDir * 22 + new Vector3(Random.Range(-3f,3f), Random.Range(-3f,3f),0));
         }

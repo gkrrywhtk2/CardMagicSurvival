@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - Area
   - Stop
+  - Gem_Item
   layers:
   - Default
   - TransparentFX

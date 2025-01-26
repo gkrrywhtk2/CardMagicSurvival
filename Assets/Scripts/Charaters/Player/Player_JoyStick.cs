@@ -9,6 +9,7 @@ public class JoyStick : MonoBehaviour
     Rigidbody2D rigid;
     public Vector2 inputVec;
     public bool nowMove;
+     public float speed;
 
     private void Awake()
     {
@@ -31,12 +32,12 @@ public class JoyStick : MonoBehaviour
         inputVec.x = joy.Horizontal;
         inputVec.y = joy.Vertical;
 
-        float moveSpeed = GameManager.instance.player.playerMove.speed;
-        Vector2 nextVec = inputVec.normalized * moveSpeed * Time.deltaTime;
+       // float moveSpeed = GameManager.instance.player.playerMove.speed;
+        Vector2 nextVec = inputVec.normalized * speed * Time.deltaTime;
         Vector2 targetPosition = rigid.position + nextVec;
         rigid.MovePosition(targetPosition);
         nowMove = nextVec.magnitude > 0;
-        Debug.Log(moveSpeed);
+       // Debug.Log(moveSpeed);
     }
      private void LateUpdate()
     {

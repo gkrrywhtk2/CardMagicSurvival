@@ -11,7 +11,7 @@ public class Firebres : MonoBehaviour
     void Update()
     {
         // 1. 방향 벡터 계산 (플레이어의 바라보는 방향)
-        direction = GameManager.instance.player.playerJoyStick.inputVec;
+        direction = GameManager.instance.player.joystickP.inputVec;
         if (direction.sqrMagnitude > 0.1f) // 입력이 있는 경우에만 갱신
         {
             direction = direction.normalized;

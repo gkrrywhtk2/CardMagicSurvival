@@ -1,21 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
+using RANK;
 
 public class ItemManager : MonoBehaviour
 {
 
-    public ItemData[] itemDatas;         // 모든 아이템 데이터
+    public ItemData[] itemDatas_normal;         // 아이템 데이터 노말
+    public ItemData[] itemDatas_rare;         // 아이템 데이터 희귀
+    public ItemData[] itemDatas_epic;         // 아이템 데이터 영웅
+    public ItemData[] itemDatas_legend;         // 아이템 데이터 전설
     public List<int> deck = new List<int>(); // 현재 회득 아이템
     public Transform[] Points; // 아이템 생성 위치
     public Item[] items;  //아이템 
     
-     public void SpawnItems_()
+     public void SpawnItems_(Rank rank)
     {
-        StartCoroutine(spawnItem());
+        StartCoroutine(spawnItem(rank));
     }
-    IEnumerator spawnItem(){
-         List<ItemData> availableItems = GetAvailableItems(); // 사용 가능한 아이템 필터링
+    IEnumerator spawnItem(Rank rank){
+         List<ItemData> availableItems = GetAvailableItems(rank); // 사용 가능한 아이템 필터링
         Vector3[] positon_0 = new Vector3[Points.Length];
         for (int i = 0; i < Points.Length; i++)
         {
@@ -54,18 +58,49 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    private List<ItemData> GetAvailableItems()
+    private List<ItemData> GetAvailableItems(Rank rank)
     {
         List<ItemData> availableItems = new List<ItemData>();
 
-        // 덱에 없는 아이템만 선택
-        foreach (var itemData in itemDatas)
-        {
-            if (!deck.Contains(itemData.ItemID))
+        switch(rank){
+            case Rank.normal:
+                foreach (var itemData in itemDatas_normal)
             {
-                availableItems.Add(itemData);
+                if (!deck.Contains(itemData.ItemID))
+                {
+                    availableItems.Add(itemData);
+                }
             }
+            break;
+            case Rank.rare:
+                foreach (var itemData in itemDatas_rare)
+            {
+                if (!deck.Contains(itemData.ItemID))
+                {
+                    availableItems.Add(itemData);
+                }
+            }
+            break;
+            case Rank.epic:
+                foreach (var itemData in itemDatas_epic)
+            {
+                if (!deck.Contains(itemData.ItemID))
+                {
+                    availableItems.Add(itemData);
+                }
+            }
+            break;
+            case Rank.legend:
+                foreach (var itemData in itemDatas_legend)
+            {
+                if (!deck.Contains(itemData.ItemID))
+                {
+                    availableItems.Add(itemData);
+                }
+            }
+            break;
         }
+       
 
         return availableItems;
     }
