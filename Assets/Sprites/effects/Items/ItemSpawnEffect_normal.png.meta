@@ -1,0 +1,379 @@
+fileFormatVersion: 2
+guid: 029c2cae1019d447d91c3b3a15fb7f8f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3487009343008331056
+    second: ItemSpawnEffect_normal_0
+  - first:
+      213: 8433436859232776136
+    second: ItemSpawnEffect_normal_1
+  - first:
+      213: -9022996340698631752
+    second: ItemSpawnEffect_normal_2
+  - first:
+      213: 6630430513850977121
+    second: ItemSpawnEffect_normal_3
+  - first:
+      213: 2558303233033711831
+    second: ItemSpawnEffect_normal_4
+  - first:
+      213: 6546982015564365930
+    second: ItemSpawnEffect_normal_5
+  - first:
+      213: -2490901811646211726
+    second: ItemSpawnEffect_normal_6
+  - first:
+      213: -2508303834101032523
+    second: ItemSpawnEffect_normal_7
+  - first:
+      213: 6258522419615420309
+    second: ItemSpawnEffect_normal_8
+  - first:
+      213: 6755903718614212591
+    second: ItemSpawnEffect_normal_9
+  - first:
+      213: -5520899107235192115
+    second: ItemSpawnEffect_normal_10
+  - first:
+      213: -5129294063272701860
+    second: ItemSpawnEffect_normal_11
+  - first:
+      213: -4848760034150925978
+    second: ItemSpawnEffect_normal_12
+  - first:
+      213: -735581446898537010
+    second: ItemSpawnEffect_normal_13
+  - first:
+      213: -7200840729009681205
+    second: ItemSpawnEffect_normal_14
+  - first:
+      213: 8313936925531352345
+    second: ItemSpawnEffect_normal_15
+  - first:
+      213: -4221947457631076159
+    second: ItemSpawnEffect_normal_16
+  - first:
+      213: -7898211315403828284
+    second: ItemSpawnEffect_normal_17
+  - first:
+      213: -77099915102900992
+    second: ItemSpawnEffect_normal_18
+  - first:
+      213: -6989515669297006654
+    second: ItemSpawnEffect_normal_19
+  - first:
+      213: -2616480104104933496
+    second: ItemSpawnEffect_normal_20
+  - first:
+      213: 8390460332052021573
+    second: ItemSpawnEffect_normal_21
+  - first:
+      213: -387207707006375824
+    second: ItemSpawnEffect_normal_22
+  - first:
+      213: 9202370189248473369
+    second: ItemSpawnEffect_normal_23
+  - first:
+      213: 5455838142652167654
+    second: ItemSpawnEffect_normal_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ItemSpawnEffect_normal_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0da258d3a77ab9fc0800000000000000
+      internalID: -3487009343008331056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemSpawnEffect_normal_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cf61462426990570800000000000000
+      internalID: 8433436859232776136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemSpawnEffect_normal_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b1320f42a0e7c280800000000000000
+      internalID: -9022996340698631752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemSpawnEffect_normal_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16b8ffd3c65040c50800000000000000
+      internalID: 6630430513850977121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemSpawnEffect_normal_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d035b86c3be08320800000000000000
+      internalID: 2558303233033711831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemSpawnEffect_normal_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a60c59ca47d8bda50800000000000000
+      internalID: 6546982015564365930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemSpawnEffect_normal_6
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 279537aeff98e6dd0800000000000000
+      internalID: -2490901811646211726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a106b63c983714d1a862fcf204468edd
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ItemSpawnEffect_normal_0: -3487009343008331056
+      ItemSpawnEffect_normal_1: 8433436859232776136
+      ItemSpawnEffect_normal_2: -9022996340698631752
+      ItemSpawnEffect_normal_3: 6630430513850977121
+      ItemSpawnEffect_normal_4: 2558303233033711831
+      ItemSpawnEffect_normal_5: 6546982015564365930
+      ItemSpawnEffect_normal_6: -2490901811646211726
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
