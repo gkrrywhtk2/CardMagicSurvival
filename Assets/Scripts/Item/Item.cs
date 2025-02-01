@@ -8,16 +8,16 @@ public class Item : MonoBehaviour
     public int ItemID;
     public int originItemID;
     public Rank itemrank;
-    SpriteRenderer spr;
+    public SpriteRenderer itemSprite;
     
 
     private void Awake() {
-        spr = GetComponent<SpriteRenderer>();
+        
     }
 
     public void Init(ItemData data){
         this.ItemID = data.ItemID;
-        spr.sprite = data.ItemSprite;
+        itemSprite.sprite = data.ItemSprite;
         this.itemrank = data.rank;
     } 
 
