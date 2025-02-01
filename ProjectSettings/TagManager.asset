@@ -51,7 +51,13 @@ TagManager:
   - name: PlayerEffect
     uniqueID: 3895238123
     locked: 0
-  - name: character
+  - name: Monster
+    uniqueID: 758257489
+    locked: 0
+  - name: Item
+    uniqueID: 363184477
+    locked: 0
+  - name: Player
     uniqueID: 1684437509
     locked: 0
   - name: SkillEffect2

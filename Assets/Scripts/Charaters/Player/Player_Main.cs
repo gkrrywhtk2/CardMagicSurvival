@@ -1,3 +1,4 @@
+using FunkyCode;
 using UnityEngine;
 
 public class Player_Main : MonoBehaviour
@@ -14,6 +15,7 @@ public class Player_Main : MonoBehaviour
   //
   public Transform fireBallPoint;
   public Transform playerCenterPivot;
+  public Light2D hikari;
  
    private void Awake() {
     playerMove = GetComponent<PlayerMove>();

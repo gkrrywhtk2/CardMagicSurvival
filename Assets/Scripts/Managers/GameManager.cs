@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     public GameObject backG;//background image
     public FloatingJoystick joystick;//조이스틱
 
+    public bool night;
+
  public void Awake()
     {
         instance = this;
@@ -81,5 +83,17 @@ public class GameManager : MonoBehaviour
     }
     public void GemPause(){
        
+    }
+    public void NightTogle(){
+        Debug.Log("asd");
+        if(night == false){
+              instance.player.hikari.size = 5;
+              night = true;
+        }
+        else{
+            instance.player.hikari.size = 10;
+              night = false;
+        }
+      
     }
 }
