@@ -97,11 +97,12 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData)
     {
          //Debug.Log($"OnBeginDrag called for {gameObject.name}");
+         /**
             if(cardOn != true){
                 eventData.pointerDrag = null; // 카드가 비활성화 상태라면 드래그 호출 차단
                 return;
             }
-
+        **/
             if(GameManager.instance.GamePlayState != true){
                 eventData.pointerDrag = null; 
                 return;
@@ -135,10 +136,12 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnDrag(PointerEventData eventData)
 {
     // 카드가 활성화된 상태일 때만 드래그를 진행
+    /**
             if(cardOn != true){
                  eventData.pointerDrag = null; // // 카드가 비활성화 상태라면 드래그 호출 차단
                 return;
             }
+            **/
             if(GameManager.instance.GamePlayState != true){
                 eventData.pointerDrag = null; 
                 return;
@@ -153,8 +156,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     rect.position = eventData.position;
       anim.enabled = false; // 드래그 시작 시 애니메이션 멈춤
 
-    // 카드가 범위 카드인지, 그리고 dropPoint 위에 있는지 확인
-    bool shouldRangeBeActive = (rangeOn == true && cardReady == true);
+    // 카드가 범위 카드인지, 그리고 dropPoint 위에 있는지 확인, 그리고 카드가 활성화 상태인지
+    bool shouldRangeBeActive = (rangeOn == true && cardReady == true && cardOn == true);
 
     // 범위 이미지의 활성 상태가 변경되었을 때만 SetActive 호출
     if (shouldRangeBeActive != lastRangeState)

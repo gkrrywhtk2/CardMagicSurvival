@@ -44,10 +44,14 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     }
     public void OnDrop(PointerEventData eventData)
     {
+        MagicCard card =  eventData.pointerDrag.GetComponent<MagicCard>();
+        if(card.cardOn == false)
+            return;
+
         if( eventData.pointerDrag != null )
         {
             //카드 사용 알고리즘
-            MagicCard card =  eventData.pointerDrag.GetComponent<MagicCard>();
+          
             card.CardLock();
             
             //사용 이펙트
