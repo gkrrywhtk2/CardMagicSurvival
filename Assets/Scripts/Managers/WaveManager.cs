@@ -25,7 +25,7 @@ public class WaveManager : MonoBehaviour
             return;
         if(waveTimeOver != false)
             return;
-        if(GameManager.instance.levelUpState == true)
+        if(GameManager.instance.ItemSelectState == true)
             return;
 
             waveGameTime -= Time.deltaTime;
@@ -52,7 +52,7 @@ public class WaveManager : MonoBehaviour
         if(GameManager.instance.spawnManager.mobCount > 0)
             return;
         
-        GameManager.instance.levelUpState = true;//바꿔야함 웨이브 오버 스테이트로
+        GameManager.instance.ItemSelectState = true;//바꿔야함 웨이브 오버 스테이트로
         GameManager.instance.nextWaveButton.gameObject.SetActive(true);
     }
 

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using RANK;
+
 public class Card
 {
     public int ID { get; set; } // 카드 ID
@@ -29,6 +30,10 @@ public class DeckManager : MonoBehaviour
     public RectTransform[] randomCardPoints;//랜덤 생성 카드 생성 위치
     public RandomCardDescPanel randomCardDescUI;//카드 설명 UI
     public GameObject arrow;//화살표 게임오브젝트
+    //CardDescUI
+    public GameObject CardDescUi;
+    public TMP_Text CardDesc_CardName;
+    public TMP_Text CardDesc_CardDesc;
 
     private void Start()
     {
@@ -280,5 +285,13 @@ foreach (var cardData in allCards)
           randomCard[2].gameObject.SetActive(false);
           randomCardDescUI.gameObject.SetActive(false);
           GameManager.instance.backG.SetActive(false);//검은 배경 비활성화
+    }
+
+    public void CardDescInit(int cardId){
+        //카드 터치했을때 카드 설명 UI
+
+        CardDescUi.gameObject.SetActive(true);
+        CardDesc_CardName.text = cardDatas[cardId].cardName;//이름 세팅
+        CardDesc_CardDesc.text = cardDatas[cardId].cardDescLv1;//이름 세팅
     }
 }

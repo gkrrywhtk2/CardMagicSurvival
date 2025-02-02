@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using RANK;
+using TMPro;
 
 public class ItemManager : MonoBehaviour
 {
@@ -13,6 +14,12 @@ public class ItemManager : MonoBehaviour
     public List<int> deck = new List<int>(); // 현재 회득 아이템
     public Transform[] Points; // 아이템 생성 위치
     public Item[] items;  //아이템 
+
+    //UI
+    public Transform[] Uipos;//아이템 설명 UI 초기화 위치
+    public GameObject ItemUI;//아이템 UI 본체 오브젝트
+    public TMP_Text Ui_Name;//아이템 이름 
+    public TMP_Text Ui_Desc;//아이템 설명
     
      public void SpawnItems_(Rank rank)
     {
@@ -119,13 +126,13 @@ public class ItemManager : MonoBehaviour
         return item;
     }
 
-    public void ItemSelected(int ItemID, int originid){
+    public void ItemSelected(int ItemID){
             GameManager.instance.player.playerEffect.levelUpCircleTimeStop.transform.position = GameManager.instance.player.dirFront.playerTransform.position;
             GameManager.instance.player.playerEffect.levelUpCircleTimeStopAnim.SetTrigger("Over");
             deck.Add(ItemID);
             items[0].gameObject.SetActive(false);
             items[1].gameObject.SetActive(false);
             items[2].gameObject.SetActive(false);
-            GameManager.instance.NextWave(ItemID, originid);
+            GameManager.instance.GamePlay();
     }
 }

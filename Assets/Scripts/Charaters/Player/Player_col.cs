@@ -38,7 +38,7 @@ public class Player_col : MonoBehaviour
         return;
     if(playerStatus.isLive != true)
         return;
-    if(GameManager.instance.levelUpState == true)
+    if(GameManager.instance.ItemSelectState == true)
         return;
     
     playerStatus.health -= damage;
@@ -73,10 +73,10 @@ public class Player_col : MonoBehaviour
 
 
    IEnumerator Get_Gem(Rank rank){
-    Debug.Log("충돌됨");
     GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
     GameManager.instance.player.joystickP.speed = 0;
     GameManager.instance.itemManager.SpawnItems_(rank);
+    GameManager.instance.ItemPause();
     yield return new WaitForSeconds(2);
      GameManager.instance.player.joystickP.speed = 3;
    

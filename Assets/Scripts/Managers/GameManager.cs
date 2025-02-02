@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     [Header("#GameControl")]
     public bool cardOneTouch;
     public bool GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)
-    public bool levelUpState = false;//true시 이동만 가능
+    public bool ItemSelectState = false;//true시 이동만 가능
     public GameObject backG;//background image
     public FloatingJoystick joystick;//조이스틱
 
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     public void GameStart(){
         gameStartButton.gameObject.SetActive(false);
         GamePlayState = true;
-        levelUpState = false;
+        ItemSelectState = false;
         deckManager.DeckSetting();
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         restartButton.gameObject.SetActive(false);
     }
 
-    public void NextWave(int ItemID, int originid){
+    public void NextWave(int ItemID){
         nextWaveButton.gameObject.SetActive(false);
         instance.GamePlayState = true;
         backG.gameObject.SetActive(false);
@@ -78,14 +78,19 @@ public class GameManager : MonoBehaviour
     }
     public void GamePlay(){
         GamePlayState = true;
+         backG.gameObject.SetActive(false);
+        ItemSelectState = false;
+        instance.player.playerCol.GetComponent<Collider2D>().isTrigger = false; 
         joystick.GetComponent<Image>().raycastTarget = true;
         Time.timeScale = 1;
     }
-    public void GemPause(){
-       
+    public void ItemPause(){
+        //아이템 획득 이벤트시 특수 이벤트 중지(마나획복, 몬스터 충돌 등)
+        instance.player.playerCol.GetComponent<Collider2D>().isTrigger = true; 
+       ItemSelectState = true;
     }
     public void NightTogle(){
-        Debug.Log("asd");
+        
         if(night == false){
               instance.player.hikari.size = 5;
               night = true;

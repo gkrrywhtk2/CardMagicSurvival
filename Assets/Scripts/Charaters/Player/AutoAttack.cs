@@ -30,7 +30,7 @@ public class AutoAttack : MonoBehaviour
         return;
     if(GameManager.instance.GamePlayState != true)
         return;
-    if(GameManager.instance.levelUpState == true)
+    if(GameManager.instance.ItemSelectState == true)
         return;
   //  if(player.playerJoyStick.inputVec.magnitude > 0.01f)
        // return; ** 기본 공격 자동화로 인한 주석처리

@@ -105,7 +105,7 @@ public class Player_Status : MonoBehaviour
     public void ManaRecovery(){
         if(GameManager.instance.GamePlayState != true)
         return;
-        if(GameManager.instance.levelUpState == true)
+        if(GameManager.instance.ItemSelectState == true)
         return;
 
         mana += (manaRecovery+ manaRecoveryPlus) * Time.deltaTime;

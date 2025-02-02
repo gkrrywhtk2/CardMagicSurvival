@@ -63,6 +63,9 @@ public class MobSpawnManager : MonoBehaviour
             if(GameManager.instance.GamePlayState == false)
                 return;
 
+            if(GameManager.instance.ItemSelectState == true)
+                return;
+
         GameObject monster = GameManager.instance.poolManager.Get(0);
         mobCount++;
         monster.GetComponent<Monster>().Init(spawndata[mob_id]);

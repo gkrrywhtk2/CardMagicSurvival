@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
-using NUnit.Framework.Constraints;
 
 public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -107,7 +106,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 eventData.pointerDrag = null; 
                 return;
             }
-            if(GameManager.instance.levelUpState == true){
+            if(GameManager.instance.ItemSelectState == true){
                 eventData.pointerDrag = null; 
                 return;
             }
@@ -123,6 +122,10 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         canvasGroup.alpha = 0.6f;          // 카드 투명도 조정
         canvasGroup.blocksRaycasts = false; // 레이캐스트 막기
         dropPoint.raycastTarget = true;//드롭 포인트 활성화
+
+          //카드 설명 UI 활성화
+         //GameManager.instance.deckManager.CardDescInit(cardId);
+         Debug.Log("테스트 카드 터치");
 
     }
 
@@ -140,7 +143,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 eventData.pointerDrag = null; 
                 return;
             }
-            if(GameManager.instance.levelUpState == true){
+            if(GameManager.instance.ItemSelectState == true){
                 eventData.pointerDrag = null; 
                 return;
             }
@@ -160,6 +163,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         range.gameObject.SetActive(shouldRangeBeActive);
         lastRangeState = shouldRangeBeActive;  // 상태 갱신
     }
+
+  
 }
 
     /// <summary>
@@ -190,6 +195,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         range.gameObject.SetActive(false);//범위 이미지 비활성화
         CardAlpha1_Range();
         anim.enabled = true; // 드래그 중지 시 애니메이션 연출 가능
+
     }
 
     public void ClockCoolTime(){
@@ -325,6 +331,13 @@ public void CardAlpha1_Range(){
         cardDrawLock = true; 
         yield return new WaitForSeconds(1);
         cardDrawLock = false;
+    }
+    public void CardDescUiSeind(){
+        //deckmanager한테 카드 정보 보내어, ui에 카드 설명창 연출
+        GameManager.instance.deckManager.CardDescInit(cardId);
+    }
+    public void CardDescUiOff(){
+        GameManager.instance.deckManager.CardDescUi.gameObject.SetActive(false);
     }
 }
 
