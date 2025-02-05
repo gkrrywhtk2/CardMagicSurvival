@@ -99,7 +99,7 @@ public class Player_Status : MonoBehaviour
         AttackBarUpdate();
         ManaBarUpdate();
         ManaRecovery();
-        ExpBarUpdate();
+       // ExpBarUpdate(); 경험치 삭제 예정
     }
 
     public void ManaRecovery(){

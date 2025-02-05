@@ -146,8 +146,10 @@ public class Monster : MonoBehaviour
         nowHit = true;
         if (Random.Range(0, 2) == 0) // 0 또는 1 반환, 50% 확률
     {
+        /**아이템 등장 일시 정지
         GameObject expgem = GameManager.instance.poolManager.Get(5);
         expgem.transform.position = transform.position;
+        **/
     }
        
         anim.SetBool("Dead", true);
