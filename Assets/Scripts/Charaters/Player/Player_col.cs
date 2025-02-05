@@ -63,12 +63,16 @@ public class Player_col : MonoBehaviour
    }
 
    private void OnTriggerEnter2D(Collider2D collison) {
-    if(!collison.CompareTag("Gem_Item"))
-        return;
+    if(collison.CompareTag("Gem_Item")){
+        Gem_Item gem = collison.GetComponent<Gem_Item>();
+        gem.Gem_Point.gameObject.SetActive(false);
+        StartCoroutine(Get_Gem(gem.rank));
+    }else if(collison.CompareTag("Gold")){
+        GoldCoin gold = collison.GetComponent<GoldCoin>();
+        gold.gameObject.SetActive(false);
+    }
 
-    Gem_Item gem = collison.GetComponent<Gem_Item>();
-    gem.Gem_Point.gameObject.SetActive(false);
-    StartCoroutine(Get_Gem(gem.rank));
+  
    }
 
 
