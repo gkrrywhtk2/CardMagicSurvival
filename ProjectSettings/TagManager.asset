@@ -11,7 +11,7 @@ TagManager:
   - Area
   - Stop
   - Gem_Item
-  - Coin
+  - Gold
   layers:
   - Default
   - TransparentFX

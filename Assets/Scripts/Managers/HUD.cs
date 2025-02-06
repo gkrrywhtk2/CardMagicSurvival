@@ -3,7 +3,7 @@ using TMPro;
 
 public class HUD : MonoBehaviour
 {
-     public enum InfoType {Time, Wave, Mobcount}
+     public enum InfoType {Time, Wave, Mobcount, gold}
     public InfoType type;
 
 
@@ -41,7 +41,9 @@ public class HUD : MonoBehaviour
             case InfoType.Mobcount:
                 thisText.text = GameManager.instance.spawnManager.mobCount.ToString();
                 break;
-      
+            case InfoType.gold:
+                this.thisText.text = GameManager.instance.dataManager.goldPoint.ToString();
+                break;
         }
     }
 }

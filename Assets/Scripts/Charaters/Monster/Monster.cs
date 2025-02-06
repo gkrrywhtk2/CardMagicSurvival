@@ -143,18 +143,19 @@ public class Monster : MonoBehaviour
 
     public void death(){
         isLive = false;
-        nowHit = true;
-        if (Random.Range(0, 2) == 0) // 0 또는 1 반환, 50% 확률
-    {
-        /**아이템 등장 일시 정지
-        GameObject expgem = GameManager.instance.poolManager.Get(5);
-        expgem.transform.position = transform.position;
-        **/
-    }
-       
+        nowHit = true; 
         anim.SetBool("Dead", true);
     }
    public void Deletemob(){
+    //아이템 드랍
+      if (Random.Range(0, 2) == 0) // 0 또는 1 반환, 50% 확률
+    {
+        int goldCoinPoolNum = 6;
+        int randomOffSet =  Random.Range(1,5);
+        GoldCoin gold = GameManager.instance.poolManager.Get(goldCoinPoolNum).GetComponent<GoldCoin>();
+        gold.value = randomOffSet;
+        gold.transform.position = transform.position;
+    }
     GameManager.instance.spawnManager.mobCount--;
     // 현재 오브젝트 비활성화
     gameObject.SetActive(false);
