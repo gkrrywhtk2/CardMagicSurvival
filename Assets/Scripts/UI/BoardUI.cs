@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BoardUI : MonoBehaviour
 {
@@ -23,6 +21,14 @@ public class BoardUI : MonoBehaviour
     Vector3 showPos = new Vector3(0,0,0);
     HideAllBoards();
     boards[boardId].GetComponent<RectTransform>().anchoredPosition = showPos;
+   }
+   public void Show_UpgradeBoard(){
+   Vector3 showPos = new Vector3(0,0,0);
+    HideAllBoards();
+    UpgradeUI upgradeUI = boards[0].GetComponent<UpgradeUI>();
+    upgradeUI.GetComponent<RectTransform>().anchoredPosition = showPos;
+    upgradeUI.ATK_Setting();
+
    }
    }
 

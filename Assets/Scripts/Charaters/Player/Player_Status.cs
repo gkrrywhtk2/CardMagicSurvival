@@ -4,11 +4,17 @@ using TMPro;
 
 public class Player_Status : MonoBehaviour
 {
-   
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("#플레이어의 상태값")]
     public bool isLive;
-    public float health;
-    public float maxHealth = 100;
+    public float health;//현재 체력
+    [Header("#일반 성장 능력치 ")]
+    public float ATK;//공격력
+    public float maxHealth = 100;//최대 체력
+    public float healthRecoveryPer;//초당 체력 회복량
+    public float CriticalDamagePer;//치명타 배율
+    public float CriticalPer;//치명타 확율
+
+    [Header("#특수 성장 능력치 ")]
     public float mana;
     public float maxMana = 10;
     public float manaRecovery;
