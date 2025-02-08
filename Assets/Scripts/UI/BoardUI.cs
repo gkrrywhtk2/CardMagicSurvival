@@ -27,7 +27,7 @@ public class BoardUI : MonoBehaviour
     HideAllBoards();
     UpgradeUI upgradeUI = boards[0].GetComponent<UpgradeUI>();
     upgradeUI.GetComponent<RectTransform>().anchoredPosition = showPos;
-    upgradeUI.ATK_Setting();
+    upgradeUI.AllUpgradeSetting();
 
    }
    }

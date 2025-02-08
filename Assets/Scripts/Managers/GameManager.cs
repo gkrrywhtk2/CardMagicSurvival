@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 
 
@@ -34,11 +35,15 @@ public class GameManager : MonoBehaviour
 
     public bool night;
 
+     [Header("#DevelepCheat")]
+     public bool cheatBoxTogle;
+     public GameObject GoldCheat;
+
  public void Awake()
     {
         instance = this;
         restartButton.gameObject.SetActive(false);
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 80;
           Screen.fullScreen = true;//풀스크린
     }
 
@@ -102,4 +107,15 @@ public class GameManager : MonoBehaviour
         }
       
     }
+
+    public void CheatBoxTogle(){
+        if(cheatBoxTogle == false){
+            GoldCheat.gameObject.SetActive(true);
+            cheatBoxTogle = true;
+        }else{
+            GoldCheat.gameObject.SetActive(false);
+            cheatBoxTogle = false;
+        }
+    }
+
 }
