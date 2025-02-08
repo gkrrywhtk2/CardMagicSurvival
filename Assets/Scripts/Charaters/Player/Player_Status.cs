@@ -28,6 +28,7 @@ public class Player_Status : MonoBehaviour
     public Slider manaBar;
     public Slider expBar;
     public TMP_Text manaText;
+    public Slider MagicArrow;
 
     private void Awake() {
         isLive = true;
@@ -72,6 +73,7 @@ public class Player_Status : MonoBehaviour
         float automaxpoint = GameManager.instance.player.autoAttack.autoAttackMaxPoint;
         float autocurpoint = GameManager.instance.player.autoAttack.autoAttackCurrentPoint;
         attackBar.value = autocurpoint/automaxpoint;
+        MagicArrow.value = autocurpoint/automaxpoint;
 
     }
 

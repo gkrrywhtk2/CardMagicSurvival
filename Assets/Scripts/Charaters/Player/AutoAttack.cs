@@ -16,9 +16,9 @@ public class AutoAttack : MonoBehaviour
     
     private void Awake() {
         player = GetComponent<Player_Main>();
-         anim = GetComponent<Animator>();
-         scaner = GetComponent<Scaner>();
-         sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+        scaner = GetComponent<Scaner>();
+        sprite = GetComponent<SpriteRenderer>();
     }
     private void FixedUpdate() {
         AutoAttackPointUp();

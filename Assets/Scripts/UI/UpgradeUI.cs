@@ -45,7 +45,7 @@ public class UpgradeUI : MonoBehaviour
     //text setting
     ATK_Text_level.text = "Lv." + nowLevel;
     ATK_Text_Desc.text = desc_Now + "->" + desc_After;
-    ATK_Text_Gold.text = GetGoldForLevel(nowLevel, UpgradeType.ATK).ToString();
+    ATK_Text_Gold.text = GetGoldForLevel(UpgradeType.ATK).ToString();
   }
 
    public void MaxHp_Setting(){
@@ -57,7 +57,7 @@ public class UpgradeUI : MonoBehaviour
     //text setting
     MaxHp_Text_level.text = "Lv." + nowLevel;
     MaxHp_Text_Desc.text = desc_Now + "->" + desc_After;
-    MaxHp_Text_Gold.text = GetGoldForLevel(nowLevel, UpgradeType.MaxHp).ToString();
+    MaxHp_Text_Gold.text = GetGoldForLevel(UpgradeType.MaxHp).ToString();
   }
 
   public void HpRecovery_Setting(){
@@ -69,7 +69,7 @@ public class UpgradeUI : MonoBehaviour
     //text setting
     HpRecovery_Text_level.text = "Lv." + nowLevel;
     HpRecovery_Text_Desc.text = desc_Now + "%" + "->" + desc_After + "%/sec";
-    HpRecovery_Text_Gold.text = GetGoldForLevel(nowLevel, UpgradeType.HpRecovery).ToString();
+    HpRecovery_Text_Gold.text = GetGoldForLevel(UpgradeType.HpRecovery).ToString();
   }
   public void CriticalDamage_Setting(){
     DataManager data = GameManager.instance.dataManager;
@@ -80,7 +80,7 @@ public class UpgradeUI : MonoBehaviour
     //text setting
     CriticalDamage_Text_level.text = "Lv." + nowLevel;
     CriticalDamage_Text_Desc.text = desc_Now + "%" + "->" + desc_After + "%";
-    CriticalDamage_Text_Gold.text = GetGoldForLevel(nowLevel, UpgradeType.CriticalDamage).ToString();
+    CriticalDamage_Text_Gold.text = GetGoldForLevel(UpgradeType.CriticalDamage).ToString();
   }
  public void CriticalPer_Setting(){
     DataManager data = GameManager.instance.dataManager;
@@ -91,7 +91,7 @@ public class UpgradeUI : MonoBehaviour
     //text setting
     CriticalPer_Text_level.text = "Lv." + nowLevel;
     CriticalPer_Text_Desc.text = desc_Now + "%" + "->" + desc_After + "%";
-    CriticalPer_Text_Gold.text = GetGoldForLevel(nowLevel, UpgradeType.CriticalPer).ToString();
+    CriticalPer_Text_Gold.text = GetGoldForLevel(UpgradeType.CriticalPer).ToString();
   }
 
   public void AllUpgradeSetting(){
@@ -102,21 +102,35 @@ public class UpgradeUI : MonoBehaviour
     CriticalDamage_Setting();
     CriticalPer_Setting();
   }
-    public static int GetGoldForLevel(int level, UpgradeType type)
+    public static int GetGoldForLevel(UpgradeType type)
     {
-        //등차가 2씩 증가하는 골드값 리턴
-        if (level < 1) throw new ArgumentException("레벨은 1 이상이어야 합니다.");
+        DataManager data = GameManager.instance.dataManager;
+        int level;//업그레이드 레벨
         int d;//등차
 
         switch(type){
             case UpgradeType.ATK:
+            level = data.level_ATK;
+            d = 2;
+            break;
             case UpgradeType.MaxHp:
+            level = data.level_Hp;
+            d = 2;
+            break;
             case UpgradeType.HpRecovery:
+            level = data.level_HpRecovery;
+            d = 2;
+            break;
             case UpgradeType.CriticalDamage:
+            level = data.level_CriticalDamage;
+            d = 2;
+            break;
             case UpgradeType.CriticalPer:
+            level = data.level_CriticalPer;
             d = 2;
             break;
             default:
+            level = 0;
             d = 2;
             break;
         }
@@ -139,7 +153,7 @@ public class UpgradeUI : MonoBehaviour
     public void UpgradeButton(int Uptype){
         upgradeType = (UpgradeType)Uptype;
         DataManager data = GameManager.instance.dataManager;
-        int requiredGold = GetGoldForLevel(data.level_ATK, upgradeType);//골드 요구량
+        int requiredGold = GetGoldForLevel(upgradeType);//골드 요구량
 
         if(data.goldPoint < requiredGold)
         return;

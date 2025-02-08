@@ -32,7 +32,7 @@ public class DataManager : MonoBehaviour
         float real_ATK = level_ATK * 2;//1레벨당 증가량 2
         float real_HP = 100 + (level_Hp * 10);//1레벨당 증가량 10
         float real_HPRecovery = level_HpRecovery * 0.1f;//1레벨당 증가량 0.1%
-        float real_CriticalDamage = level_CriticalDamage * 0.01f;//1레벨당 증가량 1%
+        float real_CriticalDamage = level_CriticalDamage;//1레벨당 증가량 1%
         float real_criticalPer = level_CriticalPer * 0.1f;//1레벨당 증가량 0.1%
 
         Player_Status player =  GameManager.instance.player.playerStatus;
