@@ -167,6 +167,7 @@ public class UpgradeUI : MonoBehaviour
         break;
         case UpgradeType.MaxHp:
             GameManager.instance.dataManager.level_Hp += 1;
+             GameManager.instance.player.playerStatus.health += 10;//최대체력 증가량만큼 현재체력 회복
         break;
         case UpgradeType.HpRecovery:
             GameManager.instance.dataManager.level_HpRecovery += 1;

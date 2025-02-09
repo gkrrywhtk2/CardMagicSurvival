@@ -153,13 +153,13 @@ public void Card2_PosionPoison(PointerEventData eventData){
     poisonSplash.transform.position = targetPosition;
     posion.transform.position = targetPosition;
 
-    float damage = GameManager.instance.player.playerStatus.DamageReturn(0.3f);
+    float damage = GameManager.instance.player.playerStatus.DamageReturn(0.3f,out bool isCritical);
     int per = -2;
     float bulletspeed = 0;
     Vector3 dir = Vector3.zero;
     int effectNumber = -1;
     global::bullet.bulletType type = global::bullet.bulletType.placement;
-    posion.Init(damage, per, bulletspeed, dir,effectNumber,type);
+    posion.Init(damage, per, bulletspeed, dir,effectNumber,type,isCritical);
 
 }
 
@@ -205,7 +205,7 @@ public void Card3_ManaUp(){
 }
    private IEnumerator FlameBurstRoutine()
 {
-    float damage = GameManager.instance.player.playerStatus.DamageReturn(0.3f);
+    float damage = GameManager.instance.player.playerStatus.DamageReturn(0.3f, out bool isCritical);
     int flameburstObjectNum = 7; // 오브젝트 풀에서 가져올 ID
 
     while (flameburstOn && flameburstTimer < flameburstDuration)
@@ -214,7 +214,7 @@ public void Card3_ManaUp(){
         
         // FlameBurst 효과 생성
         GameObject flame = GameManager.instance.effectPoolManager.Get(flameburstObjectNum);
-        flame.GetComponent<Melee>().Init(damage);
+        flame.GetComponent<Melee>().Init(damage,isCritical);
 
         Vector2 skillPosition; //플레이어의 바로 앞 스킬이 연출될 좌표
         float angle;//각도

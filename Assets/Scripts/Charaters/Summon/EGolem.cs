@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EGolem : MonoBehaviour
 {
+    /**********************************************************************************************
    [Header("Detection Settings")]
     public float detectionRange = 5f; // 탐지 범위
     public float attackRange = 1f; // 공격 범위
@@ -179,4 +180,5 @@ private void OnCollisionExit2D(Collision2D other) {
     public void EndAttacking(){
         isAttacking = false;
     }
+    **/
 }

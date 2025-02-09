@@ -26,11 +26,7 @@ public class AutoAttack : MonoBehaviour
     }
     private void AutoAttackPointUp(){
 
-    if(player.playerStatus.isLive != true)
-        return;
-    if(GameManager.instance.GamePlayState != true)
-        return;
-    if(GameManager.instance.ItemSelectState == true)
+    if(!PasueState())
         return;
   //  if(player.playerJoyStick.inputVec.magnitude > 0.01f)
        // return; ** 기본 공격 자동화로 인한 주석처리
@@ -58,7 +54,9 @@ public class AutoAttack : MonoBehaviour
        // sprite.flipX = dir.x < 0; **기본 공격 자동화 테스트로 인한 주석 처리
 
         //
-        float damage = GameManager.instance.player.playerStatus.DamageReturn(1);//임시
+      //  bool critical= GameManager.instance.player.playerStatus.CriticalReturn();
+        float damage = GameManager.instance.player.playerStatus.DamageReturn(1,out bool isCritical);//임시
+
         int bulletNumber = 0;
         int effectNumber = 1;
         int per = 0;//관통 현재 0
@@ -68,10 +66,18 @@ public class AutoAttack : MonoBehaviour
         bullet.rotation = Quaternion.FromToRotation(Vector3.right, dir);
         //bullet 오브젝트에 정보 전달.
         global::bullet.bulletType type = global::bullet.bulletType.bullet;
-        bullet.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type);
+        bullet.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type,isCritical);
         bullet.transform.position = player.playerCenterPivot.transform.position;
     }
+    private bool PasueState()
+    {
+        if (player.playerStatus.isLive != true)
+        return false;
+        if (GameManager.instance.GamePlayState != true)
+        return false;
 
+    return true;
+    }
    
 
 }

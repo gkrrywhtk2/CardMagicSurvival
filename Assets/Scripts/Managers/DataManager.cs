@@ -14,7 +14,8 @@ public class DataManager : MonoBehaviour
 
     private void Awake() {
         //임시로 레벨 세팅
-        UpgradeLevelSetting();
+     UpgradeLevelSetting();
+        
     }
 
     public void UpgradeLevelSetting(){
@@ -38,7 +39,7 @@ public class DataManager : MonoBehaviour
         Player_Status player =  GameManager.instance.player.playerStatus;
         player.ATK = real_ATK;
         player.maxHealth = real_HP;
-        player.health += 10;//최대체력 증가량만큼 현재체력 회복
+       // player.health += 10;//최대체력 증가량만큼 현재체력 회복
         player.healthRecoveryPer = real_HPRecovery;
         player.CriticalDamagePer = real_CriticalDamage;
         player.CriticalPer = real_criticalPer;

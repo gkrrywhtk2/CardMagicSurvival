@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
         deckManager.DeckSetting();
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
+         instance.player.playerStatus.StartHealthRegen();//체력 자동 회복
+         LinkToData();//데이터 불러오기
     }
 
     public void GameRestart(){
@@ -90,6 +92,7 @@ public class GameManager : MonoBehaviour
         instance.player.playerCol.GetComponent<Collider2D>().isTrigger = false; 
         joystick.GetComponent<Image>().raycastTarget = true;
         Time.timeScale = 1;
+       
     }
     public void ItemPause(){
         //아이템 획득 이벤트시 특수 이벤트 중지(마나획복, 몬스터 충돌 등)
@@ -117,6 +120,11 @@ public class GameManager : MonoBehaviour
             GoldCheat.gameObject.SetActive(false);
             cheatBoxTogle = false;
         }
+    }
+
+    public void LinkToData(){
+        //DataManager에 접근하여 현재 상태를 불러옴
+        instance.dataManager.ChageToRealValue();
     }
 
 }

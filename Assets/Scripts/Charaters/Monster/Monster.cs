@@ -110,9 +110,9 @@ public class Monster : MonoBehaviour
             anim.Play(0, -1, randomStartTime);
         }
     }
-    public void DamageCalculator(float damage){
+    public void DamageCalculator(float damage, bool isCritical){
         health -= damage;
-        ShowDamageText(damage);
+        ShowDamageText(damage,isCritical);
         if(health <= 0){
         death();
         }else if(nowPoison != true){
@@ -122,7 +122,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void ShowDamageText(float damage)
+    public void ShowDamageText(float damage, bool isCritical)
 {
     Vector3 position = transform.position; // 기본 위치
     if (coll != null)
@@ -138,7 +138,8 @@ public class Monster : MonoBehaviour
     DamageText damageText = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>(); // 오브젝트 풀에서 가져오기
     damageText.transform.position = position;
     damageText.value = damage;
-    damageText.Init();
+    damageText.Init(isCritical);
+    
 
 }
     IEnumerator HitStop(){

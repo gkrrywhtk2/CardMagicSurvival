@@ -10,6 +10,7 @@ public class bullet : MonoBehaviour
    public int effectId;//effectId는 effectpoolmanager에서 해당 불릿의 이펙트가 몇 번째 오브젝트인지를 의미함(폭발 이펙트)
    public enum bulletType{bullet, placement};
    public bulletType type;
+   public bool isCritical;
    //placement only 
    public float duration;//placement타입 bullet의 지속시간
     private HashSet<Monster> affectedEnemies = new HashSet<Monster>();
@@ -22,13 +23,14 @@ public class bullet : MonoBehaviour
        
     }
 
-     public void Init(float damage, int per, float bulletspeed,Vector3 dir, int effectId, bulletType type)
+     public void Init(float damage, int per, float bulletspeed,Vector3 dir, int effectId, bulletType type, bool isCritical)
     {
         this.damage = damage;
         this.per = per;
         this.bulletSpeed = bulletspeed;
         this.effectId = effectId;
         this.type = type;
+        this.isCritical = isCritical;
          if (per > -1)
         {
             //Bullet의 관통 횟수가 남아있다면 Bullet을 dir * speed 의 속도로 발사.
@@ -47,7 +49,7 @@ public class bullet : MonoBehaviour
         if(type == bulletType.bullet){
             if (!collision.CompareTag("Monster") || per == -1)
             return;
-        collision.GetComponent<Monster>().DamageCalculator(damage);
+        collision.GetComponent<Monster>().DamageCalculator(damage,isCritical);
         per--;
         if (per == -1)
         {
@@ -62,6 +64,7 @@ public class bullet : MonoBehaviour
 
                // 몬스터와 충돌하면 도트 데미지 시작
         Monster enemy = collision.GetComponent<Monster>();
+
         if (enemy != null && !affectedEnemies.Contains(enemy))
         {
             affectedEnemies.Add(enemy);
@@ -77,7 +80,7 @@ public class bullet : MonoBehaviour
         while (affectedEnemies.Contains(enemy))
         {
             // 몬스터에게 도트 데미지 적용
-            enemy.DamageCalculator(damage);
+            enemy.DamageCalculator(damage, isCritical);
             
             enemy.speed = 0.3f;
             yield return new WaitForSeconds(1f); // 1초 간격으로 데미지

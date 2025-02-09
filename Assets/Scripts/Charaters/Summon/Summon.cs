@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Summon : MonoBehaviour
 {
-
+/********************************************************************************************
 
     [Header("Connect")]
     SummonScaner scaner;
@@ -123,7 +123,7 @@ public class Summon : MonoBehaviour
         isAttacking = false;
         attackCorutine = null;
     }
-
+**/
 
     
 }

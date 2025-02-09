@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Player_Status : MonoBehaviour
 {
     [Header("#플레이어의 상태값")]
     public bool isLive;
     public float health;//현재 체력
+    private Coroutine regenCoroutine; // 실행 중인 체력 회복 코루틴
     [Header("#일반 성장 능력치 ")]
     public float ATK;//공격력
     public float maxHealth = 100;//최대 체력
@@ -93,10 +95,34 @@ public class Player_Status : MonoBehaviour
         }
 
     }
-    void Start()
+   public void StartHealthRegen()
+{
+    if (regenCoroutine == null) // 중복 실행 방지
     {
-        
+        regenCoroutine = StartCoroutine(HealthRecoveryCoroutine());
     }
+}
+    private IEnumerator HealthRecoveryCoroutine()
+{
+    while (true)
+    {
+         // 일시정지 상태일 경우, 대기 (코루틴이 종료되지 않도록 함)
+       yield return new WaitUntil(() => GameManager.instance.GamePlayState == true);
+
+       float recoveryAmount = maxHealth * (healthRecoveryPer * 0.01f);
+        health = Mathf.Min(health + recoveryAmount, maxHealth);
+    Debug.Log("gasdasfasf");
+        yield return new WaitForSeconds(1f); // 1초 대기 후 반복
+    }
+}
+public void StopHealthRegen()
+{
+    if (regenCoroutine != null)
+    {
+        StopCoroutine(regenCoroutine);
+        regenCoroutine = null;
+    }
+}
 
     // Update is called once per frame
     void Update()
@@ -119,16 +145,30 @@ public class Player_Status : MonoBehaviour
         mana += (manaRecovery+ manaRecoveryPlus) * Time.deltaTime;
     }
 
-    public float DamageReturn(float skillPower) {
-    // 캐릭터의 공격력 가져오기
-    float ATK = GameManager.instance.player.playerStatus.ATK;
+  public float DamageReturn(float skillPower, out bool isCritical)
+    {
+        // 캐릭터의 공격력 가져오기
+        float ATK = GameManager.instance.player.playerStatus.ATK;
 
-    // 랜덤 오프셋 적용 (0%~10% 변동)
-    float randomOffset = Random.Range(0, ATK * 0.1f);
+        // 랜덤 오프셋 적용 (0%~10% 변동)
+        float randomOffset = Random.Range(0, ATK * 0.1f);
 
-    // 최종 데미지 계산 (기본 공격력 + 변동 값) * 스킬 배율
-    float finalDamage = (ATK + randomOffset) * skillPower;
+        // 기본 데미지 계산
+        float Damage_one = (ATK + randomOffset) * skillPower;
 
-    return finalDamage;
-}
+        // 치명타 확률 체크 (CriticalPer가 1이라면 1% 확률)
+        isCritical = Random.Range(0f, 100f) < CriticalPer;
+
+        // 최종 데미지 계산 (치명타 적용)
+        float finalDamage = isCritical ? Damage_one * (1f + CriticalDamagePer / 100f) : Damage_one;
+
+        return finalDamage;
+    }
+       public bool CriticalReturn(){
+         // 치명타 확률 체크 (CriticalPer가 1이라면 1% 확률)
+        bool isCritical = Random.Range(0f, 100f) < CriticalPer;
+        return isCritical;
+       }
+
+
 }
