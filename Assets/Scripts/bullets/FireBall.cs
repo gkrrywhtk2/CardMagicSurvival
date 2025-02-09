@@ -41,7 +41,7 @@ public class FireBall : MonoBehaviour
     effect.transform.position = targetPosition;
 
     //화염구 충돌 오브젝트 초기화
-    float damage = 20;
+    float damage = GameManager.instance.player.playerStatus.DamageReturn(5);
     int per = -2;//infinity
     float bulletspeed = 0;//null
     Vector3 dir = Vector3.zero;//null

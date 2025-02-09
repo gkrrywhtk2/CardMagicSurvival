@@ -118,4 +118,17 @@ public class Player_Status : MonoBehaviour
 
         mana += (manaRecovery+ manaRecoveryPlus) * Time.deltaTime;
     }
+
+    public float DamageReturn(float skillPower) {
+    // 캐릭터의 공격력 가져오기
+    float ATK = GameManager.instance.player.playerStatus.ATK;
+
+    // 랜덤 오프셋 적용 (0%~10% 변동)
+    float randomOffset = Random.Range(0, ATK * 0.1f);
+
+    // 최종 데미지 계산 (기본 공격력 + 변동 값) * 스킬 배율
+    float finalDamage = (ATK + randomOffset) * skillPower;
+
+    return finalDamage;
+}
 }

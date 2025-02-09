@@ -153,7 +153,7 @@ public void Card2_PosionPoison(PointerEventData eventData){
     poisonSplash.transform.position = targetPosition;
     posion.transform.position = targetPosition;
 
-    float damage = 3;
+    float damage = GameManager.instance.player.playerStatus.DamageReturn(0.3f);
     int per = -2;
     float bulletspeed = 0;
     Vector3 dir = Vector3.zero;
@@ -205,7 +205,7 @@ public void Card3_ManaUp(){
 }
    private IEnumerator FlameBurstRoutine()
 {
-    float damage = 3f; // 고정 피해량
+    float damage = GameManager.instance.player.playerStatus.DamageReturn(0.3f);
     int flameburstObjectNum = 7; // 오브젝트 풀에서 가져올 ID
 
     while (flameburstOn && flameburstTimer < flameburstDuration)

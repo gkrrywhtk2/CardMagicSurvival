@@ -112,6 +112,7 @@ public class Monster : MonoBehaviour
     }
     public void DamageCalculator(float damage){
         health -= damage;
+        ShowDamageText(damage);
         if(health <= 0){
         death();
         }else if(nowPoison != true){
@@ -120,6 +121,26 @@ public class Monster : MonoBehaviour
             //여기 할 차례임
         }
     }
+
+    public void ShowDamageText(float damage)
+{
+    Vector3 position = transform.position; // 기본 위치
+    if (coll != null)
+    {
+     
+        position.y += (coll.bounds.extents.y) * 3; // 몬스터의 상단에 텍스트 배치
+    }
+    else
+    {
+        position.y += 1f; // 기본값 (콜라이더 없을 때)
+    }
+
+    DamageText damageText = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>(); // 오브젝트 풀에서 가져오기
+    damageText.transform.position = position;
+    damageText.value = damage;
+    damageText.Init();
+
+}
     IEnumerator HitStop(){
         //피격시 일시정지
         nowHit = true;

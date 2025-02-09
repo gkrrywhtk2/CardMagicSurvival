@@ -58,7 +58,7 @@ public class AutoAttack : MonoBehaviour
        // sprite.flipX = dir.x < 0; **기본 공격 자동화 테스트로 인한 주석 처리
 
         //
-        float damage = 10;//임시
+        float damage = GameManager.instance.player.playerStatus.DamageReturn(1);//임시
         int bulletNumber = 0;
         int effectNumber = 1;
         int per = 0;//관통 현재 0
@@ -71,5 +71,7 @@ public class AutoAttack : MonoBehaviour
         bullet.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type);
         bullet.transform.position = player.playerCenterPivot.transform.position;
     }
+
+   
 
 }

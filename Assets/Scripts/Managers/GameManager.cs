@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [Header("#ManagerConnect")]
     public ObjectPooling poolManager;//오브젝트 풀링
     public EffectPooling effectPoolManager;//이펙트 풀링
+    public DamageTextPooling damageTextPooling;//데미지 텍스트 풀링
     public MobSpawnManager spawnManager;
     public DeckManager deckManager;
     public WaveManager waveManager;
