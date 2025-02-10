@@ -178,7 +178,8 @@ public class Monster : MonoBehaviour
         gold.value = randomOffSet;
         gold.transform.position = transform.position;
     }
-    GameManager.instance.spawnManager.mobCount--;
+   // GameManager.instance.spawnManager.mobCount--;
+    GameManager.instance.stageManager.CheckStageProgress();//스테이지 진행률 증가
     // 현재 오브젝트 비활성화
     gameObject.SetActive(false);
    }

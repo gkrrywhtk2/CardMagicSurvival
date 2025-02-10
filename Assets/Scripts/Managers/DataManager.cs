@@ -11,6 +11,10 @@ public class DataManager : MonoBehaviour
     public int level_HpRecovery;//최력 회복량 레벨
     public int level_CriticalDamage;//치명타 배율 레벨
     public int level_CriticalPer;//치명타 확률 레벨
+    [Header("#Stage Info")]
+    public int stageProgress;//저장된 스테이지 레벨
+    
+
 
     private void Awake() {
         //임시로 레벨 세팅
