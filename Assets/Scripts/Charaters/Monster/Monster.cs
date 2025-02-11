@@ -1,10 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using MonsterType;
 
 public class Monster : MonoBehaviour
 {
 [Header("Components")]
+ 
+    public MobType mobType;
     SpriteRenderer sprite;
     Rigidbody2D rigid;
     Collider2D coll;
@@ -12,6 +14,7 @@ public class Monster : MonoBehaviour
     private Color originalColor;
     public Color hitColor;
     public RuntimeAnimatorController[] animCon;
+    public Transform damageTextPos;
 
     [Header("Scaner")]
     public Rigidbody2D moveTarget;
@@ -49,6 +52,7 @@ public class Monster : MonoBehaviour
         maxHealth = data.maxHealth;
         health = maxHealth;
         damage = data.damage;
+        mobType = data.mobType;
 
         //중독 상태 초기화
         nowPoison = false;
@@ -93,6 +97,7 @@ public class Monster : MonoBehaviour
         //재생성 될때마다 초기화
         moveTarget = GameManager.instance.player.GetComponent<Rigidbody2D>();
         player = GameManager.instance.player.GetComponent<Player_Main>();
+        transform.localScale = new Vector3(0.3f,0.3f,0);
         health = maxHealth;
         coll.enabled = true;
         rigid.simulated = true;
@@ -125,15 +130,12 @@ public class Monster : MonoBehaviour
     public void ShowDamageText(float damage, bool isCritical)
 {
     Vector3 position = transform.position; // 기본 위치
-    if (coll != null)
-    {
-     
-        position.y += (coll.bounds.extents.y) * 3; // 몬스터의 상단에 텍스트 배치
-    }
-    else
-    {
-        position.y += 1f; // 기본값 (콜라이더 없을 때)
-    }
+    SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+if (spriteRenderer != null)
+{
+    //position.y += spriteRenderer.bounds.extents.y;
+    position = damageTextPos.transform.position;
+}
 
     DamageText damageText = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>(); // 오브젝트 풀에서 가져오기
     damageText.transform.position = position;

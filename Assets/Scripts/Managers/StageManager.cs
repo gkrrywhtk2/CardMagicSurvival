@@ -72,6 +72,8 @@ public class StageManager : MonoBehaviour
     public void BossButton(){
         bossButton.gameObject.SetActive(false);
         cameraAnim.SetBool("Boss", true);
+        GameManager.instance.spawnManager.MonsterSpawn(2);
+
     }
    
 }

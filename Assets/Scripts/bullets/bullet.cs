@@ -14,6 +14,7 @@ public class bullet : MonoBehaviour
    //placement only 
    public float duration;//placement타입 bullet의 지속시간
     private HashSet<Monster> affectedEnemies = new HashSet<Monster>();
+     private HashSet<Boss> affectedEnemies_Boss = new HashSet<Boss>();
 
    Rigidbody2D rigid;
    private void Awake()
@@ -46,7 +47,8 @@ public class bullet : MonoBehaviour
 
      private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(type == bulletType.bullet){
+        if(collision.CompareTag("Monster")){
+                if(type == bulletType.bullet){
             if (!collision.CompareTag("Monster") || per == -1)
             return;
         collision.GetComponent<Monster>().DamageCalculator(damage,isCritical);
@@ -72,12 +74,53 @@ public class bullet : MonoBehaviour
         }
 
         }
+        }
+    if(collision.CompareTag("Boss")){
+                if(type == bulletType.bullet){
+            if (!collision.CompareTag("Monster") || per == -1)
+            return;
+        collision.GetComponent<Boss>().DamageCalculator(damage,isCritical);
+        per--;
+        if (per == -1)
+        {
+            GameObject effect = GameManager.instance.effectPoolManager.Get(effectId);
+            effect.transform.position = transform.position;
+            rigid.linearVelocity = Vector3.zero;
+            this.gameObject.SetActive(false);
+
+        }
+        }
+        else if(type == bulletType.placement){
+
+               // 몬스터와 충돌하면 도트 데미지 시작
+        Boss boss = collision.GetComponent<Boss>();
+
+        if (boss != null && !affectedEnemies_Boss.Contains(boss))
+        {
+            affectedEnemies_Boss.Add(boss);
+            StartCoroutine(ApplyDotDamage_Boss(boss));
+        }
+
+        }
+    }
+        
        
     }
     
      private IEnumerator ApplyDotDamage(Monster enemy)
     {
         while (affectedEnemies.Contains(enemy))
+        {
+            // 몬스터에게 도트 데미지 적용
+            enemy.DamageCalculator(damage, isCritical);
+            
+            enemy.speed = 0.3f;
+            yield return new WaitForSeconds(1f); // 1초 간격으로 데미지
+        }
+    }
+     private IEnumerator ApplyDotDamage_Boss(Boss enemy)
+    {
+        while (affectedEnemies_Boss.Contains(enemy))
         {
             // 몬스터에게 도트 데미지 적용
             enemy.DamageCalculator(damage, isCritical);

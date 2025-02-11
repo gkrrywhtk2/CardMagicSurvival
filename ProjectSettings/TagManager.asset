@@ -12,6 +12,7 @@ TagManager:
   - Stop
   - Gem_Item
   - Gold
+  - Boss
   layers:
   - Default
   - TransparentFX

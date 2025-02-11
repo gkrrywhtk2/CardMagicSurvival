@@ -36,6 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 179859248486214010}
+  - {fileID: 7752746082217382374}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6736110948672671633
@@ -169,10 +170,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d548aa2f31e8e4c89a7bf9aabd5e7ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mobType: 0
   hitColor: {r: 0.7647059, g: 0.22745098, b: 0.22745098, a: 1}
   animCon:
   - {fileID: 9100000, guid: 1255d02d820824bdb9482376e6005826, type: 2}
   - {fileID: 9100000, guid: 6e2dcb1f870a447829ab3d4851003ff4, type: 2}
+  - {fileID: 9100000, guid: bd5430a78e96d42de961598d8a334ee0, type: 2}
+  - {fileID: 9100000, guid: bd5430a78e96d42de961598d8a334ee0, type: 2}
+  damageTextPos: {fileID: 7752746082217382374}
   moveTarget: {fileID: 0}
   player: {fileID: 0}
   speed: 0
@@ -305,3 +310,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &6961883906785266541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7752746082217382374}
+  m_Layer: 6
+  m_Name: DamageTextPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7752746082217382374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6961883906785266541}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.044, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7110013912480384686}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
