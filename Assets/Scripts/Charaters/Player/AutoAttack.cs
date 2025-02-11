@@ -66,7 +66,7 @@ public class AutoAttack : MonoBehaviour
         bullet.rotation = Quaternion.FromToRotation(Vector3.right, dir);
         //bullet 오브젝트에 정보 전달.
         global::bullet.bulletType type = global::bullet.bulletType.bullet;
-        bullet.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type,isCritical);
+        bullet.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type,isCritical, global::bullet.elementType.normal);
         bullet.transform.position = player.playerCenterPivot.transform.position;
     }
     private bool PasueState()

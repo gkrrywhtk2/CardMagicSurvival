@@ -38,7 +38,7 @@ public class MobSpawnManager : MonoBehaviour
         if (slime_0 != true)
             yield break;
         float spawnCooltime = spawnTime_slime_0;
-        int mob_id = 0;
+        int mob_id = 4;
         yield return new WaitForSeconds(spawnCooltime);
             if(spawnAllow){
                 MonsterSpawn(mob_id);
@@ -58,7 +58,7 @@ public class MobSpawnManager : MonoBehaviour
         if (slime_1 != true)
             yield break;
         float spawnCooltime = spawnTime_slime_1;
-        int mob_id = 1;
+        int mob_id = 3;
         yield return new WaitForSeconds(spawnCooltime);
             if(spawnAllow){
                 MonsterSpawn(mob_id);
@@ -78,7 +78,7 @@ public class MobSpawnManager : MonoBehaviour
         if(monster.mobType == MobType.normal){
             monster.transform.position = spawnpoint[Random.Range(1, spawnpoint.Length)].position;
         }else if(monster.mobType == MobType.boss){
-            monster.transform.localScale = new Vector3(1,1,0);
+            monster.transform.localScale = new Vector3(3,3,1);
             monster.transform.position = bossSpawnPoint.position;
         }
     

@@ -35,6 +35,7 @@ public class Monster : MonoBehaviour
     public float posionDamage;//독 데미지
     public float dotDamageCoolTime;//이 시간초마다 도트 데미지 입음
     public GameObject poisonEffect;//중독 상태일때 머리위에 독 표시
+    private bool isCoroutineRunning_Hit = false;//Hit코루틴 중복실행 방지
       private void Awake()
     {
        
@@ -95,15 +96,19 @@ public class Monster : MonoBehaviour
     private void OnEnable()
     {
         //재생성 될때마다 초기화
+       
         moveTarget = GameManager.instance.player.GetComponent<Rigidbody2D>();
         player = GameManager.instance.player.GetComponent<Player_Main>();
-        transform.localScale = new Vector3(0.3f,0.3f,0);
+        transform.localScale = new Vector3(1,1,1);
         health = maxHealth;
         coll.enabled = true;
         rigid.simulated = true;
         isLive = true;
         nowHit = false;
         nowStop = false;
+        nowPoison = false;//독성 초기화
+        sprite.color = originalColor;//색상 초기화
+        coll.isTrigger = false;
     }
 
      private void RandomizeAnimation()
@@ -120,11 +125,9 @@ public class Monster : MonoBehaviour
         ShowDamageText(damage,isCritical);
         if(health <= 0){
         death();
-        }else if(nowPoison != true){
-        StartCoroutine(HitStop());
-        }else if(nowPoison == true){
-            //여기 할 차례임
+
         }
+        
     }
 
     public void ShowDamageText(float damage, bool isCritical)
@@ -144,16 +147,28 @@ if (spriteRenderer != null)
     
 
 }
+
+public void CallHotStop(){
+ StartCoroutine(HitStop());
+}
     IEnumerator HitStop(){
+
+         if (isCoroutineRunning_Hit) yield break; // 중복 실행 방지
+    isCoroutineRunning_Hit = true;
         //피격시 일시정지
         nowHit = true;
         Vector3 playerpos = GameManager.instance.playerMove.transform.position;
         Vector3 dirvec = transform.position - playerpos;
-        rigid.AddForce(dirvec.normalized * 0.1f, ForceMode2D.Impulse);
+            if(nowPoison != true){
+                //독성 공격은 피격 물리 연산 X
+                 rigid.AddForce(dirvec.normalized * 0.1f, ForceMode2D.Impulse);
+            }
+                
         sprite.color = hitColor;
         yield return new WaitForSeconds(hittime);  // 0.1초 동안 빨갛게 변함
         nowHit = false;
         sprite.color = originalColor;
+        isCoroutineRunning_Hit = false;
     }
 
     public void PoisonOn(float damage){
@@ -168,6 +183,7 @@ if (spriteRenderer != null)
     public void death(){
         isLive = false;
         nowHit = true; 
+        coll.isTrigger = true;
         anim.SetBool("Dead", true);
     }
    public void Deletemob(){

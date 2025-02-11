@@ -159,7 +159,7 @@ public void Card2_PosionPoison(PointerEventData eventData){
     Vector3 dir = Vector3.zero;
     int effectNumber = -1;
     global::bullet.bulletType type = global::bullet.bulletType.placement;
-    posion.Init(damage, per, bulletspeed, dir,effectNumber,type,isCritical);
+    posion.Init(damage, per, bulletspeed, dir,effectNumber,type,isCritical,bullet.elementType.posion);
 
 }
 

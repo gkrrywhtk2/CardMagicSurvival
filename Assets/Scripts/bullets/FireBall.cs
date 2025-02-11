@@ -1,3 +1,4 @@
+using Unity.Android.Gradle;
 using UnityEngine;
 using UnityEngine.Analytics;
 
@@ -42,12 +43,13 @@ public class FireBall : MonoBehaviour
 
     //화염구 충돌 오브젝트 초기화
     float damage = GameManager.instance.player.playerStatus.DamageReturn(5,out bool isCritical);
-    int per = -2;//infinity
-    float bulletspeed = 0;//null
-    Vector3 dir = Vector3.zero;//null
-    int effectNumber = -1;//null
-     global::bullet.bulletType type = global::bullet.bulletType.bullet;
-    effect.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type,isCritical);
+    //int per = -2;//infinity
+   // float bulletspeed = 0;//null
+   // Vector3 dir = Vector3.zero;//null
+   // int effectNumber = -1;//null
+    // global::bullet.bulletType type = global::bullet.bulletType.bullet;
+   // effect.GetComponent<bullet>().Init(damage, per, bulletspeed, dir,effectNumber,type,isCritical,bullet.elementType.normal);
+    effect.GetComponent<Melee>().Init(damage, isCritical);
     gameObject.SetActive(false);
 
    }

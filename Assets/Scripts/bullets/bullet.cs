@@ -15,6 +15,9 @@ public class bullet : MonoBehaviour
    public float duration;//placement타입 bullet의 지속시간
     private HashSet<Monster> affectedEnemies = new HashSet<Monster>();
      private HashSet<Boss> affectedEnemies_Boss = new HashSet<Boss>();
+     public enum elementType{normal, posion};
+     public elementType element;
+
 
    Rigidbody2D rigid;
    private void Awake()
@@ -24,7 +27,8 @@ public class bullet : MonoBehaviour
        
     }
 
-     public void Init(float damage, int per, float bulletspeed,Vector3 dir, int effectId, bulletType type, bool isCritical)
+     public void Init(float damage, int per, float bulletspeed,Vector3 dir, int effectId,
+      bulletType type, bool isCritical, elementType element)
     {
         this.damage = damage;
         this.per = per;
@@ -32,6 +36,7 @@ public class bullet : MonoBehaviour
         this.effectId = effectId;
         this.type = type;
         this.isCritical = isCritical;
+        this.element = element;
          if (per > -1)
         {
             //Bullet의 관통 횟수가 남아있다면 Bullet을 dir * speed 의 속도로 발사.
@@ -45,13 +50,14 @@ public class bullet : MonoBehaviour
     
     }
 
+/**
      private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Monster")){
                 if(type == bulletType.bullet){
             if (!collision.CompareTag("Monster") || per == -1)
             return;
         collision.GetComponent<Monster>().DamageCalculator(damage,isCritical);
+        
         per--;
         if (per == -1)
         {
@@ -66,6 +72,9 @@ public class bullet : MonoBehaviour
 
                // 몬스터와 충돌하면 도트 데미지 시작
         Monster enemy = collision.GetComponent<Monster>();
+        if(element == elementType.posion){
+            enemy.nowPoison = true;
+        }
 
         if (enemy != null && !affectedEnemies.Contains(enemy))
         {
@@ -74,39 +83,53 @@ public class bullet : MonoBehaviour
         }
 
         }
+
+        collision.GetComponent<Monster>().CallHotStop();//몬스터 충돌 연산
         }
-    if(collision.CompareTag("Boss")){
-                if(type == bulletType.bullet){
-            if (!collision.CompareTag("Monster") || per == -1)
-            return;
-        collision.GetComponent<Boss>().DamageCalculator(damage,isCritical);
+        **/
+        
+
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+{
+    if (!collision.CompareTag("Monster")) return; // 한 번만 검사
+
+    Monster enemy = collision.GetComponent<Monster>();
+    if (enemy == null) return; // 예외 처리
+
+    if (type == bulletType.bullet)
+    {
+        if (per == -1) return;
+
+        enemy.DamageCalculator(damage, isCritical);
         per--;
-        if (per == -1)
+
+        if (per <= 0) // 안전한 조건 검사
         {
             GameObject effect = GameManager.instance.effectPoolManager.Get(effectId);
             effect.transform.position = transform.position;
             rigid.linearVelocity = Vector3.zero;
             this.gameObject.SetActive(false);
-
         }
-        }
-        else if(type == bulletType.placement){
-
-               // 몬스터와 충돌하면 도트 데미지 시작
-        Boss boss = collision.GetComponent<Boss>();
-
-        if (boss != null && !affectedEnemies_Boss.Contains(boss))
+    }
+    else if (type == bulletType.placement)
+    {
+        if (element == elementType.posion)
         {
-            affectedEnemies_Boss.Add(boss);
-            StartCoroutine(ApplyDotDamage_Boss(boss));
+            enemy.nowPoison = true;
         }
 
+        if (!affectedEnemies.Contains(enemy))
+        {
+            affectedEnemies.Add(enemy);
+            StartCoroutine(ApplyDotDamage(enemy));
         }
     }
-        
-       
-    }
-    
+
+    enemy.CallHotStop(); // 몬스터 충돌 연산
+}
+
+
      private IEnumerator ApplyDotDamage(Monster enemy)
     {
         while (affectedEnemies.Contains(enemy))
