@@ -1,6 +1,5 @@
-using Unity.Android.Gradle;
 using UnityEngine;
-using UnityEngine.Analytics;
+
 
 public class FireBall : MonoBehaviour
 {
