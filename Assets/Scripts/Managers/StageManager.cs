@@ -19,6 +19,7 @@ public class StageManager : MonoBehaviour
 
     // 보스전 관련 변수
     public float bossTime = 60f; // 보스 제한 시간 (기본값 1분)
+    public Animator cameraAnim;
 
     private void Update() 
     {
@@ -67,5 +68,11 @@ public class StageManager : MonoBehaviour
     public void BossButtonSetting(){
         bossButton.gameObject.SetActive(true);
     }
+
+    public void BossButton(){
+        bossButton.gameObject.SetActive(false);
+        cameraAnim.SetBool("Boss", true);
+    }
+   
 }
 
