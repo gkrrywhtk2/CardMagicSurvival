@@ -8,6 +8,7 @@ public class Player_Effect : MonoBehaviour
     public GameObject ConcentEffect1;
     public GameObject levelUpCircleTimeStop;
     public Animator levelUpCircleTimeStopAnim;
+    public Animator NextStagePadeOut;
 
     public void PlayManaUp()
     {

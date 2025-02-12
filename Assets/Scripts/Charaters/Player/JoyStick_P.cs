@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class JoyStick_P : MonoBehaviour
 {
-     [Header("Connect")]
+    [Header("Connect")]
     public FloatingJoystick joy;
     Animator anim;
     SpriteRenderer spr;
@@ -10,6 +10,8 @@ public class JoyStick_P : MonoBehaviour
     public Vector2 inputVec;
     public bool nowMove;
     public float speed;
+    //next stage
+    public bool nextStageSetting = false;
 
     private void Awake()
     {
@@ -23,12 +25,14 @@ public class JoyStick_P : MonoBehaviour
         if(GameManager.instance.GamePlayState != true)
         return;
         
-
-    JoyStickMove();
+        JoyStickMove();
+        NextStageStopUpdate();
      }
 
      private void JoyStickMove()
     {
+        if(nextStageSetting == true)
+            return;
         inputVec.x = joy.Horizontal;
         inputVec.y = joy.Vertical;
 
@@ -37,6 +41,21 @@ public class JoyStick_P : MonoBehaviour
         Vector2 targetPosition = rigid.position + nextVec;
         rigid.MovePosition(targetPosition);
         nowMove = nextVec.magnitude > 0;
+       
+    }
+       private void NextStageStopUpdate()
+    {
+        if(nextStageSetting == false)
+            return;
+        Vector2 inputVec;
+        inputVec.x = 1;
+        inputVec.y = 0;;
+
+       // float moveSpeed = GameManager.instance.player.playerMove.speed;
+        Vector2 nextVec = inputVec.normalized * 5 * Time.deltaTime;
+        Rigidbody2D rigid = GameManager.instance.player.GetComponent<Rigidbody2D>();
+        Vector2 targetPosition = rigid.position + nextVec;
+        rigid.MovePosition(targetPosition);
        
     }
      private void LateUpdate()

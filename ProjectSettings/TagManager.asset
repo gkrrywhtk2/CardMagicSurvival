@@ -13,6 +13,7 @@ TagManager:
   - Gem_Item
   - Gold
   - Boss
+  - Cleaner
   layers:
   - Default
   - TransparentFX

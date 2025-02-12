@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using UnityEngine.Rendering.Universal;
 
 
 
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     public bool ItemSelectState = false;//true시 이동만 가능
     public GameObject backG;//background image
     public FloatingJoystick joystick;//조이스틱
+    public PixelPerfectCamera pixelPerfectCamera;
 
     public bool night;
 
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
     public void LinkToData(){
         //DataManager에 접근하여 현재 상태를 불러옴
         instance.dataManager.ChageToRealValue();
+        instance.dataManager.SyncStageLevelFromServer();
     }
 
 }

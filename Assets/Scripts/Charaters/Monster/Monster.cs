@@ -187,7 +187,9 @@ public void CallHotStop(){
         anim.SetBool("Dead", true);
     }
    public void Deletemob(){
-    //아이템 드랍
+    switch(mobType){
+        case MobType.normal:
+                  //아이템 드랍
       if (Random.Range(0, 2) == 0) // 0 또는 1 반환, 50% 확률
     {
         int goldCoinPoolNum = 6;
@@ -200,6 +202,16 @@ public void CallHotStop(){
     GameManager.instance.stageManager.CheckStageProgress();//스테이지 진행률 증가
     // 현재 오브젝트 비활성화
     gameObject.SetActive(false);
+        break;
+
+        case MobType.boss :
+        GameManager.instance.stageManager.BossDeadEvent();
+        gameObject.SetActive(false);
+        break;
+
+    }
+    
+  
    }
    private void OnCollisionStay2D(Collision2D other) {
         if(other.gameObject.CompareTag("Player")){
@@ -213,6 +225,9 @@ public void CallHotStop(){
             nowStop = true;
             rigid.linearVelocity = Vector2.zero; // Rigidbody2D 정지
             rigid.bodyType = RigidbodyType2D.Kinematic;// 물리적 반응 비활성화
+        }
+        if(other.gameObject.CompareTag("Cleaner")){
+            gameObject.SetActive(false);//다음 스테이지 진입시 클리너 발동, 몬스터 전부 삭제 
         }
     }
     private void OnTriggerExit2D(Collider2D other) {

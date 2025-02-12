@@ -27,10 +27,6 @@ public class Player_col : MonoBehaviour
 
 }
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
    public void HitCalCulator(float damage){
     //몬스터로부터 피격시 호출
@@ -44,10 +40,7 @@ public class Player_col : MonoBehaviour
     playerStatus.health -= damage;
     if(playerStatus.health <= 0){
 
-        playerStatus.isLive = false;
-        //rigid.bodyType = RigidbodyType2D.Static;
-        capsuleCollider.isTrigger = true;
-        ani.SetTrigger("Death");
+       PlayerDeathSetting();
     }
     nowHit = true;
     StartCoroutine(HitTimer());
@@ -56,6 +49,14 @@ public class Player_col : MonoBehaviour
    private IEnumerator HitTimer(){
     yield return new WaitForSeconds(hitCoolTime);
     nowHit = false;
+   }
+
+   public void PlayerDeathSetting(){
+      playerStatus.isLive = false;
+        //rigid.bodyType = RigidbodyType2D.Static;
+        capsuleCollider.isTrigger = true;
+        ani.SetTrigger("Death");
+        //이 함수 후에 playerDeath에서 실제 플레이어 사망
    }
    public void PlayerDeath(){
     GameManager.instance.player.playerStatus.isLive = false;

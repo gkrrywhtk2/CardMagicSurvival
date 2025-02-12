@@ -12,14 +12,14 @@ public class DataManager : MonoBehaviour
     public int level_CriticalDamage;//치명타 배율 레벨
     public int level_CriticalPer;//치명타 확률 레벨
     [Header("#Stage Info")]
-    public int stageProgress;//저장된 스테이지 레벨
+    public int stageProgressLevel;//저장된 스테이지 레벨
     
 
 
     private void Awake() {
         //임시로 레벨 세팅
      UpgradeLevelSetting();
-        
+        StageSetting();
     }
 
     public void UpgradeLevelSetting(){
@@ -29,6 +29,10 @@ public class DataManager : MonoBehaviour
         level_HpRecovery = 1;
         level_CriticalDamage = 1;
         level_CriticalPer = 1;
+    }
+
+    public void StageSetting(){
+        stageProgressLevel = 1;//저장된 스테이지 레벨
     }
 
     public void ChageToRealValue(){
@@ -49,4 +53,10 @@ public class DataManager : MonoBehaviour
         player.CriticalPer = real_criticalPer;
 
     }
+    public void SyncStageLevelFromServer()
+{
+    // 데이터 매니저에서 받은 스테이지 레벨을 실제 스테이지 매니저에 적용
+    GameManager.instance.stageManager.currentStageLevel = stageProgressLevel;
+}
+
 }
