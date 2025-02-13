@@ -16,7 +16,8 @@ public class StageManager : MonoBehaviour
     public Slider bossHpSlider;        // 보스 체력 슬라이더
     public Slider bossTimeSlider;      // 보스 제한 시간 슬라이더
     public GameObject bossButton;       //보스 도전 버튼
-    public TMP_Text stageNameText;     //스테이지 레벨텍스트
+    public TMP_Text stageLevelText;     //스테이지 레벨텍스트
+    public TMP_Text stageNameText;  //스테이지 이름 텍스트 : 정글 깊은 곳 1
     public GameObject nextStageButton;//다음 스테이지 진행 버튼
 
 
@@ -39,7 +40,8 @@ public class StageManager : MonoBehaviour
         stageProgress = 0f;
         isBossReady = false;
         nowBossBattle = false;
-        stageNameText.text = "스테이지 " + currentStageLevel;
+        stageLevelText.text = "스테이지 " + currentStageLevel;
+        stageNameText.text = "정글 깊은 곳" + currentStageLevel;
         UpdateUI();
     }
 
@@ -60,6 +62,7 @@ public class StageManager : MonoBehaviour
         if (stageProgress >= 100f)
         {
            isBossReady = true;
+           stageProgressText.text = "MAX";
             BossButtonSetting();
         }
     }
@@ -77,14 +80,20 @@ public class StageManager : MonoBehaviour
 
     public void BossButton(){
         nowBossBattle = true;//보스 배틀 시작
-        stageNameText.text = "";
+        stageProgressSlider.gameObject.SetActive(false);//스테이지 진행률 슬라이드 감추기
         bossButton.gameObject.SetActive(false);
         cameraAnim.SetBool("Boss", true);
         GameManager.instance.spawnManager.MonsterSpawn(2);
-        bossHpSlider.gameObject.SetActive(true);
+        StartCoroutine(ShowBossSlider());
+       
 
         //보스 슬라이드 세팅
         bossTime = 60;//보스 제한시간 1분
+    }
+    IEnumerator ShowBossSlider(){
+        yield return new WaitForSeconds(1f);
+         bossHpSlider.gameObject.SetActive(true);
+
     }
     private void FixedUpdate() {
         BossHpUpdate();
@@ -116,6 +125,7 @@ public class StageManager : MonoBehaviour
 
 public void BossDeadEvent(){
     nowBossBattle = false;//보스배틀 종료
+    stageProgressSlider.gameObject.SetActive(true);//스테이지 진행률 오브젝트 활성화
     bossHpSlider.gameObject.SetActive(false);//보스 슬라이드 감추기
     nextStageButton.gameObject.SetActive(true);//다음 스테이지 진행 버튼 활성화
 }
