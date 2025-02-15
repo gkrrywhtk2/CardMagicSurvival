@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
 using UnityEngine.Rendering.Universal;
 
 
@@ -30,6 +29,7 @@ public class GameManager : MonoBehaviour
     public ItemManager itemManager;
     public DataManager dataManager;
     public StageManager stageManager;
+    public WeaponManager weaponManager;
     [Header("#GameControl")]
     public bool cardOneTouch;
     public bool GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)
@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
         //DataManager에 접근하여 현재 상태를 불러옴
         instance.dataManager.ChageToRealValue();
         instance.dataManager.SyncStageLevelFromServer();
+        instance.dataManager.SyncWeaponData();
     }
 
 }

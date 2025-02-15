@@ -80,8 +80,8 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         rangeOn = data.isRangeCard;
         range.GetComponent<RectTransform>().localScale = data.rangeScale;
         CardAlpha1_Range();
-          CardDrawAni();
-         // StartCoroutine(CardDrawAnimation());
+         CardDrawAni();
+          //StartCoroutine(CardDrawAnimation());
         
         
     }
@@ -321,7 +321,7 @@ public void CardAlpha1_Range(){
        
     }
     IEnumerator CardDrawAnimation(){
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1);//드로우 쿨타임
           anim.ResetTrigger("Draw"); // 기존 트리거 초기화
             anim.SetTrigger("Draw");   // 다시 트리거 발동
     }
