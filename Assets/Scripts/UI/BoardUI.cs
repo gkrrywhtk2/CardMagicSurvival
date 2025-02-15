@@ -30,5 +30,12 @@ public class BoardUI : MonoBehaviour
     upgradeUI.AllUpgradeSetting();
 
    }
+   public void Show_WeaponBoard(){
+     Vector3 showPos = new Vector3(0,0,0);
+     GameManager.instance.weaponManager.WeaponImageSetting();
+     HideAllBoards();
+     boards[1].GetComponent<RectTransform>().anchoredPosition = showPos;
+     
+   }
    }
 

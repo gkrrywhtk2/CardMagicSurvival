@@ -15,6 +15,9 @@ public class DataManager : MonoBehaviour
     [Header("#Stage Info")]
     public int stageProgressLevel;//저장된 스테이지 레벨
 
+
+    //Weapon List
+    public List<Weapon> weaponList = new List<Weapon>();//웨폰 데이터 저장
     
 
 
@@ -61,34 +64,35 @@ public class DataManager : MonoBehaviour
     GameManager.instance.stageManager.currentStageLevel = stageProgressLevel;
 }
 
-   public void SyncWeaponData()
+    public void SyncWeaponData()
     {
         //데이터 메니저에서 받은 웨폰 데이터를 실제 웨폰 메니저에 적용
-        GameManager.instance.weaponManager.LoadWeaponList(GetWeaponsData());
+      weaponList = GetWeaponsData();
+      
     }
     public List<Weapon> GetWeaponsData(){
         //백엔드 서버에서 WeaponList를 받아옴, 우선 임시로 데이터 세팅
          List<Weapon> loadedWeapons = new List<Weapon>
         {
-            new Weapon(0, 0, WeaponGrade.Common, 1, true, 1),
-            new Weapon(1, 0, WeaponGrade.Common, 1, false, 0),
-            new Weapon(2, 0, WeaponGrade.Common, 1, false, 0),
-              new Weapon(3, 0, WeaponGrade.Common, 1, false, 0),
+            new Weapon(0, 0, WeaponGrade.Common, 1, true, 1, true),
+            new Weapon(1, 0, WeaponGrade.Common, 1, false, 0,false),
+            new Weapon(2, 0, WeaponGrade.Common, 1, false, 0,false),
+              new Weapon(3, 0, WeaponGrade.Common, 1, false, 0,false),
               //
-                new Weapon(4, 0, WeaponGrade.Rare, 1, false, 0),
-                  new Weapon(5, 0, WeaponGrade.Rare, 1, false, 0),
-                    new Weapon(6, 0, WeaponGrade.Rare, 1, false, 0),
-                      new Weapon(7, 0, WeaponGrade.Rare, 1, false, 0),
+                new Weapon(4, 0, WeaponGrade.Rare, 1, false, 0,false),
+                  new Weapon(5, 0, WeaponGrade.Rare, 1, false, 0,false),
+                    new Weapon(6, 0, WeaponGrade.Rare, 1, false, 0,false),
+                      new Weapon(7, 0, WeaponGrade.Rare, 1, false, 0,false),
                       //
-                        new Weapon(8, 0, WeaponGrade.Epic, 1, false, 0),
-                          new Weapon(9, 0, WeaponGrade.Epic, 1, false, 0),
-                            new Weapon(10, 0, WeaponGrade.Epic, 1, false, 0),
-                              new Weapon(11, 0, WeaponGrade.Epic, 1, false, 0),
+                        new Weapon(8, 0, WeaponGrade.Epic, 1, false, 0,false),
+                          new Weapon(9, 0, WeaponGrade.Epic, 1, false, 0,false),
+                            new Weapon(10, 0, WeaponGrade.Epic, 1, false, 0,false),
+                              new Weapon(11, 0, WeaponGrade.Epic, 1, false, 0,false),
                               //
-                                new Weapon(12, 0, WeaponGrade.Legendary, 1, false, 0),
-                                  new Weapon(13, 0, WeaponGrade.Legendary, 1, false, 0),
-                                    new Weapon(14, 0, WeaponGrade.Legendary, 1, false, 0),
-                                      new Weapon(15, 0, WeaponGrade.Legendary, 1, false, 0)
+                                new Weapon(12, 0, WeaponGrade.Legendary, 1, false, 0,false),
+                                  new Weapon(13, 0, WeaponGrade.Legendary, 1, false, 0,false),
+                                    new Weapon(14, 0, WeaponGrade.Legendary, 1, false, 0,false),
+                                      new Weapon(15, 0, WeaponGrade.Legendary, 1, false, 0,false)
         };
         return loadedWeapons;
     }
@@ -104,16 +108,18 @@ public class Weapon
     public WeaponGrade grade; // 무기 등급
     public int stackCount;    // 중첩 수치
     public bool isEquipped;   // 장착 여부
-     public int waeponCount;    // 보유량 수치
+     public int weaponCount;    // 보유량 수치
+     public bool isAcquired; //획득 여부
 
      // 🔹 생성자 추가 (5개의 인수를 받도록 설정)
-    public Weapon(int id, int level, WeaponGrade grade, int stack, bool equipped, int waeponCount)
+    public Weapon(int id, int level, WeaponGrade grade, int stack, bool equipped, int weaponCount, bool isAcquired)
     {
         this.weaponId = id;
         this.upgradeLevel = level;
         this.grade = grade;
         this.stackCount = stack;
         this.isEquipped = equipped;
-        this.waeponCount = waeponCount;
+        this.weaponCount = weaponCount;
+        this.isAcquired = isAcquired;
     }
 }

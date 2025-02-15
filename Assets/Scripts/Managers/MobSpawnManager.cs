@@ -1,5 +1,5 @@
 using System.Collections;
-using Assets.PixelFantasy.PixelMonsters.Common.Scripts;
+//using Assets.PixelFantasy.PixelMonsters.Common.Scripts;
 using MonsterType;
 using UnityEngine;
 
