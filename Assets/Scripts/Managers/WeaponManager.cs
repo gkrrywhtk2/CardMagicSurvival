@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using RANK;
 using System.Linq.Expressions;
+using Unity.VisualScripting;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -26,6 +27,19 @@ public class WeaponManager : MonoBehaviour
     public TMP_Text equipEffectVar_Text;//변하는 장착 효과
     public TMP_Text ownedEffectVar_Text;//변하는 보유 효과
     public Image weaponUI_MainSprite;//메인 스프라이트
+    public TMP_Text upgradePostionCountText;//강화 포션 보유량 텍스트
+
+    //weapon Icon UI_Button
+    public int saveNowWeaponId;//현재 켜져있는 아이템 UI가 무엇인지
+    public GameObject stackUpgradeButton;//중첩+ 버튼
+    public GameObject upgradeButton;//강화 버튼
+    public TMP_Text requiredUpgradePotionText;//강화 포션 요구량 텍스트
+    public Image EquipButton;//장착 버튼
+    public Image EuipIcon;//메인 스프라이트 위에 떠있는 E 표시
+    public TMP_Text equipText;//장착 or 장착중
+    public GameObject warningCost;//재료가 부족합니다 알림창
+    public Animator warningCost_Anim;//재료가 부족합니다 알림창 애니메이션 연출
+
 
 
     //
@@ -72,9 +86,11 @@ public class WeaponManager : MonoBehaviour
     public void WeaponIconButton_UISetting(int weaponId){
          Color blackColor = new Color(0f, 0f, 0f, 200f / 255f); // 검은색, 알파 200
             Color whiteColor = new Color(1f, 1f, 1f, 1f); // 흰색, 알파 255
+              Color alphaColor = new Color(1f, 1f, 1f, 0.3f); // 흰색, 알파 255
         WeaponData data_Staic = weaponData[weaponId];
         List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
         Weapon data_Var = data_VarLoad[weaponId];
+        saveNowWeaponId = weaponId;
 
 
         weaponUI.gameObject.SetActive(true);
@@ -139,11 +155,64 @@ public class WeaponManager : MonoBehaviour
         ownedEffectVar_Text.text = ownedValue_Now + "%" + "<color=#00FF00>-> </color>" + "<color=#00FF00>" + 
                                     ownedValue_Next + "</color>" + "<color=#00FF00>%</color>";
 
+
+        //보유 포션량
+        upgradePostionCountText.text = GameManager.instance.dataManager.upgradePostionCount.ToString();
+
+       // 요구 포션량 공식 = 재료 요구량 + (재료 요구량 * 강화 레벨) * 1.1 (10% 추가)
+        int baseCost = data_Staic.materialCost_Upgrade * nowUpgradeLevel;
+        int postionCost = data_Staic.materialCost_Upgrade + (int)(baseCost * 1.1f);
+        requiredUpgradePotionText.text = postionCost.ToString();//적용
+
+        //장착 여부 
+        if(data_Var.isEquipped == true){
+            equipText.text = "장착중";
+            EquipButton.color = alphaColor;
+            EuipIcon.gameObject.SetActive(true);
+        }
+        else{
+             equipText.text = "장착";
+              EquipButton.color = whiteColor;
+                EuipIcon.gameObject.SetActive(false);
+        }
+
+
+
+    }
+
+
+    public void UpgradePostionButton(){
+
+
+        int weaponId = saveNowWeaponId;
+        //데이터 세팅
+        WeaponData data_Staic = weaponData[weaponId];
+        List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
+        Weapon data_Var = data_VarLoad[weaponId];
+        DataManager data = GameManager.instance.dataManager;//데이터 메니저 호출
+        int nowUpgradeLevel = data_Var.upgradeLevel;
+        int baseCost = data_Staic.materialCost_Upgrade * nowUpgradeLevel;
+        int postionCost = data_Staic.materialCost_Upgrade + (int)(baseCost * 1.1f);
+
+        if(data_Var.isAcquired != true)
+            return;
+
+        //강화 포션 버튼
+        if(data.upgradePostionCount >= postionCost){
+            data.upgradePostionCount -= postionCost;//재료 감소
+            data_Var.upgradeLevel += 1;//강화 수치 1 상승
+            WeaponIconButton_UISetting(weaponId);//UI 최신화 
+        }else{
+            warningCost.gameObject.SetActive(true);
+            warningCost_Anim.SetTrigger("Replay");
+        }
+        
     }
 
     public void WeaponUI_XButton(){
         weaponUI.gameObject.SetActive(false);
     }
+
 
 
 }
@@ -155,6 +224,7 @@ public class WeaponData
     public int weaponId;//무기 고유번호
     public float equippedEffect_ATK;//장착 추가 공격력% * level
     public float ownedEffect_ATK;//보유 효과 * level
+    public int materialCost_Upgrade;//강화 소모량
     public string weaponName_KOR;//한글 이름
     public WeaponGrade weaponGrade;
     public Sprite weaponMainSprite;//메인 스프라이트

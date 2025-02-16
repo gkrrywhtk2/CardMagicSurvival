@@ -18,13 +18,15 @@ public class DataManager : MonoBehaviour
 
     //Weapon List
     public List<Weapon> weaponList = new List<Weapon>();//웨폰 데이터 저장
+    public int upgradePostionCount;//강화 포션 보유량
     
 
 
     private void Awake() {
         //임시로 레벨 세팅
-     UpgradeLevelSetting();
+      UpgradeLevelSetting();
         StageSetting();
+        UpgradePostionCountSetting(1000);
     }
 
     public void UpgradeLevelSetting(){
@@ -38,6 +40,11 @@ public class DataManager : MonoBehaviour
 
     public void StageSetting(){
         stageProgressLevel = 1;//저장된 스테이지 레벨
+    }
+
+    public void UpgradePostionCountSetting(int value){
+      //서버에서 강화 포션 보유량을 받아서 적용
+      upgradePostionCount = value;
     }
 
     public void ChageToRealValue(){
