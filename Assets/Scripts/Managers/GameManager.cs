@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
          instance.player.playerStatus.StartHealthRegen();//체력 자동 회복
+         
          LinkToData();//데이터 불러오기
     }
 
@@ -128,9 +129,12 @@ public class GameManager : MonoBehaviour
 
     public void LinkToData(){
         //DataManager에 접근하여 현재 상태를 불러옴
-        instance.dataManager.ChageToRealValue();
         instance.dataManager.SyncStageLevelFromServer();
         instance.dataManager.SyncWeaponData();
+
+
+
+          instance.dataManager.ChageToRealValue();//마지막에 있어야 함! 무기 효과 적용 받아야됨
     }
 
 }

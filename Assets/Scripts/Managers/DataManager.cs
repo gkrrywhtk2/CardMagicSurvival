@@ -56,8 +56,17 @@ public class DataManager : MonoBehaviour
         float real_CriticalDamage = level_CriticalDamage;//1레벨당 증가량 1%
         float real_criticalPer = level_CriticalPer * 0.1f;//1레벨당 증가량 0.1%
 
+        //무기 장착 효과
+        float equipWeaponEffectValue =  GameManager.instance.weaponManager.ReturnEquipEffect();
+
+        //무기 보유 효과
+        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedEffect();
+        
+        float finalWeaponEffectValue = equipWeaponEffectValue + ownedWeaponEffectValue;
+
         Player_Status player =  GameManager.instance.player.playerStatus;
-        player.ATK = real_ATK;
+        //ATK 참고 Real_ATK = 성장, 플레이어 레벨 ATK의 합
+        player.ATK = real_ATK * (1 + (finalWeaponEffectValue / 100f));
         player.maxHealth = real_HP;
        // player.health += 10;//최대체력 증가량만큼 현재체력 회복
         player.healthRecoveryPer = real_HPRecovery;
@@ -81,25 +90,25 @@ public class DataManager : MonoBehaviour
         //백엔드 서버에서 WeaponList를 받아옴, 우선 임시로 데이터 세팅
          List<Weapon> loadedWeapons = new List<Weapon>
         {
-            new Weapon(0, 0, WeaponGrade.Common, 1, true, 1, true),
-            new Weapon(1, 0, WeaponGrade.Common, 1, false, 0,false),
-            new Weapon(2, 0, WeaponGrade.Common, 1, false, 0,false),
-              new Weapon(3, 0, WeaponGrade.Common, 1, false, 0,false),
+            new Weapon(0, 0, WeaponGrade.Common, 0, false, 100, true),
+            new Weapon(1, 0, WeaponGrade.Common, 0, false, 0,false),
+            new Weapon(2, 0, WeaponGrade.Common, 0, false, 0,false),
+              new Weapon(3, 0, WeaponGrade.Common, 0, false, 0,false),
               //
-                new Weapon(4, 0, WeaponGrade.Rare, 1, false, 0,false),
-                  new Weapon(5, 0, WeaponGrade.Rare, 1, false, 0,false),
-                    new Weapon(6, 0, WeaponGrade.Rare, 1, false, 0,false),
-                      new Weapon(7, 0, WeaponGrade.Rare, 1, false, 0,false),
+                new Weapon(4, 0, WeaponGrade.Rare, 0, false, 50,true),
+                  new Weapon(5, 0, WeaponGrade.Rare, 0, false, 0,false),
+                    new Weapon(6, 0, WeaponGrade.Rare, 0, false, 0,false),
+                      new Weapon(7, 0, WeaponGrade.Rare, 0, false, 0,false),
                       //
-                        new Weapon(8, 0, WeaponGrade.Epic, 1, false, 0,false),
-                          new Weapon(9, 0, WeaponGrade.Epic, 1, false, 0,false),
-                            new Weapon(10, 0, WeaponGrade.Epic, 1, false, 0,false),
-                              new Weapon(11, 0, WeaponGrade.Epic, 1, false, 0,false),
+                        new Weapon(8, 0, WeaponGrade.Epic, 0, false, 30,true),
+                          new Weapon(9, 0, WeaponGrade.Epic, 0, false, 0,false),
+                            new Weapon(10, 0, WeaponGrade.Epic, 0, false, 0,false),
+                              new Weapon(11, 0, WeaponGrade.Epic, 0, false, 0,false),
                               //
-                                new Weapon(12, 0, WeaponGrade.Legendary, 1, false, 0,false),
-                                  new Weapon(13, 0, WeaponGrade.Legendary, 1, false, 0,false),
-                                    new Weapon(14, 0, WeaponGrade.Legendary, 1, false, 0,false),
-                                      new Weapon(15, 0, WeaponGrade.Legendary, 1, false, 0,false)
+                                new Weapon(12, 0, WeaponGrade.Legendary, 0, false, 10,true),
+                                  new Weapon(13, 0, WeaponGrade.Legendary, 0, false, 0,false),
+                                    new Weapon(14, 0, WeaponGrade.Legendary, 0, false, 0,false),
+                                      new Weapon(15, 0, WeaponGrade.Legendary, 0, false, 0,false)
         };
         return loadedWeapons;
     }

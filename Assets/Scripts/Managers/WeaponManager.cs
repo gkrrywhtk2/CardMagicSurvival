@@ -2,9 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
-using RANK;
-using System.Linq.Expressions;
-using Unity.VisualScripting;
+
 
 public class WeaponManager : MonoBehaviour
 {
@@ -14,7 +12,16 @@ public class WeaponManager : MonoBehaviour
     public Image[] fills;//게이지 수치 fill 오브젝트
     public TMP_Text[] weaponCountText;//0/5 아이템 보유 수치 텍스트
     public GameObject[] getBackGround;//아이템 미획득 백그라운드
-    //
+    public GameObject[] Eicons;//E 장착표시
+
+
+    //TextColor
+    private Color commonColor_W, commonColor;
+    private Color rareColor_W, rareColor;
+    private Color epicColor_W, epicColor;
+    private Color legendColor_W, legendColor;
+    
+
     //weapon Icon UI
     public GameObject weaponUI;
     public TMP_Text rankText_WeaponUI;
@@ -22,14 +29,13 @@ public class WeaponManager : MonoBehaviour
     public TMP_Text upgradeText_WeaponUI;
     public TMP_Text stackCount_WeaponUI;
     public Image fills_WeaponUI;//게이지 수치 fill 오브젝트
+    public Image frame_weaponUI;//등급에 따른 프레임 색상 변경
     public TMP_Text weaponCountText_WeaponUI;//0/5 아이템 보유 수치 텍스트
     public GameObject getBackGround_WeaponUI;//아이템 미획득 백그라운드
     public TMP_Text equipEffectVar_Text;//변하는 장착 효과
     public TMP_Text ownedEffectVar_Text;//변하는 보유 효과
     public Image weaponUI_MainSprite;//메인 스프라이트
     public TMP_Text upgradePostionCountText;//강화 포션 보유량 텍스트
-
-    //weapon Icon UI_Button
     public int saveNowWeaponId;//현재 켜져있는 아이템 UI가 무엇인지
     public GameObject stackUpgradeButton;//중첩+ 버튼
     public GameObject upgradeButton;//강화 버튼
@@ -37,6 +43,7 @@ public class WeaponManager : MonoBehaviour
     public Image EquipButton;//장착 버튼
     public Image EuipIcon;//메인 스프라이트 위에 떠있는 E 표시
     public TMP_Text equipText;//장착 or 장착중
+    public Image stackButton_WeaponSrptie;//스택 버튼에 있는 무기이미지 변경
     public GameObject warningCost;//재료가 부족합니다 알림창
     public Animator warningCost_Anim;//재료가 부족합니다 알림창 애니메이션 연출
 
@@ -44,18 +51,20 @@ public class WeaponManager : MonoBehaviour
 
     //
     public WeaponData[] weaponData;//프론트 엔드에서 관리하는 무기 데이터 관리
-    
-    public void PrintWeaponList()
+
+    private void Awake()
     {
-        
-    foreach (Weapon weapon in GameManager.instance.dataManager.weaponList)
-    {
-        Debug.Log("Weapon ID: " + weapon.weaponId + 
-                  ", Upgrade Level: " + weapon.upgradeLevel + 
-                  ", Grade: " + weapon.grade + 
-                  ", Stack Count: " + weapon.stackCount + 
-                  ", Is Equipped: " + weapon.isEquipped);
-    }
+    // 밝은 색상 (획득한 무기)
+    commonColor_W = new Color(0.7f, 0.7f, 0.7f, 1f);
+    rareColor_W = new Color(0.3f, 0.5f, 0.9f, 1f);
+    epicColor_W = new Color(0.6f, 0.3f, 0.8f, 1f);
+    legendColor_W = new Color(1f, 0.7f, 0.2f, 1f);
+
+    // 어두운 색상 (미획득 무기)
+    commonColor = new Color(0.4f, 0.4f, 0.4f, 1f);
+    rareColor = new Color(0.2f, 0.3f, 0.6f, 1f);
+    epicColor = new Color(0.4f, 0.2f, 0.5f, 1f);
+    legendColor = new Color(0.8f, 0.5f, 0.1f, 1f);
     }
 
     public void WeaponImageSetting(){
@@ -78,40 +87,85 @@ public class WeaponManager : MonoBehaviour
             if(weapons[i].isAcquired == true){
                 getBackGround[i].gameObject.SetActive(false);
                   waeaponIcons[i].color = whiteColor; // 흰색 + 알파 255
+
+            //장착한 무기에 E 표시
+            Eicons[i].gameObject.SetActive(weapons[i].isEquipped);  
             }
         }
 
     }
 
     public void WeaponIconButton_UISetting(int weaponId){
-         Color blackColor = new Color(0f, 0f, 0f, 200f / 255f); // 검은색, 알파 200
-            Color whiteColor = new Color(1f, 1f, 1f, 1f); // 흰색, 알파 255
-              Color alphaColor = new Color(1f, 1f, 1f, 0.3f); // 흰색, 알파 255
+        //weapon 상세보기 UI 세팅
+
+        Color blackColor = new Color(0f, 0f, 0f, 200f / 255f); // 검은색, 알파 200
+        Color whiteColor = new Color(1f, 1f, 1f, 1f); // 흰색, 알파 255
+        Color alphaColor = new Color(1f, 1f, 1f, 0.3f); // 흰색, 알파 255
+
         WeaponData data_Staic = weaponData[weaponId];
         List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
         Weapon data_Var = data_VarLoad[weaponId];
         saveNowWeaponId = weaponId;
-
-
         weaponUI.gameObject.SetActive(true);
 
-        //등급Text 세팅
+
+        //텍스트 색상 설정, 프레임 색상 설정, 보유, 미보유에 따른 색상 톤 변경
+        Dictionary<WeaponGrade, (Color acquired, Color defaultColor)> gradeColors = new Dictionary<WeaponGrade, (Color, Color)>
+    {
+    { WeaponGrade.Common, (commonColor_W, commonColor) },
+    { WeaponGrade.Rare, (rareColor_W, rareColor) },
+    { WeaponGrade.Epic, (epicColor_W, epicColor) },
+    { WeaponGrade.Legendary, (legendColor_W, legendColor) }
+    };
+    // 등급 설정
+    rankText_WeaponUI.text = data_Var.grade switch
+    {
+    WeaponGrade.Common => "일반",
+    WeaponGrade.Rare => "희귀",
+    WeaponGrade.Epic => "영웅",
+    WeaponGrade.Legendary => "전설",
+    _ => "알 수 없음"
+    };
+
+    // 색상 적용
+    (Color acquiredColor, Color defaultColor) = gradeColors[data_Staic.weaponGrade];
+    Color selectedColor = data_Var.isAcquired ? acquiredColor : defaultColor;
+
+    rankText_WeaponUI.color = selectedColor;
+    frame_weaponUI.color = selectedColor;
+
+/**
+        //등급Text 세팅, 색상
         switch (data_Staic.weaponGrade)
         {
             case WeaponGrade.Common :
             rankText_WeaponUI.text = "일반";
+                if(data_Var.isAcquired == true){
+                    rankText_WeaponUI.color = commonColor_W;
+                    frame_weaponUI.color = commonColor_W;
+                }else{
+                    rankText_WeaponUI.color = commonColor;
+                    frame_weaponUI.color = commonColor;
+                }
             break;
             case WeaponGrade.Rare :
             rankText_WeaponUI.text = "희귀";
+            frame_weaponUI.color = rareColor;
+            rankText_WeaponUI.color = rareColor;
             break;
             case WeaponGrade.Epic :
             rankText_WeaponUI.text = "영웅";
+            frame_weaponUI.color = epicColor;
+            rankText_WeaponUI.color = epicColor;
             break;
             case WeaponGrade.Legendary :
             rankText_WeaponUI.text = "전설";
+            frame_weaponUI.color = legendColor;
+            rankText_WeaponUI.color = legendColor;
             break;
         }
 
+**/
         //이름 세팅
         nameText_WeaponUI.text = data_Staic.weaponName_KOR;
 
@@ -127,19 +181,23 @@ public class WeaponManager : MonoBehaviour
         weaponCountText_WeaponUI.text = weaponCount + "/ 5";
 
         //미획득 어둡게 세팅 + 메인 스프라이트 세팅
+        
         getBackGround_WeaponUI.gameObject.SetActive(true);//어둡게 초기화
         weaponUI_MainSprite.sprite = data_Staic.weaponMainSprite;//스프라이트 세팅
             if(data_Var.isAcquired == true){//아이템 보유중이라면 
                 getBackGround_WeaponUI.gameObject.SetActive(false);// 밝게 하고
                   weaponUI_MainSprite.color = whiteColor; // 흰색 + 알파 255
+            }else{
+                  getBackGround_WeaponUI.gameObject.SetActive(true);// 밝게 하고
+                   weaponUI_MainSprite.color = blackColor; // 흰색 + 알파 255
             }
 
         //장착 효과 텍스트 세팅
         int nowUpgradeLevel = data_Var.upgradeLevel;
         int nextUpgradeLevel = data_Var.upgradeLevel + 1;
-        float stackCountUpgradeOffset = (data_Var.stackCount * 0.1f) + 1;//1중첩 이면 1.1
+        float stackCountUpgradeOffset = (data_Var.stackCount * 0.5f) + 1;//1중첩 이면 1.5
         
-        //장착 효과 공식 : (해당 장비 공격력 수치 + (해당 장비 공격력 수치 * 강화 수치)) * 1중첩 당 10% 추가 
+        //장착 효과 공식 : (해당 장비 공격력 수치 + (해당 장비 공격력 수치 * 강화 수치)) * 1중첩 당 50% 추가 
         float equipValue_Now = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nowUpgradeLevel))
                                 * stackCountUpgradeOffset;
         float equipValue_Next = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nextUpgradeLevel))
@@ -170,14 +228,23 @@ public class WeaponManager : MonoBehaviour
             EquipButton.color = alphaColor;
             EuipIcon.gameObject.SetActive(true);
         }
-        else{
+        else if(data_Var.isEquipped != true && data_Var.isAcquired == true){
              equipText.text = "장착";
               EquipButton.color = whiteColor;
                 EuipIcon.gameObject.SetActive(false);
         }
+        else if(data_Var.isEquipped != true && data_Var.isAcquired != true){
+            equipText.text = "미획득";
+            EquipButton.color = alphaColor;
+            EuipIcon.gameObject.SetActive(false);
+        }
+
+        //선택한 무기에 따른 중첩 버튼 이미지 세팅
+        stackButton_WeaponSrptie.sprite = data_Staic.weaponMainSprite;
 
 
 
+        WeaponImageSetting();//웨펀 스크롤에 값 적용
     }
 
 
@@ -201,18 +268,124 @@ public class WeaponManager : MonoBehaviour
         if(data.upgradePostionCount >= postionCost){
             data.upgradePostionCount -= postionCost;//재료 감소
             data_Var.upgradeLevel += 1;//강화 수치 1 상승
-            WeaponIconButton_UISetting(weaponId);//UI 최신화 
         }else{
             warningCost.gameObject.SetActive(true);
             warningCost_Anim.SetTrigger("Replay");
         }
+
+         GameManager.instance.dataManager.weaponList = data_VarLoad;//변경된 값 데이터 메니저에 적용
+        WeaponIconButton_UISetting(weaponId);//적용된 값 UI 변경
+        GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
         
+    }
+
+    public void EquipedButton(){
+        //데이터 세팅
+        int weaponId = saveNowWeaponId;
+        //데이터 세팅
+       // WeaponData data_Staic = weaponData[weaponId];
+        List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
+        Weapon data_Var = data_VarLoad[weaponId];
+       // DataManager data = GameManager.instance.dataManager;//데이터 메니저 호출
+         //장착 여부 
+        if(data_Var.isEquipped == true){
+            //아이템을 장착한 경우 아무일도 일어나지 않음
+           
+        }
+        else if(data_Var.isEquipped != true && data_Var.isAcquired == true){
+            
+            for(int i = 0; i < data_VarLoad.Count; i++){
+                //모든 아이템을 장착해제한 후
+                data_VarLoad[i].isEquipped = false;
+            }
+                //선택한 아이템을 장착
+            data_VarLoad[weaponId].isEquipped = true;
+        }
+        else if(data_Var.isEquipped != true && data_Var.isAcquired != true){
+            //아이템을 미보유한 경우 아무일도 일어나지 않음
+        }
+        GameManager.instance.dataManager.weaponList = data_VarLoad;//변경된 값 리스트에 적용
+        WeaponIconButton_UISetting(weaponId);//적용된 값 UI 변경
+        GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
+
+    }
+    public void StackButton(){
+          //데이터 세팅
+        int weaponId = saveNowWeaponId;
+        int stackRequire = 5;//1중첩에 필요한 무기량
+        List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
+        Weapon data_Var = data_VarLoad[weaponId];
+
+        if(data_Var.weaponCount >= stackRequire){
+            data_Var.weaponCount -= stackRequire;//5개 감소
+            data_Var.stackCount += 1;//중첩 1 증가
+        }else{
+            //재료가 부족할 경우 경고 UI 표시
+            warningCost.gameObject.SetActive(true);
+            warningCost_Anim.SetTrigger("Replay");
+        }
+
+        GameManager.instance.dataManager.weaponList = data_VarLoad;//변경된 값 데이터 메니저에 적용
+        WeaponIconButton_UISetting(weaponId);//적용된 값 UI 변경
+        GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
+
     }
 
     public void WeaponUI_XButton(){
         weaponUI.gameObject.SetActive(false);
     }
 
+    public float ReturnOwnedEffect(){
+        //무기 보유 효과 총량 계산해서 리턴해주는 함수
+        List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
+        
+        float valueFinal = 0;
+        for(int i =0; i<data_VarLoad.Count; i++){
+            WeaponData data_Staic = weaponData[i];
+            int nowUpgradeLevel = data_VarLoad[i].upgradeLevel;
+            float stackCountUpgradeOffset = (data_VarLoad[i].stackCount * 0.5f) + 1;//1중첩 이면 1.5
+            float ownedValue = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nowUpgradeLevel))
+                                * stackCountUpgradeOffset;
+            valueFinal += ownedValue;
+        }
+        return valueFinal;
+    }
+
+     public float ReturnEquipEffect(){
+        //무기 장착 효과 계산해서 리턴해주는 함수
+        List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
+        
+        float valueFinal = 0;
+        for(int i =0; i<data_VarLoad.Count; i++){
+            WeaponData data_Staic = weaponData[i];
+            int nowUpgradeLevel = data_VarLoad[i].upgradeLevel;
+            float stackCountUpgradeOffset = (data_VarLoad[i].stackCount * 0.5f) + 1;//1중첩 이면 1.5
+    
+            if(data_VarLoad[i].isEquipped == true){
+                float equopValue = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nowUpgradeLevel))
+                                * stackCountUpgradeOffset;
+                valueFinal = equopValue;
+                break;
+            }
+        }
+        return valueFinal;
+    }
+
+    public void DebugLoadedWeapons()
+{
+    List<Weapon> loadedWeapons = GameManager.instance.dataManager.weaponList;
+
+    foreach (Weapon weapon in loadedWeapons)
+    {
+        Debug.Log($"ID: {weapon.weaponId}, " +
+                  $"강화: {weapon.upgradeLevel}, " +
+                  $"등급: {weapon.grade}, " +
+                  $"중첩: {weapon.stackCount}, " +
+                  $"장착 여부: {weapon.isEquipped}, " +
+                  $"보유 개수: {weapon.weaponCount}, " +
+                  $"획득 여부: {weapon.isAcquired}");
+    }
+}
 
 
 }

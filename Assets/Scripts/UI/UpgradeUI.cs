@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using System;
 
 public class UpgradeUI : MonoBehaviour
 {
@@ -104,6 +103,7 @@ public class UpgradeUI : MonoBehaviour
   }
     public static int GetGoldForLevel(UpgradeType type)
     {
+      //업그레이드 항목마다 등차 설정
         DataManager data = GameManager.instance.dataManager;
         int level;//업그레이드 레벨
         int d;//등차
