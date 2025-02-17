@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JoyStick_P : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class JoyStick_P : MonoBehaviour
     public float speed;
     //next stage
     public bool nextStageSetting = false;
+    //weaponSetting
+        public SpriteRenderer weaponR;
+    public SpriteRenderer weaponL;
 
     private void Awake()
     {
@@ -58,13 +62,17 @@ public class JoyStick_P : MonoBehaviour
         rigid.MovePosition(targetPosition);
        
     }
-     private void LateUpdate()
+    private void LateUpdate()
+{
+    anim.SetFloat("speed", inputVec.magnitude);
+
+    bool isFlipped = inputVec.x < 0;
+    if (inputVec.x != 0 && spr.flipX != isFlipped)
     {
-        anim.SetFloat("speed", inputVec.magnitude);
-        if (inputVec.x != 0)
-        {
-            spr.flipX = inputVec.x < 0;
-          
-        }
+        spr.flipX = isFlipped;
+        weaponR.gameObject.SetActive(!isFlipped);
+        weaponL.gameObject.SetActive(isFlipped);
     }
+}
+
 }

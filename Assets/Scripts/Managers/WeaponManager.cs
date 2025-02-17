@@ -300,6 +300,7 @@ public class WeaponManager : MonoBehaviour
             }
                 //선택한 아이템을 장착
             data_VarLoad[weaponId].isEquipped = true;
+           // EquipedImageSetting_Character(weaponId);
         }
         else if(data_Var.isEquipped != true && data_Var.isAcquired != true){
             //아이템을 미보유한 경우 아무일도 일어나지 않음
@@ -309,6 +310,15 @@ public class WeaponManager : MonoBehaviour
         GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
 
     }
+   
+     public void EquipedImageSetting_Character(int weaponId){
+        //장착한 무기를 캐릭터에게 이미지 적용
+        WeaponData data_Staic = weaponData[weaponId];
+        GameManager.instance.player.joystickP.weaponR.sprite = data_Staic.weaponMainSprite;//스프라이트 세팅
+        GameManager.instance.player.joystickP.weaponL.sprite = data_Staic.weaponMainSprite;//스프라이트 세팅
+     }
+     
+
     public void StackButton(){
           //데이터 세팅
         int weaponId = saveNowWeaponId;
@@ -352,7 +362,8 @@ public class WeaponManager : MonoBehaviour
     }
 
      public float ReturnEquipEffect(){
-        //무기 장착 효과 계산해서 리턴해주는 함수
+        //무기 장착 효과 계산해서 리턴해주는 함수 
+        //+++무기 이미지 적용까지 이 함수에서 작동
         List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
         
         float valueFinal = 0;
@@ -365,6 +376,9 @@ public class WeaponManager : MonoBehaviour
                 float equopValue = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nowUpgradeLevel))
                                 * stackCountUpgradeOffset;
                 valueFinal = equopValue;
+
+                //무기 이미지 세팅
+                EquipedImageSetting_Character(data_VarLoad[i].weaponId);
                 break;
             }
         }

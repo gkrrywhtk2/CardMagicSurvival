@@ -90,7 +90,7 @@ public class DataManager : MonoBehaviour
         //백엔드 서버에서 WeaponList를 받아옴, 우선 임시로 데이터 세팅
          List<Weapon> loadedWeapons = new List<Weapon>
         {
-            new Weapon(0, 0, WeaponGrade.Common, 0, false, 100, true),
+            new Weapon(0, 0, WeaponGrade.Common, 0, true, 100, true),
             new Weapon(1, 0, WeaponGrade.Common, 0, false, 0,false),
             new Weapon(2, 0, WeaponGrade.Common, 0, false, 0,false),
               new Weapon(3, 0, WeaponGrade.Common, 0, false, 0,false),
