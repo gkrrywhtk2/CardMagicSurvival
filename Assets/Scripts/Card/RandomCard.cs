@@ -76,7 +76,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
         Fill_now = 0;
         nowCard = card;
         this.cardId = nowCard.ID;
-        this.cardLevel = nowCard.Rank;
+        this.cardLevel = nowCard.LEVEL;
         CardData data =  GameManager.instance.deckManager.cardDatas[cardId];
         cardImage.gameObject.SetActive(false);
         stars[0].gameObject.SetActive(false);

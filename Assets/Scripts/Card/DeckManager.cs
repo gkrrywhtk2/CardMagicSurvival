@@ -8,12 +8,12 @@ using RANK;
 public class Card
 {
     public int ID { get; set; } // 카드 ID
-    public int Rank { get; set; } // 카드 레벨
+    public int LEVEL { get; set; } // 카드 레벨
 
-    public Card(int id, int rank)
+    public Card(int id, int level)
     {
         ID = id;
-        Rank = rank;
+        LEVEL = level;
     }
 }
 
@@ -78,7 +78,7 @@ for (int i = deck.Count - 1; i > 0; i--)
     for (int i = 0; i < handCount; i++)
     {
         int cardId = deck[0].ID; // 덱 맨 위의 카드 ID 가져오기
-        int cardLevel = deck[0].Rank;
+        int cardLevel = deck[0].LEVEL;
         deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
 
         // 핸드 카드 초기화
@@ -93,7 +93,7 @@ for (int i = deck.Count - 1; i > 0; i--)
 }
     public void DrawCard(int fixedCard){
                 int cardId = deck[0].ID; // 덱 맨 위의 카드 ID 가져오기
-                int cardLevel = deck[0].Rank;
+                int cardLevel = deck[0].LEVEL;
                 deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
 
                 // 핸드 카드 초기화
@@ -177,10 +177,10 @@ for (int i = deck.Count - 1; i > 0; i--)
     // 1. 업그레이드 가능한 카드 추가
     foreach (var card in deck)
     {
-        if (card.Rank < 3) // 레벨 3 미만인 카드만 추가
+        if (card.LEVEL < 3) // 레벨 3 미만인 카드만 추가
         {
             //기존 카드보다 1레벨 높은 카드를 풀에 추가.
-            candidatePool.Add(new Card(card.ID, card.Rank + 1));
+            candidatePool.Add(new Card(card.ID, card.LEVEL + 1));
         }
     }
     //1-2 업그레이드
@@ -228,9 +228,9 @@ foreach (var cardData in allCards)
     if (existingCardInDeck != null)
     {
         // 이미 존재하는 카드의 Rank를 올림
-        if (existingCardInDeck.Rank < 3)
+        if (existingCardInDeck.LEVEL < 3)
         {
-            existingCardInDeck.Rank += 1;
+            existingCardInDeck.LEVEL += 1;
         }
     }
     else//deck에 카드가 없다면 핸드를 찾아본다.
@@ -244,7 +244,7 @@ foreach (var cardData in allCards)
             {
            // existingCardInHand.cardRank = Mathf.Min(existingCardInHand.cardRank + 1, 3);
            // existingCardInHand.RankImageSetting(existingCardInHand.cardRank); // Rank 이미지 업데이트
-            existingCardInHand.Init_CardUpgrade(existingCardInHand.cardRank + 1);// 등급 업
+            //existingCardInHand.Init_CardUpgrade(existingCardInHand.cardRank + 1);// 등급 업
             }
         }
         else{

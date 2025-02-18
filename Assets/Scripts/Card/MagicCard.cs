@@ -21,14 +21,16 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public int cardCost;     // 카드 비용
     public int cardRank;//{1,2,3}
     public int fixedCardNumber;//012 어떤 위치의 카드인지
-    public bool cardOn;
+    public bool cardOn;//코스트 체크
     public bool cardDrawLock;//카드 드로우 애니메이션 연출시 카드 터치 금지용
 
     [Header("Object Connect")]
      public Image cardImage;  // 카드 이미지
-    public Image[] stars;// 카드 등급 이미지
-    public Sprite star_True;
-    public Sprite star_False;
+
+
+   // public Image[] stars;// 카드 등급 이미지 개발 중단
+    //public Sprite star_True;
+    //public Sprite star_False;
 
     public TMP_Text costText;//코스트 숫자
     public Image dropPoint;//드랍 포인트
@@ -37,7 +39,10 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public bool rangeOn;
     public bool cardReady;//drop 포인트위에 있을때 true
     private bool lastRangeState = false; // 이전 상태를 저장할 변수
+    private bool lastCardReadyState = false;
     public Image manaCost;//마나 보석 이미지
+    public int cardLevel;
+    public TMP_Text cardLevelText;//카드 레벨 텍스트
     
 
     private void Awake()
@@ -61,7 +66,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     
    
-    public void CardInit(CardData data,int rank)
+    public void CardInit(CardData data,int level)
     {
         cardOn = false;
         cardReady = false;
@@ -72,8 +77,11 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         cardId = data.cardId;
-        cardRank = rank;
-        RankImageSetting(cardRank);
+        cardLevel = level;
+        cardLevelText.gameObject.SetActive(true);
+        cardLevelText.text = "Lv." + cardLevel.ToString();
+        cardLevelText.gameObject.SetActive(false);//우선 감추기
+        //RankImageSetting(cardRank); 별 연출 개발 중단
         cardCost = data.cardCost;
         cardImage.sprite = data.cardImage;
         costText.text = cardCost.ToString();
@@ -85,11 +93,13 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         
         
     }
+    /**
     public void Init_CardUpgrade(int rank){
         cardRank = rank;
-        RankImageSetting(cardRank);
+     //   RankImageSetting(cardRank); 별 연출 개발 중단
 
     }
+    *///
 
     /// <summary>
     /// 드래그 시작 시 호출
@@ -126,7 +136,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
           //카드 설명 UI 활성화
          //GameManager.instance.deckManager.CardDescInit(cardId);
-         Debug.Log("테스트 카드 터치");
+        // Debug.Log("테스트 카드 터치");
 
     }
 
@@ -158,6 +168,12 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     // 카드가 범위 카드인지, 그리고 dropPoint 위에 있는지 확인, 그리고 카드가 활성화 상태인지
     bool shouldRangeBeActive = (rangeOn == true && cardReady == true && cardOn == true);
+    bool shouldCardReadyBeActive = (cardReady == true);
+
+    if(shouldCardReadyBeActive != lastCardReadyState){
+        cardLevelText.gameObject.SetActive(shouldCardReadyBeActive);
+         lastCardReadyState = shouldCardReadyBeActive;  // 상태 갱신
+    }
 
     // 범위 이미지의 활성 상태가 변경되었을 때만 SetActive 호출
     if (shouldRangeBeActive != lastRangeState)
@@ -240,23 +256,23 @@ public void CardAlpha0_Range(bool shouldRangeBeActive){
         Color cardColor = cardImage.color;
         Color manaColor = manaCost.color;
         Color textColor = costText.color;
-        Color starColor0 = stars[0].color;
-        Color starColor1 = stars[1].color;
-        Color starColor2 = stars[2].color;
+       // Color starColor0 = stars[0].color; 개발 중단
+       // Color starColor1 = stars[1].color;
+      //  Color starColor2 = stars[2].color;
 
         cardColor.a = 0;
         manaColor.a = 0;
         textColor.a = 0;
-        starColor0.a = 0;
-        starColor1.a = 0;
-        starColor2.a = 0;
+       // starColor0.a = 0; 개발 중단]
+      //  starColor1.a = 0;
+       // starColor2.a = 0;
 
         cardImage.color = cardColor;
         manaCost.color = manaColor;
         costText.color = textColor;
-        stars[0].color = starColor0;
-        stars[1].color = starColor1;
-        stars[2].color = starColor2;
+       // stars[0].color = starColor0; 개발 중단
+      //  stars[1].color = starColor1;
+      //  stars[2].color = starColor2;
         //카드 레벨 이미지도 투명화 
     }else{
        CardAlpha1_Range();
@@ -267,32 +283,35 @@ public void CardAlpha1_Range(){
        Color cardColor = cardImage.color;
         Color manaColor = manaCost.color;
         Color textColor = costText.color;
-        Color starColor0 = stars[0].color;
-        Color starColor1 = stars[1].color;
-        Color starColor2 = stars[2].color;
+      //  Color starColor0 = stars[0].color; 개발 중단
+      //  Color starColor1 = stars[1].color;
+     //  Color starColor2 = stars[2].color;
 
         cardColor.a = 1;
         manaColor.a = 1;
         textColor.a = 1;
-        starColor0.a = 1;
-        starColor1.a = 1;
-        starColor2.a = 1;
+       // starColor0.a = 1; 개발 중단
+       // starColor1.a = 1;
+       // starColor2.a = 1;
 
 
         cardImage.color = cardColor;
         manaCost.color = manaColor;
         costText.color = textColor;
-        stars[0].color = starColor0;
-        stars[1].color = starColor1;
-        stars[2].color = starColor2;
+       // stars[0].color = starColor0; 개발 중단
+      //  stars[1].color = starColor1;
+       // stars[2].color = starColor2;
     }
+
+    /**
     public void RankImageSetting(int rank){
-    //카드 등급 이미지(별) 세팅
+        /
+    //카드 등급 이미지(별) 세팅 개발 중단
 
     //초기화
-    stars[0].sprite = star_False;
-    stars[1].sprite = star_False;
-    stars[2].sprite = star_False;
+    //stars[0].sprite = star_False; 개발 중단
+   // stars[1].sprite = star_False;
+   // stars[2].sprite = star_False;
 
         switch(rank){
             case 1:
@@ -314,11 +333,11 @@ public void CardAlpha1_Range(){
             break;
         }
     }
+    **/
     public void CardDrawAni(){
         
             anim.ResetTrigger("Draw"); // 기존 트리거 초기화
             anim.SetTrigger("Draw");   // 다시 트리거 발동
-       
     }
     IEnumerator CardDrawAnimation(){
         yield return new WaitForSeconds(1);//드로우 쿨타임
