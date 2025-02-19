@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public DataManager dataManager;
     public StageManager stageManager;
     public WeaponManager weaponManager;
+    public BoardUI boardUI;
     [Header("#GameControl")]
     public bool cardOneTouch;
     public bool GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)
@@ -60,6 +61,7 @@ public class GameManager : MonoBehaviour
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
          instance.player.playerStatus.StartHealthRegen();//체력 자동 회복
+         instance.boardUI.ShowSeletedTap(2);//2는 카드 탭 세팅, 
          
          LinkToData();//데이터 불러오기
     }

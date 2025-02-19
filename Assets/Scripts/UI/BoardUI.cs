@@ -1,9 +1,15 @@
+using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class BoardUI : MonoBehaviour
 {
    public GameObject[] boards;
-   //0 : upgrade, 1 : item ...
+   //0 : upgrade, 1 : item  2: card, 3: spellbook, 4: fairy 5: shop
+   public Image[] taps_Image;
+   public RectTransform[] taps_Rect;
+   public Image[] taps_Icons;
+   public TMP_Text[] taps_text;//탭 이름 텍스트
    private void Awake() {
      //Debug.Log(boards[0].GetComponent<RectTransform>().anchoredPosition);
      HideAllBoards();
@@ -16,6 +22,35 @@ public class BoardUI : MonoBehaviour
         boards[i].GetComponent<RectTransform>().anchoredPosition = hidePostion;
     }
    }
+  public void HideAllTaps()
+{
+    // 모든 탭 비활성화 (y 좌표를 -20으로 내려서 숨기고 색상 변경)
+    for (int i = 0; i < taps_Rect.Length; i++)
+    {
+        Vector2 hidePosition = taps_Rect[i].anchoredPosition;
+        hidePosition.y = -20; // 비활성화 위치
+        taps_Rect[i].anchoredPosition = hidePosition;
+
+        // 비활성화 색상 변경 (BCBCBC)
+        taps_Image[i].color = new Color32(188, 188, 188, 255);
+        taps_Icons[i].color = new Color32(188, 188, 188, 255);
+        taps_text[i].color = new Color32(188, 188, 188, 255);
+    }
+}
+
+public void ShowSeletedTap(int tapNum)
+{
+    // 선택한 탭만 활성화 (y 좌표를 0으로 올려서 표시)
+    Vector2 showPosition = taps_Rect[tapNum].anchoredPosition;
+    showPosition.y = 0; // 활성화 위치
+    taps_Rect[tapNum].anchoredPosition = showPosition;
+
+    // 활성화 색상 변경 (FFFFFF)
+    taps_Image[tapNum].color = new Color32(255, 255, 255, 255);
+     taps_Icons[tapNum].color = new Color32(255, 255, 255, 255);
+     taps_text[tapNum].color = new Color32(255, 255, 255, 255);
+}
+
 
    public void ShowBoard(int boardId){
     Vector3 showPos = new Vector3(0,0,0);
