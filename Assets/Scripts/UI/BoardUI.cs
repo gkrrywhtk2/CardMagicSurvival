@@ -10,6 +10,9 @@ public class BoardUI : MonoBehaviour
    public RectTransform[] taps_Rect;
    public Image[] taps_Icons;
    public TMP_Text[] taps_text;//탭 이름 텍스트
+   //
+   public GameObject deckSettingUI;//덱 관리 UI 창
+   public GameObject bottomTapUI;//아래 위치하는 탭 UI창, 카드 세팅UI연출시 활성화.
    private void Awake() {
      //Debug.Log(boards[0].GetComponent<RectTransform>().anchoredPosition);
      HideAllBoards();
@@ -72,5 +75,14 @@ public void ShowSeletedTap(int tapNum)
      boards[1].GetComponent<RectTransform>().anchoredPosition = showPos;
      
    }
+    public void Show_DeckSettingUI(){
+      deckSettingUI.gameObject.SetActive(true);
+      bottomTapUI.gameObject.SetActive(true);
+     }
+
+     public void Hide_DeckSettingUI(){
+       deckSettingUI.gameObject.SetActive(false);
+      bottomTapUI.gameObject.SetActive(false);
+     }
    }
 
