@@ -8,19 +8,22 @@ using RANK;
 public class Card
 {
     public int ID { get; set; } // 카드 ID
-    public int LEVEL { get; set; } // 카드 레벨
+    public int STACK { get; set; } // 카드 레벨
 
-    public Card(int id, int level)
+    public int COUNT { get; set; }// 카드 보유량
+
+    public Card(int id, int stack, int count)
     {
         ID = id;
-        LEVEL = level;
+        STACK = stack;
+        COUNT = count;
     }
 }
 
 public class DeckManager : MonoBehaviour
 {
     public CardData[] cardDatas;         // 모든 카드 데이터
-    public List<Card> deck = new List<Card>(); // 현재 덱
+    public List<Card> deck = new List<Card>(); // 현재 덱 *주의* 카드가 핸드에 있을때는 deck리스트에서 제외됨
     public RectTransform[] boardPoints; // 카드 보드 포인트
     public MagicCard[] magicCards;      // 핸드 카드 총 3장
     public Image nextcardImage;//다음 카드 이미지
@@ -37,29 +40,31 @@ public class DeckManager : MonoBehaviour
 
     private void Start()
     {
-        CardSelect(); // 초기 덱 선택
+        //CardSelect(); // 초기 덱 선택
         randomCard[0].RandomCardNum = 0;
         randomCard[1].RandomCardNum = 1;
         randomCard[2].RandomCardNum = 2;
        
       
     }
-    public void CardSelect()
+    public void GetSavedDeck(List<Card> savedDeck)
     {
-        // 초기 덱 세팅 (여기서는 0, 1, 2, 3을 예제로 사용)
-        deck.Add(new Card(0, 1));
-        deck.Add(new Card(1, 1));
-        deck.Add(new Card(2, 1));
-        deck.Add(new Card(3, 1));
-        deck.Add(new Card(4, 1));
+        // 초기 덱 세팅 (-1값 제거)
+        for(int i = 0; i <savedDeck.Count; i++){
+            if(savedDeck[i].ID != -1){//카드 아이디가 -1인 값은 제외하고 deck에 추가
+                deck.Add(savedDeck[i]);
+            }
+        }
+
     }
 
-    public void DeckSetting()
+    public void HandSetting()
 {
-    StartCoroutine(DeckSettingCoroutine());
+    //덱을 설정한 후 처음 3장 뽑기 
+    StartCoroutine(HandSettingCoroutine());
 }
 
-private IEnumerator DeckSettingCoroutine()
+private IEnumerator HandSettingCoroutine()
 {
     // Fisher-Yates 알고리즘으로 덱 섞기
 for (int i = deck.Count - 1; i > 0; i--)
@@ -78,7 +83,7 @@ for (int i = deck.Count - 1; i > 0; i--)
     for (int i = 0; i < handCount; i++)
     {
         int cardId = deck[0].ID; // 덱 맨 위의 카드 ID 가져오기
-        int cardLevel = deck[0].LEVEL;
+        int cardLevel = deck[0].STACK;
         deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
 
         // 핸드 카드 초기화
@@ -93,7 +98,7 @@ for (int i = deck.Count - 1; i > 0; i--)
 }
     public void DrawCard(int fixedCard){
                 int cardId = deck[0].ID; // 덱 맨 위의 카드 ID 가져오기
-                int cardLevel = deck[0].LEVEL;
+                int cardLevel = deck[0].STACK;
                 deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
 
                 // 핸드 카드 초기화
@@ -177,16 +182,16 @@ for (int i = deck.Count - 1; i > 0; i--)
     // 1. 업그레이드 가능한 카드 추가
     foreach (var card in deck)
     {
-        if (card.LEVEL < 3) // 레벨 3 미만인 카드만 추가
+        if (card.STACK < 3) // 레벨 3 미만인 카드만 추가
         {
             //기존 카드보다 1레벨 높은 카드를 풀에 추가.
-            candidatePool.Add(new Card(card.ID, card.LEVEL + 1));
+            candidatePool.Add(new Card(card.ID, card.STACK + 1, 1));
         }
     }
     //1-2 업그레이드
     foreach(var handCard in magicCards){
         if(handCard.cardRank < 3){
-            candidatePool.Add(new Card(handCard.cardId, handCard.cardRank + 1));
+            candidatePool.Add(new Card(handCard.cardId, handCard.cardRank + 1, 1));
         }
     }
 
@@ -200,7 +205,7 @@ foreach (var cardData in allCards)
     // 덱과 핸드 카드에 없는 카드만 추가
     if (!isCardInDeckOrHand)
     {
-        candidatePool.Add(new Card(cardData.cardId, 1)); // 신규 카드는 레벨 1로 추가
+        candidatePool.Add(new Card(cardData.cardId, 1, 1)); // 신규 카드는 레벨 1로 추가
     }
 }
 
@@ -228,9 +233,9 @@ foreach (var cardData in allCards)
     if (existingCardInDeck != null)
     {
         // 이미 존재하는 카드의 Rank를 올림
-        if (existingCardInDeck.LEVEL < 3)
+        if (existingCardInDeck.STACK < 3)
         {
-            existingCardInDeck.LEVEL += 1;
+            existingCardInDeck.STACK += 1;
         }
     }
     else//deck에 카드가 없다면 핸드를 찾아본다.
@@ -294,4 +299,15 @@ foreach (var cardData in allCards)
         CardDesc_CardName.text = cardDatas[cardId].cardName;//이름 세팅
         CardDesc_CardDesc.text = cardDatas[cardId].cardDescLv1;//이름 세팅
     }
+
+    //////////////////////
+    //덱 관리 UI 관련
+    public void ShowPlayerDeck(){
+        //현재 플레이어의 활성덱을 보여주는 함수
+        DataManager data = GameManager.instance.dataManager;
+        for(int i = 0; i < 8; i++){
+            GameManager.instance.boardUI.deckCardUI[i].Init(data.savedDeck[i]);
+        }
+    }
+
 }

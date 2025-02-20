@@ -16,17 +16,25 @@ public class DataManager : MonoBehaviour
     public int stageProgressLevel;//저장된 스테이지 레벨
 
 
-    //Weapon List
+    [Header("#Weapon Info")]
     public List<Weapon> weaponList = new List<Weapon>();//웨폰 데이터 저장
     public int upgradePostionCount;//강화 포션 보유량
+
+    [Header("#Card Info")]
+     public List<Card> savedDeck = new List<Card>(); //덱 저장 항상 8개 유지, cardId - 1은 null값
+      public List<Card> havedCardsList = new List<Card>(); //현재 보유한 모든 카드 모음
     
 
 
     private void Awake() {
         //임시로 레벨 세팅
-      UpgradeLevelSetting();
+        UpgradeLevelSetting();
         StageSetting();
         UpgradePostionCountSetting(1000);
+    }
+    public void Start()
+    {
+         DeckSetting();
     }
 
     public void UpgradeLevelSetting(){
@@ -46,6 +54,30 @@ public class DataManager : MonoBehaviour
       //서버에서 강화 포션 보유량을 받아서 적용
       upgradePostionCount = value;
     }
+     public void DeckSetting(){
+      //서버에서 현재 저장된 덱을 받아서 적용
+        savedDeck.Add(new Card(0, 1, 1));
+        savedDeck.Add(new Card(1, 1, 1));
+        savedDeck.Add(new Card(2, 1, 1));
+        savedDeck.Add(new Card(3, 1, 1));
+        savedDeck.Add(new Card(4, 1, 1));
+        savedDeck.Add(new Card(-1, 1, 1));
+        savedDeck.Add(new Card(-1, 1, 1));
+        savedDeck.Add(new Card(-1, 1, 1));
+
+      GameManager.instance.deckManager.GetSavedDeck(savedDeck);
+     }
+
+     public int ReturnCardCount(int cardId){
+      //카드 아이디를 입력하면 현재 해당 카드의 보유량을 리턴해주는 함수
+      int returnNum = 0;//초기화
+      for(int i = 0; i < savedDeck.Count; i++){
+        if(savedDeck[i].ID == cardId){
+          returnNum = savedDeck[i].COUNT;
+        }
+      }
+      return returnNum;
+     }
 
     public void ChageToRealValue(){
         //Upgrade 레벨을 받아서 실제 플레이어에게 적용되는 값으로 바꿔주는 함수.

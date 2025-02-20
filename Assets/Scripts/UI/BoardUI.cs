@@ -13,6 +13,8 @@ public class BoardUI : MonoBehaviour
    //
    public GameObject deckSettingUI;//덱 관리 UI 창
    public GameObject bottomTapUI;//아래 위치하는 탭 UI창, 카드 세팅UI연출시 활성화.
+   //
+   public DeckCard[] deckCardUI;//덱 관리 UI에서 현재 플레이어의 카드 8장
    private void Awake() {
      //Debug.Log(boards[0].GetComponent<RectTransform>().anchoredPosition);
      HideAllBoards();

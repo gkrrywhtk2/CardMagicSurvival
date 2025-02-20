@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         gameStartButton.gameObject.SetActive(false);
         GamePlayState = true;
         ItemSelectState = false;
-        deckManager.DeckSetting();
+        deckManager.HandSetting();
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
          instance.player.playerStatus.StartHealthRegen();//체력 자동 회복

@@ -62,10 +62,11 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
                 GameObject effect = GameManager.instance.poolManager.Get(cardUseEffectNum);
                 effect.transform.position = targetPosition;
             }
-                   
+            
              //마나 소모
             float cost = card.cardCost;
             int rank = card.cardRank;
+            int count = GameManager.instance.dataManager.ReturnCardCount(card.cardId);//카드 보유량 가져오기
             GameManager.instance.player.playerStatus.mana -= cost;
 
             //카드 사용 로직
@@ -74,7 +75,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
             //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = eventData.pointerDrag.GetComponent<MagicCard>().cardDrawStartPosition;//원래 위치로
            
-            deckManager.deck.Add(new Card(card.cardId, rank));//사용된 카드 덱 맨 아래로
+            deckManager.deck.Add(new Card(card.cardId, rank, count));//사용된 카드 덱 맨 아래로
             deckManager.DrawCard(card.fixedCardNumber);
 
         

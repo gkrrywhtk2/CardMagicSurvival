@@ -60,7 +60,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
         selectFill.fillAmount = value;
         if(Fill_now >= Fill_Max){
             //선택한 카드 추가
-            GameManager.instance.deckManager.TakeCardInfo(new Card(cardId,cardLevel));
+            GameManager.instance.deckManager.TakeCardInfo(new Card(cardId,cardLevel, 1));
             SingleEventTrigger.single.oneTouch = false;
             thisTouch = false;
             return;
@@ -76,7 +76,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
         Fill_now = 0;
         nowCard = card;
         this.cardId = nowCard.ID;
-        this.cardLevel = nowCard.LEVEL;
+        this.cardLevel = nowCard.STACK;
         CardData data =  GameManager.instance.deckManager.cardDatas[cardId];
         cardImage.gameObject.SetActive(false);
         stars[0].gameObject.SetActive(false);
