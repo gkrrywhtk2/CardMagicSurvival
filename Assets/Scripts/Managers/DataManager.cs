@@ -34,7 +34,8 @@ public class DataManager : MonoBehaviour
     }
     public void Start()
     {
-         DeckSetting();
+         HavedDeckSetting();
+         SavedDeckSetting();
     }
 
     public void UpgradeLevelSetting(){
@@ -54,18 +55,36 @@ public class DataManager : MonoBehaviour
       //서버에서 강화 포션 보유량을 받아서 적용
       upgradePostionCount = value;
     }
-     public void DeckSetting(){
-      //서버에서 현재 저장된 덱을 받아서 적용
+     public void HavedDeckSetting(){
+      //서버에서 현재 저장된 덱을 받아서 적용, 가진 모든 카드
+        havedCardsList.Add(new Card(0, 1, 1));
+        havedCardsList.Add(new Card(1, 1, 1));
+        havedCardsList.Add(new Card(2, 1, 1));
+        havedCardsList.Add(new Card(3, 1, 1));
+        havedCardsList.Add(new Card(4, 1, 1));
+        havedCardsList.Add(new Card(5, 1, 1));
+        havedCardsList.Add(new Card(6, 1, 1));
+       // savedDeck.Add(new Card(-1, 1, 1));
+       // savedDeck.Add(new Card(-1, 1, 1));
+       // savedDeck.Add(new Card(-1, 1, 1));
+
+     
+     }
+     public void SavedDeckSetting(){
+       //현재 나의 덱에 저장된 카드
         savedDeck.Add(new Card(0, 1, 1));
         savedDeck.Add(new Card(1, 1, 1));
         savedDeck.Add(new Card(2, 1, 1));
         savedDeck.Add(new Card(3, 1, 1));
         savedDeck.Add(new Card(4, 1, 1));
-        savedDeck.Add(new Card(-1, 1, 1));
-        savedDeck.Add(new Card(-1, 1, 1));
-        savedDeck.Add(new Card(-1, 1, 1));
+      
+        while(savedDeck.Count < 8){
+        savedDeck.Add(new Card(-1, 1, 1));//8장이 되지 않는다면 임의의 더미 카드 생성, savedDeck은 항상 8장 이어야함
+         }
+        
 
-      GameManager.instance.deckManager.GetSavedDeck(savedDeck);
+        GameManager.instance.deckManager.GetSavedDeck(savedDeck);
+     
      }
 
      public int ReturnCardCount(int cardId){

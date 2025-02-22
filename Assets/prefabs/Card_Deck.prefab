@@ -94,9 +94,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSprite: {fileID: 8873346316151864792}
+  manaSprite: {fileID: 8345439055408620305}
   costText: {fileID: 3285138509686574289}
+  gaze: {fileID: 9219039069246720360}
   Fill: {fileID: 909342637456654453}
   fillText: {fileID: 3177422808406243257}
+  stackBackGround: {fileID: 5134232657167225587}
   stackText: {fileID: 2124138762218441764}
 --- !u!1 &1522365254940602936
 GameObject:

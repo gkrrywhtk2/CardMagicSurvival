@@ -68,7 +68,6 @@ public void ShowSeletedTap(int tapNum)
     UpgradeUI upgradeUI = boards[0].GetComponent<UpgradeUI>();
     upgradeUI.GetComponent<RectTransform>().anchoredPosition = showPos;
     upgradeUI.AllUpgradeSetting();
-
    }
    public void Show_WeaponBoard(){
      Vector3 showPos = new Vector3(0,0,0);

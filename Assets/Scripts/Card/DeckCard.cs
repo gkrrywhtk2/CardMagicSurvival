@@ -13,6 +13,11 @@ public class DeckCard : MonoBehaviour
     public TMP_Text fillText;//1/5 text
     public GameObject stackBackGround;//중첩 텍스트의 부모 오브젝트
     public TMP_Text stackText;//중첩 텍스트
+    public bool inMyDeck;//현재 나의 카드목록에 올라와있는 덱 카드인가?
+    public GameObject Button_Info;
+    public GameObject Button_Use;
+    public GameObject Button_Delete;
+
 
     public void Init(Card card){
 
@@ -47,6 +52,12 @@ public class DeckCard : MonoBehaviour
         gaze.gameObject.SetActive(false);
         stackBackGround.gameObject.SetActive(false);
 
+    }
+   public void CardTouch()
+    {
+    Button_Info.gameObject.SetActive(true);
+    Button_Delete.gameObject.SetActive(inMyDeck);
+    Button_Use.gameObject.SetActive(!inMyDeck);
     }
 
 

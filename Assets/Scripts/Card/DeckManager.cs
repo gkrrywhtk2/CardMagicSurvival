@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using RANK;
+using System.Linq;
 
 public class Card
 {
@@ -37,6 +38,7 @@ public class DeckManager : MonoBehaviour
     public GameObject CardDescUi;
     public TMP_Text CardDesc_CardName;
     public TMP_Text CardDesc_CardDesc;
+     public List<Card> ownedCardList = new List<Card>(); //
 
     private void Start()
     {
@@ -308,6 +310,33 @@ foreach (var cardData in allCards)
         for(int i = 0; i < 8; i++){
             GameManager.instance.boardUI.deckCardUI[i].Init(data.savedDeck[i]);
         }
+        ShowOwnedCards();
+    }
+
+     public List<Card> FillteringSavedDeck()
+    {
+        // 현재 savedDeck에서 ID가 -1은 제외하는 함수
+         List<Card> list = GameManager.instance.dataManager.savedDeck;
+        list.RemoveAll(card => card.ID == -1);  // ID가 -1인 카드 모두 삭제
+        return list;
+
+    }
+
+    public void ShowOwnedCards(){
+        //보유한 카드목록 리스트를 뽑아주는 함수. 보유한 카드 목록 = 보유한 모든 카드 - 현재 나의 덱
+
+        List<Card> ownedCardList = GameManager.instance.dataManager.havedCardsList
+            .Where(card => !FillteringSavedDeck().Any(savedCard => savedCard.ID == card.ID)) // savedDeck에 없는 카드만 선택
+            .GroupBy(card => card.ID) // 같은 ID를 가진 카드들을 그룹화
+            .Select(group => group.First()) // 중복된 ID 중 하나만 선택
+            .ToList();
+
+        for(int i = 0; i < ownedCardList.Count; i++){
+           DeckCard deckCard =  GameManager.instance.deckCardPooling.Get(0).GetComponent<DeckCard>();
+           deckCard.Init(ownedCardList[i]);
+           deckCard.inMyDeck = false;//선택된 DeckCard가 나의 현재 덱에 올라와 있는지
+        }
+
     }
 
 }

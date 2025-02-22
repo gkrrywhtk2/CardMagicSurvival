@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public EffectPooling effectPoolManager;//이펙트 풀링
     public DamageTextPooling damageTextPooling;//데미지 텍스트 풀링
     public MobPooling mobPooling;//몬스터 오브잭트 풀링
+    public DeckCardPooling deckCardPooling;// 덱 카드 풀링
     public MobSpawnManager spawnManager;
     public DeckManager deckManager;
     public WaveManager waveManager;
