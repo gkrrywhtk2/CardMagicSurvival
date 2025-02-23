@@ -39,6 +39,7 @@ public class DeckManager : MonoBehaviour
     public TMP_Text CardDesc_CardName;
     public TMP_Text CardDesc_CardDesc;
      public List<Card> ownedCardList = new List<Card>(); //
+     public GameObject ownedCardset;//덱 관리에서 보유한 카드목록이 풀링되는 부모 오브젝트
 
     private void Start()
     {
@@ -313,17 +314,25 @@ foreach (var cardData in allCards)
         ShowOwnedCards();
     }
 
-     public List<Card> FillteringSavedDeck()
-    {
-        // 현재 savedDeck에서 ID가 -1은 제외하는 함수
-         List<Card> list = GameManager.instance.dataManager.savedDeck;
-        list.RemoveAll(card => card.ID == -1);  // ID가 -1인 카드 모두 삭제
-        return list;
+   public List<Card> FillteringSavedDeck()
+{
+    // 현재 savedDeck에서 ID가 -1은 제외하는 함수
+    List<Card> list = new List<Card>(GameManager.instance.dataManager.savedDeck); // savedDeck를 복사
+    list.RemoveAll(card => card.ID == -1);  // ID가 -1인 카드 모두 삭제
+    return list;
+}
 
-    }
 
     public void ShowOwnedCards(){
         //보유한 카드목록 리스트를 뽑아주는 함수. 보유한 카드 목록 = 보유한 모든 카드 - 현재 나의 덱
+
+
+
+     // ownedCardset의 자식 오브젝트들을 비활성화
+    foreach (Transform child in ownedCardset.transform)
+    {
+        child.gameObject.SetActive(false);  // 각 자식 오브젝트를 비활성화
+    }
 
         List<Card> ownedCardList = GameManager.instance.dataManager.havedCardsList
             .Where(card => !FillteringSavedDeck().Any(savedCard => savedCard.ID == card.ID)) // savedDeck에 없는 카드만 선택

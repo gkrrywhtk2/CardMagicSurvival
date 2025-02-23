@@ -44,7 +44,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/.utmp/RelWithDebInfo/2g2t1p27/arm64-v8a/GameActivity/cmake_install.cmake")
   include("/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/.utmp/RelWithDebInfo/2g2t1p27/arm64-v8a/FramePacing/cmake_install.cmake")
 
 endif()

@@ -15,8 +15,8 @@ public class BoardUI : MonoBehaviour
    public GameObject bottomTapUI;//아래 위치하는 탭 UI창, 카드 세팅UI연출시 활성화.
    //
    public DeckCard[] deckCardUI;//덱 관리 UI에서 현재 플레이어의 카드 8장
-   private void Awake() {
-     //Debug.Log(boards[0].GetComponent<RectTransform>().anchoredPosition);
+   public GameObject deckCardButtons;//카드 누르면 정보, 추가, 제거 버튼
+   private void Awake() {     //Debug.Log(boards[0].GetComponent<RectTransform>().anchoredPosition);
      HideAllBoards();
      ShowBoard(2);//일단 카드 ui 호출
    }
@@ -79,11 +79,19 @@ public void ShowSeletedTap(int tapNum)
     public void Show_DeckSettingUI(){
       deckSettingUI.gameObject.SetActive(true);
       bottomTapUI.gameObject.SetActive(true);
+       deckCardButtons.gameObject.SetActive(false);//일단 비활성화
      }
 
      public void Hide_DeckSettingUI(){
        deckSettingUI.gameObject.SetActive(false);
       bottomTapUI.gameObject.SetActive(false);
      }
+
+     public void DeckCardButtonOff(){
+       Debug.Log("빈곳 터치");
+        deckCardButtons.gameObject.SetActive(false);
+    }
+
+     
    }
 

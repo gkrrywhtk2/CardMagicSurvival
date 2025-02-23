@@ -1,12 +1,14 @@
 # ninja log v5
-3	220	1735484525158670061	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	68dee55d6488d0a7
-222	419	1735484525347196609	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2g2t1p27/obj/armeabi-v7a/libswappywrapper.so	b15baa0ae170b127
-2	813	1735484525749564158	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	b27d4f4a4cd59bf4
-1	827	1735484525767667165	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	69ad731efaa0989e
-0	852	1735484525794600392	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	56ab488152b8738b
-2	881	1735484525822805406	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	262a1ff29b76102f
-3	942	1735484525884881270	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	b8505e10c8ed94a2
-1	987	1735484525929778592	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	c60238993dfd8353
-1	1131	1735484526074081335	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	a2db1c09dcaaff68
 0	1238	1735484526181437257	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	88d0a8ef26804f07
+1	987	1735484525929778592	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	c60238993dfd8353
 1238	1350	1735484526288605561	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2g2t1p27/obj/armeabi-v7a/libgame.so	ab3fa390bfb761ad
+1	1131	1735484526074081335	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	a2db1c09dcaaff68
+3	942	1735484525884881270	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	b8505e10c8ed94a2
+2	881	1735484525822805406	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	262a1ff29b76102f
+2	813	1735484525749564158	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	b27d4f4a4cd59bf4
+0	852	1735484525794600392	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	56ab488152b8738b
+1	827	1735484525767667165	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	69ad731efaa0989e
+222	419	1735484525347196609	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2g2t1p27/obj/armeabi-v7a/libswappywrapper.so	b15baa0ae170b127
+3	220	1735484525158670061	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	68dee55d6488d0a7
+0	135	1740332185266691361	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	68dee55d6488d0a7
+136	268	1740332185394371423	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2g2t1p27/obj/armeabi-v7a/libswappywrapper.so	b15baa0ae170b127

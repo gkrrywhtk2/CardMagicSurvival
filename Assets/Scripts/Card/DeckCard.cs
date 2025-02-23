@@ -14,14 +14,17 @@ public class DeckCard : MonoBehaviour
     public GameObject stackBackGround;//중첩 텍스트의 부모 오브젝트
     public TMP_Text stackText;//중첩 텍스트
     public bool inMyDeck;//현재 나의 카드목록에 올라와있는 덱 카드인가?
-    public GameObject Button_Info;
-    public GameObject Button_Use;
-    public GameObject Button_Delete;
+       public bool isTouchInfo;//이게 활성화 되어있으면 deckCard 오브젝트가 아닌, 터치시 연출되는 상세 정보 보기 버튼 나오는 toucheddeckCard임
+    RectTransform rect;
 
+    void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+    }
 
     public void Init(Card card){
-
-        if(card.ID == -1){
+        deckCard = card; //카드 데이터 처리
+        if(deckCard.ID == -1){
         NullCardInit();
         }
         else{
@@ -32,8 +35,8 @@ public class DeckCard : MonoBehaviour
         manaSprite.gameObject.SetActive(true);
         gaze.gameObject.SetActive(true);
         stackBackGround.gameObject.SetActive(true);
-        //데이터 처리
-        deckCard = card;
+       
+       
        // deckCard.ID = card.ID; 이렇게 초기화 하면 안됨, 오답노트로 남겨두자 
        // deckCard.STACK = card.STACK;
        // deckCard.COUNT = card.COUNT;
@@ -53,12 +56,34 @@ public class DeckCard : MonoBehaviour
         stackBackGround.gameObject.SetActive(false);
 
     }
-   public void CardTouch()
+    public void CardTouch()
     {
-    Button_Info.gameObject.SetActive(true);
-    Button_Delete.gameObject.SetActive(inMyDeck);
-    Button_Use.gameObject.SetActive(!inMyDeck);
+        if(isTouchInfo == true)
+            return;
+        if(deckCard.ID == -1)
+            return;
+        Debug.Log("카드 터치");
+        GameManager.instance.boardUI.deckCardButtons.gameObject.SetActive(true);
+
+        // 카드를 터치했을 때, 해당 카드의 위치를 가져옵니다.
+        Vector3 cardPosition = cardSprite.transform.position;
+
+        // 버튼을 카드 위치로 이동시키기
+        MoveButtonToPosition(cardPosition, deckCard);
     }
+
+    // 버튼을 카드 위치로 이동시키는 함수
+    private void MoveButtonToPosition(Vector3 targetPosition, Card card)
+    {
+        targetPosition.y += 175;
+        // 카드의 월드 좌표를 버튼의 월드 좌표로 설정
+        DeckCard cardTouched = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
+        cardTouched.Init(card);
+        cardTouched.transform.position = targetPosition;
+    }
+
+    
+
 
 
 }
