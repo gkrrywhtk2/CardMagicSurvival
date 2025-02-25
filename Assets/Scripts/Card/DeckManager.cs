@@ -300,7 +300,7 @@ foreach (var cardData in allCards)
 
         CardDescUi.gameObject.SetActive(true);
         CardDesc_CardName.text = cardDatas[cardId].cardName;//이름 세팅
-        CardDesc_CardDesc.text = cardDatas[cardId].cardDescLv1;//이름 세팅
+        CardDesc_CardDesc.text = cardDatas[cardId].cardDesc_Main;//이름 세팅
     }
 
     //////////////////////

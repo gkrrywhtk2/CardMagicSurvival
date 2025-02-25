@@ -4,17 +4,67 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
   public enum CardRank{normal, rare, epic, legend};
+  public enum InfoTag{damage, count, duration, range, manarecovery}
   [Header("#Main Info")]
   public int cardId;
   public int cardCost;
   public CardRank rank;
+  public InfoTag[] infoTags;
   public string cardName;
-  public string cardDescLv1;
-    public string cardDescLv2;
-      public string cardDescLv3;
+  public string cardDesc_Main;
   public Sprite cardImage;
   public bool isRangeCard;
   public Vector3 rangeScale;
   public Sprite nextcardImage;
+
+  [Header("# Damage Info")]
+    public float baseDamage; // 기본 공격력
+    public float growthValue; // 성장 계수
+
+    public float GetDamage(int stack)
+      {
+          return baseDamage + (growthValue * stack);
+      }
+    
+    [Header("# Count Info")]//공격 횟수 정보
+    public int baseCount;// 기본 공격 횟수
+    public int growthValue_Count;//성장 계수
+
+    public float GetCount(int stack)
+      {
+          return baseCount + (growthValue_Count * stack);
+      }
+
+      [Header("# Duration Info")]//지속 시간 정보
+    public float baseDuration;// 기본 지속시간
+    public float growthValue_Duration;//성장 계수
+
+    public float GetDuration(int stack)
+      {
+          return baseDuration + (growthValue_Duration * stack);
+      }
+
+      [Header("# Range Info")]//범위 정보
+        public Vector3 rangeScale_;
+        public float growthValue_Range;//성장 계수
+          public Vector3 GetRange(int stack)
+        {
+             return rangeScale_ * (1 + growthValue_Range * stack);
+          }
+
+      public float GetRangeForUser(int stack)
+    {
+        return Mathf.Round(GetRange(stack).x * 10) / 10f; // 소수점 한 자리로 고정
+      }
+
+       [Header("# Mana Info")]//마나 정보
+      public int baseManaRecovery;// 기본 마나 회복량
+    public int growthValue_ManaRecovery;//성장 계수
+
+    public float GetManaRecovery(int stack)
+      {
+          return baseManaRecovery + (growthValue_ManaRecovery * stack);
+      }
+
 
 }

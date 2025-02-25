@@ -53,16 +53,16 @@ public class RandomCardDescPanel : MonoBehaviour
 
         switch(level){
             case 1:
-            descText.text = data.cardDescLv1;
+           // descText.text = data.cardDescLv1;
             cardLvText.text = "Lv1";
             newText.gameObject.SetActive(true);
             break;
             case 2:
             cardLvText.text = "Lv2";
-            descText.text = data.cardDescLv2;
+          //  descText.text = data.cardDescLv2;
             break;
             case 3:
-            descText.text = data.cardDescLv3;
+          //  descText.text = data.cardDescLv3;
             cardLvText.text = "Lv3";
             break;
         }

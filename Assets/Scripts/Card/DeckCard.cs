@@ -14,7 +14,7 @@ public class DeckCard : MonoBehaviour
     public GameObject stackBackGround;//중첩 텍스트의 부모 오브젝트
     public TMP_Text stackText;//중첩 텍스트
     public bool inMyDeck;//현재 나의 카드목록에 올라와있는 덱 카드인가?
-       public bool isTouchInfo;//이게 활성화 되어있으면 deckCard 오브젝트가 아닌, 터치시 연출되는 상세 정보 보기 버튼 나오는 toucheddeckCard임
+    public bool isTouchInfo;//이게 활성화 되어있으면 deckCard 오브젝트가 아닌, 터치시 연출되는 상세 정보 보기 버튼 나오는 toucheddeckCard임
     RectTransform rect;
 
     void Awake()
@@ -80,6 +80,11 @@ public class DeckCard : MonoBehaviour
         DeckCard cardTouched = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
         cardTouched.Init(card);
         cardTouched.transform.position = targetPosition;
+    }
+    public void CardInfoUIOn(){
+       CardInfoUI cardinfo =  GameManager.instance.boardUI.cardInfoUI;
+       cardinfo.gameObject.SetActive(true);
+       cardinfo.Init(deckCard);
     }
 
     

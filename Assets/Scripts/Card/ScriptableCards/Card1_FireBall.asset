@@ -15,11 +15,20 @@ MonoBehaviour:
   cardId: 1
   cardCost: 5
   rank: 2
+  infoTags: 0000000003000000
   cardName: "\uC6B4\uC11D \uB099\uD558"
-  cardDescLv1: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uBC94\uC704 \uD53C\uD574"
-  cardDescLv2: "\uBC94\uC704 1.5\uBC30"
-  cardDescLv3: "\uBC94\uC704 1.5\uBC30 + \uD53C\uD574\uB7C9 2\uBC30"
+  cardDesc_Main: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uC6B4\uC11D\uC744 \uB099\uD558\uD569\uB2C8\uB2E4"
   cardImage: {fileID: -6287250751935635100, guid: c75d942da998e4d43bd62a47c8c915cf, type: 3}
   isRangeCard: 1
   rangeScale: {x: 3, y: 1.5, z: 0}
   nextcardImage: {fileID: 21300000, guid: 02083fdd5d9ecb6408a58e8ad5ae5771, type: 3}
+  baseDamage: 500
+  growthValue: 50
+  baseCount: 0
+  growthValue_Count: 0
+  baseDuration: 0
+  growthValue_Duration: 0
+  rangeScale_: {x: 3, y: 1.5, z: 0}
+  growthValue_Range: 0.1
+  baseManaRecovery: 0
+  growthValue_ManaRecovery: 0
