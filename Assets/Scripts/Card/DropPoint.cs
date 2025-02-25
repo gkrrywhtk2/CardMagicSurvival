@@ -64,18 +64,18 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             }
             
              //마나 소모
-            float cost = card.cardCost;
-            int rank = card.cardRank;
-            int count = GameManager.instance.dataManager.ReturnCardCount(card.cardId);//카드 보유량 가져오기
+            float cost = card.cardData.cardCost;
+            int STACK = card.magicCard.STACK;
+           // int count = GameManager.instance.dataManager.ReturnCardCount(card.cardId);//카드 보유량 가져오기
             GameManager.instance.player.playerStatus.mana -= cost;
 
             //카드 사용 로직
-            CardUse(card.cardId, eventData);
+            CardUse(card.magicCard.ID, eventData);
             //eventData.pointerDrag.transform.SetParent(transform);
 
             //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = eventData.pointerDrag.GetComponent<MagicCard>().cardDrawStartPosition;//원래 위치로
            
-            deckManager.deck.Add(new Card(card.cardId, rank, count));//사용된 카드 덱 맨 아래로
+            deckManager.deck.Add(card.magicCard.ID);//사용된 카드 덱 맨 아래로
             deckManager.DrawCard(card.fixedCardNumber);
 
         

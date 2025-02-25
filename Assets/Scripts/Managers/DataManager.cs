@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq; // LINQ 사용
 
 public class DataManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class DataManager : MonoBehaviour
     public int upgradePostionCount;//강화 포션 보유량
 
     [Header("#Card Info")]
-     public List<Card> savedDeck = new List<Card>(); //덱 저장 항상 8개 유지, cardId - 1은 null값
+     public List<int> savedDeck = new List<int>(); //덱 저장 항상 8개 유지, cardId - 1은 null값
       public List<Card> havedCardsList = new List<Card>(); //현재 보유한 모든 카드 모음
     
 
@@ -57,29 +58,28 @@ public class DataManager : MonoBehaviour
     }
      public void HavedDeckSetting(){
       //서버에서 현재 저장된 덱을 받아서 적용, 가진 모든 카드
-        havedCardsList.Add(new Card(0, 1, 1));
-        havedCardsList.Add(new Card(1, 1, 1));
-        havedCardsList.Add(new Card(2, 1, 1));
-        havedCardsList.Add(new Card(3, 1, 1));
-        havedCardsList.Add(new Card(4, 1, 1));
-        havedCardsList.Add(new Card(5, 1, 1));
-        havedCardsList.Add(new Card(6, 1, 1));
-       // savedDeck.Add(new Card(-1, 1, 1));
-       // savedDeck.Add(new Card(-1, 1, 1));
-       // savedDeck.Add(new Card(-1, 1, 1));
+        havedCardsList.Add(new Card(0, 0, 10));
+        havedCardsList.Add(new Card(1, 0, 20));
+        havedCardsList.Add(new Card(2, 0, 30));
+        havedCardsList.Add(new Card(3, 0, 1));
+        havedCardsList.Add(new Card(4, 0, 1));
+        havedCardsList.Add(new Card(5, 0, 1));
+        havedCardsList.Add(new Card(6, 0, 1));
+       
 
      
      }
      public void SavedDeckSetting(){
        //현재 나의 덱에 저장된 카드
-        savedDeck.Add(new Card(0, 1, 1));
-        savedDeck.Add(new Card(1, 1, 1));
-        savedDeck.Add(new Card(2, 1, 1));
-        savedDeck.Add(new Card(3, 1, 1));
-        savedDeck.Add(new Card(4, 1, 1));
+        savedDeck.Add(0);
+         savedDeck.Add(1);
+          savedDeck.Add(2);
+           savedDeck.Add(3);
+            savedDeck.Add(4);
+      
       
         while(savedDeck.Count < 8){
-        savedDeck.Add(new Card(-1, 1, 1));//8장이 되지 않는다면 임의의 더미 카드 생성, savedDeck은 항상 8장 이어야함
+        savedDeck.Add(-1);//8장이 되지 않는다면 임의의 더미 카드 생성, savedDeck은 항상 8장 이어야함
          }
         
 
@@ -91,8 +91,9 @@ public class DataManager : MonoBehaviour
       //카드 아이디를 입력하면 현재 해당 카드의 보유량을 리턴해주는 함수
       int returnNum = 0;//초기화
       for(int i = 0; i < savedDeck.Count; i++){
-        if(savedDeck[i].ID == cardId){
-          returnNum = savedDeck[i].COUNT;
+        if(savedDeck[i] == cardId){
+          Card targetCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == savedDeck[i]);
+          returnNum = targetCard.COUNT;
         }
       }
       return returnNum;
@@ -163,6 +164,24 @@ public class DataManager : MonoBehaviour
         };
         return loadedWeapons;
     }
+
+
+
+    public void LogDeckStatus()
+{
+    Debug.Log("=== Haved Deck ===");
+    foreach (var card in havedCardsList)
+    {
+        Debug.Log($"ID: {card.ID}, COUNT: {card.COUNT}, Stack: {card.STACK}");
+    }
+
+    Debug.Log("=== Saved Deck ===");
+    foreach (var num in savedDeck)
+    {
+        Debug.Log($"saveDeckList: " + num);
+    }
+}
+
 }
 
 

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq; // LINQ 사용
 
 public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -17,9 +18,11 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Vector3 cardDrawStartPosition;//카드 드로우 연출시 시작하는 위치
 
     [Header("Card Info")]
-    public int cardId;       // 카드 ID
-    public int cardCost;     // 카드 비용
-    public int cardRank;//{1,2,3}
+    public CardData cardData;
+   public Card magicCard;
+    //public int cardId;       // 카드 ID
+   // public int cardCost;     // 카드 비용
+    //public int cardRank;//{1,2,3}
     public int fixedCardNumber;//012 어떤 위치의 카드인지
     public bool cardOn;//코스트 체크
     public bool cardDrawLock;//카드 드로우 애니메이션 연출시 카드 터치 금지용
@@ -41,7 +44,6 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private bool lastRangeState = false; // 이전 상태를 저장할 변수
     private bool lastCardReadyState = false;
     public Image manaCost;//마나 보석 이미지
-    public int cardLevel;
     public TMP_Text cardLevelText;//카드 레벨 텍스트
     
 
@@ -53,7 +55,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //cardImage = GetComponent<Image>();
         originalPosition = rect.position;
         anim = GetComponent<Animator>();
-          cardDrawLock = false;
+        cardDrawLock = false;
    
     }
 
@@ -66,32 +68,31 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     
    
-    public void CardInit(CardData data,int level)
+    public void CardInit(int cardid)
     {
+        cardData = GameManager.instance.deckManager.cardDatas[cardid];
+        magicCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == cardid);
         cardOn = false;
         cardReady = false;
-        if (data == null)
-        {
-            Debug.LogError("CardData is null!");
-            return;
-        }
-
-        cardId = data.cardId;
-        cardLevel = level;
         cardLevelText.gameObject.SetActive(true);
-        cardLevelText.text = "Lv." + cardLevel.ToString();
+        cardLevelText.text = "Lv." + magicCard.STACK.ToString();
         cardLevelText.gameObject.SetActive(false);//우선 감추기
         //RankImageSetting(cardRank); 별 연출 개발 중단
-        cardCost = data.cardCost;
-        cardImage.sprite = data.cardImage;
-        costText.text = cardCost.ToString();
-        rangeOn = data.isRangeCard;
-        range.GetComponent<RectTransform>().localScale = data.rangeScale;
+        //cardCost = cardData.cardCost;
+        cardImage.sprite = cardData.cardImage;
+        costText.text = cardData.cardCost.ToString();
+        rangeOn = cardData.isRangeCard;
+        range.GetComponent<RectTransform>().localScale = cardData.rangeScale;
         CardAlpha1_Range();
          CardDrawAni();
           //StartCoroutine(CardDrawAnimation());
-        
-        
+    }
+
+    public void CardInitWhenStackUpgrade(){
+        int id = magicCard.ID;
+        cardLevelText.gameObject.SetActive(true);
+        cardLevelText.text = "Lv." + magicCard.STACK.ToString();
+        cardLevelText.gameObject.SetActive(false);//우선 감추기
     }
     /**
     public void Init_CardUpgrade(int rank){
@@ -218,9 +219,14 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void ClockCoolTime(){
+        if(cardData == null)
+        return;//카드가 생성되기전에는 실행 X
+
      // 현재 마나와 카드 비용 비율 계산
     float mana = GameManager.instance.player.playerStatus.mana;
-    float value = Mathf.Clamp01(mana / cardCost);
+    float value = Mathf.Clamp01(mana / cardData.cardCost);
+ 
+    
 
     // 쿨타임 UI 업데이트
     CoolTimeImage.fillAmount = value;
@@ -356,7 +362,7 @@ public void CardAlpha1_Range(){
     }
     public void CardDescUiSeind(){
         //deckmanager한테 카드 정보 보내어, ui에 카드 설명창 연출
-        GameManager.instance.deckManager.CardDescInit(cardId);
+        GameManager.instance.deckManager.CardDescInit(magicCard.ID);
     }
     public void CardDescUiOff(){
         GameManager.instance.deckManager.CardDescUi.gameObject.SetActive(false);

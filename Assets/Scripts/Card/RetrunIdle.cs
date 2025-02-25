@@ -23,7 +23,7 @@ public class RetrunIdle : MonoBehaviour
     }
      public void AutoSelect(){
         //처음 생성될때 0번째 랜덤 카드 자동 선택
-        int index = 0;//첫번째 randomCard
-        GameManager.instance.deckManager.RandomCardSelectedSetting(index);
+      //  int index = 0;//첫번째 randomCard
+       // GameManager.instance.deckManager.RandomCardSelectedSetting(index);
     }
 }

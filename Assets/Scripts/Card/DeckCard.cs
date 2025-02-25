@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq; // LINQ 사용
 
 public class DeckCard : MonoBehaviour
 {
-    public Card deckCard;//{cardID, cardLevel}
+    public Card deckCard;
     public Image cardSprite;//카드 메인 이미지
     public Image manaSprite;//마나 이미지
     public TMP_Text costText;//카드 코스트 텍스트
@@ -22,8 +23,12 @@ public class DeckCard : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
-    public void Init(Card card){
-        deckCard = card; //카드 데이터 처리
+    public void Init(int cardid){
+        deckCard =  GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == cardid);
+        if(deckCard == null){
+            deckCard = new Card(-1, 0 , 0);
+        }
+        //deckCard = card; //카드 데이터 처리
         if(deckCard.ID == -1){
         NullCardInit();
         }
@@ -58,22 +63,30 @@ public class DeckCard : MonoBehaviour
     }
     public void CardTouch()
     {
+        if (deckCard == null || deckCard.ID == -1) {
+        Debug.LogWarning("deckCard is null or invalid.");
+        return;
+    }
+        Debug.Log(deckCard.ID);
         if(isTouchInfo == true)
             return;
         if(deckCard.ID == -1)
             return;
         Debug.Log("카드 터치");
-        GameManager.instance.boardUI.deckCardButtons.gameObject.SetActive(true);
+       DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
+       infoCard.gameObject.SetActive(true);
+       infoCard.Init(deckCard.ID);
 
         // 카드를 터치했을 때, 해당 카드의 위치를 가져옵니다.
         Vector3 cardPosition = cardSprite.transform.position;
 
         // 버튼을 카드 위치로 이동시키기
-        MoveButtonToPosition(cardPosition, deckCard);
+        int cardID = deckCard.ID;
+        MoveButtonToPosition(cardPosition, cardID);
     }
 
     // 버튼을 카드 위치로 이동시키는 함수
-    private void MoveButtonToPosition(Vector3 targetPosition, Card card)
+    private void MoveButtonToPosition(Vector3 targetPosition, int card)
     {
         targetPosition.y += 175;
         // 카드의 월드 좌표를 버튼의 월드 좌표로 설정

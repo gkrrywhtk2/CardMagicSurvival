@@ -1,6 +1,9 @@
-using RANK;
-using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine.UI;
+using RANK;
+using System.Linq; // LINQ 사용
 
 public class CardInfoUI : MonoBehaviour
 {
@@ -15,11 +18,32 @@ public class CardInfoUI : MonoBehaviour
     public TMP_Text cardDesc_Text;//한영 변환
     public TMP_Text[] cardDescNameLine_Text;//카드 정보 0번쨰 줄 
     public TMP_Text[] cardDescNameLine_VarText;//카드 정보 0번째줄 효과
-    public TMP_Text cardDescNameLine1_Text;
-    public TMP_Text cardDescNameLine1_VarText;
-    public TMP_Text cardDescNameLine2_Text;
-    public TMP_Text cardDescNameLine2_VarText;
+    public GameObject touchedCard;//deckCardTouch했을때 정보, 제거, 사용 뜨는 그 오브젝트
+    //
+    public GameObject warningText;
 
+    
+
+       //TextColor
+    private Color commonColor_W, commonColor;
+    private Color rareColor_W, rareColor;
+    private Color epicColor_W, epicColor;
+    private Color legendColor_W, legendColor;
+
+    private void Awake()
+    {
+    // 밝은 색상 (획득한 카드)
+    commonColor_W = new Color(0.7f, 0.7f, 0.7f, 1f);
+    rareColor_W = new Color(0.3f, 0.5f, 0.9f, 1f);
+    epicColor_W = new Color(0.6f, 0.3f, 0.8f, 1f);
+    legendColor_W = new Color(1f, 0.7f, 0.2f, 1f);
+
+    // 어두운 색상 (미획득 카드)
+    commonColor = new Color(0.4f, 0.4f, 0.4f, 1f);
+    rareColor = new Color(0.2f, 0.3f, 0.6f, 1f);
+    epicColor = new Color(0.4f, 0.2f, 0.5f, 1f);
+    legendColor = new Color(0.8f, 0.5f, 0.1f, 1f);
+    }
     public void Init(Card card){
     //데이터 세팅
         thisCard = card;
@@ -34,13 +58,21 @@ public class CardInfoUI : MonoBehaviour
     CardData.CardRank.legend => "전설",
     _ => "알 수 없음"
     };
+    cardRank_Text.color = cardData.rank switch
+    {
+    CardData.CardRank.normal => commonColor_W,
+    CardData.CardRank.rare => rareColor_W,
+    CardData.CardRank.epic  => epicColor_W,
+    CardData.CardRank.legend => legendColor_W,
+    _ => commonColor_W
+    };
 
 
     //카드 이름Text 세팅
     cardName_Text.text = cardData.cardName;
 
     //카드 이미지 세팅
-    cardImgae.Init(thisCard);
+    cardImgae.Init(thisCard.ID);
 
     //카드 효과 설명 세팅
     cardEffect_VarText.text = cardData.cardDesc_Main;
@@ -96,8 +128,28 @@ public class CardInfoUI : MonoBehaviour
 
 public void OffButton(){
     GameManager.instance.boardUI.cardInfoUI.gameObject.SetActive(false);
+    touchedCard.gameObject.SetActive(false);
 }
 public void OnButton(){
     GameManager.instance.boardUI.cardInfoUI.gameObject.SetActive(true);
+}
+public void StackUpgradeButton(){
+    if(thisCard.COUNT >= 5){
+      // ID가 1인 카드 찾기
+    Card targetCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == thisCard.ID);
+    targetCard.COUNT -= 5;//카드 5개 소진
+    targetCard.STACK += 1;//카드 업그레이드
+    Init(targetCard);
+    GameManager.instance.deckManager.ShowPlayerDeck();
+     DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
+       infoCard.gameObject.SetActive(true);
+       infoCard.Init(targetCard.ID);
+
+       GameManager.instance.deckManager.magicCards[0].CardInitWhenStackUpgrade();
+          GameManager.instance.deckManager.magicCards[1].CardInitWhenStackUpgrade();
+             GameManager.instance.deckManager.magicCards[2].CardInitWhenStackUpgrade();
+    }else{
+        warningText.gameObject.SetActive(true);
+    }
 }
 }

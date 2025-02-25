@@ -60,7 +60,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
         selectFill.fillAmount = value;
         if(Fill_now >= Fill_Max){
             //선택한 카드 추가
-            GameManager.instance.deckManager.TakeCardInfo(new Card(cardId,cardLevel, 1));
+           // GameManager.instance.deckManager.TakeCardInfo(new Card(cardId,cardLevel, 1));
             SingleEventTrigger.single.oneTouch = false;
             thisTouch = false;
             return;
@@ -136,7 +136,7 @@ public class RandomCard : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     public void SendCardInfo(){
          //GameManager.instance.deckManager.TakeCardInfo(nowCard); 일단 대기
         //GameManager.instance. nextWaveButton 카드 선택시 다음 웨이브로 넘어가야할 차례
-      GameManager.instance.deckManager.RandomCardSelectedSetting(RandomCardNum);
+      //GameManager.instance.deckManager.RandomCardSelectedSetting(RandomCardNum);
         
     }
 
