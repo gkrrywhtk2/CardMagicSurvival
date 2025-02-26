@@ -1,9 +1,8 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 
 public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
@@ -18,15 +17,27 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     public float flameburstTimer;
     public float flameburstDuration = 5;
 
+    //
+
+     // 카드 효과를 ID로 매핑하기 위한 딕셔너리
+    private Dictionary<int, ICardUse> cardAbility;
+
     private void Awake()
     {
-        rect        = GetComponent<RectTransform>();
-    }
-    private void Update(){
-      
-    }
-    
+        rect = GetComponent<RectTransform>();
+        
+        // gameObject가 비활성화되어 있지 않도록 보장
+    gameObject.SetActive(true);
 
+    // 카드 능력 딕셔너리 초기화
+    cardAbility = new Dictionary<int, ICardUse>
+    {
+        { 1, gameObject.AddComponent<Card1_MeteorStrike>() }
+    };
+
+
+    // 필요에 따라 다른 카드들 추가
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -67,10 +78,15 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             float cost = card.cardData.cardCost;
             int STACK = card.magicCard.STACK;
            // int count = GameManager.instance.dataManager.ReturnCardCount(card.cardId);//카드 보유량 가져오기
-            GameManager.instance.player.playerStatus.mana -= cost;
+    
 
             //카드 사용 로직
-            CardUse(card.magicCard.ID, eventData);
+            if(card.magicCard.ID == 1){
+                UseCard(eventData);
+            }else{
+                CardUse(eventData);
+            }
+            
             //eventData.pointerDrag.transform.SetParent(transform);
 
             //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = eventData.pointerDrag.GetComponent<MagicCard>().cardDrawStartPosition;//원래 위치로
@@ -82,32 +98,57 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         }
        // gameObject.SetActive(false);
     }
-    public void CardUse(int cardId,PointerEventData eventData){
+
+
+      // 카드 ID에 따라 효과를 실행하는 함수
+    public void UseCard(PointerEventData eventData)
+    {
+        MagicCard card =  eventData.pointerDrag.GetComponent<MagicCard>();
+        int ID = card.magicCard.ID;
+        int STACK = card.magicCard.STACK;
+        
+        if (cardAbility.ContainsKey(ID))
+        {
+            cardAbility[ID].Use(eventData); // 해당 카드의 효과 실행
+        }
+        else
+        {
+            Debug.LogWarning("카드 효과가 정의되지 않았습니다.");
+        }
+    }
+
+
+    public void CardUse(PointerEventData eventData){
+        MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        int cardId = card.magicCard.ID;
+        float cost = card.cardData.cardCost;
+        int STACK = card.magicCard.STACK;
+        GameManager.instance.player.playerStatus.mana -= cost;//마나 소모
+
         switch(cardId){
             case 0:
-            Card0_Concentration();
+        Card0_Concentration(eventData);
             return;
-
             case 1:
-        Card1_FireBall(eventData);
+       // Card1_FireBall(eventData);
             return;
-
             case 2:
         Card2_PosionPoison(eventData);
             return;
-
             case 3:
-        Card3_ManaUp();
+        Card3_ManaUp(eventData);
             return;
             case 4:
-            Card4_FlameBurst();
+        Card4_FlameBurst(eventData);
             return;
             default:
             return;
         }
+
+           
     }
 
-     public void Card0_Concentration(){
+     public void Card0_Concentration(PointerEventData eventData){
          GameManager.instance.player.playerEffect.PlayConcentration();
          StartCoroutine(Concentration());
     }
@@ -116,7 +157,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     // 화염구 생성
     int fireBallNum = 2;
     GameObject fireball = GameManager.instance.poolManager.Get(fireBallNum); 
-    FireBall fire = fireball.GetComponent<FireBall>();
+   // FireBall fire = fireball.GetComponent<FireBall>();
 
        // 생성 위치 설정
     Vector3 startPosition = GameManager.instance.player.fireBallPoint.transform.position;
@@ -126,7 +167,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
     targetPosition.z = 0; // 2D 환경이라면 Z축을 고정
 
-    fire.Initialize(targetPosition);
+   // fire.Initialize(targetPosition);
 
    // 방향 벡터 계산
     Vector3 direction = targetPosition - startPosition;
@@ -164,7 +205,7 @@ public void Card2_PosionPoison(PointerEventData eventData){
 
 }
 
-public void Card3_ManaUp(){
+public void Card3_ManaUp(PointerEventData eventData){
     GameManager.instance.player.playerEffect.PlayManaUp();
     StartCoroutine(ManaPlus());
 
@@ -189,7 +230,7 @@ public void Card3_ManaUp(){
 
     }
 
-   public void Card4_FlameBurst()
+   public void Card4_FlameBurst(PointerEventData eventData)
 {
     // 기존 Coroutine이 실행 중이면 중단
     if (flameBurstCorutine != null)

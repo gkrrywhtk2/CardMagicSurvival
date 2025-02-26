@@ -47,11 +47,15 @@ public class CardData : ScriptableObject
       [Header("# Range Info")]//범위 정보
         public Vector3 rangeScale_;
         public float growthValue_Range;//성장 계수
-          public Vector3 GetRange(int stack)
-        {
-             return rangeScale_ * (1 + growthValue_Range * stack);
-          }
-
+         public Vector3 GetRange(int stack)
+{
+    // rangeScale_.x와 rangeScale_.y에 성장 계수를 곱해서 증가시킨 값으로 새로운 Vector3를 반환
+        return new Vector3(
+        rangeScale_.x + (growthValue_Range * stack), // x축 값 증가
+        rangeScale_.y + (growthValue_Range * stack), // y축 값 증가
+        0 // z축 값은 고정
+    );
+}
       public float GetRangeForUser(int stack)
     {
         return Mathf.Round(GetRange(stack).x * 10) / 10f; // 소수점 한 자리로 고정

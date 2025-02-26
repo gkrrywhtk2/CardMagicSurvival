@@ -67,12 +67,12 @@ public class DeckCard : MonoBehaviour
         Debug.LogWarning("deckCard is null or invalid.");
         return;
     }
-        Debug.Log(deckCard.ID);
+       // Debug.Log(deckCard.ID);
         if(isTouchInfo == true)
             return;
         if(deckCard.ID == -1)
             return;
-        Debug.Log("카드 터치");
+        //Debug.Log("카드 터치");
        DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
        infoCard.gameObject.SetActive(true);
        infoCard.Init(deckCard.ID);

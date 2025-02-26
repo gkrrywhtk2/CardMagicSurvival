@@ -28,7 +28,7 @@ MonoBehaviour:
   growthValue_Count: 0
   baseDuration: 0
   growthValue_Duration: 0
-  rangeScale_: {x: 3, y: 1.5, z: 0}
+  rangeScale_: {x: 3, y: 3, z: 0}
   growthValue_Range: 0.1
   baseManaRecovery: 0
   growthValue_ManaRecovery: 0

@@ -137,7 +137,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
           //카드 설명 UI 활성화
          //GameManager.instance.deckManager.CardDescInit(cardId);
-        // Debug.Log("테스트 카드 터치");
+       // Debug.Log(magicCard.STACK);
 
     }
 

@@ -148,6 +148,7 @@ public void StackUpgradeButton(){
        GameManager.instance.deckManager.magicCards[0].CardInitWhenStackUpgrade();
           GameManager.instance.deckManager.magicCards[1].CardInitWhenStackUpgrade();
              GameManager.instance.deckManager.magicCards[2].CardInitWhenStackUpgrade();
+             Debug.Log("StackUpgradeButton");
     }else{
         warningText.gameObject.SetActive(true);
     }

@@ -154,7 +154,7 @@ public void StopHealthRegen()
         float randomOffset = Random.Range(0, ATK * 0.1f);
 
         // 기본 데미지 계산
-        float Damage_one = (ATK + randomOffset) * skillPower;
+        float Damage_one = (ATK + randomOffset) * (skillPower/100);
 
         // 치명타 확률 체크 (CriticalPer가 1이라면 1% 확률)
         isCritical = Random.Range(0f, 100f) < CriticalPer;

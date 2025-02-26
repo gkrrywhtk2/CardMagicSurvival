@@ -121,8 +121,13 @@ public class Monster : MonoBehaviour
         }
     }
     public void DamageCalculator(float damage, bool isCritical){
-        health -= damage;
-        ShowDamageText(damage,isCritical);
+
+        int damageOffSet = Random.Range(0,10);
+        float finalDamage = (damage + damageOffSet);
+        finalDamage = Mathf.Max(finalDamage, 1); // finalDamage 1 이하로 내려가지 않도록 설정
+        health -= finalDamage;
+
+        ShowDamageText(finalDamage,isCritical);
         if(health <= 0){
         death();
 
