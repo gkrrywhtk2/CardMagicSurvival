@@ -14,7 +14,7 @@ public class CardData : ScriptableObject
   public string cardDesc_Main;
   public Sprite cardImage;
   public bool isRangeCard;
-  public Vector3 rangeScale;
+  public Vector3 rangeScale_Card;
   public Sprite nextcardImage;
 
   [Header("# Damage Info")]

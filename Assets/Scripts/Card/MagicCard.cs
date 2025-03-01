@@ -82,7 +82,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         cardImage.sprite = cardData.cardImage;
         costText.text = cardData.cardCost.ToString();
         rangeOn = cardData.isRangeCard;
-        range.GetComponent<RectTransform>().localScale = cardData.rangeScale;
+        range.GetComponent<RectTransform>().localScale = cardData.rangeScale_Card;
         CardAlpha1_Range();
          CardDrawAni();
           //StartCoroutine(CardDrawAnimation());

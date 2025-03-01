@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e815ae4f9cc4b55827773fccce780f, type: 3}
+  m_Name: Card3_ManaUp
+  m_EditorClassIdentifier: 
+  cardId: 3
+  cardCost: 0
+  rank: 1
+  infoTags: 0400000002000000
+  cardName: "\uBE44\uC804 \uD750\uB984"
+  cardDesc_Main: "\uB9C8\uB098 \uD68C\uBCF5\uB7C9\uC774 \uD06C\uAC8C \uC99D\uAC00\uD569\uB2C8\uB2E4"
+  cardImage: {fileID: 2337542489007108328, guid: 960143881f61b4635b0eb89cdae1d8ce, type: 3}
+  isRangeCard: 0
+  rangeScale: {x: 0, y: 0, z: 0}
+  nextcardImage: {fileID: 21300000, guid: a9dda65b0f365244586f782652d859ad, type: 3}
+  baseDamage: 0
+  growthValue: 0
+  baseCount: 0
+  growthValue_Count: 0
+  baseDuration: 3
+  growthValue_Duration: 0
+  rangeScale_: {x: 0, y: 0, z: 0}
+  growthValue_Range: 0
+  baseManaRecovery: 300
+  growthValue_ManaRecovery: 50
