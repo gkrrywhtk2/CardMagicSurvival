@@ -26,17 +26,22 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     {
         rect = GetComponent<RectTransform>();
         
-        // gameObject가 비활성화되어 있지 않도록 보장
+    // gameObject가 비활성화되어 있지 않도록 보장
     gameObject.SetActive(true);
 
     // 카드 능력 딕셔너리 초기화
-    cardAbility = new Dictionary<int, ICardUse>
-    {
-        { 1, gameObject.AddComponent<Card1_MeteorStrike>() }
-    };
+    InitCardDictionary();
 
 
     // 필요에 따라 다른 카드들 추가
+    }
+
+    public void InitCardDictionary(){
+            cardAbility = new Dictionary<int, ICardUse>
+        {
+            { 1, gameObject.AddComponent<Card1_MeteorStrike>() },
+            { 2, gameObject.AddComponent<Card2_VenomousCurse>() }
+        };
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -81,11 +86,11 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     
 
             //카드 사용 로직
-            if(card.magicCard.ID == 1){
-                UseCard(eventData);
-            }else{
-                CardUse(eventData);
-            }
+            UseCard(eventData);
+           
+            
+               // CardUse(eventData);
+            
             
             //eventData.pointerDrag.transform.SetParent(transform);
 
@@ -133,7 +138,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
        // Card1_FireBall(eventData);
             return;
             case 2:
-        Card2_PosionPoison(eventData);
+       // Card2_PosionPoison(eventData);
             return;
             case 3:
         Card3_ManaUp(eventData);

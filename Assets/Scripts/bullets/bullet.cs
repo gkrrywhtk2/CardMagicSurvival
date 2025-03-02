@@ -93,12 +93,8 @@ public class bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
 {
     if (!collision.CompareTag("Monster")) return; // 한 번만 검사
-
     Monster enemy = collision.GetComponent<Monster>();
     if (enemy == null) return; // 예외 처리
-
-    if (type == bulletType.bullet)
-    {
         if (per == -1) return;
 
         enemy.DamageCalculator(damage, isCritical);
@@ -111,22 +107,7 @@ public class bullet : MonoBehaviour
             rigid.linearVelocity = Vector3.zero;
             this.gameObject.SetActive(false);
         }
-    }
-    else if (type == bulletType.placement)
-    {
-        if (element == elementType.posion)
-        {
-            enemy.nowPoison = true;
-        }
-
-        if (!affectedEnemies.Contains(enemy))
-        {
-            affectedEnemies.Add(enemy);
-            StartCoroutine(ApplyDotDamage(enemy));
-        }
-    }
-
-    enemy.CallHotStop(); // 몬스터 충돌 연산
+    enemy.CallHitStop(); // 몬스터 충돌 연산
 }
 
 

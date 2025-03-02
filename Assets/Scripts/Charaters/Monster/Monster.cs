@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using MonsterType;
+using TMPro;
 
 public class Monster : MonoBehaviour
 {
@@ -29,16 +30,17 @@ public class Monster : MonoBehaviour
     public float health;
     public float maxHealth;
     public float damage;
+    private bool isCoroutineRunning_Hit = false;//Hit코루틴 중복실행 방지
 
     [Header("poison")]
-    public bool nowPoison;//현재 중독 상태이상인지 체크용
-    public float posionDamage;//독 데미지
-    public float dotDamageCoolTime;//이 시간초마다 도트 데미지 입음
-    public GameObject poisonEffect;//중독 상태일때 머리위에 독 표시
-    private bool isCoroutineRunning_Hit = false;//Hit코루틴 중복실행 방지
+    public int toxicity;//독성 중첩 상태. 0 이면 평시
+    public float toxicityDamage;//독 데미지
+    public float toxicityInterval = 1;//이 시간초마다 도트 데미지 입음
+    public GameObject toxicityEffect;//중독 상태일때 머리위에 독 표시
+    public TMP_Text toxicityStackText;//중독 중첩 수치 표시
+    private Coroutine toxicityCoroutine;//중독 코루틴
       private void Awake()
     {
-       
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
@@ -56,16 +58,13 @@ public class Monster : MonoBehaviour
         mobType = data.mobType;
 
         //중독 상태 초기화
-        nowPoison = false;
-        posionDamage = 0;
-        dotDamageCoolTime = 0;
+        RemovePoison();
 
         //몬스터들 애니메이션 겹치지 않게끔.
         RandomizeAnimation();
     }
      private void FixedUpdate()
     {
-       
         MoveToPlayer();
     }
 
@@ -106,7 +105,7 @@ public class Monster : MonoBehaviour
         isLive = true;
         nowHit = false;
         nowStop = false;
-        nowPoison = false;//독성 초기화
+        toxicity = 0;//독성 초기화
         sprite.color = originalColor;//색상 초기화
         coll.isTrigger = false;
     }
@@ -136,39 +135,52 @@ public class Monster : MonoBehaviour
     }
 
     public void ShowDamageText(float damage, bool isCritical)
-{
-    Vector3 position = transform.position; // 기본 위치
-    SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-if (spriteRenderer != null)
-{
-    //position.y += spriteRenderer.bounds.extents.y;
-    position = damageTextPos.transform.position;
-}
+    {
+        Vector3 position = transform.position; // 기본 위치
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        
+            if (spriteRenderer != null)
+            {
+                //position.y += spriteRenderer.bounds.extents.y;
+                position = damageTextPos.transform.position;
+            }
 
-    DamageText damageText = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>(); // 오브젝트 풀에서 가져오기
-    damageText.transform.position = position;
-    damageText.value = damage;
-    damageText.Init(isCritical);
-    
+        DamageText damageText = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>(); // 오브젝트 풀에서 가져오기
+        damageText.transform.position = position;
+        damageText.value = damage;
+        damageText.Init(isCritical);
+    }
+     public void ShowPosionDamageText(float damage)
+    {
+        Vector3 position = transform.position; // 기본 위치
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        
+            if (spriteRenderer != null)
+            {
+                //position.y += spriteRenderer.bounds.extents.y;
+                position = damageTextPos.transform.position;
+            }
+        bool nonCritical = false;
+        DamageText damageText = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>(); // 오브젝트 풀에서 가져오기
+        damageText.transform.position = position;
+        damageText.value = damage;
+        damageText.GetComponentInChildren<TMP_Text>().color = Color.green;
+        damageText.Init(nonCritical);
+       
+    }
 
-}
-
-public void CallHotStop(){
+public void CallHitStop(){
  StartCoroutine(HitStop());
 }
     IEnumerator HitStop(){
 
          if (isCoroutineRunning_Hit) yield break; // 중복 실행 방지
-    isCoroutineRunning_Hit = true;
+        isCoroutineRunning_Hit = true;
         //피격시 일시정지
         nowHit = true;
         Vector3 playerpos = GameManager.instance.playerMove.transform.position;
         Vector3 dirvec = transform.position - playerpos;
-            if(nowPoison != true){
-                //독성 공격은 피격 물리 연산 X
-                 rigid.AddForce(dirvec.normalized * 0.1f, ForceMode2D.Impulse);
-            }
-                
+        rigid.AddForce(dirvec.normalized * 0.1f, ForceMode2D.Impulse);
         sprite.color = hitColor;
         yield return new WaitForSeconds(hittime);  // 0.1초 동안 빨갛게 변함
         nowHit = false;
@@ -176,14 +188,57 @@ public void CallHotStop(){
         isCoroutineRunning_Hit = false;
     }
 
-    public void PoisonOn(float damage){
-        //몬스터 중독 상태 ON
-        nowPoison = true;
+    public void ApplyPoison()
+    {
+        if (toxicityCoroutine == null)
+        {
+            toxicityCoroutine = StartCoroutine(ApplyPoisonDamage());
+            toxicityEffect.gameObject.SetActive(true);//중독 이펙트
+        }
+        
+    }
+     public void RemovePoison()
+    {
+        //몬스터 생성시 호출하여 초기화
+        if (toxicityCoroutine != null)
+        {
+            StopCoroutine(toxicityCoroutine);
+            toxicityCoroutine = null;
+        }
+            //중독 효과 초기화
+            toxicityEffect.gameObject.SetActive(false);
+            toxicity = 0;
+            toxicityStackText.text = "";
+        
+    }
+     private IEnumerator ApplyPoisonDamage()
+    {
+        while (toxicity >= 1)
+        {
+            float atk = GameManager.instance.player.playerStatus.ATK;
+            int damage = Mathf.CeilToInt(atk * 0.1f * toxicity);
+            TakePosionDamage(damage);
+            yield return new WaitForSeconds(toxicityInterval);
+        }
+
+        toxicityCoroutine = null;
     }
 
-     //IEnumerator PoisonDamage(){
-//
-    // }
+    public void toxicityPlus(){
+        //독성 상태 추가 중첩
+        toxicity++;
+        toxicityStackText.text = toxicity.ToString();
+    }
+     private void TakePosionDamage(int damage)
+    {
+        Debug.Log($"몬스터가 {damage} 중독 피해를 입음!");
+        // HP 감소 로직 추가
+        health -= damage;
+        ShowPosionDamageText(damage);
+        if(health <= 0){
+        death();
+            }
+    }
 
     public void death(){
         isLive = false;
