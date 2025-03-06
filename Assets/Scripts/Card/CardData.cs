@@ -30,7 +30,7 @@ public class CardData : ScriptableObject
     public int baseCount;// 기본 공격 횟수
     public int growthValue_Count;//성장 계수
 
-    public float GetCount(int stack)
+    public int GetCount(int stack)
       {
           return baseCount + (growthValue_Count * stack);
       }
