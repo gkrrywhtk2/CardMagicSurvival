@@ -40,7 +40,8 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             cardAbility = new Dictionary<int, ICardUse>
         {
             { 1, gameObject.AddComponent<Card1_MeteorStrike>() },
-            { 2, gameObject.AddComponent<Card2_VenomousCurse>() }
+            { 2, gameObject.AddComponent<Card2_VenomousCurse>() },
+            { 3, gameObject.AddComponent<Card3_ManaFlow>() }
         };
     }
 
@@ -83,7 +84,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             float cost = card.cardData.cardCost;
             int STACK = card.magicCard.STACK;
            // int count = GameManager.instance.dataManager.ReturnCardCount(card.cardId);//카드 보유량 가져오기
-    
+            GameManager.instance.player.playerStatus.mana -= cost;//마나 소모
 
             //카드 사용 로직
             UseCard(eventData);
@@ -111,7 +112,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         MagicCard card =  eventData.pointerDrag.GetComponent<MagicCard>();
         int ID = card.magicCard.ID;
         int STACK = card.magicCard.STACK;
-        
+
         if (cardAbility.ContainsKey(ID))
         {
             cardAbility[ID].Use(eventData); // 해당 카드의 효과 실행
@@ -141,7 +142,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
        // Card2_PosionPoison(eventData);
             return;
             case 3:
-        Card3_ManaUp(eventData);
+       // Card3_ManaUp(eventData);
             return;
             case 4:
         Card4_FlameBurst(eventData);
@@ -210,21 +211,8 @@ public void Card2_PosionPoison(PointerEventData eventData){
 
 }
 
-public void Card3_ManaUp(PointerEventData eventData){
-    GameManager.instance.player.playerEffect.PlayManaUp();
-    StartCoroutine(ManaPlus());
 
-}
-
-    IEnumerator ManaPlus(){
-
-        float duration = 1.5f;
-        float plus = (GameManager.instance.player.playerStatus.manaRecovery);
-        GameManager.instance.player.playerStatus.manaRecoveryPlus = plus;
-        yield return new WaitForSeconds(duration);
-        GameManager.instance.player.playerStatus.manaRecoveryPlus  = 0;
-
-    }
+   
 
     IEnumerator Concentration(){
         float duration = 1.5f;

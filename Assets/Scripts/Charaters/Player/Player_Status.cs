@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player_Status : MonoBehaviour
 {
@@ -18,9 +19,8 @@ public class Player_Status : MonoBehaviour
 
     [Header("#특수 성장 능력치 ")]
     public float mana;
-    public float maxMana = 10;
-    public float manaRecovery;
-    public float manaRecoveryPlus;
+    public float maxMana = 9;
+    public float baseManaRecovery;//기본 마나회복량; 일단 0.5로 세팅하였음 초당 0.5회복
     public float maxexp;
     public float nowexp;
     public int playLevel;
@@ -32,15 +32,30 @@ public class Player_Status : MonoBehaviour
     public TMP_Text manaText;
     public Slider MagicArrow;
 
+    //메인 UI 슬라이드_ SlideLine 오브젝트에 있다.
+    public Slider hpBar_UI;
+    public Slider manaBar_UI;
+    public TMP_Text nowHpText_UI;
+    public TMP_Text nowManaText_UI;
+     
+
     private void Awake() {
+       
+
+    }
+    public void PlayerInit(){
+        //게임 시작시 플레이어 변수 초기화
         isLive = true;
         health = maxHealth;
-      
+        StartHealthRegen();
     }
-
     private void HpBarUpdate()
     {
         hpBar.value = health / maxHealth;
+        hpBar_UI.value = hpBar.value;
+
+        // 🔹 체력을 소수점 1자리까지 표시
+        nowHpText_UI.text = health.ToString("F1");
 
         if (health < maxHealth)
             return;
@@ -50,7 +65,6 @@ public class Player_Status : MonoBehaviour
             health = maxHealth;
             return;
         }
-
     }
 
      private void ExpBarUpdate()
@@ -84,6 +98,9 @@ public class Player_Status : MonoBehaviour
         int currentMana = Mathf.FloorToInt(mana); // 정수로 변환
         manaText.text = currentMana.ToString();
         manaBar.value = mana / maxMana;
+        manaBar_UI.value = manaBar.value;
+        nowManaText_UI.text = currentMana.ToString();//UI 마나바에 적용
+        
 
         if (mana < maxMana)
             return;
@@ -136,14 +153,57 @@ public void StopHealthRegen()
        // ExpBarUpdate(); 경험치 삭제 예정
     }
 
-    public void ManaRecovery(){
-        if(GameManager.instance.GamePlayState != true)
-        return;
-        if(GameManager.instance.ItemSelectState == true)
+
+
+
+   // 마나 회복 관련 로직*********
+public List<float> manaRecoveryEffects = new List<float>(); // 마나 증가량 효과 버프 모음
+private float totalManaRecoveryMultiplier = 1f; // 기본값 100% (배수 개념)
+
+public void ManaRecovery()
+{
+    if (!GameManager.instance.GamePlayState || GameManager.instance.ItemSelectState)
         return;
 
-        mana += (manaRecovery+ manaRecoveryPlus) * Time.deltaTime;
+    // 🔹 매 프레임마다 초기화 후 효과를 다시 계산해야 함
+    totalManaRecoveryMultiplier = 1f; // 기본값 100% (누적 방지)
+
+    foreach (float effect in manaRecoveryEffects)
+    {
+        totalManaRecoveryMultiplier += effect; // 효과를 누적
     }
+
+    // 마나 회복 적용
+    mana += baseManaRecovery * totalManaRecoveryMultiplier * Time.deltaTime;
+}
+
+// 🔹 마나 회복 증가 효과 추가
+public void AddManaRecoveryEffect(float percent)
+{
+    manaRecoveryEffects.Add(percent / 100f); // % 단위를 배수로 변환 (ex: 100% -> 1.0f)
+    UpdateTotalManaRecoveryMultiplier(); // 최신 값 반영
+}
+
+// 🔹 마나 회복 증가 효과 제거 (ex: 장비 해제, 카드 효과 만료)
+public void RemoveManaRecoveryEffect(float percent)
+{
+    manaRecoveryEffects.Remove(percent / 100f);
+    UpdateTotalManaRecoveryMultiplier(); // 최신 값 반영
+}
+
+// 🔹 효과가 변경될 때마다 총 배율을 업데이트
+private void UpdateTotalManaRecoveryMultiplier()
+{
+    totalManaRecoveryMultiplier = 1f; // 기본값 100%
+    foreach (float effect in manaRecoveryEffects)
+    {
+        totalManaRecoveryMultiplier += effect;
+    }
+}
+
+// 마나 회복 관련 로직 끝***********************//
+
+
 
   public float DamageReturn(float skillPower, out bool isCritical)
     {

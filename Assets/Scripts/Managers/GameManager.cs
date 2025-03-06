@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public DataManager dataManager;
     public StageManager stageManager;
     public WeaponManager weaponManager;
+    public IconManager iconManager;
     public BoardUI boardUI;
     [Header("#GameControl")]
     public bool cardOneTouch;
@@ -61,7 +62,8 @@ public class GameManager : MonoBehaviour
         deckManager.HandSetting();
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
-         instance.player.playerStatus.StartHealthRegen();//체력 자동 회복
+         
+         instance.player.playerStatus.PlayerInit();
          instance.boardUI.ShowSeletedTap(2);//2는 카드 탭 세팅, 
          
          LinkToData();//데이터 불러오기
