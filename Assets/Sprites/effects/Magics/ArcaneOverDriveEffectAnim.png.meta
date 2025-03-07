@@ -1,0 +1,1136 @@
+fileFormatVersion: 2
+guid: 9130a23cfe4534161863e634300909e5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6804532628159391159
+    second: ArcaneOverDriveEffectAnim_0
+  - first:
+      213: -6663953804897897947
+    second: ArcaneOverDriveEffectAnim_1
+  - first:
+      213: 5408981163674586482
+    second: ArcaneOverDriveEffectAnim_2
+  - first:
+      213: 7633312102982550276
+    second: ArcaneOverDriveEffectAnim_3
+  - first:
+      213: 3333922332432399312
+    second: ArcaneOverDriveEffectAnim_4
+  - first:
+      213: -5349603029791041276
+    second: ArcaneOverDriveEffectAnim_5
+  - first:
+      213: -535175484758758562
+    second: ArcaneOverDriveEffectAnim_6
+  - first:
+      213: -3307870967886180436
+    second: ArcaneOverDriveEffectAnim_7
+  - first:
+      213: 7458985593539032842
+    second: ArcaneOverDriveEffectAnim_8
+  - first:
+      213: 6898103176295527507
+    second: ArcaneOverDriveEffectAnim_9
+  - first:
+      213: -2676978157348782922
+    second: ArcaneOverDriveEffectAnim_10
+  - first:
+      213: 5931285764023050505
+    second: ArcaneOverDriveEffectAnim_11
+  - first:
+      213: -5147983911581381597
+    second: ArcaneOverDriveEffectAnim_12
+  - first:
+      213: -5303921076662410903
+    second: ArcaneOverDriveEffectAnim_13
+  - first:
+      213: -7350197654091259940
+    second: ArcaneOverDriveEffectAnim_14
+  - first:
+      213: 5517961666354698027
+    second: ArcaneOverDriveEffectAnim_15
+  - first:
+      213: -5956577105517205105
+    second: ArcaneOverDriveEffectAnim_16
+  - first:
+      213: 8654521317605487477
+    second: ArcaneOverDriveEffectAnim_17
+  - first:
+      213: -3371158667183403963
+    second: ArcaneOverDriveEffectAnim_18
+  - first:
+      213: 2278905678691149734
+    second: ArcaneOverDriveEffectAnim_19
+  - first:
+      213: 8664201242219611000
+    second: ArcaneOverDriveEffectAnim_20
+  - first:
+      213: -6116981712101386655
+    second: ArcaneOverDriveEffectAnim_21
+  - first:
+      213: 1905046217277675890
+    second: ArcaneOverDriveEffectAnim_22
+  - first:
+      213: -4038769231687876130
+    second: ArcaneOverDriveEffectAnim_23
+  - first:
+      213: -1128239612144826626
+    second: ArcaneOverDriveEffectAnim_24
+  - first:
+      213: -6736544465310782923
+    second: ArcaneOverDriveEffectAnim_25
+  - first:
+      213: 8380648004701624920
+    second: ArcaneOverDriveEffectAnim_26
+  - first:
+      213: 478470994553234961
+    second: ArcaneOverDriveEffectAnim_27
+  - first:
+      213: 2257978179830999088
+    second: ArcaneOverDriveEffectAnim_28
+  - first:
+      213: 6763063253108077797
+    second: ArcaneOverDriveEffectAnim_29
+  - first:
+      213: -6091627809510112642
+    second: ArcaneOverDriveEffectAnim_30
+  - first:
+      213: 5454551930403067663
+    second: ArcaneOverDriveEffectAnim_31
+  - first:
+      213: 5213155311951649842
+    second: ArcaneOverDriveEffectAnim_32
+  - first:
+      213: -544364395317624599
+    second: ArcaneOverDriveEffectAnim_33
+  - first:
+      213: -1089322912473071934
+    second: ArcaneOverDriveEffectAnim_34
+  - first:
+      213: 4393389808906240819
+    second: ArcaneOverDriveEffectAnim_35
+  - first:
+      213: 206168396896371493
+    second: ArcaneOverDriveEffectAnim_36
+  - first:
+      213: -8278562099180625554
+    second: ArcaneOverDriveEffectAnim_37
+  - first:
+      213: 8189491690987498307
+    second: ArcaneOverDriveEffectAnim_38
+  - first:
+      213: 5256441569726808622
+    second: ArcaneOverDriveEffectAnim_39
+  - first:
+      213: 2980523164187361069
+    second: ArcaneOverDriveEffectAnim_40
+  - first:
+      213: 5306888987656447084
+    second: ArcaneOverDriveEffectAnim_41
+  - first:
+      213: 4575062213203226769
+    second: ArcaneOverDriveEffectAnim_42
+  - first:
+      213: -9062434779149088481
+    second: ArcaneOverDriveEffectAnim_43
+  - first:
+      213: -5340867651919395061
+    second: ArcaneOverDriveEffectAnim_44
+  - first:
+      213: 9027005530305279673
+    second: ArcaneOverDriveEffectAnim_45
+  - first:
+      213: -8770945537696832198
+    second: ArcaneOverDriveEffectAnim_46
+  - first:
+      213: 6692525855985440978
+    second: ArcaneOverDriveEffectAnim_47
+  - first:
+      213: 5392160637344292953
+    second: ArcaneOverDriveEffectAnim_48
+  - first:
+      213: -3659508156573055692
+    second: ArcaneOverDriveEffectAnim_49
+  - first:
+      213: -677778435650134451
+    second: ArcaneOverDriveEffectAnim_50
+  - first:
+      213: 4251857258254320727
+    second: ArcaneOverDriveEffectAnim_51
+  - first:
+      213: -898686329714056391
+    second: ArcaneOverDriveEffectAnim_52
+  - first:
+      213: -1674095946050481248
+    second: ArcaneOverDriveEffectAnim_53
+  - first:
+      213: -2678356891809258
+    second: ArcaneOverDriveEffectAnim_54
+  - first:
+      213: -2905341538642698009
+    second: ArcaneOverDriveEffectAnim_55
+  - first:
+      213: -3919818960385676042
+    second: ArcaneOverDriveEffectAnim_56
+  - first:
+      213: -4553709876435129547
+    second: ArcaneOverDriveEffectAnim_57
+  - first:
+      213: -5630680572105562649
+    second: ArcaneOverDriveEffectAnim_58
+  - first:
+      213: 1510436397064746893
+    second: ArcaneOverDriveEffectAnim_59
+  - first:
+      213: -1334109551599238181
+    second: ArcaneOverDriveEffectAnim_60
+  - first:
+      213: 6447397778650417248
+    second: ArcaneOverDriveEffectAnim_61
+  - first:
+      213: 3880409845726128844
+    second: ArcaneOverDriveEffectAnim_62
+  - first:
+      213: 5519969753972542520
+    second: ArcaneOverDriveEffectAnim_63
+  - first:
+      213: -7084928343999090537
+    second: ArcaneOverDriveEffectAnim_64
+  - first:
+      213: -5435800394032679695
+    second: ArcaneOverDriveEffectAnim_65
+  - first:
+      213: -7971379479740372842
+    second: ArcaneOverDriveEffectAnim_66
+  - first:
+      213: 3907835617347693101
+    second: ArcaneOverDriveEffectAnim_67
+  - first:
+      213: 2074440821264679016
+    second: ArcaneOverDriveEffectAnim_68
+  - first:
+      213: 6580493315021475612
+    second: ArcaneOverDriveEffectAnim_69
+  - first:
+      213: 1942870332168506420
+    second: ArcaneOverDriveEffectAnim_70
+  - first:
+      213: -4823180219028376134
+    second: ArcaneOverDriveEffectAnim_71
+  - first:
+      213: 5273268597932194081
+    second: ArcaneOverDriveEffectAnim_72
+  - first:
+      213: -8482963851866283773
+    second: ArcaneOverDriveEffectAnim_73
+  - first:
+      213: 328715328033045056
+    second: ArcaneOverDriveEffectAnim_74
+  - first:
+      213: 7609333889268097963
+    second: ArcaneOverDriveEffectAnim_75
+  - first:
+      213: 3121923803468694484
+    second: ArcaneOverDriveEffectAnim_76
+  - first:
+      213: -4527964313979839411
+    second: ArcaneOverDriveEffectAnim_77
+  - first:
+      213: 7682115445551041211
+    second: ArcaneOverDriveEffectAnim_78
+  - first:
+      213: -8661627467210993197
+    second: ArcaneOverDriveEffectAnim_79
+  - first:
+      213: -8236487040062131068
+    second: ArcaneOverDriveEffectAnim_80
+  - first:
+      213: -628885051049026179
+    second: ArcaneOverDriveEffectAnim_81
+  - first:
+      213: -2440697258229282614
+    second: ArcaneOverDriveEffectAnim_82
+  - first:
+      213: 5191940280446390471
+    second: ArcaneOverDriveEffectAnim_83
+  - first:
+      213: -5112071530790398847
+    second: ArcaneOverDriveEffectAnim_84
+  - first:
+      213: -6597322173774402553
+    second: ArcaneOverDriveEffectAnim_85
+  - first:
+      213: 4211427190092291434
+    second: ArcaneOverDriveEffectAnim_86
+  - first:
+      213: 5262559329496309427
+    second: ArcaneOverDriveEffectAnim_87
+  - first:
+      213: 6946341208368608888
+    second: ArcaneOverDriveEffectAnim_88
+  - first:
+      213: -8793672041122288925
+    second: ArcaneOverDriveEffectAnim_89
+  - first:
+      213: 7024086933137241165
+    second: ArcaneOverDriveEffectAnim_90
+  - first:
+      213: -634560316621884795
+    second: ArcaneOverDriveEffectAnim_91
+  - first:
+      213: 3725734933262102297
+    second: ArcaneOverDriveEffectAnim_92
+  - first:
+      213: -8077458690259963304
+    second: ArcaneOverDriveEffectAnim_93
+  - first:
+      213: -3009968931738768015
+    second: ArcaneOverDriveEffectAnim_94
+  - first:
+      213: 7741805226635636688
+    second: ArcaneOverDriveEffectAnim_95
+  - first:
+      213: 7325833333009835492
+    second: ArcaneOverDriveEffectAnim_96
+  - first:
+      213: 2697702352549615615
+    second: ArcaneOverDriveEffectAnim_97
+  - first:
+      213: 3926230792732147643
+    second: ArcaneOverDriveEffectAnim_98
+  - first:
+      213: 5454951245034882096
+    second: ArcaneOverDriveEffectAnim_99
+  - first:
+      213: -7870408365199300562
+    second: ArcaneOverDriveEffectAnim_100
+  - first:
+      213: -1004231777713367079
+    second: ArcaneOverDriveEffectAnim_101
+  - first:
+      213: -8329533569163365260
+    second: ArcaneOverDriveEffectAnim_102
+  - first:
+      213: -4376337074697891438
+    second: ArcaneOverDriveEffectAnim_103
+  - first:
+      213: -843679507419324716
+    second: ArcaneOverDriveEffectAnim_104
+  - first:
+      213: -592933712592712512
+    second: ArcaneOverDriveEffectAnim_105
+  - first:
+      213: -5307844475532777277
+    second: ArcaneOverDriveEffectAnim_106
+  - first:
+      213: 3796564019434860016
+    second: ArcaneOverDriveEffectAnim_107
+  - first:
+      213: -3464414135513552528
+    second: ArcaneOverDriveEffectAnim_108
+  - first:
+      213: -4713620548405902837
+    second: ArcaneOverDriveEffectAnim_109
+  - first:
+      213: -9176290167171220687
+    second: ArcaneOverDriveEffectAnim_110
+  - first:
+      213: -4254109570984596113
+    second: ArcaneOverDriveEffectAnim_111
+  - first:
+      213: 7104449051947981287
+    second: ArcaneOverDriveEffectAnim_112
+  - first:
+      213: -2244690756506756864
+    second: ArcaneOverDriveEffectAnim_113
+  - first:
+      213: -7897329730175754344
+    second: ArcaneOverDriveEffectAnim_114
+  - first:
+      213: -6508503105107309596
+    second: ArcaneOverDriveEffectAnim_115
+  - first:
+      213: -7032344693836797301
+    second: ArcaneOverDriveEffectAnim_116
+  - first:
+      213: 6438751440757629990
+    second: ArcaneOverDriveEffectAnim_117
+  - first:
+      213: 8293761911171880158
+    second: ArcaneOverDriveEffectAnim_118
+  - first:
+      213: 9013673944040487962
+    second: ArcaneOverDriveEffectAnim_119
+  - first:
+      213: -6287766423965605521
+    second: ArcaneOverDriveEffectAnim_120
+  - first:
+      213: 7409646564693792884
+    second: ArcaneOverDriveEffectAnim_121
+  - first:
+      213: 3625115024470189027
+    second: ArcaneOverDriveEffectAnim_122
+  - first:
+      213: -8818105085337821387
+    second: ArcaneOverDriveEffectAnim_123
+  - first:
+      213: -5423561303108385877
+    second: ArcaneOverDriveEffectAnim_124
+  - first:
+      213: -1098853370235291911
+    second: ArcaneOverDriveEffectAnim_125
+  - first:
+      213: -7311554541715508197
+    second: ArcaneOverDriveEffectAnim_126
+  - first:
+      213: -5674742510987305473
+    second: ArcaneOverDriveEffectAnim_127
+  - first:
+      213: 6433067949032974789
+    second: ArcaneOverDriveEffectAnim_128
+  - first:
+      213: -5630590408759002739
+    second: ArcaneOverDriveEffectAnim_129
+  - first:
+      213: 8989977286245899786
+    second: ArcaneOverDriveEffectAnim_130
+  - first:
+      213: 3889884850777936277
+    second: ArcaneOverDriveEffectAnim_131
+  - first:
+      213: -2435517105592195268
+    second: ArcaneOverDriveEffectAnim_132
+  - first:
+      213: -9135870576239558197
+    second: ArcaneOverDriveEffectAnim_133
+  - first:
+      213: -7261134653025707975
+    second: ArcaneOverDriveEffectAnim_134
+  - first:
+      213: -208238167643918386
+    second: ArcaneOverDriveEffectAnim_135
+  - first:
+      213: -7578956926739293358
+    second: ArcaneOverDriveEffectAnim_136
+  - first:
+      213: -3016451544778472545
+    second: ArcaneOverDriveEffectAnim_137
+  - first:
+      213: -8790289786113851933
+    second: ArcaneOverDriveEffectAnim_138
+  - first:
+      213: 7014083020204235012
+    second: ArcaneOverDriveEffectAnim_139
+  - first:
+      213: 6488882143199803701
+    second: ArcaneOverDriveEffectAnim_140
+  - first:
+      213: -6941446515948632244
+    second: ArcaneOverDriveEffectAnim_141
+  - first:
+      213: -8827778175782264906
+    second: ArcaneOverDriveEffectAnim_142
+  - first:
+      213: -3057286496394676790
+    second: ArcaneOverDriveEffectAnim_143
+  - first:
+      213: 5780100097943787793
+    second: ArcaneOverDriveEffectAnim_144
+  - first:
+      213: 373532943334697510
+    second: ArcaneOverDriveEffectAnim_145
+  - first:
+      213: -2117554473278681630
+    second: ArcaneOverDriveEffectAnim_146
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b5eef39f5e8e6e50800000000000000
+      internalID: 6804532628159391159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522b2735251e483a0800000000000000
+      internalID: -6663953804897897947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27d4a99d5bf801b40800000000000000
+      internalID: 5408981163674586482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40307f52ae8fee960800000000000000
+      internalID: 7633312102982550276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_4
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dbff5d82b8744e20800000000000000
+      internalID: 3333922332432399312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_5
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40993f7436462c5b0800000000000000
+      internalID: -5349603029791041276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_6
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5be47a6bbca298f0800000000000000
+      internalID: -535175484758758562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_7
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: caf015c61e41812d0800000000000000
+      internalID: -3307870967886180436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0776afb0e3a38760800000000000000
+      internalID: 7458985593539032842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_9
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 354b6178a4cfabf50800000000000000
+      internalID: 6898103176295527507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_10
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bcfeb39c8679dad0800000000000000
+      internalID: -2676978157348782922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_11
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 901ece12af8205250800000000000000
+      internalID: 5931285764023050505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_12
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32c04c858efae88b0800000000000000
+      internalID: -5147983911581381597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_13
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96164d4d1efa466b0800000000000000
+      internalID: -5303921076662410903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_14
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdf1bf63d2adef990800000000000000
+      internalID: -7350197654091259940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_15
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b275b4f66ecb39c40800000000000000
+      internalID: 5517961666354698027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f892c6c8eacf55da0800000000000000
+      internalID: -5956577105517205105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_17
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 573bbe4e8490b1870800000000000000
+      internalID: 8654521317605487477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_18
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54ccd09ad0d3731d0800000000000000
+      internalID: -3371158667183403963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_19
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a7a10ff3ac40af10800000000000000
+      internalID: 2278905678691149734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_20
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8738ff8ff1d6d3870800000000000000
+      internalID: 8664201242219611000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_21
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 166d2a0ca8d1c1ba0800000000000000
+      internalID: -6116981712101386655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_22
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2799985f075107a10800000000000000
+      internalID: 1905046217277675890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcaneOverDriveEffectAnim_23
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed1877738c863f7c0800000000000000
+      internalID: -4038769231687876130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: acf8d7bcc733c48dbb864499e4e8743c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ArcaneOverDriveEffectAnim_0: 6804532628159391159
+      ArcaneOverDriveEffectAnim_1: -6663953804897897947
+      ArcaneOverDriveEffectAnim_10: -2676978157348782922
+      ArcaneOverDriveEffectAnim_11: 5931285764023050505
+      ArcaneOverDriveEffectAnim_12: -5147983911581381597
+      ArcaneOverDriveEffectAnim_13: -5303921076662410903
+      ArcaneOverDriveEffectAnim_14: -7350197654091259940
+      ArcaneOverDriveEffectAnim_15: 5517961666354698027
+      ArcaneOverDriveEffectAnim_16: -5956577105517205105
+      ArcaneOverDriveEffectAnim_17: 8654521317605487477
+      ArcaneOverDriveEffectAnim_18: -3371158667183403963
+      ArcaneOverDriveEffectAnim_19: 2278905678691149734
+      ArcaneOverDriveEffectAnim_2: 5408981163674586482
+      ArcaneOverDriveEffectAnim_20: 8664201242219611000
+      ArcaneOverDriveEffectAnim_21: -6116981712101386655
+      ArcaneOverDriveEffectAnim_22: 1905046217277675890
+      ArcaneOverDriveEffectAnim_23: -4038769231687876130
+      ArcaneOverDriveEffectAnim_3: 7633312102982550276
+      ArcaneOverDriveEffectAnim_4: 3333922332432399312
+      ArcaneOverDriveEffectAnim_5: -5349603029791041276
+      ArcaneOverDriveEffectAnim_6: -535175484758758562
+      ArcaneOverDriveEffectAnim_7: -3307870967886180436
+      ArcaneOverDriveEffectAnim_8: 7458985593539032842
+      ArcaneOverDriveEffectAnim_9: 6898103176295527507
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

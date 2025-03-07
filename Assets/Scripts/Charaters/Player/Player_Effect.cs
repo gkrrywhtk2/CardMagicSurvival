@@ -10,6 +10,9 @@ public class Player_Effect : MonoBehaviour
     public Animator levelUpCircleTimeStopAnim;
     public Animator NextStagePadeOut;
     //
+    //Card6
+    public GameObject card6_Effect0;
+    public GameObject card6_Effect1;
 
 
     public void PlayManaUp()

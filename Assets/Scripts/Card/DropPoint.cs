@@ -28,7 +28,9 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             { 2, gameObject.AddComponent<Card2_VenomousCurse>() },
             { 3, gameObject.AddComponent<Card3_ManaFlow>() },
             { 4, gameObject.AddComponent<Card4_FlameBurst>() },
-            { 5, gameObject.AddComponent<Card5_FireBall>() }
+            { 5, gameObject.AddComponent<Card5_FireBall>() },
+              { 6, gameObject.AddComponent<Card6_ArcaneOverDrive>() },
+                { 7, gameObject.AddComponent<Card7_Heal>() }
         };
     }
 

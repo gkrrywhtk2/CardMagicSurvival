@@ -65,6 +65,7 @@ public class DataManager : MonoBehaviour
         havedCardsList.Add(new Card(4, 0, 1));
         havedCardsList.Add(new Card(5, 0, 1));
         havedCardsList.Add(new Card(6, 0, 1));
+          havedCardsList.Add(new Card(7, 0, 1));
        
 
      
@@ -77,6 +78,8 @@ public class DataManager : MonoBehaviour
            savedDeck.Add(3);
             savedDeck.Add(4);
              savedDeck.Add(5);
+              savedDeck.Add(6);
+               savedDeck.Add(7);
       
       
         while(savedDeck.Count < 8){

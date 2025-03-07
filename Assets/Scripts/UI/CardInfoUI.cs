@@ -92,6 +92,7 @@ public class CardInfoUI : MonoBehaviour
               CardData.InfoTag.range => "범위",
                CardData.InfoTag.manarecovery => "초당 마나 회복량",
                  CardData.InfoTag.speedUp => "추가 이동속도",
+                 CardData.InfoTag.Heal => "체력 회복",
            _=> "알 수 없음"
         };
     }
@@ -126,6 +127,11 @@ public class CardInfoUI : MonoBehaviour
             CardData.InfoTag.speedUp =>   cardData.GetSpeedUp(thisCard.STACK).ToString()+ 
                   "<color=#00FF00>-> </color>" +  "<color=#00FF00>" +
                 cardData.GetSpeedUp(thisCard.STACK + 1).ToString()+"</color>",
+
+                CardData.InfoTag.Heal =>   cardData.GetHeal(thisCard.STACK).ToString()+ 
+                "%" + "<color=#00FF00>-> </color>" +  "<color=#00FF00>" +
+                cardData.GetHeal(thisCard.STACK + 1).ToString()+"</color>" +
+                "<color=#00FF00>%</color>",
            _=> "알 수 없음"
         };
     }

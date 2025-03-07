@@ -236,30 +236,69 @@ private void UpdateTotalManaRecoveryMultiplier()
 
 
 
+
+
+
+
   public float DamageReturn(float skillPower, out bool isCritical)
+{
+    // 캐릭터의 공격력 가져오기
+    float ATK = GameManager.instance.player.playerStatus.ATK;
+
+    // 랜덤 오프셋 적용 (-5% ~ +5% 변동)
+    float randomOffset = Random.Range(ATK * -0.05f, ATK * 0.05f);
+
+    // 기본 데미지 계산
+    float Damage_one = (ATK + randomOffset) * (skillPower / 100f);
+
+    // 치명타 확률 계산 (totalCriticalMultiplier 포함)
+    isCritical = CriticalReturn();
+
+    // 최종 데미지 계산 (치명타 적용)
+    float finalDamage = isCritical ? Damage_one * (CriticalDamagePer / 100f) : Damage_one;
+
+    return finalDamage;
+}
+
+
+    //추가 치명타 확률 로직 ***********************//
+     public List<float> criticalEffects = new List<float>(); // 추가 치명타 효과 리스트
+    private float totalCriticalMultiplier = 0f; // 추가 치명타 확률
+
+    public bool CriticalReturn()
     {
-        // 캐릭터의 공격력 가져오기
-        float ATK = GameManager.instance.player.playerStatus.ATK;
-
-        // 랜덤 오프셋 적용 (0%~10% 변동)
-        float randomOffset = Random.Range(0, ATK * 0.1f);
-
-        // 기본 데미지 계산
-        float Damage_one = (ATK + randomOffset) * (skillPower/100);
-
-        // 치명타 확률 체크 (CriticalPer가 1이라면 1% 확률)
-        isCritical = Random.Range(0f, 100f) < CriticalPer;
-
-        // 최종 데미지 계산 (치명타 적용)
-        float finalDamage = isCritical ? Damage_one * (1f + CriticalDamagePer / 100f) : Damage_one;
-
-        return finalDamage;
+        // 치명타 확률 계산 (기본 확률 + 추가 확률)
+        float finalCriticalChance = CriticalPer + totalCriticalMultiplier;
+        return Random.Range(0f, 100f) < finalCriticalChance;
     }
-       public bool CriticalReturn(){
-         // 치명타 확률 체크 (CriticalPer가 1이라면 1% 확률)
-        bool isCritical = Random.Range(0f, 100f) < CriticalPer;
-        return isCritical;
-       }
 
+    // 치명타 확률 증가 효과 추가
+    public void AddCriticalEffect(float value)
+    {
+        criticalEffects.Add(value);
+        UpdateTotalCriticalMultiplier();
+    }
+
+    // 치명타 확률 증가 효과 제거
+    public void RemoveCriticalEffect(float value)
+    {
+        if (criticalEffects.Contains(value)) // 값이 존재하는지 확인 후 제거
+        {
+            criticalEffects.Remove(value);
+            UpdateTotalCriticalMultiplier();
+        }
+    }
+
+    // 총 치명타 확률 증가량 업데이트
+    private void UpdateTotalCriticalMultiplier()
+    {
+        totalCriticalMultiplier = 0f; // 기본값 0
+        foreach (float effect in criticalEffects)
+        {
+            totalCriticalMultiplier += effect;
+        }
+    }
+
+    //치명타 로직 종료*****************
 
 }

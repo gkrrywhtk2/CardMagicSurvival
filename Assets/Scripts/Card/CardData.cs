@@ -4,7 +4,7 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
   public enum CardRank{normal, rare, epic, legend};
-  public enum InfoTag{damage, count, duration, range, manarecovery, speedUp}
+  public enum InfoTag{damage, count, duration, range, manarecovery, speedUp, Heal}
   [Header("#Main Info")]
   public int cardId;
   public int cardCost;
@@ -78,6 +78,15 @@ public class CardData : ScriptableObject
     public float GetSpeedUp(int stack)
       {
           return baseSpeedUp + (growthValue_baseSpeedUp * stack);
+      }
+
+       [Header("#Heal Info")]//추가 신속 정보
+      public float heal;// 기본 마나 회복량
+      public float growthValue_heal;//성장 계수
+
+    public float GetHeal(float stack)
+      {
+          return heal + (growthValue_heal * stack);
       }
 
 

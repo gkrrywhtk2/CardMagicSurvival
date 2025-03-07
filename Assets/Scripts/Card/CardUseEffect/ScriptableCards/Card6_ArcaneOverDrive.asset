@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e815ae4f9cc4b55827773fccce780f, type: 3}
+  m_Name: Card6_ArcaneOverDrive
+  m_EditorClassIdentifier: 
+  cardId: 6
+  cardCost: 3
+  rank: 2
+  infoTags: 02000000
+  cardName: "\uBE44\uC804 \uD3ED\uC8FC"
+  cardDesc_Main: "\uC77C\uC2DC\uC801\uC73C\uB85C \uBAA8\uB4E0 \uACF5\uACA9\uC5D0
+    \uCE58\uBA85\uD0C0 \uD53C\uD574\uAC00 \uC801\uC6A9\uB429\uB2C8\uB2E4"
+  cardImage: {fileID: 8311890819477487470, guid: 9ea773bec934e4722833748f3c04a587, type: 3}
+  isRangeCard: 0
+  isDirCard: 0
+  rangeScale_Card: {x: 0, y: 0, z: 0}
+  nextcardImage: {fileID: 21300000, guid: e2e2b5659263eb4439933700e9659bab, type: 3}
+  baseDamage: 0
+  growthValue: 0
+  baseCount: 0
+  growthValue_Count: 0
+  baseDuration: 3
+  growthValue_Duration: 0.5
+  rangeScale_: {x: 0, y: 0, z: 0}
+  growthValue_Range: 0
+  baseManaRecovery: 0
+  growthValue_ManaRecovery: 0
+  baseSpeedUp: 0
+  growthValue_baseSpeedUp: 0
