@@ -4,7 +4,7 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
   public enum CardRank{normal, rare, epic, legend};
-  public enum InfoTag{damage, count, duration, range, manarecovery}
+  public enum InfoTag{damage, count, duration, range, manarecovery, speedUp}
   [Header("#Main Info")]
   public int cardId;
   public int cardCost;
@@ -14,6 +14,7 @@ public class CardData : ScriptableObject
   public string cardDesc_Main;
   public Sprite cardImage;
   public bool isRangeCard;
+  public bool isDirCard;//방향 벡터가 필요한 카드인지? ex) 화염구
   public Vector3 rangeScale_Card;
   public Sprite nextcardImage;
 
@@ -68,6 +69,15 @@ public class CardData : ScriptableObject
     public float GetManaRecovery(int stack)
       {
           return baseManaRecovery + (growthValue_ManaRecovery * stack);
+      }
+
+      [Header("#Haste Info")]//추가 신속 정보
+      public float baseSpeedUp;// 기본 마나 회복량
+      public float growthValue_baseSpeedUp;//성장 계수
+
+    public float GetSpeedUp(int stack)
+      {
+          return baseSpeedUp + (growthValue_baseSpeedUp * stack);
       }
 
 

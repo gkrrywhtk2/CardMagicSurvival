@@ -153,10 +153,41 @@ public void StopHealthRegen()
        // ExpBarUpdate(); 경험치 삭제 예정
     }
 
+    //이동속도 변경 관련 로직*****
+    public List<float> speedUpEffects = new List<float>(); //이동 속도 증가량 리스트 모음
+    private float totalspeedUpMultiplier ; // 기본값0
+
+
+   
+public void AddSpeedUpEffect(float value)
+{
+    speedUpEffects.Add(value); // % 단위를 배수로 변환 (ex: 100% -> 1.0f)
+    UpdateTotalSpeedUpMultiplier(); // 최신 값 반영
+}
+
+// 🔹 마나 회복 증가 효과 제거 (ex: 장비 해제, 카드 효과 만료)
+public void RemoveSpeedUpEffect(float value)
+{
+    speedUpEffects.Remove(value);
+    UpdateTotalSpeedUpMultiplier(); // 최신 값 반영
+}
+
+// 🔹 효과가 변경될 때마다 총 배율을 업데이트
+private void UpdateTotalSpeedUpMultiplier()
+{
+    totalspeedUpMultiplier = 0; // 기본값0
+    foreach (float value in speedUpEffects)
+    {
+        totalspeedUpMultiplier += value;
+    }
+    GameManager.instance.player.joystickP.totalSpeedUpPlusValue = totalspeedUpMultiplier;//추가 속도 적용
+}
+
+  //이동 속도 변경 관련 로직 끝
 
 
 
-   // 마나 회복 관련 로직*********
+   // 마나 회복 관련 로직 시작********
 public List<float> manaRecoveryEffects = new List<float>(); // 마나 증가량 효과 버프 모음
 private float totalManaRecoveryMultiplier = 1f; // 기본값 100% (배수 개념)
 

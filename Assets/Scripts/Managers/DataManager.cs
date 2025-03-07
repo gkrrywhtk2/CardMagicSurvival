@@ -76,6 +76,7 @@ public class DataManager : MonoBehaviour
           savedDeck.Add(2);
            savedDeck.Add(3);
             savedDeck.Add(4);
+             savedDeck.Add(5);
       
       
         while(savedDeck.Count < 8){

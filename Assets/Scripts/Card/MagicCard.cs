@@ -40,11 +40,13 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Image CoolTimeImage;//시계 방향 쿨타임 이미지
     public GameObject range;//스킬 범위 이미지 오브젝트
     public bool rangeOn;
+    public bool directionCard;
     public bool cardReady;//drop 포인트위에 있을때 true
     private bool lastRangeState = false; // 이전 상태를 저장할 변수
     private bool lastCardReadyState = false;
     public Image manaCost;//마나 보석 이미지
     public TMP_Text cardLevelText;//카드 레벨 텍스트
+    public DIr_FrontForCard dIr_FrontForCard;
     
 
     private void Awake()
@@ -56,6 +58,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         originalPosition = rect.position;
         anim = GetComponent<Animator>();
         cardDrawLock = false;
+       
    
     }
 
@@ -83,6 +86,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         costText.text = cardData.cardCost.ToString();
         rangeOn = cardData.isRangeCard;
         range.GetComponent<RectTransform>().localScale = cardData.rangeScale_Card;
+        directionCard = cardData.isDirCard;
         CardAlpha1_Range();
          CardDrawAni();
           //StartCoroutine(CardDrawAnimation());
@@ -135,10 +139,9 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         canvasGroup.blocksRaycasts = false; // 레이캐스트 막기
         dropPoint.raycastTarget = true;//드롭 포인트 활성화
 
-          //카드 설명 UI 활성화
-         //GameManager.instance.deckManager.CardDescInit(cardId);
-       // Debug.Log(magicCard.STACK);
-
+        //방향 카드라면 화살표 활성화
+        if(directionCard == true)
+            dIr_FrontForCard.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -184,9 +187,13 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         lastRangeState = shouldRangeBeActive;  // 상태 갱신
     }
 
-  
+    //사용한 위치로 날아가는 효과가 필요한 경우
+    if (!dIr_FrontForCard.gameObject.activeSelf)
+    return;
+    Vector2 targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(eventData.position.x, eventData.position.y));
+    dIr_FrontForCard.ArrowDirSetting(targetPosition);
 }
-
+    
     /// <summary>
     /// 드래그 종료 시 호출
     /// </summary>
@@ -215,6 +222,9 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         range.gameObject.SetActive(false);//범위 이미지 비활성화
         CardAlpha1_Range();
         anim.enabled = true; // 드래그 중지 시 애니메이션 연출 가능
+
+      
+        dIr_FrontForCard.gameObject.SetActive(false);//방향 오브젝트 비활성화
 
     }
 

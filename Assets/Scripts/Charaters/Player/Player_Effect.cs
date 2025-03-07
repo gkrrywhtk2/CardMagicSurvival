@@ -18,7 +18,7 @@ public class Player_Effect : MonoBehaviour
       manaUp2.gameObject.SetActive(true);
     }
 
-    public void PlayConcentration(){
+    public void HasteEffect(){
       ConcentEffect0.gameObject.SetActive(true);
       ConcentEffect1.gameObject.SetActive(true);
     }

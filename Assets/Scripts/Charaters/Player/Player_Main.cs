@@ -12,6 +12,7 @@ public class Player_Main : MonoBehaviour
 
   public Player_Effect playerEffect;
   public Dir_Front dirFront;
+  public DIr_FrontForCard dirFront_forCard;
   //
   public Transform fireBallPoint;
   public Transform playerCenterPivot;
@@ -25,6 +26,7 @@ public class Player_Main : MonoBehaviour
     joystickP = GetComponent<JoyStick_P>();
     playerEffect = GetComponent<Player_Effect>();
     dirFront = GetComponentInChildren<Dir_Front>();
+    dirFront_forCard = GetComponentInChildren<DIr_FrontForCard>();
    }
 
 }

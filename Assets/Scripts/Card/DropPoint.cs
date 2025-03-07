@@ -23,10 +23,12 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     public void InitCardDictionary(){
             cardAbility = new Dictionary<int, ICardUse>
         {
+            { 0, gameObject.AddComponent<Card0_Haste>() },
             { 1, gameObject.AddComponent<Card1_MeteorStrike>() },
             { 2, gameObject.AddComponent<Card2_VenomousCurse>() },
             { 3, gameObject.AddComponent<Card3_ManaFlow>() },
-            { 4, gameObject.AddComponent<Card4_FlameBurst>() }
+            { 4, gameObject.AddComponent<Card4_FlameBurst>() },
+            { 5, gameObject.AddComponent<Card5_FireBall>() }
         };
     }
 
@@ -92,22 +94,5 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         {
             Debug.LogWarning("카드 효과가 정의되지 않았습니다.");
         }
-    }
-
-        public void Card0_Concentration(PointerEventData eventData){
-            GameManager.instance.player.playerEffect.PlayConcentration();
-            StartCoroutine(Concentration());
-    }
-    IEnumerator Concentration(){
-        float duration = 1.5f;
-        float plus = (GameManager.instance.player.autoAttack.autoAttackRecovery);
-        GameManager.instance.player.autoAttack.autoAttackRecoveryPlus0 = (plus * 3);
-        yield return new WaitForSeconds(duration);
-        GameManager.instance.player.autoAttack.autoAttackRecoveryPlus0 = 0;
-
-    }
-
-  
-
-    
+    }    
 }

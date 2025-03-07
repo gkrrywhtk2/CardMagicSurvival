@@ -11,6 +11,7 @@ public class JoyStick_P : MonoBehaviour
     public Vector2 inputVec;
     public bool nowMove;
     public float speed;
+    public float totalSpeedUpPlusValue;//모든 추가 이동속도
     //next stage
     public bool nextStageSetting = false;
     //weaponSetting
@@ -41,7 +42,7 @@ public class JoyStick_P : MonoBehaviour
         inputVec.y = joy.Vertical;
 
        // float moveSpeed = GameManager.instance.player.playerMove.speed;
-        Vector2 nextVec = inputVec.normalized * speed * Time.deltaTime;
+        Vector2 nextVec = inputVec.normalized * (speed + totalSpeedUpPlusValue) * Time.deltaTime;
         Vector2 targetPosition = rigid.position + nextVec;
         rigid.MovePosition(targetPosition);
         nowMove = nextVec.magnitude > 0;
