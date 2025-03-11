@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         spawnManager.Spawn_Slime_1();
          
          instance.player.playerStatus.PlayerInit();
-         instance.boardUI.ShowSeletedTap(2);//2는 카드 탭 세팅, 
+         //instance.boardUI.ShowSeletedTap(2);//2는 카드 탭 세팅,삭제 예정
          
          LinkToData();//데이터 불러오기
     }

@@ -34,7 +34,7 @@ public class BoardUI : MonoBehaviour
     for (int i = 0; i < taps_Rect.Length; i++)
     {
         Vector2 hidePosition = taps_Rect[i].anchoredPosition;
-        hidePosition.y = -40; // 비활성화 위치
+        //hidePosition.y = -40; // 비활성화 위치
         taps_Rect[i].anchoredPosition = hidePosition;
 
         // 비활성화 색상 변경 (BCBCBC)
@@ -48,7 +48,7 @@ public void ShowSeletedTap(int tapNum)
 {
     // 선택한 탭만 활성화 (y 좌표를 0으로 올려서 표시)
     Vector2 showPosition = taps_Rect[tapNum].anchoredPosition;
-    showPosition.y = -30; // 활성화 위치
+    //showPosition.y = -30; // 활성화 위치
     taps_Rect[tapNum].anchoredPosition = showPosition;
 
     // 활성화 색상 변경 (FFFFFF)
@@ -60,7 +60,7 @@ public void ShowSeletedTap(int tapNum)
 
    public void ShowBoard(int boardId){
     Vector3 showPos = new Vector3(0,0,0);
-    HideAllBoards();
+   HideAllBoards();
     boards[boardId].GetComponent<RectTransform>().anchoredPosition = showPos;
    }
    public void Show_UpgradeBoard(){
