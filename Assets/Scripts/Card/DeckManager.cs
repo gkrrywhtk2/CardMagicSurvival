@@ -40,13 +40,14 @@ public class DeckManager : MonoBehaviour
     public TMP_Text CardDesc_CardDesc;
      public List<Card> ownedCardList = new List<Card>(); //
      public GameObject ownedCardset;//덱 관리에서 보유한 카드목록이 풀링되는 부모 오브젝트
+     public GameObject touchedCard;//카드 정보 오브젝트
 
     private void Start()
     {
         //CardSelect(); // 초기 덱 선택
-        randomCard[0].RandomCardNum = 0;
-        randomCard[1].RandomCardNum = 1;
-        randomCard[2].RandomCardNum = 2;
+       /// randomCard[0].RandomCardNum = 0;
+       // randomCard[1].RandomCardNum = 1;
+       // randomCard[2].RandomCardNum = 2;
        
       
     }
@@ -116,69 +117,110 @@ for (int i = deck.Count - 1; i > 0; i--)
         nextcardImage.sprite = cardDatas[deck[0]].nextcardImage;
     }
 
+    public void CardDescInit(int cardId){
+        //카드 터치했을때 카드 설명 UI
 
-    public void StartUpgradeEvent(){
-       // UpgradeEvent(deck, cardDatas);
+        CardDescUi.gameObject.SetActive(true);
+        CardDesc_CardName.text = cardDatas[cardId].cardName;//이름 세팅
+        CardDesc_CardDesc.text = cardDatas[cardId].cardDesc_Main;//이름 세팅
     }
 
-     public void UpgradeEvent(List<Card> deck, CardData[] allCards){
-         // 1. 후보 카드 풀 초기화
-        //UpdateCandidatePool(deck, allCards);
-
-        //2. 후보 카드의 개수
-        int candidateCount = Mathf.Min(3, candidatePool.Count);
-        List<Card> selectedCards = new List<Card>();
-        //3. 랜덤 카드 선택(최대 3장)
-    
-            for (int i = 0; i < candidateCount; i++)
-            {
-            int randomIndex = Random.Range(0, candidatePool.Count);
-            selectedCards.Add(candidatePool[randomIndex]);
-            candidatePool.RemoveAt(randomIndex); // 선택된 카드는 후보 풀에서 임시 제거
-            }
-        
-        
-        //selectedCard 개수에 따른 분기, 백그라운드 이미지(어두문 배경) 활성화
-        GameManager.instance.backG.SetActive(true);
-        switch (selectedCards.Count){
-            case 0:
-            break;
-
-            case 1:
-            randomCard[0].gameObject.SetActive(true);
-            randomCard[0].transform.position = randomCardPoints[2].position;
-            randomCard[0].Init(selectedCards[0]);
-            break;
-
-            case 2:
-            randomCard[0].gameObject.SetActive(true);
-            randomCard[0].transform.position = randomCardPoints[1].position;
-            randomCard[1].gameObject.SetActive(true);
-            randomCard[1].transform.position = randomCardPoints[3].position;
-            randomCard[0].Init(selectedCards[0]);
-            randomCard[1].Init(selectedCards[1]);
-            break;
-
-            case 3:
-            randomCard[0].gameObject.SetActive(true);
-            randomCard[0].transform.position = randomCardPoints[0].position;
-            randomCard[1].gameObject.SetActive(true);
-            randomCard[1].transform.position = randomCardPoints[2].position;
-            randomCard[2].gameObject.SetActive(true);
-            randomCard[2].transform.position = randomCardPoints[4].position;
-
-            randomCard[0].Init(selectedCards[0]);
-            randomCard[1].Init(selectedCards[1]);
-            randomCard[2].Init(selectedCards[2]);
-
-            break;
+    //////////////////////
+    //덱 관리 UI 관련
+    public void ShowPlayerDeck(){
+        //현재 플레이어의 활성덱을 보여주는 함수
+        DataManager data = GameManager.instance.dataManager;
+        for(int i = 0; i < 8; i++){
+            GameManager.instance.boardUI.deckCardUI[i].Init(data.savedDeck[i]);
         }
-           // int index = 0;//첫번째 randomCard
-         //   RandomCardSelectedSetting(index);
+        ShowOwnedCards();
+    }
+
+   public List<int> FillteringSavedDeck()
+{
+    // 현재 savedDeck에서 ID가 -1은 제외하는 함수
+    List<int> list = new List<int>(GameManager.instance.dataManager.savedDeck); // savedDeck를 복사
+    list.RemoveAll(value => value == -1);//-1인값 삭제
+    return list;
+}
 
 
+   public void ShowOwnedCards()
+{
+    // ownedCardset의 자식 오브젝트들을 비활성화
+    foreach (Transform child in ownedCardset.transform)
+    {
+        child.gameObject.SetActive(false);
+    }
+
+    // 현재 덱에 포함된 카드 ID 리스트 (ID만 포함)
+    List<int> savedCardIds = FillteringSavedDeck(); 
+
+    // savedDeck에 없는 카드만 필터링
+    List<Card> ownedCardList = GameManager.instance.dataManager.havedCardsList
+        .Where(card => !savedCardIds.Contains(card.ID)) // savedDeck에 없는 카드만 선택
+        .ToList();
+
+    for (int i = 0; i < ownedCardList.Count; i++)
+    {
+        DeckCard deckCard = GameManager.instance.deckCardPooling.Get(0).GetComponent<DeckCard>();
+        deckCard.Init(ownedCardList[i].ID);
+        deckCard.inMyDeck = false; // 선택된 DeckCard가 현재 덱에 있는지 여부
+    }
+}
+
+    public void RemoveCard(int cardId){
+        //플레이어의 활성덱에서 카드 제거 deck -> owedCardList
+        int index = GameManager.instance.dataManager.savedDeck.IndexOf(cardId);
+        GameManager.instance.dataManager.savedDeck[index] = -1; //-1 is Null
+
+
+        //UI 최신화
+        ShowPlayerDeck();
+        touchedCard.SetActive(false);//터치 카드 UI 비활성화
         
-     }
+    }
+
+    public void AddCard(int cardId)
+{
+    // -1 값을 가진 인덱스를 찾기
+    int index = GameManager.instance.dataManager.savedDeck.IndexOf(-1);
+
+    if (index != -1) 
+    {
+        // -1 값을 cardId로 변경
+        GameManager.instance.dataManager.savedDeck[index] = cardId;
+        ShowPlayerDeck();
+        touchedCard.SetActive(false); // 터치 카드 UI 비활성화
+    }
+    else
+    {
+        Debug.Log("덱이 최대치에 도달했습니다!");
+    }
+}
+
+   public void SaveNowDeck()
+{
+    // -1이 아닌 카드 개수 확인
+    int validCardCount = GameManager.instance.dataManager.savedDeck.Count(card => card != -1);
+
+    if (validCardCount < 4)
+    {
+        Debug.Log("플레이어의 덱은 항상 4장 이상이어야 합니다.");
+        return;
+    }
+
+    deck.Clear(); // deck 리스트 초기화
+    GetSavedDeck(GameManager.instance.dataManager.savedDeck); // 덱 재구성
+    HandSetting(); // 덱 재구성 후 다시 카드 뽑기
+
+    GameManager.instance.boardUI.Hide_DeckSettingUI(); // 최종적으로 덱 세팅 UI 종료
+}
+
+
+
+}
+
 
 
 
@@ -236,7 +278,7 @@ foreach (var cardData in allCards)
         GameManager.instance.GamePlay();
     }
 /**
-   public void AddCard_ToHand(Card newCard)
+public void AddCard_ToHand(Card newCard)
 {
     // 1. 덱에서 같은 ID의 카드를 찾음
     var existingCardInDeck = deck.Find(card => card.ID == newCard.ID);
@@ -305,57 +347,69 @@ foreach (var cardData in allCards)
     ******************카드 업그레이드 이벤트 삭제
     **/ 
 
-    public void CardDescInit(int cardId){
-        //카드 터치했을때 카드 설명 UI
-
-        CardDescUi.gameObject.SetActive(true);
-        CardDesc_CardName.text = cardDatas[cardId].cardName;//이름 세팅
-        CardDesc_CardDesc.text = cardDatas[cardId].cardDesc_Main;//이름 세팅
+    /** 시스템 삭제
+    public void StartUpgradeEvent(){
+       // UpgradeEvent(deck, cardDatas);
     }
 
-    //////////////////////
-    //덱 관리 UI 관련
-    public void ShowPlayerDeck(){
-        //현재 플레이어의 활성덱을 보여주는 함수
-        DataManager data = GameManager.instance.dataManager;
-        for(int i = 0; i < 8; i++){
-            GameManager.instance.boardUI.deckCardUI[i].Init(data.savedDeck[i]);
+     public void UpgradeEvent(List<Card> deck, CardData[] allCards){
+         // 1. 후보 카드 풀 초기화
+        //UpdateCandidatePool(deck, allCards);
+
+        //2. 후보 카드의 개수
+        int candidateCount = Mathf.Min(3, candidatePool.Count);
+        List<Card> selectedCards = new List<Card>();
+        //3. 랜덤 카드 선택(최대 3장)
+    
+            for (int i = 0; i < candidateCount; i++)
+            {
+            int randomIndex = Random.Range(0, candidatePool.Count);
+            selectedCards.Add(candidatePool[randomIndex]);
+            candidatePool.RemoveAt(randomIndex); // 선택된 카드는 후보 풀에서 임시 제거
+            }
+        
+        
+        //selectedCard 개수에 따른 분기, 백그라운드 이미지(어두문 배경) 활성화
+        GameManager.instance.backG.SetActive(true);
+        switch (selectedCards.Count){
+            case 0:
+            break;
+
+            case 1:
+            randomCard[0].gameObject.SetActive(true);
+            randomCard[0].transform.position = randomCardPoints[2].position;
+            randomCard[0].Init(selectedCards[0]);
+            break;
+
+            case 2:
+            randomCard[0].gameObject.SetActive(true);
+            randomCard[0].transform.position = randomCardPoints[1].position;
+            randomCard[1].gameObject.SetActive(true);
+            randomCard[1].transform.position = randomCardPoints[3].position;
+            randomCard[0].Init(selectedCards[0]);
+            randomCard[1].Init(selectedCards[1]);
+            break;
+
+            case 3:
+            randomCard[0].gameObject.SetActive(true);
+            randomCard[0].transform.position = randomCardPoints[0].position;
+            randomCard[1].gameObject.SetActive(true);
+            randomCard[1].transform.position = randomCardPoints[2].position;
+            randomCard[2].gameObject.SetActive(true);
+            randomCard[2].transform.position = randomCardPoints[4].position;
+
+            randomCard[0].Init(selectedCards[0]);
+            randomCard[1].Init(selectedCards[1]);
+            randomCard[2].Init(selectedCards[2]);
+
+            break;
         }
-        ShowOwnedCards();
-    }
-
-   public List<int> FillteringSavedDeck()
-{
-    // 현재 savedDeck에서 ID가 -1은 제외하는 함수
-    List<int> list = new List<int>(GameManager.instance.dataManager.savedDeck); // savedDeck를 복사
-    list.RemoveAll(value => value == -1);//-1인값 삭제
-    return list;
-}
+           // int index = 0;//첫번째 randomCard
+         //   RandomCardSelectedSetting(index);
 
 
-   public void ShowOwnedCards()
-{
-    // ownedCardset의 자식 오브젝트들을 비활성화
-    foreach (Transform child in ownedCardset.transform)
-    {
-        child.gameObject.SetActive(false);
-    }
-
-    // 현재 덱에 포함된 카드 ID 리스트 (ID만 포함)
-    List<int> savedCardIds = FillteringSavedDeck(); 
-
-    // savedDeck에 없는 카드만 필터링
-    List<Card> ownedCardList = GameManager.instance.dataManager.havedCardsList
-        .Where(card => !savedCardIds.Contains(card.ID)) // savedDeck에 없는 카드만 선택
-        .ToList();
-
-    for (int i = 0; i < ownedCardList.Count; i++)
-    {
-        DeckCard deckCard = GameManager.instance.deckCardPooling.Get(0).GetComponent<DeckCard>();
-        deckCard.Init(ownedCardList[i].ID);
-        deckCard.inMyDeck = false; // 선택된 DeckCard가 현재 덱에 있는지 여부
-    }
-}
-
-
-}
+        
+     }
+     시스템 삭제//
+     **/ 
+    

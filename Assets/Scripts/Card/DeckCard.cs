@@ -93,13 +93,28 @@ public class DeckCard : MonoBehaviour
         DeckCard cardTouched = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
         cardTouched.Init(card);
         cardTouched.transform.position = targetPosition;
+        if(inMyDeck == true){
+            //활성 카드라면 제거 버튼 활성화
+            cardTouched.GetComponent<TouchedCard>().removeButton.gameObject.SetActive(true);
+            cardTouched.GetComponent<TouchedCard>().useButton.gameObject.SetActive(false);
+        }else{
+            //반대 경우
+            cardTouched.GetComponent<TouchedCard>().removeButton.gameObject.SetActive(false);
+            cardTouched.GetComponent<TouchedCard>().useButton.gameObject.SetActive(true);
+        }
+        
     }
     public void CardInfoUIOn(){
        CardInfoUI cardinfo =  GameManager.instance.boardUI.cardInfoUI;
        cardinfo.gameObject.SetActive(true);
        cardinfo.Init(deckCard);
     }
-
+    public void Button_RemoveCard(){
+        GameManager.instance.deckManager.RemoveCard(deckCard.ID);
+    }
+    public void Button_ADDCard(){
+        GameManager.instance.deckManager.AddCard(deckCard.ID);
+    }
     
 
 
