@@ -57,7 +57,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
         if( eventData.pointerDrag != null )
         {
-            card.CardLock();
+            //card.CardLock();
             //사용 이펙트
             if(card.rangeOn != true){
             Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
@@ -76,6 +76,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     
             //사용된 카드 덱 맨 아래로
             deckManager.deck.Add(card.magicCard.ID);
+
             deckManager.DrawCard(card.fixedCardNumber);
         }
     }

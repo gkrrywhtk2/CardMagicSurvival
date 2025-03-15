@@ -70,7 +70,11 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// 카드 데이터를 초기화하는 메서드
     /// </summary>
     
-   
+   public void CardReload(){
+    anim.enabled = false;//애니메이션 비활성화하여 앵커드 포지션 적용되게 변경
+    rect.anchoredPosition = new Vector3(-5000, -5000, 0);
+    Debug.Log("위치 조정");
+   }
     public void CardInit(int cardid)
     {
         cardData = GameManager.instance.deckManager.cardDatas[cardid];
@@ -88,7 +92,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         range.GetComponent<RectTransform>().localScale = cardData.rangeScale_Card;
         directionCard = cardData.isDirCard;
         CardAlpha1_Range();
-         CardDrawAni();
+        CardDrawAni(0);
           //StartCoroutine(CardDrawAnimation());
     }
 
@@ -208,22 +212,16 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (transform.parent == canvas)
         {
             transform.SetParent(previousParent);
-            if(cardDrawLock == true ){
-               //rect.anchoredPosition = cardDrawStartPosition;
-                 // Debug.Log("카드 드로우 지점으로");
-            }else{
-                //rect.anchoredPosition = originalPosition;
-                //  Debug.Log("오리진 포지션");
-            }
-              
-            
         }
         dropPoint.raycastTarget = false;//드롭 포인트 활성화
         range.gameObject.SetActive(false);//범위 이미지 비활성화
         CardAlpha1_Range();
-        anim.enabled = true; // 드래그 중지 시 애니메이션 연출 가능
 
-      
+        if(cardReady != true || cardOn != true)//카드가 사용되어지지 않았다면 기존 위치로 복귀
+            anim.enabled = true; // 드래그 중지 시 애니메이션 연출 가능
+        
+        Debug.Log(cardReady);
+
         dIr_FrontForCard.gameObject.SetActive(false);//방향 오브젝트 비활성화
 
     }
@@ -350,15 +348,26 @@ public void CardAlpha1_Range(){
         }
     }
     **/
-    public void CardDrawAni(){
-        
-            anim.ResetTrigger("Draw"); // 기존 트리거 초기화
-            anim.SetTrigger("Draw");   // 다시 트리거 발동
+    public void CardDrawAni(float coolTime){
+        anim.enabled = true;//애니메이션 활성화
+        StartCoroutine(DrawAnimation(coolTime));
+           // anim.ResetTrigger("Draw"); // 기존 트리거 초기화
+          //  anim.SetTrigger("Draw");   // 다시 트리거 발동
     }
-    IEnumerator CardDrawAnimation(){
-        yield return new WaitForSeconds(1);//드로우 쿨타임
-          anim.ResetTrigger("Draw"); // 기존 트리거 초기화
-            anim.SetTrigger("Draw");   // 다시 트리거 발동
+    IEnumerator DrawAnimation(float coolTime){
+        anim.ResetTrigger("Draw"); // 기존 트리거 초기화
+        anim.SetTrigger("Draw");   // 다시 트리거 발동
+        anim.speed = 0;
+        yield return new WaitForSeconds(coolTime);//드로우 쿨타임
+        anim.speed = 2;
+    }
+
+     IEnumerator AfterDeckSettingCardDraw(float coolTime){
+        anim.ResetTrigger("Draw"); // 기존 트리거 초기화
+        anim.SetTrigger("Draw");   // 다시 트리거 발동
+        anim.speed = 0;
+        yield return new WaitForSeconds(coolTime);//드로우 쿨타임
+        anim.speed = 2;
     }
 
 

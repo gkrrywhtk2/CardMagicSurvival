@@ -41,6 +41,10 @@ public class DeckManager : MonoBehaviour
      public List<Card> ownedCardList = new List<Card>(); //
      public GameObject ownedCardset;//덱 관리에서 보유한 카드목록이 풀링되는 부모 오브젝트
      public GameObject touchedCard;//카드 정보 오브젝트
+     //CardBoardUI
+    public TMP_Text battleDeckText;//전투덱 n/8
+    public RectTransform cardSettingScroll_Rect;
+    public Image[] card_clockBack;//카드 로딩중 카드 보드 360도 쿨타임 연출
 
     private void Start()
     {
@@ -85,6 +89,14 @@ for (int i = deck.Count - 1; i > 0; i--)
     // **2. 덱에서 3장 뽑아 핸드에 배치**
     int handCount = 3;
 
+    //카드 리로딩
+    magicCards[0].CardReload();
+    magicCards[1].CardReload();
+    magicCards[2].CardReload();
+
+    // 모든 카드 딜레이 완료될 때까지 대기
+    yield return StartCoroutine(ClockBackGroundAnim(1, 0, 1, 2));
+
     for (int i = 0; i < handCount; i++)
     {
         int cardId = deck[0]; // 덱 맨 위의 카드 ID 가져오기
@@ -92,6 +104,8 @@ for (int i = deck.Count - 1; i > 0; i--)
         //Card newCard =  GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == deck[0]);
        // int cardLevel = deck[0].STACK;
         deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
+
+
 
         // 핸드 카드 초기화
         magicCards[i].CardInit(cardId);
@@ -103,11 +117,39 @@ for (int i = deck.Count - 1; i > 0; i--)
     // 마지막에 다음 카드 이미지 설정
     NextCardImageSetting();
 }
+    private IEnumerator ClockBackGroundAnim(float duration, params int[] cardIndexes)
+{
+    float elapsedTime = 0f;
+
+    while (elapsedTime < duration)
+    {
+        elapsedTime += Time.deltaTime;
+        float progress = Mathf.Clamp01(elapsedTime / duration);
+
+        // 선택된 카드들만 fillAmount 증가
+        foreach (int index in cardIndexes)
+        {
+            card_clockBack[index].fillAmount = progress;
+        }
+
+        yield return null;
+    }
+}
+
+
     public void DrawCard(int fixedCard){
+               StartCoroutine(DrawCard_Corutine(fixedCard));
+    }
+
+    public IEnumerator DrawCard_Corutine(int fixedCard){
                 int cardId = deck[0]; // 덱 맨 위의 카드 ID 가져오기
                 int cardStack =  GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == deck[0]).STACK;
                   // int cardLevel = deck[0].STACK;
                 deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
+
+                //드로우 딜레이
+                magicCards[fixedCard].CardReload();
+                yield return StartCoroutine(ClockBackGroundAnim(1,fixedCard));
 
                 // 핸드 카드 초기화
                 magicCards[fixedCard].CardInit(cardId);
@@ -129,10 +171,20 @@ for (int i = deck.Count - 1; i > 0; i--)
     //////////////////////
     //덱 관리 UI 관련
     public void ShowPlayerDeck(){
+
+
         //현재 플레이어의 활성덱을 보여주는 함수
         DataManager data = GameManager.instance.dataManager;
+        //오브젝트들 초기화
         for(int i = 0; i < 8; i++){
             GameManager.instance.boardUI.deckCardUI[i].Init(data.savedDeck[i]);
+        }
+
+        //텍스트 최산화
+        battleDeckText.color = Color.white;
+        battleDeckText.text = "전투 덱 " + FillteringSavedDeck().Count + "/8";
+        if(FillteringSavedDeck().Count < 4){
+            battleDeckText.color = Color.red;
         }
         ShowOwnedCards();
     }
@@ -168,6 +220,11 @@ for (int i = deck.Count - 1; i > 0; i--)
         deckCard.Init(ownedCardList[i].ID);
         deckCard.inMyDeck = false; // 선택된 DeckCard가 현재 덱에 있는지 여부
     }
+
+     // 📌 스크롤 길이 동적 조절
+    int cardCount = ownedCardList.Count;
+    float newHeight = 1500 + Mathf.Max(0, (cardCount - 1) / 4) * 400; 
+    Scroll_SetRectTransformHeight(newHeight);
 }
 
     public void RemoveCard(int cardId){
@@ -201,7 +258,10 @@ for (int i = deck.Count - 1; i > 0; i--)
 }
 
    public void SaveNowDeck()
-{
+{   
+    //순서 재배치
+    GameManager.instance.dataManager.ReorderSavedDeck();
+
     // -1이 아닌 카드 개수 확인
     int validCardCount = GameManager.instance.dataManager.savedDeck.Count(card => card != -1);
 
@@ -212,12 +272,62 @@ for (int i = deck.Count - 1; i > 0; i--)
     }
 
     GetSavedDeck(GameManager.instance.dataManager.savedDeck); // 덱 재구성
+   
     HandSetting(); // 덱 재구성 후 다시 카드 뽑기
 
     GameManager.instance.boardUI.Hide_DeckSettingUI(); // 최종적으로 덱 세팅 UI 종료
 }
 
 
+    /// <summary>
+    /// RectTransform의 높이(Height)를 설정합니다.
+    /// Anchor 모드가 Top, Stretch 상태에서도 작동합니다.
+    /// </summary>
+    /// <param name="height">설정할 높이 값</param>
+    public void Scroll_SetRectTransformHeight(float height)
+    {
+        if (cardSettingScroll_Rect == null) return;
+
+        // 현재 RectTransform의 크기 가져오기
+        Vector2 sizeDelta = cardSettingScroll_Rect.sizeDelta;
+        
+        // height만 변경
+        sizeDelta.y = height;
+        
+        // 변경된 크기 적용
+        cardSettingScroll_Rect.sizeDelta = sizeDelta;
+    }
+
+    /// <summary>
+    /// RectTransform의 Y 위치를 설정합니다.
+    /// Anchor 모드가 Top, Stretch 상태일 때는 anchoredPosition을 사용합니다.
+    /// </summary>
+    /// <param name="posY">설정할 Y 위치 값</param>
+    public void Scroll_SetRectTransformPosY(float posY)
+    {
+        if (cardSettingScroll_Rect == null) return;
+
+        // 현재 anchoredPosition 가져오기
+        Vector2 anchoredPosition = cardSettingScroll_Rect.anchoredPosition;
+        
+        // Y 위치만 변경
+        anchoredPosition.y = posY;
+        
+        // 변경된 위치 적용
+        cardSettingScroll_Rect.anchoredPosition = anchoredPosition;
+    }
+
+    /// <summary>
+    /// Top, Stretch 상태에서 RectTransform의 위치와 크기를 한 번에 설정합니다.
+    /// </summary>
+    /// <param name="posY">설정할 Y 위치 값</param>
+    /// <param name="height">설정할 높이 값</param>
+    public void Scroll_SetRectTransformPositionAndHeight(float posY, float height)
+    {
+        Scroll_SetRectTransformPosY(posY);
+        Scroll_SetRectTransformHeight(height);
+    }
+    
 
 }
 

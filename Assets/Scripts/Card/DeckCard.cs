@@ -49,7 +49,7 @@ public class DeckCard : MonoBehaviour
         costText.text = deckData.cardDatas[deckCard.ID].cardCost.ToString();
         Fill.fillAmount = Mathf.Clamp01((float)deckCard.COUNT / 5);
         fillText.text =  deckCard.COUNT.ToString() + "/ 5";
-        stackText.text = "중첩 " + deckCard.STACK.ToString();
+        stackText.text = "레벨 " + deckCard.STACK.ToString();
         }
 
     }

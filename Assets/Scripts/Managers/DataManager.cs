@@ -65,7 +65,7 @@ public class DataManager : MonoBehaviour
         havedCardsList.Add(new Card(4, 0, 1));
         havedCardsList.Add(new Card(5, 0, 1));
         havedCardsList.Add(new Card(6, 0, 1));
-          havedCardsList.Add(new Card(7, 0, 1));
+        havedCardsList.Add(new Card(7, 0, 1));
        
 
      
@@ -90,6 +90,38 @@ public class DataManager : MonoBehaviour
         GameManager.instance.deckManager.GetSavedDeck(savedDeck);
      
      }
+
+     /// <summary>
+/// savedDeck 리스트에서 -1 값을 제거하고 유효한 카드들을 앞으로 재정렬한 후,
+/// 뒤쪽에 -1을 채워 항상 8장을 유지하는 함수
+/// </summary>
+public void ReorderSavedDeck()
+{
+    // -1이 아닌 카드들만 새 리스트에 추가
+    List<int> validCards = new List<int>();
+    
+    foreach (int cardId in savedDeck)
+    {
+        if (cardId != -1)
+        {
+            validCards.Add(cardId);
+        }
+    }
+    
+    // savedDeck 초기화
+    savedDeck.Clear();
+    
+    // 유효한 카드들 먼저 추가
+    savedDeck.AddRange(validCards);
+    
+    // 나머지를 -1로 채워서 8장을 유지
+    while (savedDeck.Count < 8)
+    {
+        savedDeck.Add(-1);
+    }
+    
+
+}
 
      public int ReturnCardCount(int cardId){
       //카드 아이디를 입력하면 현재 해당 카드의 보유량을 리턴해주는 함수
