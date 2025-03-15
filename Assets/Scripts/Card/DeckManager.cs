@@ -54,6 +54,7 @@ public class DeckManager : MonoBehaviour
     public void GetSavedDeck(List<int> savedDeck)
     {
         // 초기 덱 세팅 (-1값 제거)
+        deck.Clear();//초기화
         for(int i = 0; i <savedDeck.Count; i++){
             if(savedDeck[i] != -1){//카드 아이디가 -1인 값은 제외하고 deck에 추가
                 deck.Add(savedDeck[i]);
@@ -210,7 +211,6 @@ for (int i = deck.Count - 1; i > 0; i--)
         return;
     }
 
-    deck.Clear(); // deck 리스트 초기화
     GetSavedDeck(GameManager.instance.dataManager.savedDeck); // 덱 재구성
     HandSetting(); // 덱 재구성 후 다시 카드 뽑기
 
