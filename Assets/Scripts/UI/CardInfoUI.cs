@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using RANK;
-using System.Linq; // LINQ 사용
+using System.Linq;
+using Unity.Mathematics; // LINQ 사용
 
 public class CardInfoUI : MonoBehaviour
 {
@@ -144,24 +145,31 @@ public void OffButton(){
 public void OnButton(){
     GameManager.instance.boardUI.cardInfoUI.gameObject.SetActive(true);
 }
-public void StackUpgradeButton(){
-    if(thisCard.COUNT >= 5){
-      // ID가 1인 카드 찾기
-    Card targetCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == thisCard.ID);
-    targetCard.COUNT -= 5;//카드 5개 소진
-    targetCard.STACK += 1;//카드 업그레이드
-    Init(targetCard);
-    GameManager.instance.deckManager.ShowPlayerDeck();
-     DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
-       infoCard.gameObject.SetActive(true);
-       infoCard.Init(targetCard.ID);
+    public void StackUpgradeButton(){
+         Card targetCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == thisCard.ID);
 
-       GameManager.instance.deckManager.magicCards[0].CardInitWhenStackUpgrade();
-          GameManager.instance.deckManager.magicCards[1].CardInitWhenStackUpgrade();
-             GameManager.instance.deckManager.magicCards[2].CardInitWhenStackUpgrade();
-             Debug.Log("StackUpgradeButton");
-    }else{
-        warningText.gameObject.SetActive(true);
+        if(thisCard.COUNT >= ReturnRequireCount(targetCard.STACK)){//레벨에 따른 필요 재료 수
+        // ID가 1인 카드 찾기
+        targetCard.COUNT -= 5;//카드 5개 소진
+        targetCard.STACK += 1;//카드 업그레이드
+        Init(targetCard);
+        GameManager.instance.deckManager.ShowPlayerDeck();
+        DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
+        infoCard.gameObject.SetActive(true);
+        infoCard.Init(targetCard.ID);
+
+        GameManager.instance.deckManager.magicCards[0].CardInitWhenStackUpgrade();
+            GameManager.instance.deckManager.magicCards[1].CardInitWhenStackUpgrade();
+                GameManager.instance.deckManager.magicCards[2].CardInitWhenStackUpgrade();
+                //Debug.Log("StackUpgradeButton");
+        }else{
+            warningText.gameObject.SetActive(true);
+        }
     }
-}
+    public int ReturnRequireCount(int nowStack){
+        //업그레이드 시 필요한 재료 수를 리턴하는 함수
+        int index = 0;
+        index = 2 + nowStack ;
+        return index;
+    }
 }

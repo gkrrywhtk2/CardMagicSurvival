@@ -17,6 +17,7 @@ public class DeckCard : MonoBehaviour
     public bool inMyDeck;//현재 나의 카드목록에 올라와있는 덱 카드인가?
     public bool isTouchInfo;//이게 활성화 되어있으면 deckCard 오브젝트가 아닌, 터치시 연출되는 상세 정보 보기 버튼 나오는 toucheddeckCard임
     RectTransform rect;
+    public GameObject upArrow;//업그레이드 가능 오브젝트
 
     void Awake()
     {
@@ -45,13 +46,22 @@ public class DeckCard : MonoBehaviour
        // deckCard.ID = card.ID; 이렇게 초기화 하면 안됨, 오답노트로 남겨두자 
        // deckCard.STACK = card.STACK;
        // deckCard.COUNT = card.COUNT;
+       int requireCount = ReturnRequireCount(deckCard.STACK);//업그레이드에 필요한 재료 수
         cardSprite.sprite = deckData.cardDatas[deckCard.ID].cardImage;
         costText.text = deckData.cardDatas[deckCard.ID].cardCost.ToString();
-        Fill.fillAmount = Mathf.Clamp01((float)deckCard.COUNT / 5);
-        fillText.text =  deckCard.COUNT.ToString() + "/ 5";
+        Fill.fillAmount = Mathf.Clamp01((float)deckCard.COUNT / requireCount);
+        fillText.text =  deckCard.COUNT.ToString() + "/ " + requireCount;
         stackText.text = "레벨 " + deckCard.STACK.ToString();
+            if(!isTouchInfo)
+                upArrow.gameObject.SetActive(Fill.fillAmount >= 1);
         }
 
+    }
+     public int ReturnRequireCount(int nowStack){
+        //업그레이드 시 필요한 재료 수를 리턴하는 함수
+        int index = 0;
+        index = 2 + nowStack ;
+        return index;
     }
     public void NullCardInit(){
         //존재하지 않는 카드 -1 일경우 흑백 처리 
