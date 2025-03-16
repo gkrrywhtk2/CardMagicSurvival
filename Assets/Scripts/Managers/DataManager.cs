@@ -61,7 +61,7 @@ public class DataManager : MonoBehaviour
         havedCardsList.Add(new Card(0, 0, 10));
         havedCardsList.Add(new Card(1, 0, 20));
         havedCardsList.Add(new Card(2, 0, 30));
-        havedCardsList.Add(new Card(3, 0, 1));
+        havedCardsList.Add(new Card(3, 0, 100));
         havedCardsList.Add(new Card(4, 0, 1));
         havedCardsList.Add(new Card(5, 0, 1));
         havedCardsList.Add(new Card(6, 0, 1));

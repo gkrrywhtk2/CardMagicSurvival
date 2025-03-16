@@ -52,8 +52,14 @@ public class DeckCard : MonoBehaviour
         Fill.fillAmount = Mathf.Clamp01((float)deckCard.COUNT / requireCount);
         fillText.text =  deckCard.COUNT.ToString() + "/ " + requireCount;
         stackText.text = "레벨 " + deckCard.STACK.ToString();
-            if(!isTouchInfo)
-                upArrow.gameObject.SetActive(Fill.fillAmount >= 1);
+        upArrow.gameObject.SetActive(Fill.fillAmount >= 1);
+
+        if(deckCard.STACK >= 10){
+            //카드 만랩은 10
+            Fill.fillAmount = 1;
+            fillText.text = "MAX";
+            upArrow.gameObject.SetActive(false);
+        }
         }
 
     }
@@ -93,6 +99,8 @@ public class DeckCard : MonoBehaviour
         // 버튼을 카드 위치로 이동시키기
         int cardID = deckCard.ID;
         MoveButtonToPosition(cardPosition, cardID);
+        //gameObject.SetActive(false);
+     
     }
 
     // 버튼을 카드 위치로 이동시키는 함수
@@ -101,7 +109,7 @@ public class DeckCard : MonoBehaviour
         targetPosition.y += 175;
         // 카드의 월드 좌표를 버튼의 월드 좌표로 설정
         DeckCard cardTouched = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
-        cardTouched.Init(card);
+       //cardTouched.Init(card);
         cardTouched.transform.position = targetPosition;
         if(inMyDeck == true){
             //활성 카드라면 제거 버튼 활성화
@@ -118,12 +126,16 @@ public class DeckCard : MonoBehaviour
        CardInfoUI cardinfo =  GameManager.instance.boardUI.cardInfoUI;
        cardinfo.gameObject.SetActive(true);
        cardinfo.Init(deckCard);
+       GameManager.instance.deckManager.touchedCard.gameObject.SetActive(false);
+      
     }
     public void Button_RemoveCard(){
         GameManager.instance.deckManager.RemoveCard(deckCard.ID);
+      
     }
     public void Button_ADDCard(){
         GameManager.instance.deckManager.AddCard(deckCard.ID);
+       
     }
     
 

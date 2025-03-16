@@ -13,7 +13,7 @@ public class CardInfoUI : MonoBehaviour
     public TMP_Text title;//타이틀, 한영 변환용
     public TMP_Text cardRank_Text;//카드 등급
     public TMP_Text cardName_Text;//카드 이름
-    public DeckCard cardImgae;//카드 이미지 세팅
+    public DeckCard deckCard;//카드 이미지 세팅
     public TMP_Text cardEffect_Text;//한영 변환
     public TMP_Text cardEffect_VarText;//카드 효과
     public TMP_Text cardDesc_Text;//한영 변환
@@ -22,6 +22,7 @@ public class CardInfoUI : MonoBehaviour
     public GameObject touchedCard;//deckCardTouch했을때 정보, 제거, 사용 뜨는 그 오브젝트
     //
     public GameObject warningText;
+    public GameObject maxWariningText;
 
     
 
@@ -73,7 +74,7 @@ public class CardInfoUI : MonoBehaviour
     cardName_Text.text = cardData.cardName;
 
     //카드 이미지 세팅
-    cardImgae.Init(thisCard.ID);
+    deckCard.Init(thisCard.ID);
 
     //카드 효과 설명 세팅
     cardEffect_VarText.text = cardData.cardDesc_Main;
@@ -139,14 +140,20 @@ public class CardInfoUI : MonoBehaviour
 }
 
 public void OffButton(){
+    GameManager.instance.deckManager.touchedCard.gameObject.SetActive(false); //TouchedCard 비활성화
     GameManager.instance.boardUI.cardInfoUI.gameObject.SetActive(false);
-    touchedCard.gameObject.SetActive(false);
+ 
 }
 public void OnButton(){
     GameManager.instance.boardUI.cardInfoUI.gameObject.SetActive(true);
 }
     public void StackUpgradeButton(){
          Card targetCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == thisCard.ID);
+
+        if(thisCard.STACK >= 10){
+            maxWariningText.gameObject.SetActive(true);
+            return;
+        }
 
         if(thisCard.COUNT >= ReturnRequireCount(targetCard.STACK)){//레벨에 따른 필요 재료 수
         // ID가 1인 카드 찾기

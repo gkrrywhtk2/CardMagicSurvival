@@ -223,7 +223,7 @@ for (int i = deck.Count - 1; i > 0; i--)
 
      // 📌 스크롤 길이 동적 조절
     int cardCount = ownedCardList.Count;
-    float newHeight = 1500 + Mathf.Max(0, (cardCount - 1) / 4) * 400; 
+    float newHeight = 1800 + Mathf.Max(0, (cardCount - 1) / 4) * 400; 
     Scroll_SetRectTransformHeight(newHeight);
 }
 
