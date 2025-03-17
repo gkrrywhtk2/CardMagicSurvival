@@ -73,7 +73,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
    public void CardReload(){
     anim.enabled = false;//애니메이션 비활성화하여 앵커드 포지션 적용되게 변경
     rect.anchoredPosition = new Vector3(-5000, -5000, 0);
-    Debug.Log("위치 조정");
+   // Debug.Log("위치 조정");
    }
     public void CardInit(int cardid)
     {
@@ -220,7 +220,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if(cardReady != true || cardOn != true)//카드가 사용되어지지 않았다면 기존 위치로 복귀
             anim.enabled = true; // 드래그 중지 시 애니메이션 연출 가능
         
-        Debug.Log(cardReady);
+       // Debug.Log(cardReady);
 
         dIr_FrontForCard.gameObject.SetActive(false);//방향 오브젝트 비활성화
 

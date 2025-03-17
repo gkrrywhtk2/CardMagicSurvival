@@ -128,7 +128,7 @@ public class Player_Status : MonoBehaviour
 
        float recoveryAmount = maxHealth * (healthRecoveryPer * 0.01f);
         health = Mathf.Min(health + recoveryAmount, maxHealth);
-    Debug.Log("gasdasfasf");
+   // Debug.Log("gasdasfasf");
         yield return new WaitForSeconds(1f); // 1초 대기 후 반복
     }
 }

@@ -110,18 +110,7 @@ public class GameManager : MonoBehaviour
         instance.player.playerCol.GetComponent<Collider2D>().isTrigger = true; 
        ItemSelectState = true;
     }
-    public void NightTogle(){
-        
-        if(night == false){
-              instance.player.hikari.size = 5;
-              night = true;
-        }
-        else{
-            instance.player.hikari.size = 10;
-              night = false;
-        }
-      
-    }
+ 
 
     public void CheatBoxTogle(){
         if(cheatBoxTogle == false){

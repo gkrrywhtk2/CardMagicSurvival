@@ -5,6 +5,7 @@ using System.Collections;
 using TMPro;
 using RANK;
 using System.Linq;
+using Unity.Multiplayer.Center.Common;
 
 public class Card
 {
@@ -42,10 +43,12 @@ public class DeckManager : MonoBehaviour
      public GameObject ownedCardset;//덱 관리에서 보유한 카드목록이 풀링되는 부모 오브젝트
      public GameObject[] touchedCard;//카드 정보 오브젝트
      //CardBoardUI
+     public CardSetting_UI cardSetting_UI;
     public TMP_Text battleDeckText;//전투덱 n/8
     public RectTransform cardSettingScroll_Rect;
     public RectTransform cardCollectionScroll_Rect;
     public Image[] card_clockBack;//카드 로딩중 카드 보드 360도 쿨타임 연출
+    public PreSet_Deck[] preSet_Deck;
 
     private void Start()
     {
@@ -188,18 +191,56 @@ for (int i = deck.Count - 1; i > 0; i--)
             battleDeckText.color = Color.red;
         }
         ShowOwnedCards(selectedDeckNumber);
+        PersetDeckButtonSetting();//프리셋 버튼 활성화
+    }
+
+    public void PersetDeckButtonSetting(){
+        int deckCount = GameManager.instance.dataManager.getPresetDeckCount;
+        int stack = 0;
+
+        //우선 모든 버튼 잠금
+        for(int index = 0; index < preSet_Deck.Length; index++){
+            preSet_Deck[index].NowLock();
+            
+        }
+        
+        //해금된 버튼 활성화
+        for(int index = 0; index < deckCount; index++){
+             preSet_Deck[index].UnLock();
+             stack++;
+        } 
+         preSet_Deck[stack].CanUnlock();//해금된 버튼 바로 다음 버튼은 구매하여 언락가능하다
+        
+    }
+
+    public void Click_PresetDeckButton(int touchIndex){
+
+        switch(preSet_Deck[touchIndex].buttonState){
+            case PreSet_Deck.state.unLock :
+            GameManager.instance.dataManager.selectedSavedDeck = touchIndex;
+            ShowPlayerDeck();
+            break;
+
+            case PreSet_Deck.state.canUnlock :
+            cardSetting_UI.OnShopPanel();
+            break;
+
+            case PreSet_Deck.state.nowLock :
+            
+            break;
+        }
     }
 
    public List<int> FillteringSavedDeck(int index)
 {
     // 현재 savedDeck에서 ID가 -1은 제외하는 함수
     List<int> list = new List<int>(GameManager.instance.dataManager.savedDeck[index]); // savedDeck를 복사
-    Debug.Log(string.Join(", ", GameManager.instance.dataManager.savedDeck[index]) + " 여기에 -1이 있어야됨");
+   // Debug.Log(string.Join(", ", GameManager.instance.dataManager.savedDeck[index]) + " 여기에 -1이 있어야됨");
 
     // savedDeck[index]를 수정하지 않고 list에서만 -1을 제거
     list.RemoveAll(value => value == -1); // -1인값 삭제
 
-    Debug.Log(string.Join(", ", GameManager.instance.dataManager.savedDeck[index]) + " 여기에 -1이 있어야됨");
+   // Debug.Log(string.Join(", ", GameManager.instance.dataManager.savedDeck[index]) + " 여기에 -1이 있어야됨");
 
     return list;
 }

@@ -17,6 +17,7 @@ public class BoardUI : MonoBehaviour
    public DeckCard[] deckCardUI;//덱 관리 UI에서 현재 플레이어의 카드 8장
    public CardInfoUI cardInfoUI;
    public GameObject deckCardButtons;//카드 누르면 정보, 추가, 제거 버튼
+  
    private void Awake() {     //Debug.Log(boards[0].GetComponent<RectTransform>().anchoredPosition);
      HideAllBoards();
      ShowBoard(2);//일단 카드 ui 호출

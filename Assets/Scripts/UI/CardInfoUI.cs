@@ -181,4 +181,24 @@ public void OnButton(){
         index = 2 + nowStack ;
         return index;
     }
+    public void UpgradeAllCards()
+{
+    // GameManager.instance 캐싱
+    DataManager data = GameManager.instance.dataManager;
+    List<Card> cards = data.havedCardsList; 
+
+    foreach (var card in cards)
+    {
+        while (card.STACK < 10 && card.COUNT >= ReturnRequireCount(card.STACK))
+        {
+            card.COUNT -= ReturnRequireCount(card.STACK);
+            card.STACK += 1;
+        }
+    }
+
+    // UI 업데이트
+    GameManager.instance.deckManager.ShowPlayerDeck();
+    GameManager.instance.deckManager.ShowAllCards();
+}
+
 }

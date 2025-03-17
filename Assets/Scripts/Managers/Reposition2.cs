@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Reposition2 : MonoBehaviour
 {
+    /**
  [SerializeField] private float moveDistance = 40f; // 이동 거리 설정
 
     void OnTriggerExit2D(Collider2D collision)
@@ -72,4 +73,5 @@ public class Reposition2 : MonoBehaviour
                break;
        }
    }
+   **/
 }

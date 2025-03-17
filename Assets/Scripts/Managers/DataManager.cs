@@ -23,7 +23,7 @@ public class DataManager : MonoBehaviour
 
     [Header("#Card Info")]
      public List<int>[] savedDeck = new List<int>[5]; //덱 저장 항상 8개 유지, cardId - 1은 null값
-        public int savedDeckCount = 1;//해금된 프리셋 수
+        public int getPresetDeckCount = 1;//해금된 프리셋 수
         public int selectedSavedDeck = 0;//현재 선택된 프리셋 넘버
       public List<Card> havedCardsList = new List<Card>(); //현재 보유한 모든 카드 모음
     
@@ -86,7 +86,7 @@ public class DataManager : MonoBehaviour
     for (int i = 0; i < savedDeck.Length; i++)
     {
         string deckStatus = string.Join(", ", savedDeck[i]);
-        Debug.Log("Deck " + i + ": " + deckStatus);
+        //Debug.Log("Deck " + i + ": " + deckStatus);
     }
 
     // 덱 정보 갱신
@@ -110,7 +110,7 @@ public void ReorderSavedDeck(int selected)
     savedDeck[selected].AddRange(validCards);
 
     // 유효한 카드 수 출력
-    Debug.Log("유효한 카드 수: " + validCards.Count);
+    //Debug.Log("유효한 카드 수: " + validCards.Count);
 
     // 부족한 부분 -1로 채우기
     while (savedDeck[selected].Count < 8)
@@ -119,7 +119,7 @@ public void ReorderSavedDeck(int selected)
     }
 
     // 최종적으로 저장된 덱 출력
-    Debug.Log("최종 덱 상태: " + string.Join(",", savedDeck[selected]));
+   // Debug.Log("최종 덱 상태: " + string.Join(",", savedDeck[selected]));
 }
 
 

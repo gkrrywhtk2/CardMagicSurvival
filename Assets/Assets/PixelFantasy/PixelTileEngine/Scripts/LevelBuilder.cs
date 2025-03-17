@@ -541,7 +541,7 @@ namespace Assets.PixelFantasy.PixelTileEngine.Scripts
                 SpriteCollection.CoverTilesets.Add(new Tileset(texture, sprites));
             }
 
-            FindObjectOfType<Inventory>().SwitchTab(type);
+           // FindObjectOfType<Inventory>().SwitchTab(type);
         }
 
         public void SwitchCover()

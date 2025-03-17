@@ -15,7 +15,7 @@ public class EffectsControl : MonoBehaviour
     void OnDead()
     {
         if(sender== null)
-            FindObjectOfType<MouseControl>().AddCard();
+           // FindObjectOfType<MouseControl>().AddCard();
         Destroy(gameObject);
     }
 }
