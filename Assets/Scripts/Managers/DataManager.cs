@@ -22,7 +22,9 @@ public class DataManager : MonoBehaviour
     public int upgradePostionCount;//강화 포션 보유량
 
     [Header("#Card Info")]
-     public List<int> savedDeck = new List<int>(); //덱 저장 항상 8개 유지, cardId - 1은 null값
+     public List<int>[] savedDeck = new List<int>[5]; //덱 저장 항상 8개 유지, cardId - 1은 null값
+        public int savedDeckCount = 1;//해금된 프리셋 수
+        public int selectedSavedDeck = 0;//현재 선택된 프리셋 넘버
       public List<Card> havedCardsList = new List<Card>(); //현재 보유한 모든 카드 모음
     
 
@@ -70,65 +72,64 @@ public class DataManager : MonoBehaviour
 
      
      }
-     public void SavedDeckSetting(){
-       //현재 나의 덱에 저장된 카드
-        savedDeck.Add(0);
-         savedDeck.Add(1);
-          savedDeck.Add(2);
-           savedDeck.Add(3);
-            savedDeck.Add(4);
-             savedDeck.Add(5);
-              savedDeck.Add(6);
-               savedDeck.Add(7);
-      
-      
-        while(savedDeck.Count < 8){
-        savedDeck.Add(-1);//8장이 되지 않는다면 임의의 더미 카드 생성, savedDeck은 항상 8장 이어야함
-         }
-        
+    public void SavedDeckSetting(){
+    // 모든 덱 초기화
+    for (int i = 0; i < savedDeck.Length; i++)
+    {
+        savedDeck[i] = Enumerable.Repeat(-1, 8).ToList(); // -1이 8개인 리스트 생성
+    }
 
-        GameManager.instance.deckManager.GetSavedDeck(savedDeck);
-     
-     }
+    // savedDeck[선택된 덱 프리셋]만 특정 값으로 임의 설정
+    savedDeck[selectedSavedDeck] = new List<int> { 1, 2, 3, 4, -1, -1, -1, -1 };
 
-     /// <summary>
-/// savedDeck 리스트에서 -1 값을 제거하고 유효한 카드들을 앞으로 재정렬한 후,
+    // 모든 savedDeck 디버깅
+    for (int i = 0; i < savedDeck.Length; i++)
+    {
+        string deckStatus = string.Join(", ", savedDeck[i]);
+        Debug.Log("Deck " + i + ": " + deckStatus);
+    }
+
+    // 덱 정보 갱신
+    GameManager.instance.deckManager.GetSavedDeck(savedDeck[selectedSavedDeck]);
+}
+
+
+   /// <summary>
+/// savedDeck 리스트에서 -1 값을 제거하고 유효한 카드들을 앞으로 정렬한 후,
 /// 뒤쪽에 -1을 채워 항상 8장을 유지하는 함수
 /// </summary>
-public void ReorderSavedDeck()
+public void ReorderSavedDeck(int selected)
 {
     // -1이 아닌 카드들만 새 리스트에 추가
-    List<int> validCards = new List<int>();
-    
-    foreach (int cardId in savedDeck)
-    {
-        if (cardId != -1)
-        {
-            validCards.Add(cardId);
-        }
-    }
-    
-    // savedDeck 초기화
-    savedDeck.Clear();
-    
-    // 유효한 카드들 먼저 추가
-    savedDeck.AddRange(validCards);
-    
-    // 나머지를 -1로 채워서 8장을 유지
-    while (savedDeck.Count < 8)
-    {
-        savedDeck.Add(-1);
-    }
-    
+    List<int> validCards = savedDeck[selected].Where(cardId => cardId != -1).ToList();
 
+    // savedDeck[selected] 초기화
+    savedDeck[selected].Clear();
+
+    // 유효한 카드들 추가
+    savedDeck[selected].AddRange(validCards);
+
+    // 유효한 카드 수 출력
+    Debug.Log("유효한 카드 수: " + validCards.Count);
+
+    // 부족한 부분 -1로 채우기
+    while (savedDeck[selected].Count < 8)
+    {
+        savedDeck[selected].Add(-1);
+    }
+
+    // 최종적으로 저장된 덱 출력
+    Debug.Log("최종 덱 상태: " + string.Join(",", savedDeck[selected]));
 }
+
+
 
      public int ReturnCardCount(int cardId){
       //카드 아이디를 입력하면 현재 해당 카드의 보유량을 리턴해주는 함수
       int returnNum = 0;//초기화
-      for(int i = 0; i < savedDeck.Count; i++){
-        if(savedDeck[i] == cardId){
-          Card targetCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == savedDeck[i]);
+      for(int i = 0; i < havedCardsList.Count; i++){
+        if(havedCardsList[i].ID == cardId){
+          Card targetCard = GameManager.instance.dataManager.havedCardsList[i];
           returnNum = targetCard.COUNT;
         }
       }

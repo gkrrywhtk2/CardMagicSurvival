@@ -16,6 +16,7 @@ public class DeckCard : MonoBehaviour
     public TMP_Text stackText;//중첩 텍스트
     public bool inMyDeck;//현재 나의 카드목록에 올라와있는 덱 카드인가?
     public bool isTouchInfo;//이게 활성화 되어있으면 deckCard 오브젝트가 아닌, 터치시 연출되는 상세 정보 보기 버튼 나오는 toucheddeckCard임
+    public bool inAllCard;//모든 카드 보기 안에 있는 DeckCard일 경우 true
     RectTransform rect;
     public GameObject upArrow;//업그레이드 가능 오브젝트
 
@@ -88,29 +89,46 @@ public class DeckCard : MonoBehaviour
             return;
         if(deckCard.ID == -1)
             return;
-        //Debug.Log("카드 터치");
-       DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
-       infoCard.gameObject.SetActive(true);
-       infoCard.Init(deckCard.ID);
+        Debug.Log("카드 터치");
+
+        if(inAllCard == true){
+            DeckCard touchedCard = GameManager.instance.deckManager.touchedCard[1].GetComponent<DeckCard>();
+            touchedCard.gameObject.SetActive(true);
+            touchedCard.Init(deckCard.ID);
+        }else{
+            DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
+            infoCard.gameObject.SetActive(true);
+            infoCard.Init(deckCard.ID);
+        }
+    
 
         // 카드를 터치했을 때, 해당 카드의 위치를 가져옵니다.
         Vector3 cardPosition = cardSprite.transform.position;
 
         // 버튼을 카드 위치로 이동시키기
         int cardID = deckCard.ID;
-        MoveButtonToPosition(cardPosition, cardID);
+        MoveButtonToPosition(cardPosition, cardID, inAllCard);
         //gameObject.SetActive(false);
      
     }
 
     // 버튼을 카드 위치로 이동시키는 함수
-    private void MoveButtonToPosition(Vector3 targetPosition, int card)
+    private void MoveButtonToPosition(Vector3 targetPosition, int card , bool inallCard)
     {
         targetPosition.y += 175;
         // 카드의 월드 좌표를 버튼의 월드 좌표로 설정
-        DeckCard cardTouched = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
-       //cardTouched.Init(card);
+        if(inallCard == true){
+            DeckCard touchedCard = GameManager.instance.deckManager.touchedCard[1].GetComponent<DeckCard>();
+            touchedCard.transform.position = targetPosition;
+        }else{
+             DeckCard cardTouched = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
         cardTouched.transform.position = targetPosition;
+
+                //모든 카드 보기UI 상에 위치한 터치 카드라면 , 사용,제거 버튼을 사용하지 않음
+                if(cardTouched.GetComponent<TouchedCard>().isCollection == true)
+                return;
+
+
         if(inMyDeck == true){
             //활성 카드라면 제거 버튼 활성화
             cardTouched.GetComponent<TouchedCard>().removeButton.gameObject.SetActive(true);
@@ -120,13 +138,14 @@ public class DeckCard : MonoBehaviour
             cardTouched.GetComponent<TouchedCard>().removeButton.gameObject.SetActive(false);
             cardTouched.GetComponent<TouchedCard>().useButton.gameObject.SetActive(true);
         }
+        }
         
     }
     public void CardInfoUIOn(){
        CardInfoUI cardinfo =  GameManager.instance.boardUI.cardInfoUI;
        cardinfo.gameObject.SetActive(true);
        cardinfo.Init(deckCard);
-       GameManager.instance.deckManager.touchedCard.gameObject.SetActive(false);
+       GameManager.instance.deckManager.TouchedCardSetFalse();
       
     }
     public void Button_RemoveCard(){

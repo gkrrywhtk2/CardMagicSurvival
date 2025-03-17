@@ -140,7 +140,7 @@ public class CardInfoUI : MonoBehaviour
 }
 
 public void OffButton(){
-    GameManager.instance.deckManager.touchedCard.gameObject.SetActive(false); //TouchedCard 비활성화
+     GameManager.instance.deckManager.TouchedCardSetFalse();
     GameManager.instance.boardUI.cardInfoUI.gameObject.SetActive(false);
  
 }
@@ -149,6 +149,7 @@ public void OnButton(){
 }
     public void StackUpgradeButton(){
          Card targetCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == thisCard.ID);
+         int selectedDeckNumber = GameManager.instance.dataManager.selectedSavedDeck;
 
         if(thisCard.STACK >= 10){
             maxWariningText.gameObject.SetActive(true);
@@ -160,7 +161,8 @@ public void OnButton(){
         targetCard.COUNT -= 5;//카드 5개 소진
         targetCard.STACK += 1;//카드 업그레이드
         Init(targetCard);
-        GameManager.instance.deckManager.ShowPlayerDeck();
+        GameManager.instance.deckManager.ShowPlayerDeck();//덱 설정 최신화
+        GameManager.instance.deckManager.ShowAllCards();
         DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
         infoCard.gameObject.SetActive(true);
         infoCard.Init(targetCard.ID);
