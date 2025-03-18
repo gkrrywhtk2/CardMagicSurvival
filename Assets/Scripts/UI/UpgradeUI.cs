@@ -4,7 +4,7 @@ using TMPro;
 public class UpgradeUI : MonoBehaviour
 {
 
-    public enum UpgradeType{ATK, MaxHp, HpRecovery, CriticalDamage, CriticalPer};
+    public enum UpgradeType{ATK, MaxHp, HpRecovery, CriticalPer , CriticalDamage};
     UpgradeType upgradeType;
   [Header("Text_MainName")]
   //다국어 지원용
@@ -33,9 +33,18 @@ public class UpgradeUI : MonoBehaviour
   public TMP_Text HpRecovery_Text_Gold;
   public TMP_Text CriticalDamage_Text_Gold;
   public TMP_Text CriticalPer_Text_Gold;
+  //
+
+  public EffectPooling effectPooling;
+  public RectTransform[] effectIcon; // 🔹 화면 왼쪽 끝에 있는 아이콘 (Inspector에서 설정)
+
+    void Awake()
+    {
+         UpgradeEffectAnim(0);//이펙트 버그 수정용(미리 하나 만들어야 처음부터 이펙트 연출됨)
+    }
 
 
-  public void ATK_Setting(){
+    public void ATK_Setting(){
     DataManager data = GameManager.instance.dataManager;
     int nowLevel = data.level_ATK;
     float desc_Now = nowLevel * 2;
@@ -150,43 +159,67 @@ public class UpgradeUI : MonoBehaviour
 
 
 
-    public void UpgradeButton(int Uptype){
-        upgradeType = (UpgradeType)Uptype;
-        DataManager data = GameManager.instance.dataManager;
-        int requiredGold = GetGoldForLevel(upgradeType);//골드 요구량
+  public void UpgradeButton(int Uptype)
+{
+    upgradeType = (UpgradeType)Uptype;
+    DataManager data = GameManager.instance.dataManager;
+    int requiredGold = GetGoldForLevel(upgradeType); // 골드 요구량
+    int effectPos = 0;
 
-        if(data.goldPoint < requiredGold)
-        return;
+    if (data.goldPoint < requiredGold) return;
+    data.goldPoint -= requiredGold;
 
-        data.goldPoint -= requiredGold;
-
-        switch (upgradeType)
-        {
+    switch (upgradeType)
+    {
         case UpgradeType.ATK:
             GameManager.instance.dataManager.level_ATK += 1;
+            effectPos = 0;
         break;
+
         case UpgradeType.MaxHp:
             GameManager.instance.dataManager.level_Hp += 1;
-             GameManager.instance.player.playerStatus.health += 10;//최대체력 증가량만큼 현재체력 회복
+            GameManager.instance.player.playerStatus.health += 10; // 최대 체력 증가량만큼 현재 체력 회복
+             effectPos = 1;
         break;
+
         case UpgradeType.HpRecovery:
             GameManager.instance.dataManager.level_HpRecovery += 1;
+             effectPos = 2;
         break;
-        case UpgradeType.CriticalDamage:
-            GameManager.instance.dataManager.level_CriticalDamage += 1;
-        break;
+
         case UpgradeType.CriticalPer:
             GameManager.instance.dataManager.level_CriticalPer += 1;
+             effectPos = 3;
         break;
-            default:
-            break;
-        }
-        AllUpgradeSetting();
-        data.ChageToRealValue();//캐릭터stats에 실제로 변경된 값 적용
+
+        case UpgradeType.CriticalDamage:
+            GameManager.instance.dataManager.level_CriticalDamage += 1;
+             effectPos = 4;
+        break;
+
+        default:
+        break;
     }
+
+    UpgradeEffectAnim(effectPos);
+
+    AllUpgradeSetting();
+    data.ChageToRealValue(); // 캐릭터 stats에 실제로 변경된 값 적용
+}
 
     public void OffUpgradeUI(){
       GameManager.instance.boardUI.buttomTapUI.gameObject.SetActive(false);
       gameObject.SetActive(false);
+    }
+
+    public void UpgradeEffectAnim(int index){
+        // 🔹 이펙트 생성
+            RectTransform effect = effectPooling.Get(0).GetComponent<RectTransform>();
+
+            // 1️⃣ 아이콘의 월드 좌표 가져오기
+            Vector3 worldPosition = effectIcon[index].position; 
+
+            // 2️⃣ 이펙트도 월드 좌표로 변경
+            effect.position = worldPosition;
     }
 }
