@@ -194,24 +194,34 @@ for (int i = deck.Count - 1; i > 0; i--)
         PersetDeckButtonSetting();//프리셋 버튼 활성화
     }
 
-    public void PersetDeckButtonSetting(){
-        int deckCount = GameManager.instance.dataManager.getPresetDeckCount;
-        int stack = 0;
+   public void PersetDeckButtonSetting()
+{
+    int deckCount = GameManager.instance.dataManager.getPresetDeckCount;
+    int stack = 0;
 
-        //우선 모든 버튼 잠금
-        for(int index = 0; index < preSet_Deck.Length; index++){
-            preSet_Deck[index].NowLock();
-            
-        }
-        
-        //해금된 버튼 활성화
-        for(int index = 0; index < deckCount; index++){
-             preSet_Deck[index].UnLock();
-             stack++;
-        } 
-         preSet_Deck[stack].CanUnlock();//해금된 버튼 바로 다음 버튼은 구매하여 언락가능하다
-        
+    // 📌 deckCount가 preSet_Deck.Length를 초과하지 않도록 제한
+    deckCount = Mathf.Min(deckCount, preSet_Deck.Length);
+
+    // 우선 모든 버튼 잠금
+    for (int index = 0; index < preSet_Deck.Length; index++)
+    {
+        preSet_Deck[index].NowLock();
     }
+
+    // 해금된 버튼 활성화
+    for (int index = 0; index < deckCount; index++)
+    {
+        preSet_Deck[index].UnLock();
+        stack++;
+    }
+
+    // 📌 stack이 배열 길이를 초과하지 않도록 체크
+    if (stack < preSet_Deck.Length)
+    {
+        preSet_Deck[stack].CanUnlock(); // 다음 버튼을 구매 가능 상태로 변경
+    }
+}
+
 
     public void Click_PresetDeckButton(int touchIndex){
 

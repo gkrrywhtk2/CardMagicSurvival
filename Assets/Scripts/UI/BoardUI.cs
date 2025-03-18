@@ -12,7 +12,9 @@ public class BoardUI : MonoBehaviour
    public TMP_Text[] taps_text;//탭 이름 텍스트
    //
    public GameObject deckSettingUI;//덱 관리 UI 창
-   public GameObject bottomTapUI;//아래 위치하는 탭 UI창, 카드 세팅UI연출시 활성화.
+
+   public UpgradeUI upgradeUI;//덱 관리 UI 창
+   public GameObject buttomTapUI;//아래 위치하는 탭 UI창, 카드 세팅UI연출시 활성화.
    //
    public DeckCard[] deckCardUI;//덱 관리 UI에서 현재 플레이어의 카드 8장
    public CardInfoUI cardInfoUI;
@@ -65,11 +67,18 @@ public void ShowSeletedTap(int tapNum)
     boards[boardId].GetComponent<RectTransform>().anchoredPosition = showPos;
    }
    public void Show_UpgradeBoard(){
+    /**
    Vector3 showPos = new Vector3(0,0,0);
     HideAllBoards();
     UpgradeUI upgradeUI = boards[0].GetComponent<UpgradeUI>();
     upgradeUI.GetComponent<RectTransform>().anchoredPosition = showPos;
     upgradeUI.AllUpgradeSetting();
+    **/
+
+      upgradeUI.gameObject.SetActive(true);
+      upgradeUI.AllUpgradeSetting();
+      buttomTapUI.gameObject.SetActive(true);
+      
    }
    public void Show_WeaponBoard(){
      Vector3 showPos = new Vector3(0,0,0);
@@ -80,13 +89,13 @@ public void ShowSeletedTap(int tapNum)
    }
     public void Show_DeckSettingUI(){
       deckSettingUI.gameObject.SetActive(true);
-      bottomTapUI.gameObject.SetActive(true);
+      buttomTapUI.gameObject.SetActive(true);
        deckCardButtons.gameObject.SetActive(false);//일단 비활성화
      }
 
      public void Hide_DeckSettingUI(){
        deckSettingUI.gameObject.SetActive(false);
-      bottomTapUI.gameObject.SetActive(false);
+      buttomTapUI.gameObject.SetActive(false);
      }
 
      public void DeckCardButtonOff(){

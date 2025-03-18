@@ -184,4 +184,9 @@ public class UpgradeUI : MonoBehaviour
         AllUpgradeSetting();
         data.ChageToRealValue();//캐릭터stats에 실제로 변경된 값 적용
     }
+
+    public void OffUpgradeUI(){
+      GameManager.instance.boardUI.buttomTapUI.gameObject.SetActive(false);
+      gameObject.SetActive(false);
+    }
 }
