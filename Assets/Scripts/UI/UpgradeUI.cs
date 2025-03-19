@@ -4,7 +4,7 @@ using TMPro;
 public class UpgradeUI : MonoBehaviour
 {
 
-    public enum UpgradeType{ATK, MaxHp, HpRecovery, CriticalPer , CriticalDamage};
+    public enum UpgradeType{ATK, MaxHp, HpRecovery, CriticalPer , CriticalDamage, PlayerLevel};
     UpgradeType upgradeType;
   [Header("Text_MainName")]
   //다국어 지원용

@@ -8,6 +8,8 @@ public class DataManager : MonoBehaviour
     public float goldPoint;//현재 플레이어의 골드량
 
     [Header("#Player Info_UpgradeLevel")]
+    public int playerLevel;//플레이어의 레벨
+    public int expPoint;//회복한 경험치량
     public int level_ATK;//공격력 레벨
     public int level_Hp;//최대 체력 레벨
     public int level_HpRecovery;//최력 회복량 레벨

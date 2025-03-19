@@ -25,7 +25,7 @@ public class RandomCardDescPanel : MonoBehaviour
         outline = GetComponent<Outline>();
     }
     public void UISetting(CardData data, int level){
-        playerLvText.text = "현재 레벨 :" + GameManager.instance.player.playerStatus.playLevel.ToString();
+      //  playerLvText.text = "현재 레벨 :" + GameManager.instance.player.playerStatus.playLevel.ToString();
 
         nameText.text = data.cardName;
         newText.gameObject.SetActive(false);
