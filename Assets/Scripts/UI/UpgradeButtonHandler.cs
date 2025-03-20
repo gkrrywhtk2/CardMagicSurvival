@@ -1,9 +1,19 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UpgradeButtonHandler : MonoBehaviour
 {
     public int upgradeType; // Inspector에서 설정 가능
+    DataManager mainData;
+    UpgradeUI upgradeUI;
+    void Awake()
+    {
+        mainData = GameManager.instance.dataManager;
+        upgradeUI = GameManager.instance.boardUI.upgradeUI;
+
+        
+    }
 
     public void OnPointerDown()
     {
@@ -23,13 +33,17 @@ public class UpgradeButtonHandler : MonoBehaviour
     }
     public void PlayerLevelUp()
     {
-        int nowPlayerLevel = GameManager.instance.dataManager.playerLevel;
+        
+        int nowPlayerLevel = mainData.playerLevel;
         int maxEXP = nowPlayerLevel * 1000; // 임시, 필요 경험치 함수
-        int nowEXP = GameManager.instance.dataManager.expPoint;
+        int nowEXP = mainData.expPoint;
 
         if(nowEXP >= maxEXP){
-            GameManager.instance.dataManager.playerLevel++;
-            GameManager.instance.dataManager.expPoint -= maxEXP;
+            mainData.playerLevel++;
+            mainData.expPoint -= maxEXP;
+            mainData.cur_statPoint += 1;//스탯 포인트 1추가
+            upgradeUI.EXPUpdate();
+            upgradeUI.ShowLevelUpAnimation();//반짝 애니메이션
         }else{
             Debug.Log("경험치가 부족합니다");
         }

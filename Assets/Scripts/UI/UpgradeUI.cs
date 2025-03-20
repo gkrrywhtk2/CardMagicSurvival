@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class UpgradeUI : MonoBehaviour
 {
+  public DataManager mainData;
 
     public enum UpgradeType{ATK, MaxHp, HpRecovery, CriticalPer , CriticalDamage, PlayerLevel};
     UpgradeType upgradeType;
@@ -38,11 +41,91 @@ public class UpgradeUI : MonoBehaviour
   public EffectPooling effectPooling;
   public RectTransform[] effectIcon; // 🔹 화면 왼쪽 끝에 있는 아이콘 (Inspector에서 설정)
 
-    void Awake()
-    {
+  // 플레이어 레벨 관련
+    
+     public TMP_Text text_PlayerLevel;
+    public TMP_Text text_expUnderFill;//게이지 위에 있는 경험치 텍스트
+    public TMP_Text text_expPer;//경험치 몇 퍼?
+    public TMP_Text text_statPoint;//잔여 스탯 포인트 TEXT
+      public Slider expBar;
+      public Image playerLevelUpButton;
+      RedDotController redDot;
+      public Animator flashAnim;//레벨업 애니메이션 효과
+      private void Awake() {
+        redDot = GetComponentInChildren<RedDotController>();
          UpgradeEffectAnim(0);//이펙트 버그 수정용(미리 하나 만들어야 처음부터 이펙트 연출됨)
+      }
+
+
+    void FixedUpdate()
+    {
+        //EXPUpdate(); 코루틴으로 변경
     }
 
+  public void EXPUpdate(){
+    int nowPlayerLevel = mainData.playerLevel;
+    int maxEXP = nowPlayerLevel * 1000; // 임시, 필요 경험치 함수
+    int nowEXP = mainData.expPoint;
+
+    expBar.value = (float)nowEXP / maxEXP; // 정수 나눗셈 방지 (float 변환)
+    text_PlayerLevel.text = "LV. " + nowPlayerLevel.ToString();
+    text_expUnderFill.text = nowEXP.ToString() + " / " + maxEXP.ToString();
+    
+    // 🔹 백분율로 변환 & 소수점 1자리까지 표시
+    float percentage = (float)nowEXP / maxEXP * 100;
+    text_expPer.text = Mathf.Min(percentage, 100f).ToString("F1") + "%";
+
+    // 잔여 스탯 포인트 표기
+    text_statPoint.text = "POINT : " + mainData.cur_statPoint.ToString();
+
+    // 레벨업이 가능하면 화이트로, 불가능하면 회색(A2A2A2)로 설정
+    if (nowEXP > maxEXP) // 레벨업이 가능하면
+    {
+        playerLevelUpButton.color = Color.white; // 레벨업 가능 상태
+        redDot.UpdateRedDot(true);
+    }
+    else // 레벨업이 불가능하면
+    {
+        playerLevelUpButton.color = new Color(0xA2 / 255f, 0xA2 / 255f, 0xA2 / 255f); // A2A2A2 색상
+         redDot.UpdateRedDot(false);
+    }
+}
+
+ private Coroutine expUpdateCoroutine;
+    public void ShowLevelUpAnimation(){
+      flashAnim.SetTrigger("Flash");
+    }
+
+    private void OnEnable()
+    {
+        // 이미 코루틴이 실행 중이라면 중복 실행을 방지
+        if (expUpdateCoroutine == null)
+        {
+            expUpdateCoroutine = StartCoroutine(ExpUpdateCoroutine());
+        }
+    }
+
+    private void OnDisable()
+    {
+        // GameObject가 비활성화될 때 코루틴을 중지
+        if (expUpdateCoroutine != null)
+        {
+            StopCoroutine(expUpdateCoroutine);
+            expUpdateCoroutine = null;
+        }
+    }
+
+    private IEnumerator ExpUpdateCoroutine()
+    {
+        while (true)
+        {
+            EXPUpdate();
+            Debug.Log("Updating EXP...");//0.5초 마다 초기화
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+  
 
     public void ATK_Setting(){
     DataManager data = GameManager.instance.dataManager;

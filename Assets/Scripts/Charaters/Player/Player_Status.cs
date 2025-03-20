@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 public class Player_Status : MonoBehaviour
 {
-    public DataManager mainData;
     [Header("#플레이어의 상태값")]
     public bool isLive;
     public float health;//현재 체력
@@ -22,14 +21,10 @@ public class Player_Status : MonoBehaviour
     public float mana;
     public float maxMana = 9;
     public float baseManaRecovery;//기본 마나회복량; 일단 0.5로 세팅하였음 초당 0.5회복
-    public TMP_Text text_PlayerLevel;
-    public TMP_Text text_expUnderFill;//게이지 위에 있는 경험치 텍스트
-    public TMP_Text text_expPer;//경험치 몇 퍼?
     [Header("Bar")]
     public Slider attackBar;
     public Slider hpBar;
     public Slider manaBar;
-    public Slider expBar;
     public TMP_Text manaText;
     public Slider MagicArrow;
 
@@ -38,26 +33,6 @@ public class Player_Status : MonoBehaviour
     public Slider manaBar_UI;
     public TMP_Text nowHpText_UI;
     public TMP_Text nowManaText_UI;
-
-
-    void FixedUpdate()
-    {
-        EXPUpdate();
-    }
-
-  void EXPUpdate(){
-    int nowPlayerLevel = mainData.playerLevel;
-    int maxEXP = nowPlayerLevel * 1000; // 임시, 필요 경험치 함수
-    int nowEXP = mainData.expPoint;
-
-    expBar.value = (float)nowEXP / maxEXP; // 정수 나눗셈 방지 (float 변환)
-    text_PlayerLevel.text = "LV. " + nowPlayerLevel.ToString();
-    text_expUnderFill.text = nowEXP.ToString() + " / " + maxEXP.ToString();
-    
-    // 🔹 백분율로 변환 & 소수점 1자리까지 표시
-    text_expPer.text = ((float)nowEXP / maxEXP * 100).ToString("F1") + "%";
-}
-
 
 
     public void PlayerInit(){
@@ -163,9 +138,6 @@ public void StopHealthRegen()
     //이동속도 변경 관련 로직*****
     public List<float> speedUpEffects = new List<float>(); //이동 속도 증가량 리스트 모음
     private float totalspeedUpMultiplier ; // 기본값0
-
-
-   
 public void AddSpeedUpEffect(float value)
 {
     speedUpEffects.Add(value); // % 단위를 배수로 변환 (ex: 100% -> 1.0f)

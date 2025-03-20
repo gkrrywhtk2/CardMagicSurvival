@@ -6,10 +6,11 @@ public class DataManager : MonoBehaviour
 {
     //백엔드 서버와 이어주는 중간 연결다리
     public float goldPoint;//현재 플레이어의 골드량
+    public float cur_statPoint;//잔여 스택 포인트
 
     [Header("#Player Info_UpgradeLevel")]
     public int playerLevel;//플레이어의 레벨
-    public int expPoint;//회복한 경험치량
+    public int expPoint;//회득한 경험치량
     public int level_ATK;//공격력 레벨
     public int level_Hp;//최대 체력 레벨
     public int level_HpRecovery;//최력 회복량 레벨
@@ -50,6 +51,10 @@ public class DataManager : MonoBehaviour
         level_HpRecovery = 1;
         level_CriticalDamage = 1;
         level_CriticalPer = 1;
+    }
+    public void PlayerLevelSetting(){
+      playerLevel = 1; //임시로 1로 설정
+      cur_statPoint = 1;
     }
 
     public void StageSetting(){
