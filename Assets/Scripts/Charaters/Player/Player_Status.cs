@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class Player_Status : MonoBehaviour
 {
+    public DataManager dataManager;
+    public UpgradeUI upgradeUI;
     [Header("#플레이어의 상태값")]
     public bool isLive;
     public float health;//현재 체력
@@ -219,25 +221,55 @@ private void UpdateTotalManaRecoveryMultiplier()
 
 
 
-  public float DamageReturn(float skillPower, out bool isCritical)
-{
-    // 캐릭터의 공격력 가져오기
-    float ATK = GameManager.instance.player.playerStatus.ATK;
+    public float DamageReturn(float skillPower, out bool isCritical)
+    {
+        // 랜덤 오프셋 적용 (-5% ~ +5% 변동)
+        float randomOffset = Random.Range(GetTotalATK() * -0.05f, GetTotalATK() * 0.05f);
 
-    // 랜덤 오프셋 적용 (-5% ~ +5% 변동)
-    float randomOffset = Random.Range(ATK * -0.05f, ATK * 0.05f);
+        // 기본 데미지 계산
+        float basicDamage = (GetTotalATK() + randomOffset) * (skillPower / 100f);
 
-    // 기본 데미지 계산
-    float Damage_one = (ATK + randomOffset) * (skillPower / 100f);
+        // 치명타 확률 계산 (totalCriticalMultiplier 포함)
+        isCritical = CriticalReturn();
 
-    // 치명타 확률 계산 (totalCriticalMultiplier 포함)
-    isCritical = CriticalReturn();
+        // 최종 데미지 계산 (치명타 적용)
+        float finalDamage = isCritical ? basicDamage * (GetTotalCriDamage() / 100f) : basicDamage;
 
-    // 최종 데미지 계산 (치명타 적용)
-    float finalDamage = isCritical ? Damage_one * (CriticalDamagePer / 100f) : Damage_one;
+        return finalDamage;
+    }
 
-    return finalDamage;
-}
+  // 총 공격력 계산
+    public float GetTotalATK()
+    {
+        // 기본 성장ATK 및 훈련ATK 계산
+        float totalATK = (dataManager.mainData.atk * 2) + (dataManager.traningData.atk * 5);
+        Debug.Log("ToTalATK = " + totalATK);
+
+        // 무기 장착 효과 및 보유 효과를 한 번만 계산하여 저장
+        float equipWeaponEffectValue = GameManager.instance.weaponManager.ReturnEquipEffect();
+        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedEffect();
+
+        // 무기 효과 값 계산
+        float finalWeaponEffectValue = equipWeaponEffectValue + ownedWeaponEffectValue;
+
+        // 최종 공격력에 적용
+        totalATK *= (1 + (finalWeaponEffectValue / 100f)); // 백분율로 변환하여 적용
+        Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
+        Debug.Log("ToTalATK + WeaponValue= " + totalATK);
+        return totalATK;
+    }
+    public float GetTotalCriPer(){
+        float totalCriPer = upgradeUI.CriticalPer_Setting();
+         totalCriPer = totalCriPer + totalCriticalMultiplier;
+         Debug.Log("ToTalCri" + totalCriPer);
+        return totalCriPer;
+    }
+    public float GetTotalCriDamage(){
+         float totalCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
+         Debug.Log("TotalCriDamage" + totalCriDamage);
+         return totalCriDamage;
+    }
+
 
 
     //추가 치명타 확률 로직 ***********************//
@@ -247,8 +279,7 @@ private void UpdateTotalManaRecoveryMultiplier()
     public bool CriticalReturn()
     {
         // 치명타 확률 계산 (기본 확률 + 추가 확률)
-        float finalCriticalChance = CriticalPer + totalCriticalMultiplier;
-        return Random.Range(0f, 100f) < finalCriticalChance;
+        return Random.Range(0f, 100f) < GetTotalCriPer();
     }
 
     // 치명타 확률 증가 효과 추가

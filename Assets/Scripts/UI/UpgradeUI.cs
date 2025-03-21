@@ -88,7 +88,7 @@ public class UpgradeUI : MonoBehaviour
   public void EXPUpdate(){
     int nowPlayerLevel = mainData.traningData.level;
     int maxEXP = nowPlayerLevel * 1000; // 임시, 필요 경험치 함수
-    int nowEXP = mainData.expPoint;
+    int nowEXP = mainData.traningData.expPoint;
 
     expBar.value = (float)nowEXP / maxEXP; // 정수 나눗셈 방지 (float 변환)
     text_PlayerLevel.text = "LV. " + nowPlayerLevel.ToString();
@@ -152,7 +152,7 @@ public class UpgradeUI : MonoBehaviour
 
     public void ATK_Setting(){
     DataManager data = GameManager.instance.dataManager;
-    int nowLevel = data.level_ATK;
+    int nowLevel = data.mainData.atk;
     float desc_Now = nowLevel * 2;
     float desc_After = (nowLevel + 1) * 2;
 
@@ -164,7 +164,7 @@ public class UpgradeUI : MonoBehaviour
 
    public void MaxHp_Setting(){
     DataManager data = GameManager.instance.dataManager;
-    int nowLevel = data.level_Hp;
+    int nowLevel = data.mainData.hp;
     float desc_Now = 100 + (nowLevel * 10);
     float desc_After = 100 + ((nowLevel + 1) * 10);
 
@@ -176,7 +176,7 @@ public class UpgradeUI : MonoBehaviour
 
   public void HpRecovery_Setting(){
     DataManager data = GameManager.instance.dataManager;
-    int nowLevel = data.level_HpRecovery;
+    int nowLevel = data.mainData.hpRecovery;
     float desc_Now = nowLevel * 0.1f;
     float desc_After = (nowLevel + 1) * 0.1f;
 
@@ -185,9 +185,9 @@ public class UpgradeUI : MonoBehaviour
     HpRecovery_Text_Desc.text = desc_Now + "%" + "->" + desc_After + "%/sec";
     HpRecovery_Text_Gold.text = GetGoldForLevel(UpgradeType.HpRecovery).ToString();
   }
-  public void CriticalDamage_Setting(){
+  public float CriticalDamage_Setting(){
     DataManager data = GameManager.instance.dataManager;
-    int nowLevel = data.level_CriticalDamage;
+    int nowLevel = data.mainData.criticalDamage;
     float desc_Now = nowLevel;
     float desc_After = nowLevel+ 1;
 
@@ -195,10 +195,11 @@ public class UpgradeUI : MonoBehaviour
     CriticalDamage_Text_level.text = "Lv." + nowLevel;
     CriticalDamage_Text_Desc.text = desc_Now + "%" + "->" + desc_After + "%";
     CriticalDamage_Text_Gold.text = GetGoldForLevel(UpgradeType.CriticalDamage).ToString();
+    return desc_Now;
   }
- public void CriticalPer_Setting(){
+ public float CriticalPer_Setting(){
     DataManager data = GameManager.instance.dataManager;
-    int nowLevel = data.level_CriticalPer;
+    int nowLevel = data.mainData.criticalPer;
     float desc_Now = nowLevel * 0.1f;
     float desc_After = (nowLevel+ 1) * 0.1f;
 
@@ -206,6 +207,7 @@ public class UpgradeUI : MonoBehaviour
     CriticalPer_Text_level.text = "Lv." + nowLevel;
     CriticalPer_Text_Desc.text = desc_Now + "%" + "->" + desc_After + "%";
     CriticalPer_Text_Gold.text = GetGoldForLevel(UpgradeType.CriticalPer).ToString();
+    return desc_Now;
   }
 
   //훈련 스탯 세팅 함수
@@ -237,7 +239,7 @@ public class UpgradeUI : MonoBehaviour
     traning_VIT_Level.text = "Lv." + nowLevel;
     traning_VIT_Desc.text = "체력 회복량 " + "+" + desc_Now + "-> " + "+" + desc_After;
   }
-  public void Traning_CRI_Setting(){
+  public float Traning_CRI_Setting(){
     int nowLevel = mainData.traningData.cri;
     float desc_Now = nowLevel * 3;
     float desc_After = (nowLevel + 1) * 3;
@@ -245,6 +247,7 @@ public class UpgradeUI : MonoBehaviour
     //text setting
     traning_CRI_Level.text = "Lv." + nowLevel;
     traning_CRI_Desc.text = "치명타 공격력 " + "+" + desc_Now + "%" + " -> " + "+" + desc_After + "%";
+    return desc_Now;
   }
    public void Traning_LUK_Setting(){
     int nowLevel = mainData.traningData.luk;
@@ -299,23 +302,23 @@ public class UpgradeUI : MonoBehaviour
 
         switch(type){
             case UpgradeType.ATK:
-            level = data.level_ATK;
+            level = data.mainData.atk;
             d = 2;
             break;
             case UpgradeType.MaxHp:
-            level = data.level_Hp;
+            level = data.mainData.hp;
             d = 2;
             break;
             case UpgradeType.HpRecovery:
-            level = data.level_HpRecovery;
+            level = data.mainData.hpRecovery;
             d = 2;
             break;
             case UpgradeType.CriticalDamage:
-            level = data.level_CriticalDamage;
+            level = data.mainData.criticalDamage;
             d = 2;
             break;
             case UpgradeType.CriticalPer:
-            level = data.level_CriticalPer;
+            level = data.mainData.criticalPer;
             d = 2;
             break;
             default:
@@ -346,34 +349,37 @@ public class UpgradeUI : MonoBehaviour
     int requiredGold = GetGoldForLevel(upgradeType); // 골드 요구량
     int effectPos = 0;
 
-    if (data.goldPoint < requiredGold) return;
+    if (data.goldPoint < requiredGold){
+      GameManager.instance.WarningText("골드가 부족합니다");
+      return;
+    } 
     data.goldPoint -= requiredGold;
 
     switch (upgradeType)
     {
         case UpgradeType.ATK:
-            GameManager.instance.dataManager.level_ATK += 1;
+            GameManager.instance.dataManager.mainData.atk += 1;
             effectPos = 0;
         break;
 
         case UpgradeType.MaxHp:
-            GameManager.instance.dataManager.level_Hp += 1;
+            GameManager.instance.dataManager.mainData.hp += 1;
             GameManager.instance.player.playerStatus.health += 10; // 최대 체력 증가량만큼 현재 체력 회복
              effectPos = 1;
         break;
 
         case UpgradeType.HpRecovery:
-            GameManager.instance.dataManager.level_HpRecovery += 1;
+            GameManager.instance.dataManager.mainData.hpRecovery += 1;
              effectPos = 2;
         break;
 
         case UpgradeType.CriticalPer:
-            GameManager.instance.dataManager.level_CriticalPer += 1;
+            GameManager.instance.dataManager.mainData.criticalPer += 1;
              effectPos = 3;
         break;
 
         case UpgradeType.CriticalDamage:
-            GameManager.instance.dataManager.level_CriticalDamage += 1;
+            GameManager.instance.dataManager.mainData.criticalDamage += 1;
              effectPos = 4;
         break;
 
@@ -384,7 +390,7 @@ public class UpgradeUI : MonoBehaviour
     UpgradeEffectAnim(effectPos);
 
     AllUpgradeSetting();
-    data.ChageToRealValue(); // 캐릭터 stats에 실제로 변경된 값 적용
+    //data.ChageToRealValue(); // 캐릭터 stats에 실제로 변경된 값 적용
 }
 
     public void OffUpgradeUI(){
@@ -423,7 +429,8 @@ public class UpgradeUI : MonoBehaviour
       int traningStatPoint = mainData.traningData.point;
 
       if (traningStatPoint < 1){//필요 포인트량 1
-        Debug.Log("잔여 포인트가 부족합니다!");
+        //Debug.Log("잔여 포인트가 부족합니다!");
+        GameManager.instance.WarningText("잔여포인트가 부족합니다");
         return;
       }
         switch (traningType)

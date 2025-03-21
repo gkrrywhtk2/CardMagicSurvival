@@ -245,7 +245,7 @@ public void CallHitStop(){
         nowHit = true; 
         coll.isTrigger = true;
         anim.SetBool("Dead", true);
-        GameManager.instance.dataManager.expPoint += 103;
+        GameManager.instance.dataManager.traningData.expPoint += 103;
     }
    public void Deletemob(){
     switch(mobType){

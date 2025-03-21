@@ -36,16 +36,16 @@ public class UpgradeButtonHandler : MonoBehaviour
         
         int nowPlayerLevel = mainData.traningData.level;
         int maxEXP = nowPlayerLevel * 1000; // 임시, 필요 경험치 함수
-        int nowEXP = mainData.expPoint;
+        int nowEXP = mainData.traningData.expPoint;
 
         if(nowEXP >= maxEXP){
             mainData.traningData.level++;
-            mainData.expPoint -= maxEXP;
+            mainData.traningData.expPoint -= maxEXP;
             mainData.traningData.point += 1;//스탯 포인트 1추가
             upgradeUI.EXPUpdate();
             upgradeUI.ShowLevelUpAnimation();//반짝 애니메이션
         }else{
-            Debug.Log("경험치가 부족합니다");
+            GameManager.instance.WarningText("경험치가 부족합니다");
         }
     }
 

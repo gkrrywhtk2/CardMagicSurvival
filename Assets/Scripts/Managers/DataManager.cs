@@ -9,14 +9,9 @@ public class DataManager : MonoBehaviour
 
 
     [Header("#Player Info_UpgradeLevel")]
-    public int expPoint;//회득한 경험치량
-    public int level_ATK;//공격력 레벨
-    public int level_Hp;//최대 체력 레벨
-    public int level_HpRecovery;//최력 회복량 레벨
-    public int level_CriticalDamage;//치명타 배율 레벨
-    public int level_CriticalPer;//치명타 확률 레벨
     //훈련 스탯
     public Traning_PlayerStatData traningData;
+    public Main_PlayerStatData mainData;
 
     
     [Header("#Stage Info")]
@@ -37,28 +32,27 @@ public class DataManager : MonoBehaviour
 
     private void Awake() {
         //임시로 레벨 세팅
-        UpgradeLevelSetting();
+
         StageSetting();
         UpgradePostionCountSetting(1000);
         SettingPlayerStatData_Traning();
+        SettingPlayerMainData();
     }
     public void Start()
     {
          HavedDeckSetting();
          SavedDeckSetting();
+         SyncStageLevelFromServer();
+         SyncWeaponData();
     }
 
-    public void UpgradeLevelSetting(){
-        //게임이 시작될때 저장되어있던 param값을 받아서 UpgradeLevel을 세팅한다.
-        level_ATK = 1;
-        level_Hp = 1;
-        level_HpRecovery = 1;
-        level_CriticalDamage = 1;
-        level_CriticalPer = 1;
-    }
+   
     public void SettingPlayerStatData_Traning(){
       traningData = new Traning_PlayerStatData();//훈련 스탯 우선 0으로 전부 초기화 
       traningData.level = 1;//레벨은 1로 고정
+    }
+     public void SettingPlayerMainData(){
+      mainData = new Main_PlayerStatData();//훈련 스탯 우선 0으로 전부 초기화 
     }
 
 
@@ -148,6 +142,7 @@ public void ReorderSavedDeck(int selected)
       return returnNum;
      }
 
+/**
     public void ChageToRealValue(){
         //Upgrade 레벨을 받아서 실제 플레이어에게 적용되는 값으로 바꿔주는 함수.
         
@@ -175,6 +170,8 @@ public void ReorderSavedDeck(int selected)
         player.CriticalPer = real_criticalPer;
 
     }
+    **/
+
     public void SyncStageLevelFromServer()
 {
     // 데이터 매니저에서 받은 스테이지 레벨을 실제 스테이지 매니저에 적용
@@ -271,4 +268,15 @@ public class Traning_PlayerStatData
     public int mrp;
     public int dcd;
     public int point;
+    public int expPoint;
+}
+
+[System.Serializable]
+public class Main_PlayerStatData
+{
+    public int atk;//공격력 레벨
+    public int hp;//최대 체력 레벨
+    public int hpRecovery;//최력 회복량 레벨
+    public int criticalDamage;//치명타 배율 레벨
+    public int criticalPer;//치명타 확률 레벨
 }

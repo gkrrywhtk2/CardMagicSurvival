@@ -275,7 +275,7 @@ public class WeaponManager : MonoBehaviour
 
          GameManager.instance.dataManager.weaponList = data_VarLoad;//변경된 값 데이터 메니저에 적용
         WeaponIconButton_UISetting(weaponId);//적용된 값 UI 변경
-        GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
+       // GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
         
     }
 
@@ -307,7 +307,7 @@ public class WeaponManager : MonoBehaviour
         }
         GameManager.instance.dataManager.weaponList = data_VarLoad;//변경된 값 리스트에 적용
         WeaponIconButton_UISetting(weaponId);//적용된 값 UI 변경
-        GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
+      //  GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
 
     }
    
@@ -337,7 +337,7 @@ public class WeaponManager : MonoBehaviour
 
         GameManager.instance.dataManager.weaponList = data_VarLoad;//변경된 값 데이터 메니저에 적용
         WeaponIconButton_UISetting(weaponId);//적용된 값 UI 변경
-        GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
+      //  GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
 
     }
 

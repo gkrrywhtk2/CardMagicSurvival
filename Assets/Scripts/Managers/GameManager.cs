@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public GameObject backG;//background image
     public FloatingJoystick joystick;//조이스틱
     public PixelPerfectCamera pixelPerfectCamera;
+    public WarningUI warningUI;
 
     public bool night;
 
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
          instance.player.playerStatus.PlayerInit();
          //instance.boardUI.ShowSeletedTap(2);//2는 카드 탭 세팅,삭제 예정
          
-         LinkToData();//데이터 불러오기
+        // LinkToData();//데이터 불러오기
     }
 
     public void GameRestart(){
@@ -126,10 +127,10 @@ public class GameManager : MonoBehaviour
         //DataManager에 접근하여 현재 상태를 불러옴
         instance.dataManager.SyncStageLevelFromServer();
         instance.dataManager.SyncWeaponData();
-
-
-
-          instance.dataManager.ChageToRealValue();//마지막에 있어야 함! 무기 효과 적용 받아야됨
+    }
+    public void WarningText(string warn){
+        warningUI.gameObject.SetActive(true);
+        warningUI.text.text = warn;
     }
 
 }
