@@ -40,6 +40,29 @@ public class UpgradeUI : MonoBehaviour
 
   public EffectPooling effectPooling;
   public RectTransform[] effectIcon; // 🔹 화면 왼쪽 끝에 있는 아이콘 (Inspector에서 설정)
+   public RectTransform[] traning_EffectIcon; // 🔹 화면 왼쪽 끝에 있는 아이콘 (Inspector에서 설정)
+
+
+  //훈련 스탯 관련
+    public enum TraningType{ATK, HP, VIT, CRI , LUK, MRP, DCD};
+        TraningType traningType;
+    [Header("TraningStat")]
+    
+    public TMP_Text traning_ATK_Level;//훈련 ATK 레벨
+    public TMP_Text traning_ATK_Desc;//
+    public TMP_Text traning_HP_Level;//
+    public TMP_Text traning_HP_Desc;//훈련 Desc
+    public TMP_Text traning_VIT_Level;//
+    public TMP_Text traning_VIT_Desc;//훈련 Desc
+    public TMP_Text traning_CRI_Level;//
+    public TMP_Text traning_CRI_Desc;//훈련 Desc
+    public TMP_Text traning_LUK_Level;//
+    public TMP_Text traning_LUK_Desc;//훈련 Desc
+    public TMP_Text traning_MRP_Level;//
+    public TMP_Text traning_MRP_Desc;//훈련 Desc
+    public TMP_Text traning_DCD_Level;//
+    public TMP_Text traning_DCD_Desc;//훈련 Desc
+
 
   // 플레이어 레벨 관련
     
@@ -63,7 +86,7 @@ public class UpgradeUI : MonoBehaviour
     }
 
   public void EXPUpdate(){
-    int nowPlayerLevel = mainData.playerLevel;
+    int nowPlayerLevel = mainData.traningData.level;
     int maxEXP = nowPlayerLevel * 1000; // 임시, 필요 경험치 함수
     int nowEXP = mainData.expPoint;
 
@@ -76,7 +99,7 @@ public class UpgradeUI : MonoBehaviour
     text_expPer.text = Mathf.Min(percentage, 100f).ToString("F1") + "%";
 
     // 잔여 스탯 포인트 표기
-    text_statPoint.text = "POINT : " + mainData.cur_statPoint.ToString();
+    text_statPoint.text = "POINT : " + mainData.traningData.point.ToString();
 
     // 레벨업이 가능하면 화이트로, 불가능하면 회색(A2A2A2)로 설정
     if (nowEXP > maxEXP) // 레벨업이 가능하면
@@ -87,7 +110,7 @@ public class UpgradeUI : MonoBehaviour
     else // 레벨업이 불가능하면
     {
         playerLevelUpButton.color = new Color(0xA2 / 255f, 0xA2 / 255f, 0xA2 / 255f); // A2A2A2 색상
-         redDot.UpdateRedDot(false);
+        redDot.UpdateRedDot(false);
     }
 }
 
@@ -185,6 +208,72 @@ public class UpgradeUI : MonoBehaviour
     CriticalPer_Text_Gold.text = GetGoldForLevel(UpgradeType.CriticalPer).ToString();
   }
 
+  //훈련 스탯 세팅 함수
+    public void Traning_ATK_Setting(){
+    int nowLevel = mainData.traningData.atk;
+    float desc_Now = nowLevel * 5;
+    float desc_After = (nowLevel + 1) * 5;
+
+    //text setting
+    traning_ATK_Level.text = "Lv." + nowLevel;
+    traning_ATK_Desc.text = "공격력 " + "+" + desc_Now + "-> " + "+" + desc_After;
+  }
+
+  public void Traning_HP_Setting(){
+    int nowLevel = mainData.traningData.hp;
+    float desc_Now = nowLevel * 30;
+    float desc_After = (nowLevel + 1) * 30;
+
+    //text setting
+    traning_HP_Level.text = "Lv." + nowLevel;
+    traning_HP_Desc.text = "체력 " + "+" + desc_Now + "-> " + "+" + desc_After;
+  }
+  public void Traning_VIT_Setting(){
+    int nowLevel = mainData.traningData.vit;
+    float desc_Now = nowLevel * 5;
+    float desc_After = (nowLevel + 1) * 5;
+
+    //text setting
+    traning_VIT_Level.text = "Lv." + nowLevel;
+    traning_VIT_Desc.text = "체력 회복량 " + "+" + desc_Now + "-> " + "+" + desc_After;
+  }
+  public void Traning_CRI_Setting(){
+    int nowLevel = mainData.traningData.cri;
+    float desc_Now = nowLevel * 3;
+    float desc_After = (nowLevel + 1) * 3;
+
+    //text setting
+    traning_CRI_Level.text = "Lv." + nowLevel;
+    traning_CRI_Desc.text = "치명타 공격력 " + "+" + desc_Now + "%" + " -> " + "+" + desc_After + "%";
+  }
+   public void Traning_LUK_Setting(){
+    int nowLevel = mainData.traningData.luk;
+    float desc_Now = nowLevel * 0.5f;
+    float desc_After = (nowLevel + 1) * 0.5f;
+
+    //text setting
+    traning_LUK_Level.text = "Lv." + nowLevel;
+    traning_LUK_Desc.text = "골드 추가 획득량 " + "+" + desc_Now + "%" + " -> " + "+" + desc_After + "%";
+  }
+  public void Traning_MRP_Setting(){
+    int nowLevel = mainData.traningData.mrp;
+    float desc_Now = nowLevel * 0.1f;
+    float desc_After = (nowLevel + 1) * 0.1f;
+
+    //text setting
+    traning_MRP_Level.text = "Lv." + nowLevel;
+    traning_MRP_Desc.text = "마나 추가 회복량 " + "+" + desc_Now + "%" + " -> " + "+" + desc_After + "%";
+  }
+   public void Traning_DCD_Setting(){
+    int nowLevel = mainData.traningData.dcd;
+    float desc_Now = nowLevel * 0.01f;
+    float desc_After = (nowLevel + 1) * 0.01f;
+
+    //text setting
+    traning_DCD_Level.text = "Lv." + nowLevel;
+    traning_DCD_Desc.text = "카드 뽑기 대기시간 " + "-" + desc_Now + "s" + " -> " + "-" + desc_After + "s";
+  }
+
   public void AllUpgradeSetting(){
     //모든 능력치 세팅 한번에 모아둔 함수
     ATK_Setting();
@@ -192,6 +281,14 @@ public class UpgradeUI : MonoBehaviour
     HpRecovery_Setting();
     CriticalDamage_Setting();
     CriticalPer_Setting();
+    //훈련 스탯
+    Traning_ATK_Setting();
+    Traning_HP_Setting();
+    Traning_VIT_Setting();
+    Traning_CRI_Setting();
+    Traning_LUK_Setting();
+    Traning_MRP_Setting();
+    Traning_DCD_Setting();
   }
     public static int GetGoldForLevel(UpgradeType type)
     {
@@ -295,6 +392,8 @@ public class UpgradeUI : MonoBehaviour
       gameObject.SetActive(false);
     }
 
+    
+
     public void UpgradeEffectAnim(int index){
         // 🔹 이펙트 생성
             RectTransform effect = effectPooling.Get(0).GetComponent<RectTransform>();
@@ -305,4 +404,71 @@ public class UpgradeUI : MonoBehaviour
             // 2️⃣ 이펙트도 월드 좌표로 변경
             effect.position = worldPosition;
     }
+
+     public void Training_UpgradeEffectAnim(int index){
+        // 🔹 이펙트 생성
+            RectTransform effect = effectPooling.Get(1).GetComponent<RectTransform>();
+
+            // 1️⃣ 아이콘의 월드 좌표 가져오기
+            Vector3 worldPosition = traning_EffectIcon[index].position; 
+
+            // 2️⃣ 이펙트도 월드 좌표로 변경
+            effect.position = worldPosition;
+    }
+
+      public void Traning_UpgradeButton(int Type)
+  {
+      traningType = (TraningType)Type;//컴포넌트에서 설정한 int값을 TraningType으로 변환
+      int effectPos = 0;
+      int traningStatPoint = mainData.traningData.point;
+
+      if (traningStatPoint < 1){//필요 포인트량 1
+        Debug.Log("잔여 포인트가 부족합니다!");
+        return;
+      }
+        switch (traningType)
+        {
+            case TraningType.ATK:
+                mainData.traningData.atk++;
+                effectPos = 0;
+            break;
+
+            case TraningType.HP:
+                mainData.traningData.hp++;
+                GameManager.instance.player.playerStatus.health += 5; // 최대 체력 증가량만큼 현재 체력 회복
+                effectPos = 1;
+            break;
+
+            case TraningType.VIT:
+                mainData.traningData.vit++;
+                effectPos = 2;
+            break;
+
+            case TraningType.CRI:
+              mainData.traningData.cri++;
+                effectPos = 3;
+            break;
+
+            case TraningType.LUK:
+                mainData.traningData.luk++;
+                effectPos = 4;
+            break;
+
+            case TraningType.MRP:
+              mainData.traningData.mrp++;
+                effectPos = 5;
+            break;
+
+            case TraningType.DCD:
+                mainData.traningData.dcd++;
+                effectPos = 6;
+            break;
+
+            default:
+            break;
+        }
+      mainData.traningData.point--; //포인트 감소
+      Training_UpgradeEffectAnim(effectPos);
+      AllUpgradeSetting();
+  }
 }

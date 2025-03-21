@@ -34,14 +34,14 @@ public class UpgradeButtonHandler : MonoBehaviour
     public void PlayerLevelUp()
     {
         
-        int nowPlayerLevel = mainData.playerLevel;
+        int nowPlayerLevel = mainData.traningData.level;
         int maxEXP = nowPlayerLevel * 1000; // 임시, 필요 경험치 함수
         int nowEXP = mainData.expPoint;
 
         if(nowEXP >= maxEXP){
-            mainData.playerLevel++;
+            mainData.traningData.level++;
             mainData.expPoint -= maxEXP;
-            mainData.cur_statPoint += 1;//스탯 포인트 1추가
+            mainData.traningData.point += 1;//스탯 포인트 1추가
             upgradeUI.EXPUpdate();
             upgradeUI.ShowLevelUpAnimation();//반짝 애니메이션
         }else{

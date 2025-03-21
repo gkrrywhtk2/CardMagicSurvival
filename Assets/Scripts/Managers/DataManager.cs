@@ -6,16 +6,19 @@ public class DataManager : MonoBehaviour
 {
     //백엔드 서버와 이어주는 중간 연결다리
     public float goldPoint;//현재 플레이어의 골드량
-    public float cur_statPoint;//잔여 스택 포인트
+
 
     [Header("#Player Info_UpgradeLevel")]
-    public int playerLevel;//플레이어의 레벨
     public int expPoint;//회득한 경험치량
     public int level_ATK;//공격력 레벨
     public int level_Hp;//최대 체력 레벨
     public int level_HpRecovery;//최력 회복량 레벨
     public int level_CriticalDamage;//치명타 배율 레벨
     public int level_CriticalPer;//치명타 확률 레벨
+    //훈련 스탯
+    public Traning_PlayerStatData traningData;
+
+    
     [Header("#Stage Info")]
     public int stageProgressLevel;//저장된 스테이지 레벨
 
@@ -37,6 +40,7 @@ public class DataManager : MonoBehaviour
         UpgradeLevelSetting();
         StageSetting();
         UpgradePostionCountSetting(1000);
+        SettingPlayerStatData_Traning();
     }
     public void Start()
     {
@@ -52,10 +56,11 @@ public class DataManager : MonoBehaviour
         level_CriticalDamage = 1;
         level_CriticalPer = 1;
     }
-    public void PlayerLevelSetting(){
-      playerLevel = 1; //임시로 1로 설정
-      cur_statPoint = 1;
+    public void SettingPlayerStatData_Traning(){
+      traningData = new Traning_PlayerStatData();//훈련 스탯 우선 0으로 전부 초기화 
+      traningData.level = 1;//레벨은 1로 고정
     }
+
 
     public void StageSetting(){
         stageProgressLevel = 1;//저장된 스테이지 레벨
@@ -252,4 +257,18 @@ public class Weapon
         this.weaponCount = weaponCount;
         this.isAcquired = isAcquired;
     }
+}
+
+[System.Serializable]
+public class Traning_PlayerStatData
+{
+    public int level;
+    public int atk;
+    public int hp;
+    public int vit;
+    public int cri;
+    public int luk;
+    public int mrp;
+    public int dcd;
+    public int point;
 }
