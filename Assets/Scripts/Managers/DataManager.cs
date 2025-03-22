@@ -276,7 +276,7 @@ public class Main_PlayerStatData
 {
     public int atk;//공격력 레벨
     public int hp;//최대 체력 레벨
-    public int hpRecovery;//최력 회복량 레벨
+    public int vit;//최력 회복량 레벨
     public int criticalDamage;//치명타 배율 레벨
     public int criticalPer;//치명타 확률 레벨
 }

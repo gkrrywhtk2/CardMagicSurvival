@@ -40,25 +40,18 @@ public class Player_Status : MonoBehaviour
     public void PlayerInit(){
         //게임 시작시 플레이어 변수 초기화
         isLive = true;
+        GetMaxHealth();
         health = maxHealth;
         StartHealthRegen();
     }
     private void HpBarUpdate()
     {
+            // 체력 바 갱신
         hpBar.value = health / maxHealth;
         hpBar_UI.value = hpBar.value;
 
-        // 🔹 체력을 소수점 1자리까지 표시
-        nowHpText_UI.text = health.ToString("F1");
-
-        if (health < maxHealth)
-            return;
-
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-            return;
-        }
+        // 🔹 체력을 자연수로 표시
+        nowHpText_UI.text = Mathf.FloorToInt(health).ToString();
     }
 
     
@@ -110,9 +103,9 @@ public class Player_Status : MonoBehaviour
          // 일시정지 상태일 경우, 대기 (코루틴이 종료되지 않도록 함)
        yield return new WaitUntil(() => GameManager.instance.GamePlayState == true);
 
-       float recoveryAmount = maxHealth * (healthRecoveryPer * 0.01f);
+       float recoveryAmount = upgradeUI.HpRecovery_Setting() + upgradeUI.Traning_VIT_Setting();
         health = Mathf.Min(health + recoveryAmount, maxHealth);
-   // Debug.Log("gasdasfasf");
+       Debug.Log("Heal : " + recoveryAmount);
         yield return new WaitForSeconds(1f); // 1초 대기 후 반복
     }
 }
@@ -233,8 +226,8 @@ private void UpdateTotalManaRecoveryMultiplier()
         isCritical = CriticalReturn();
 
         // 최종 데미지 계산 (치명타 적용)
-        float finalDamage = isCritical ? basicDamage * (GetTotalCriDamage() / 100f) : basicDamage;
-
+        float finalDamage = isCritical ? basicDamage + (basicDamage * (GetTotalCriDamage() / 100f)) : basicDamage;
+        //Debug.Log("CriticalDamage :" + GetTotalCriDamage());
         return finalDamage;
     }
 
@@ -243,7 +236,7 @@ private void UpdateTotalManaRecoveryMultiplier()
     {
         // 기본 성장ATK 및 훈련ATK 계산
         float totalATK = (dataManager.mainData.atk * 2) + (dataManager.traningData.atk * 5);
-        Debug.Log("ToTalATK = " + totalATK);
+        //Debug.Log("ToTalATK = " + totalATK);
 
         // 무기 장착 효과 및 보유 효과를 한 번만 계산하여 저장
         float equipWeaponEffectValue = GameManager.instance.weaponManager.ReturnEquipEffect();
@@ -254,19 +247,13 @@ private void UpdateTotalManaRecoveryMultiplier()
 
         // 최종 공격력에 적용
         totalATK *= (1 + (finalWeaponEffectValue / 100f)); // 백분율로 변환하여 적용
-        Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
-        Debug.Log("ToTalATK + WeaponValue= " + totalATK);
+       // Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
+      //  Debug.Log("ToTalATK + WeaponValue= " + totalATK);
         return totalATK;
-    }
-    public float GetTotalCriPer(){
-        float totalCriPer = upgradeUI.CriticalPer_Setting();
-         totalCriPer = totalCriPer + totalCriticalMultiplier;
-         Debug.Log("ToTalCri" + totalCriPer);
-        return totalCriPer;
     }
     public float GetTotalCriDamage(){
          float totalCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
-         Debug.Log("TotalCriDamage" + totalCriDamage);
+         //Debug.Log("TotalCriDamage" + totalCriDamage);
          return totalCriDamage;
     }
 
@@ -278,8 +265,11 @@ private void UpdateTotalManaRecoveryMultiplier()
 
     public bool CriticalReturn()
     {
+        float totalCriPer = upgradeUI.CriticalPer_Setting();
+        totalCriPer = totalCriPer + totalCriticalMultiplier;
+    
         // 치명타 확률 계산 (기본 확률 + 추가 확률)
-        return Random.Range(0f, 100f) < GetTotalCriPer();
+        return Random.Range(0f, 100f) < totalCriPer;
     }
 
     // 치명타 확률 증가 효과 추가
@@ -310,5 +300,13 @@ private void UpdateTotalManaRecoveryMultiplier()
     }
 
     //치명타 로직 종료*****************
+
+    public void GetMaxHealth(){
+        maxHealth = 100 + upgradeUI.MaxHp_Setting() + upgradeUI.Traning_HP_Setting();
+    }
+    public int ReturnCoinValue(float value){
+        value =  value + (value * (upgradeUI.Traning_LUK_Setting()/ 100));
+        return (int)value;
+    }
 
 }

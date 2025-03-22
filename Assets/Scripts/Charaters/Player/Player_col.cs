@@ -8,6 +8,7 @@ public class Player_col : MonoBehaviour
 {
     
     Player_Status playerStatus;
+    public DataManager dataManager;
     private bool nowHit;
     private float hitCoolTime = 0.5f;
     Animator ani;
@@ -59,7 +60,7 @@ public class Player_col : MonoBehaviour
         //이 함수 후에 playerDeath에서 실제 플레이어 사망
    }
    public void PlayerDeath(){
-    GameManager.instance.player.playerStatus.isLive = false;
+    playerStatus.isLive = false;
     GameManager.instance.restartButton.SetActive(true);
    }
 
@@ -70,7 +71,7 @@ public class Player_col : MonoBehaviour
         StartCoroutine(Get_Gem(gem.rank));
     }else if(collison.CompareTag("Gold")){
         GoldCoin gold = collison.GetComponent<GoldCoin>();
-        GameManager.instance.dataManager.goldPoint += gold.value;
+        dataManager.goldPoint += playerStatus.ReturnCoinValue(gold.value);
         gold.gameObject.SetActive(false);
     }
 
