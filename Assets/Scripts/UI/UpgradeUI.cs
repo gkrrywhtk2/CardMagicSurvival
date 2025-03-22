@@ -263,23 +263,30 @@ public class UpgradeUI : MonoBehaviour
     traning_LUK_Desc.text = "골드 추가 획득량 " + "+" + desc_Now + "%" + " -> " + "+" + desc_After + "%";
     return desc_Now;
   }
-  public void Traning_MRP_Setting(){
-    int nowLevel = mainData.traningData.mrp;
-    float desc_Now = nowLevel * 0.1f;
-    float desc_After = (nowLevel + 1) * 0.1f;
+  public float Traning_MRP_Setting()
+  {
+      int nowLevel = mainData.traningData.mrp;
+      float desc_Now = nowLevel * 0.001f;
+      float desc_After = (nowLevel + 1) * 0.001f;
 
-    //text setting
-    traning_MRP_Level.text = "Lv." + nowLevel;
-    traning_MRP_Desc.text = "마나 추가 회복량 " + "+" + desc_Now + "%" + " -> " + "+" + desc_After + "%";
+      // text setting (소수점 3자리 고정)
+      traning_MRP_Level.text = "Lv." + nowLevel;
+      traning_MRP_Desc.text = $"마나 추가 회복량 +{desc_Now:F3} -> +{desc_After:F3}";
+
+      return desc_Now;
   }
-   public void Traning_DCD_Setting(){
-    int nowLevel = mainData.traningData.dcd;
-    float desc_Now = nowLevel * 0.01f;
-    float desc_After = (nowLevel + 1) * 0.01f;
 
-    //text setting
-    traning_DCD_Level.text = "Lv." + nowLevel;
-    traning_DCD_Desc.text = "카드 뽑기 대기시간 " + "-" + desc_Now + "s" + " -> " + "-" + desc_After + "s";
+  public float Traning_DCD_Setting()
+  {
+      int nowLevel = mainData.traningData.dcd;
+      float desc_Now = nowLevel * 0.001f;
+      float desc_After = (nowLevel + 1) * 0.001f;
+
+      // text setting (소수점 3자리 고정)
+      traning_DCD_Level.text = "Lv." + nowLevel;
+      traning_DCD_Desc.text = $"카드 뽑기 대기시간 -{desc_Now:F3}s -> -{desc_After:F3}s";
+
+      return desc_Now;
   }
 
   public void AllUpgradeSetting(){
@@ -484,5 +491,21 @@ public class UpgradeUI : MonoBehaviour
       Training_UpgradeEffectAnim(effectPos);
       AllUpgradeSetting();
       GameManager.instance.player.playerStatus.GetMaxHealth();
+  }
+
+  public void ButtonResetPoint(){
+    //스탯 포인트 초기화 버튼
+    GameManager.instance.purchaseUI.gameObject.SetActive(true);
+    GameManager.instance.purchaseUI.Init(PurchaseUI.PurchaseList.ResetStatPoint);
+  }
+  public void ResetTraningPoint(){
+    mainData.traningData.atk = 0;
+    mainData.traningData.hp = 0;
+    mainData.traningData.cri = 0;
+    mainData.traningData.luk = 0;
+    mainData.traningData.mrp = 0;
+    mainData.traningData.dcd = 0;
+    mainData.traningData.point = mainData.traningData.level - 1;
+    AllUpgradeSetting();//UI 세팅
   }
 }

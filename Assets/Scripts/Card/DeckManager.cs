@@ -150,10 +150,14 @@ for (int i = deck.Count - 1; i > 0; i--)
                 int cardStack =  GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == deck[0]).STACK;
                   // int cardLevel = deck[0].STACK;
                 deck.RemoveAt(0);    // 덱 맨 위의 카드 제거
+                int basicDrawCoolTime = 1;
+                float traningCoolTime = GameManager.instance.boardUI.upgradeUI.Traning_DCD_Setting();
+                float finalDrawCoolTime = basicDrawCoolTime - traningCoolTime;
 
                 //드로우 딜레이
                 magicCards[fixedCard].CardReload();
-                yield return StartCoroutine(ClockBackGroundAnim(1,fixedCard));
+                yield return StartCoroutine(ClockBackGroundAnim(finalDrawCoolTime,fixedCard));
+                Debug.Log("카드 쿨타임 : " + finalDrawCoolTime);
 
                 // 핸드 카드 초기화
                 magicCards[fixedCard].CardInit(cardId);

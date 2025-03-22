@@ -3,11 +3,10 @@ using TMPro;
 
 public class HUD : MonoBehaviour
 {
-     public enum InfoType {Time, Wave, Mobcount, gold}
+    public enum InfoType {gold, ruby}
     public InfoType type;
-
-
     private TMP_Text thisText;
+    public DataManager dataManager;
 
 
     private void Awake()
@@ -17,32 +16,17 @@ public class HUD : MonoBehaviour
 
     private void Start()
     {
-
+        dataManager = GameManager.instance.dataManager;
     }
     private void LateUpdate()
     {
         switch (type)
         {
-            case InfoType.Time:
-            if(GameManager.instance.GamePlayState != true)
-                return;
-            if(GameManager.instance.waveManager.waveTimeOver != false)
-                return;
-                float remainTime = GameManager.instance.waveManager.waveGameTime;
-                int min = Mathf.FloorToInt(remainTime / 60);
-                int sec = Mathf.FloorToInt(remainTime % 60);
-                thisText.text = string.Format("{0:D2} : {1:D2}", min, sec);
-
-                break;
-            case InfoType.Wave:
-                float nowWaveLevel = GameManager.instance.waveManager.nowWave;
-                thisText.text = nowWaveLevel.ToString();
-                break;
-            case InfoType.Mobcount:
-                thisText.text = GameManager.instance.spawnManager.mobCount.ToString();
-                break;
             case InfoType.gold:
-                this.thisText.text = GameManager.instance.dataManager.goldPoint.ToString();
+                this.thisText.text = dataManager.goldPoint.ToString();
+                break;
+            case InfoType.ruby:
+                this.thisText.text = dataManager.rubyPoint.ToString();
                 break;
         }
     }

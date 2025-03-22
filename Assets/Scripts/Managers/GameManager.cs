@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerGameObject;
     public GameObject gameStartButton;//게임 시작 버튼
     public GameObject nextWaveButton;//다음 웨이브 버튼
+    public PurchaseUI purchaseUI;//구매 UI
 
 
     [Header("#ManagerConnect")]

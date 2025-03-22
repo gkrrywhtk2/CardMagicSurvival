@@ -6,7 +6,6 @@ public class CardSetting_UI : MonoBehaviour
     public RectTransform[] scrolls;
     public GameObject[] titleLine_Objects; //0은 프리셋 버튼, 1은 스크롤 내리기
     public Image[] taps;
-    public GameObject shopPanel; // 구매 패널
 
     // 🔹 미리 세팅해둔 위치 값들 (스크롤별 기본 위치)
     private Vector2[] presetPositions;
@@ -56,18 +55,12 @@ public class CardSetting_UI : MonoBehaviour
 
     public void OnShopPanel()
     {
-        shopPanel.SetActive(true);
+        GameManager.instance.purchaseUI.gameObject.SetActive(true);
+        GameManager.instance.purchaseUI.Init(PurchaseUI.PurchaseList.Deckpreset);
     }
-
-    public void OffShopPanel()
-    {
-        shopPanel.SetActive(false);
-    }
-
     public void BuyButton()
     {
         GameManager.instance.dataManager.getPresetDeckCount++;
         GameManager.instance.deckManager.ShowPlayerDeck();
-        shopPanel.SetActive(false);
     }
 }

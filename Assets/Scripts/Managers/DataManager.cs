@@ -6,6 +6,7 @@ public class DataManager : MonoBehaviour
 {
     //백엔드 서버와 이어주는 중간 연결다리
     public float goldPoint;//현재 플레이어의 골드량
+    public int rubyPoint;//현재 플레이어의 루비 소지량
 
 
     [Header("#Player Info_UpgradeLevel")]
@@ -44,6 +45,7 @@ public class DataManager : MonoBehaviour
          SavedDeckSetting();
          SyncStageLevelFromServer();
          SyncWeaponData();
+         rubyPoint = 3000;
     }
 
    

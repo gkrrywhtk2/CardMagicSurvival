@@ -162,49 +162,44 @@ private void UpdateTotalSpeedUpMultiplier()
 
 
    // 마나 회복 관련 로직 시작********
-public List<float> manaRecoveryEffects = new List<float>(); // 마나 증가량 효과 버프 모음
-private float totalManaRecoveryMultiplier = 1f; // 기본값 100% (배수 개념)
+        public List<float> manaRecoveryFlatBonusList = new List<float>(); // 고정 마나 회복 보너스
+        private float totalFlatManaRecovery = 0f; // 총 고정 회복량
 
-public void ManaRecovery()
-{
-    if (!GameManager.instance.GamePlayState || GameManager.instance.ItemSelectState)
-        return;
+        public void ManaRecovery()
+        {
+            if (!GameManager.instance.GamePlayState || GameManager.instance.ItemSelectState)
+                return;
 
-    // 🔹 매 프레임마다 초기화 후 효과를 다시 계산해야 함
-    totalManaRecoveryMultiplier = 1f; // 기본값 100% (누적 방지)
+            float traningManaRecovery = upgradeUI.Traning_MRP_Setting();
 
-    foreach (float effect in manaRecoveryEffects)
-    {
-        totalManaRecoveryMultiplier += effect; // 효과를 누적
-    }
+            // 기본 회복량 + 추가 회복량 적용
+            mana += (baseManaRecovery + totalFlatManaRecovery + traningManaRecovery) * Time.deltaTime;
+        }
 
-    // 마나 회복 적용
-    mana += baseManaRecovery * totalManaRecoveryMultiplier * Time.deltaTime;
-}
+        // 🔹 고정 마나 회복량 추가
+        public void AddManaRecoveryFlat(float value)
+        {
+            manaRecoveryFlatBonusList.Add(value);
+            UpdateFlatManaRecovery();
+        }
 
-// 🔹 마나 회복 증가 효과 추가
-public void AddManaRecoveryEffect(float percent)
-{
-    manaRecoveryEffects.Add(percent / 100f); // % 단위를 배수로 변환 (ex: 100% -> 1.0f)
-    UpdateTotalManaRecoveryMultiplier(); // 최신 값 반영
-}
+        // 🔹 고정 마나 회복량 제거
+        public void RemoveManaRecoveryFlat(float value)
+        {
+            manaRecoveryFlatBonusList.Remove(value);
+            UpdateFlatManaRecovery();
+        }
 
-// 🔹 마나 회복 증가 효과 제거 (ex: 장비 해제, 카드 효과 만료)
-public void RemoveManaRecoveryEffect(float percent)
-{
-    manaRecoveryEffects.Remove(percent / 100f);
-    UpdateTotalManaRecoveryMultiplier(); // 최신 값 반영
-}
+        // 🔹 총 고정 마나 회복량 업데이트
+        private void UpdateFlatManaRecovery()
+        {
+            totalFlatManaRecovery = 0f;
+            foreach (float value in manaRecoveryFlatBonusList)
+            {
+                totalFlatManaRecovery += value;
+            }
+        }
 
-// 🔹 효과가 변경될 때마다 총 배율을 업데이트
-private void UpdateTotalManaRecoveryMultiplier()
-{
-    totalManaRecoveryMultiplier = 1f; // 기본값 100%
-    foreach (float effect in manaRecoveryEffects)
-    {
-        totalManaRecoveryMultiplier += effect;
-    }
-}
 
 // 마나 회복 관련 로직 끝***********************//
 

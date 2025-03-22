@@ -32,21 +32,22 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
 
     }
 
-    public IEnumerator TemporaryManaRecovery(float percent, float duration)
-    {
-        Player_Status player = GameManager.instance.player.playerStatus;
+   public IEnumerator TemporaryManaRecovery(float flatValue, float duration)
+{
+    Player_Status player = GameManager.instance.player.playerStatus;
 
-        // 기존 효과 제거 (이미 적용된 효과가 있다면 리셋)
-        player.RemoveManaRecoveryEffect(percent);
-        player.AddManaRecoveryEffect(percent);
+    // 기존 동일한 수치 제거 (중복 방지용)
+    player.RemoveManaRecoveryFlat(flatValue);
+    player.AddManaRecoveryFlat(flatValue);
 
-        //IconUI 생성
-        GameManager.instance.iconManager.AddOrUpdateIcon(3, duration);
+    // UI 아이콘 표시 (예: 3번 슬롯에 duration 동안 표시)
+    GameManager.instance.iconManager.AddOrUpdateIcon(3, duration);
 
-        yield return new WaitForSeconds(duration);
+    yield return new WaitForSeconds(duration);
 
-        // 지속시간 종료 후 효과 제거
-        player.RemoveManaRecoveryEffect(percent);
-        manaRecoveryCoroutine = null; // 코루틴 종료 시 변수 초기화
-    }
+    // 지속시간이 끝나면 해당 효과 제거
+    player.RemoveManaRecoveryFlat(flatValue);
+    manaRecoveryCoroutine = null;
+}
+
 }
