@@ -6,6 +6,7 @@ public class BoardUI : MonoBehaviour
 {
    public GameObject[] boards;
    //0 : upgrade, 1 : item  2: card, 3: spellbook, 4: fairy 5: shop
+   public GameObject mainBoard_Card;//카드 보드
    public Image[] taps_Image;
    public RectTransform[] taps_Rect;
    public Image[] taps_Icons;
@@ -13,16 +14,18 @@ public class BoardUI : MonoBehaviour
    //
    public GameObject deckSettingUI;//덱 관리 UI 창
 
-   public UpgradeUI upgradeUI;//덱 관리 UI 창
+   public UpgradeUI upgradeUI;//
+   public GameObject EqipUI;//장비 UI
    public GameObject buttomTapUI;//아래 위치하는 탭 UI창, 카드 세팅UI연출시 활성화.
    //
    public DeckCard[] deckCardUI;//덱 관리 UI에서 현재 플레이어의 카드 8장
    public CardInfoUI cardInfoUI;
+   
    public GameObject deckCardButtons;//카드 누르면 정보, 추가, 제거 버튼
   
    private void Awake() {     //Debug.Log(boards[0].GetComponent<RectTransform>().anchoredPosition);
-     HideAllBoards();
-     ShowBoard(2);//일단 카드 ui 호출
+   // HideAllBoards();
+    // ShowBoard(2);//일단 카드 ui 호출
    }
 
    public void HideAllBoards(){
@@ -92,6 +95,11 @@ public void ShowSeletedTap(int tapNum)
       buttomTapUI.gameObject.SetActive(true);
        deckCardButtons.gameObject.SetActive(false);//일단 비활성화
      }
+     public void Show_EqipBoardUI(){
+        EqipUI.gameObject.SetActive(true);
+        GameManager.instance.weaponManager.WeaponImageSetting();
+        buttomTapUI.gameObject.SetActive(true);
+     }
 
      public void Hide_DeckSettingUI(){
        deckSettingUI.gameObject.SetActive(false);
@@ -101,6 +109,9 @@ public void ShowSeletedTap(int tapNum)
      public void DeckCardButtonOff(){
        Debug.Log("빈곳 터치");
         deckCardButtons.gameObject.SetActive(false);
+    }
+    public void OffButtonUI(){
+      buttomTapUI.gameObject.SetActive(false);
     }
 
      

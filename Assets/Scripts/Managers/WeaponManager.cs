@@ -72,24 +72,33 @@ public class WeaponManager : MonoBehaviour
            Color blackColor = new Color(0f, 0f, 0f, 200f / 255f); // 검은색, 알파 200
             Color whiteColor = new Color(1f, 1f, 1f, 1f); // 흰색, 알파 255
         //현재 장비 리스트를 읽어 인게임 이미지를 보여준다
-        for(int i = 0; i < weapons.Count; i++){
-            //강화 수치 세팅
+            for (int i = 0; i < weapons.Count; i++)
+        {
+            // 강화 수치 세팅
             upgradeText[i].text = "+" + weapons[i].upgradeLevel.ToString();
-             //중첩 수치 세팅
-            stackCountText[i].text = weapons[i].stackCount.ToString() + "중첩";
-            //게이지 FILL 수치 세팅
-            int weaponCount = weapons[i].weaponCount;
-            fills[i].fillAmount = Mathf.Clamp01((float)weaponCount / 5);
-            weaponCountText[i].text = weaponCount.ToString() + " / 5";
-            //미획득 아이템 어둡게 세팅
-            getBackGround[i].gameObject.SetActive(true);//초기화
-              waeaponIcons[i].color = blackColor; // 기본값: 검은색 + 알파 200 초기화
-            if(weapons[i].isAcquired == true){
-                getBackGround[i].gameObject.SetActive(false);
-                  waeaponIcons[i].color = whiteColor; // 흰색 + 알파 255
 
-            //장착한 무기에 E 표시
-            Eicons[i].gameObject.SetActive(weapons[i].isEquipped);  
+            // 중첩 수치 세팅
+            stackCountText[i].text = weapons[i].stackCount.ToString() + "중첩";
+
+            // ✅ 중첩 요구량 계산 (기본값 2 + 현재 스택 수)
+            int stackRequire = 2 + weapons[i].stackCount;
+
+            // 게이지 FILL 수치 세팅
+            int weaponCount = weapons[i].weaponCount;
+            fills[i].fillAmount = Mathf.Clamp01((float)weaponCount / stackRequire);
+            weaponCountText[i].text = weaponCount.ToString() + " / " + stackRequire;
+
+            // 미획득 아이템 어둡게 세팅
+            getBackGround[i].gameObject.SetActive(true); // 초기화
+            waeaponIcons[i].color = blackColor;
+
+            if (weapons[i].isAcquired)
+            {
+                getBackGround[i].gameObject.SetActive(false);
+                waeaponIcons[i].color = whiteColor;
+
+                // 장착한 무기에 E 표시
+                Eicons[i].gameObject.SetActive(weapons[i].isEquipped);
             }
         }
 
@@ -134,38 +143,6 @@ public class WeaponManager : MonoBehaviour
     rankText_WeaponUI.color = selectedColor;
     frame_weaponUI.color = selectedColor;
 
-/**
-        //등급Text 세팅, 색상
-        switch (data_Staic.weaponGrade)
-        {
-            case WeaponGrade.Common :
-            rankText_WeaponUI.text = "일반";
-                if(data_Var.isAcquired == true){
-                    rankText_WeaponUI.color = commonColor_W;
-                    frame_weaponUI.color = commonColor_W;
-                }else{
-                    rankText_WeaponUI.color = commonColor;
-                    frame_weaponUI.color = commonColor;
-                }
-            break;
-            case WeaponGrade.Rare :
-            rankText_WeaponUI.text = "희귀";
-            frame_weaponUI.color = rareColor;
-            rankText_WeaponUI.color = rareColor;
-            break;
-            case WeaponGrade.Epic :
-            rankText_WeaponUI.text = "영웅";
-            frame_weaponUI.color = epicColor;
-            rankText_WeaponUI.color = epicColor;
-            break;
-            case WeaponGrade.Legendary :
-            rankText_WeaponUI.text = "전설";
-            frame_weaponUI.color = legendColor;
-            rankText_WeaponUI.color = legendColor;
-            break;
-        }
-
-**/
         //이름 세팅
         nameText_WeaponUI.text = data_Staic.weaponName_KOR;
 
@@ -176,10 +153,12 @@ public class WeaponManager : MonoBehaviour
         stackCount_WeaponUI.text = data_Var.stackCount.ToString() + "중첩";
 
         //게이지 FILL 수치 세팅
+       // 중첩에 필요한 무기 수 = 2 + 현재 중첩 수치
+        int stackRequire = 2 + data_Var.stackCount;
+        // 게이지 FILL 수치 세팅
         int weaponCount = data_Var.weaponCount;
-        fills_WeaponUI.fillAmount = Mathf.Clamp01((float)weaponCount / 5);
-        weaponCountText_WeaponUI.text = weaponCount + "/ 5";
-
+        fills_WeaponUI.fillAmount = Mathf.Clamp01((float)weaponCount / stackRequire);
+        weaponCountText_WeaponUI.text = weaponCount + " / " + stackRequire;
         //미획득 어둡게 세팅 + 메인 스프라이트 세팅
         
         getBackGround_WeaponUI.gameObject.SetActive(true);//어둡게 초기화
@@ -188,7 +167,7 @@ public class WeaponManager : MonoBehaviour
                 getBackGround_WeaponUI.gameObject.SetActive(false);// 밝게 하고
                   weaponUI_MainSprite.color = whiteColor; // 흰색 + 알파 255
             }else{
-                  getBackGround_WeaponUI.gameObject.SetActive(true);// 밝게 하고
+                getBackGround_WeaponUI.gameObject.SetActive(true);// 밝게 하고
                    weaponUI_MainSprite.color = blackColor; // 흰색 + 알파 255
             }
 
@@ -319,27 +298,77 @@ public class WeaponManager : MonoBehaviour
      }
      
 
-    public void StackButton(){
-          //데이터 세팅
-        int weaponId = saveNowWeaponId;
-        int stackRequire = 5;//1중첩에 필요한 무기량
-        List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
-        Weapon data_Var = data_VarLoad[weaponId];
+   public void StackButton()
+{
+    int weaponId = saveNowWeaponId;
+    List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
+    Weapon data_Var = data_VarLoad[weaponId];
 
-        if(data_Var.weaponCount >= stackRequire){
-            data_Var.weaponCount -= stackRequire;//5개 감소
-            data_Var.stackCount += 1;//중첩 1 증가
-        }else{
-            //재료가 부족할 경우 경고 UI 표시
+    // 현재 중첩 수에 따라 필요한 무기량 계산
+    int stackRequire = 2 + data_Var.stackCount;
+
+    if (data_Var.weaponCount >= stackRequire)
+    {
+        data_Var.weaponCount -= stackRequire; // 무기 수 감소
+        data_Var.stackCount += 1;             // 중첩 1 증가
+    }
+    else
+    {
+        // 재료가 부족할 경우 경고 UI 표시
+        warningCost.gameObject.SetActive(true);
+        warningCost_Anim.SetTrigger("Replay");
+    }
+
+    GameManager.instance.dataManager.weaponList = data_VarLoad; // 변경 사항 저장
+    WeaponIconButton_UISetting(weaponId); // UI 갱신
+    // GameManager.instance.dataManager.ChageToRealValue(); // 필요 시 적용
+}
+
+    public void StackAllButton()
+    {
+        List<Weapon> weaponList = GameManager.instance.dataManager.weaponList;
+        bool didStack = false; // 중첩이 하나라도 일어났는지 체크용
+
+        for (int i = 0; i < weaponList.Count; i++)
+        {
+            Weapon weapon = weaponList[i];
+
+            // 미획득 무기는 건너뛰기
+            if (!weapon.isAcquired)
+                continue;
+
+            // 가능한 만큼 중첩
+            while (true)
+            {
+                int stackRequire = 2 + weapon.stackCount;
+
+                if (weapon.weaponCount >= stackRequire)
+                {
+                    weapon.weaponCount -= stackRequire;
+                    weapon.stackCount += 1;
+                    didStack = true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        // 변경 사항 저장
+        GameManager.instance.dataManager.weaponList = weaponList;
+
+        // UI 갱신
+        WeaponImageSetting();
+
+        // 하나도 중첩되지 않았을 경우 경고 출력
+        if (!didStack)
+        {
             warningCost.gameObject.SetActive(true);
             warningCost_Anim.SetTrigger("Replay");
         }
-
-        GameManager.instance.dataManager.weaponList = data_VarLoad;//변경된 값 데이터 메니저에 적용
-        WeaponIconButton_UISetting(weaponId);//적용된 값 UI 변경
-      //  GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
-
     }
+        
 
     public void WeaponUI_XButton(){
         weaponUI.gameObject.SetActive(false);
