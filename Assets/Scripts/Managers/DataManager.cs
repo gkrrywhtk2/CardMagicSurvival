@@ -185,33 +185,69 @@ public void ReorderSavedDeck(int selected)
         //데이터 메니저에서 받은 웨폰 데이터를 실제 웨폰 메니저에 적용
       weaponList = GetWeaponsData();
       
+      
     }
-    public List<Weapon> GetWeaponsData(){
-        //백엔드 서버에서 WeaponList를 받아옴, 우선 임시로 데이터 세팅
-         List<Weapon> loadedWeapons = new List<Weapon>
+    
+   public List<Weapon> GetWeaponsData()
+{
+    List<Weapon> baseWeapons = GetInitialWeaponsData();
+    List<Weapon> overrideWeapons = GetOverrideWeaponsData();
+    return MergeWeapons(baseWeapons, overrideWeapons);
+}
+
+private List<Weapon> GetInitialWeaponsData()
+{
+    return new List<Weapon>
+    {
+        new Weapon(0, 0, WeaponGrade.Common, 0,false, 0, false),
+        new Weapon(1, 0, WeaponGrade.Common, 0, false, 0, false),
+        new Weapon(2, 0, WeaponGrade.Common, 0, false, 0, false),
+        new Weapon(3, 0, WeaponGrade.Common, 0, false, 0, false),
+        new Weapon(4, 0, WeaponGrade.Rare, 0, false, 0, false),
+        new Weapon(5, 0, WeaponGrade.Rare, 0, false, 0, false),
+        new Weapon(6, 0, WeaponGrade.Rare, 0, false, 0, false),
+        new Weapon(7, 0, WeaponGrade.Rare, 0, false, 0, false),
+        new Weapon(8, 0, WeaponGrade.Epic, 0, false, 0, false),
+        new Weapon(9, 0, WeaponGrade.Epic, 0, false, 0, false),
+        new Weapon(10, 0, WeaponGrade.Epic, 0, false, 0, false),
+        new Weapon(11, 0, WeaponGrade.Epic, 0, false, 0, false),
+        new Weapon(12, 0, WeaponGrade.Legendary, 0, false, 0, false),
+        new Weapon(13, 0, WeaponGrade.Legendary, 0, false, 0, false),
+        new Weapon(14, 0, WeaponGrade.Legendary, 0, false, 0, false),
+        new Weapon(15, 0, WeaponGrade.Legendary, 0, false, 0, false),
+    };
+}
+// public Weapon(int id, int level, WeaponGrade grade, int stack, bool equipped, int weaponCount, bool isAcquired)
+private List<Weapon> GetOverrideWeaponsData()
+{
+    // 서버나 외부 데이터로부터 받은 갱신된 무기 정보
+    return new List<Weapon>
+    {
+        new Weapon(0, 0, WeaponGrade.Common, 0, true, 50, true),
+        new Weapon(4, 0, WeaponGrade.Rare, 0, false, 20, true),
+        new Weapon(11, 0, WeaponGrade.Epic, 0, false, 300, true),
+        new Weapon(15, 0, WeaponGrade.Legendary, 0, false, 0, true),
+        // 필요한 만큼 추가
+    };
+}
+
+private List<Weapon> MergeWeapons(List<Weapon> baseList, List<Weapon> overrideList)
+{
+    foreach (Weapon newWeapon in overrideList)
+    {
+        int index = baseList.FindIndex(w => w.weaponId == newWeapon.weaponId);
+        if (index >= 0)
         {
-            new Weapon(0, 0, WeaponGrade.Common, 0, true, 100, true),
-            new Weapon(1, 0, WeaponGrade.Common, 0, false, 0,false),
-            new Weapon(2, 0, WeaponGrade.Common, 0, false, 0,false),
-              new Weapon(3, 0, WeaponGrade.Common, 0, false, 0,false),
-              //
-                new Weapon(4, 0, WeaponGrade.Rare, 0, false, 50,true),
-                  new Weapon(5, 0, WeaponGrade.Rare, 0, false, 0,false),
-                    new Weapon(6, 0, WeaponGrade.Rare, 0, false, 0,false),
-                      new Weapon(7, 0, WeaponGrade.Rare, 0, false, 0,false),
-                      //
-                        new Weapon(8, 0, WeaponGrade.Epic, 0, false, 30,true),
-                          new Weapon(9, 0, WeaponGrade.Epic, 0, false, 0,false),
-                            new Weapon(10, 0, WeaponGrade.Epic, 0, false, 0,false),
-                              new Weapon(11, 0, WeaponGrade.Epic, 0, false, 0,false),
-                              //
-                                new Weapon(12, 0, WeaponGrade.Legendary, 0, false, 10,true),
-                                  new Weapon(13, 0, WeaponGrade.Legendary, 0, false, 0,false),
-                                    new Weapon(14, 0, WeaponGrade.Legendary, 0, false, 0,false),
-                                      new Weapon(15, 0, WeaponGrade.Legendary, 0, false, 0,false)
-        };
-        return loadedWeapons;
+            baseList[index] = newWeapon;
+        }
+        else
+        {
+            baseList.Add(newWeapon);
+        }
     }
+    return baseList;
+}
+
 
 
 

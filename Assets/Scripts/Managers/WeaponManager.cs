@@ -37,8 +37,6 @@ public class WeaponManager : MonoBehaviour
     public Image weaponUI_MainSprite;//메인 스프라이트
     public TMP_Text upgradePostionCountText;//강화 포션 보유량 텍스트
     public int saveNowWeaponId;//현재 켜져있는 아이템 UI가 무엇인지
-    public GameObject stackUpgradeButton;//중첩+ 버튼
-    public GameObject upgradeButton;//강화 버튼
     public TMP_Text requiredUpgradePotionText;//강화 포션 요구량 텍스트
     public Image EquipButton;//장착 버튼
     public Image EuipIcon;//메인 스프라이트 위에 떠있는 E 표시
@@ -46,6 +44,13 @@ public class WeaponManager : MonoBehaviour
     public Image stackButton_WeaponSrptie;//스택 버튼에 있는 무기이미지 변경
     public GameObject warningCost;//재료가 부족합니다 알림창
     public Animator warningCost_Anim;//재료가 부족합니다 알림창 애니메이션 연출
+    public enum UpgradeType{upgrade, levelup};
+    public UpgradeType upgradeType = UpgradeType.upgrade;
+    
+    // 레벨업 버튼 관련 모음
+        public GameObject levelUpButton;//레벨업 버튼
+        public GameObject upgradeButton;//강화 버튼
+        public TMP_Text requireLevelUpCount;//레벨업에 필요한 아이템의 수
 
 
 
@@ -78,7 +83,7 @@ public class WeaponManager : MonoBehaviour
             upgradeText[i].text = "+" + weapons[i].upgradeLevel.ToString();
 
             // 중첩 수치 세팅
-            stackCountText[i].text = weapons[i].stackCount.ToString() + "중첩";
+            stackCountText[i].text = "Lv." + weapons[i].stackCount.ToString();
 
             // ✅ 중첩 요구량 계산 (기본값 2 + 현재 스택 수)
             int stackRequire = 2 + weapons[i].stackCount;
@@ -106,7 +111,6 @@ public class WeaponManager : MonoBehaviour
 
     public void WeaponIconButton_UISetting(int weaponId){
         //weapon 상세보기 UI 세팅
-
         Color blackColor = new Color(0f, 0f, 0f, 200f / 255f); // 검은색, 알파 200
         Color whiteColor = new Color(1f, 1f, 1f, 1f); // 흰색, 알파 255
         Color alphaColor = new Color(1f, 1f, 1f, 0.3f); // 흰색, 알파 255
@@ -150,7 +154,7 @@ public class WeaponManager : MonoBehaviour
         upgradeText_WeaponUI.text = "+" + data_Var.upgradeLevel.ToString(); // +1
 
         //중첩 수치 세팅
-        stackCount_WeaponUI.text = data_Var.stackCount.ToString() + "중첩";
+        stackCount_WeaponUI.text = "Lv." + data_Var.stackCount.ToString();
 
         //게이지 FILL 수치 세팅
        // 중첩에 필요한 무기 수 = 2 + 현재 중첩 수치
@@ -171,43 +175,92 @@ public class WeaponManager : MonoBehaviour
                    weaponUI_MainSprite.color = blackColor; // 흰색 + 알파 255
             }
 
-        //장착 효과 텍스트 세팅
-        int nowUpgradeLevel = data_Var.upgradeLevel;
-        int nextUpgradeLevel = data_Var.upgradeLevel + 1;
-        float stackCountUpgradeOffset = (data_Var.stackCount * 0.5f) + 1;//1중첩 이면 1.5
+        //장착 효과 텍스트 세팅 , 분기
+        switch(upgradeType){
+            case UpgradeType.upgrade:
+                int nowUpgradeLevel = data_Var.upgradeLevel;
+                int nextUpgradeLevel = data_Var.upgradeLevel + 1;
+
+                float equipValue_Now = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nowUpgradeLevel));        
+                float equipValue_Next = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nextUpgradeLevel));  
+
+                equipEffectVar_Text.text = equipValue_Now + "%" + "<color=#00FF00>-> </color>" + "<color=#00FF00>" + 
+                                    equipValue_Next + "</color>" + "<color=#00FF00>%</color>";
+
+                //강화 페이지에서는 레벨업 관련 텍스트는 현재 레벨만 표시됨
+
+                int nowLevel = data_Var.stackCount;
+                int nextLevel = data_Var.stackCount + 1;
+                float ownedValue_Now = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nowLevel));
+                float ownedValue_Next = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nextLevel));
+
+                ownedEffectVar_Text.text = ownedValue_Now + "%";
+
+                upgradeButton.gameObject.SetActive(true);//강화 버튼 활성화
+                levelUpButton.gameObject.SetActive(false);//레벨업 버튼 비활성화
+            break;
+
+            case UpgradeType.levelup:
+                nowUpgradeLevel = data_Var.upgradeLevel;
+                nextUpgradeLevel = data_Var.upgradeLevel + 1;
+
+                equipValue_Now = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nowUpgradeLevel));        
+                //equipValue_Next = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nextUpgradeLevel));  
+
+                equipEffectVar_Text.text = equipValue_Now + "%";
+
+                //
+                nowLevel = data_Var.stackCount;
+                nextLevel = data_Var.stackCount + 1;
+                ownedValue_Now = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nowLevel));
+                ownedValue_Next = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nextLevel));
+
+                ownedEffectVar_Text.text = ownedValue_Now + "%" + "<color=#00FF00>-> </color>" + "<color=#00FF00>" + 
+                                        ownedValue_Next + "</color>" + "<color=#00FF00>%</color>";
+
+                upgradeButton.gameObject.SetActive(false);//강화 버튼 비활성화
+                levelUpButton.gameObject.SetActive(true);//레벨업 버튼 활성화
+                requireLevelUpCount.text =  stackRequire.ToString(); 
+            break;
+        }
+        //int nowUpgradeLevel = data_Var.upgradeLevel;
+       // int nextUpgradeLevel = data_Var.upgradeLevel + 1;
+       // float stackCountUpgradeOffset = (data_Var.stackCount * 0.5f) + 1;//1중첩 이면 1.5
         
         //장착 효과 공식 : (해당 장비 공격력 수치 + (해당 장비 공격력 수치 * 강화 수치)) * 1중첩 당 50% 추가 
-        float equipValue_Now = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nowUpgradeLevel))
-                                * stackCountUpgradeOffset;
-        float equipValue_Next = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nextUpgradeLevel))
-                                * stackCountUpgradeOffset;
+       // float equipValue_Now = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nowUpgradeLevel))
+                               // * stackCountUpgradeOffset;
+       // float equipValue_Next = (data_Staic.equippedEffect_ATK + (data_Staic.equippedEffect_ATK * nextUpgradeLevel))
+                              //  * stackCountUpgradeOffset;
         
         //보유 효과
-        float ownedValue_Now = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nowUpgradeLevel))
-                                * stackCountUpgradeOffset;
-        float ownedValue_Next = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nextUpgradeLevel))
-                                * stackCountUpgradeOffset;
-        equipEffectVar_Text.text = equipValue_Now + "%" + "<color=#00FF00>-> </color>" + "<color=#00FF00>" + 
-                                    equipValue_Next + "</color>" + "<color=#00FF00>%</color>";
-        ownedEffectVar_Text.text = ownedValue_Now + "%" + "<color=#00FF00>-> </color>" + "<color=#00FF00>" + 
-                                    ownedValue_Next + "</color>" + "<color=#00FF00>%</color>";
+        //float ownedValue_Now = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nowUpgradeLevel))
+                                //* stackCountUpgradeOffset;
+       // float ownedValue_Next = (data_Staic.ownedEffect_ATK + (data_Staic.ownedEffect_ATK * nextUpgradeLevel))
+                               // * stackCountUpgradeOffset;
+       // equipEffectVar_Text.text = equipValue_Now + "%" + "<color=#00FF00>-> </color>" + "<color=#00FF00>" + 
+                                  //  equipValue_Next + "</color>" + "<color=#00FF00>%</color>";
+       // ownedEffectVar_Text.text = ownedValue_Now + "%" + "<color=#00FF00>-> </color>" + "<color=#00FF00>" + 
+                                   // ownedValue_Next + "</color>" + "<color=#00FF00>%</color>";
 
 
         //보유 포션량
         upgradePostionCountText.text = GameManager.instance.dataManager.upgradePostionCount.ToString();
 
        // 요구 포션량 공식 = 재료 요구량 + (재료 요구량 * 강화 레벨) * 1.1 (10% 추가)
-        int baseCost = data_Staic.materialCost_Upgrade * nowUpgradeLevel;
+        int baseCost = data_Staic.materialCost_Upgrade * data_Var.upgradeLevel;
         int postionCost = data_Staic.materialCost_Upgrade + (int)(baseCost * 1.1f);
         requiredUpgradePotionText.text = postionCost.ToString();//적용
 
         //장착 여부 
         if(data_Var.isEquipped == true){
+             EquipButton.gameObject.SetActive(true);
             equipText.text = "장착중";
             EquipButton.color = alphaColor;
             EuipIcon.gameObject.SetActive(true);
         }
         else if(data_Var.isEquipped != true && data_Var.isAcquired == true){
+             EquipButton.gameObject.SetActive(true);
              equipText.text = "장착";
               EquipButton.color = whiteColor;
                 EuipIcon.gameObject.SetActive(false);
@@ -216,6 +269,9 @@ public class WeaponManager : MonoBehaviour
             equipText.text = "미획득";
             EquipButton.color = alphaColor;
             EuipIcon.gameObject.SetActive(false);
+            upgradeButton.SetActive(false);
+            levelUpButton.SetActive(false);
+            EquipButton.gameObject.SetActive(false);
         }
 
         //선택한 무기에 따른 중첩 버튼 이미지 세팅
@@ -224,7 +280,9 @@ public class WeaponManager : MonoBehaviour
 
 
         WeaponImageSetting();//웨펀 스크롤에 값 적용
+        
     }
+
 
 
     public void UpgradePostionButton(){
@@ -298,7 +356,7 @@ public class WeaponManager : MonoBehaviour
      }
      
 
-   public void StackButton()
+   public void LevelUpButton()
 {
     int weaponId = saveNowWeaponId;
     List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
@@ -428,6 +486,35 @@ public class WeaponManager : MonoBehaviour
                   $"보유 개수: {weapon.weaponCount}, " +
                   $"획득 여부: {weapon.isAcquired}");
     }
+}
+
+    public Image upgradeTap;
+public Image levelUpTap;
+
+public void SetUpgradeMode()
+{
+    upgradeType = UpgradeType.upgrade;
+    WeaponIconButton_UISetting(saveNowWeaponId);
+
+    // 색상 설정 (활성화: #CF7200, 비활성화: #4B4B4B)
+    Color activeColor = new Color32(0xCF, 0x72, 0x00, 0xFF);
+    Color inactiveColor = new Color32(0x4B, 0x4B, 0x4B, 0xFF);
+
+    upgradeTap.color = activeColor;
+    levelUpTap.color = inactiveColor;
+}
+
+public void SetLevelMode()
+{
+    upgradeType = UpgradeType.levelup;
+    WeaponIconButton_UISetting(saveNowWeaponId);
+
+    // 색상 설정 (활성화: #CF7200, 비활성화: #4B4B4B)
+    Color activeColor = new Color32(0xCF, 0x72, 0x00, 0xFF);
+    Color inactiveColor = new Color32(0x4B, 0x4B, 0x4B, 0xFF);
+
+    upgradeTap.color = inactiveColor;
+    levelUpTap.color = activeColor;
 }
 
 
