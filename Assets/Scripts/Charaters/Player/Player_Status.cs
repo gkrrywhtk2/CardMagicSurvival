@@ -235,20 +235,24 @@ private void UpdateTotalSpeedUpMultiplier()
 
         // 무기 장착 효과 및 보유 효과를 한 번만 계산하여 저장
         float equipWeaponEffectValue = GameManager.instance.weaponManager.ReturnEquipEffect();
-        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedEffect();
+        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedATKEffect();
+        Debug.Log("ownedWeaponEffectValueATK : " + ownedWeaponEffectValue);
 
         // 무기 효과 값 계산
         float finalWeaponEffectValue = equipWeaponEffectValue + ownedWeaponEffectValue;
 
         // 최종 공격력에 적용
-        totalATK *= (1 + (finalWeaponEffectValue / 100f)); // 백분율로 변환하여 적용
+        totalATK *= 1 + (finalWeaponEffectValue / 100f); // 백분율로 변환하여 적용
        // Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
       //  Debug.Log("ToTalATK + WeaponValue= " + totalATK);
         return totalATK;
     }
     public float GetTotalCriDamage(){
          float totalCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
+         float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedCRIEffect();
+          Debug.Log("ownedWeaponEffectValueCRI : " + ownedWeaponEffectValue);
          //Debug.Log("TotalCriDamage" + totalCriDamage);
+         totalCriDamage = totalCriDamage + ownedWeaponEffectValue;
          return totalCriDamage;
     }
 

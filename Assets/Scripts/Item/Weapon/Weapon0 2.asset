@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67bbb7d8fc108471590039da7794b8bb, type: 3}
+  m_Name: Weapon0 2
+  m_EditorClassIdentifier: 
+  weaponId: 2
+  materialCost_Upgrade: 5
+  weaponName_KOR: "\uACE0\uBAA9\uB098\uBB34 \uC2A4\uD0DC\uD504"
+  weaponGrade: 0
+  weaponMainSprite: {fileID: -1096225465, guid: be11a126dd0df554ab316f49f2f08a65, type: 3}
+  tags: 00000000
+  equippeBase_ATK: 10
+  ownedBase_ATK: 5
+  ownedBase_CRI: 0

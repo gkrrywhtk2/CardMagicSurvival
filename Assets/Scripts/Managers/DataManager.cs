@@ -199,35 +199,62 @@ private List<Weapon> GetInitialWeaponsData()
 {
     return new List<Weapon>
     {
-        new Weapon(0, 0, WeaponGrade.Common, 0,false, 0, false),
-        new Weapon(1, 0, WeaponGrade.Common, 0, false, 0, false),
-        new Weapon(2, 0, WeaponGrade.Common, 0, false, 0, false),
-        new Weapon(3, 0, WeaponGrade.Common, 0, false, 0, false),
-        new Weapon(4, 0, WeaponGrade.Rare, 0, false, 0, false),
-        new Weapon(5, 0, WeaponGrade.Rare, 0, false, 0, false),
-        new Weapon(6, 0, WeaponGrade.Rare, 0, false, 0, false),
-        new Weapon(7, 0, WeaponGrade.Rare, 0, false, 0, false),
-        new Weapon(8, 0, WeaponGrade.Epic, 0, false, 0, false),
-        new Weapon(9, 0, WeaponGrade.Epic, 0, false, 0, false),
-        new Weapon(10, 0, WeaponGrade.Epic, 0, false, 0, false),
-        new Weapon(11, 0, WeaponGrade.Epic, 0, false, 0, false),
-        new Weapon(12, 0, WeaponGrade.Legendary, 0, false, 0, false),
-        new Weapon(13, 0, WeaponGrade.Legendary, 0, false, 0, false),
-        new Weapon(14, 0, WeaponGrade.Legendary, 0, false, 0, false),
-        new Weapon(15, 0, WeaponGrade.Legendary, 0, false, 0, false),
+        new Weapon(0, 0, 0, false, 0, false),     // 기본값
+        new Weapon(1, 0, 0, false, 0, false),     // 기본값
+        new Weapon(2, 0, 0, false, 0, false),     // 기본값
+        new Weapon(3, 0, 0, false, 0, false),     // 기본값
+        new Weapon(4, 0, 0, false, 0, false),     // 기본값
+        new Weapon(5, 0, 0, false, 0, false),     // 기본값
+        new Weapon(6, 0, 0, false, 0, false),     // 기본값
+        new Weapon(7, 0, 0, false, 0, false),     // 기본값
+        new Weapon(8, 0, 0, false, 0, false),     // 기본값
+        new Weapon(9, 0, 0, false, 0, false),     // 기본값
+        new Weapon(10, 0, 0, false, 0, false),    // 기본값
+        new Weapon(11, 0, 0, false, 0, false),    // 기본값
+        new Weapon(12, 0, 0, false, 0, false),    // 기본값
+        new Weapon(13, 0, 0, false, 0, false),    // 기본값
+        new Weapon(14, 0, 0, false, 0, false),    // 기본값
+        new Weapon(15, 0, 0, false, 0, false),    // 기본값
+        new Weapon(16, 0, 0, false, 0, false),    // 기본값
+        new Weapon(17, 0, 0, false, 0, false),    // 기본값
+        new Weapon(18, 0, 0, false, 0, false),    // 기본값
+        new Weapon(19, 0, 0, false, 0, false),    // 기본값
+        new Weapon(20, 0, 0, false, 0, false),    // 기본값
+        new Weapon(21, 0, 0, false, 0, false),    // 기본값
+        new Weapon(22, 0, 0, false, 0, false),    // 기본값
+        new Weapon(23, 0, 0, false, 0, false),    // 기본값
     };
 }
 // public Weapon(int id, int level, WeaponGrade grade, int stack, bool equipped, int weaponCount, bool isAcquired)
-private List<Weapon> GetOverrideWeaponsData()
+   private List<Weapon> GetOverrideWeaponsData()
 {
     // 서버나 외부 데이터로부터 받은 갱신된 무기 정보
     return new List<Weapon>
     {
-        new Weapon(0, 0, WeaponGrade.Common, 0, true, 50, true),
-        new Weapon(4, 0, WeaponGrade.Rare, 0, false, 20, true),
-        new Weapon(11, 0, WeaponGrade.Epic, 0, false, 300, true),
-        new Weapon(15, 0, WeaponGrade.Legendary, 0, false, 0, true),
-        // 필요한 만큼 추가
+        new Weapon(0, 0, 0, true, 300, true),  // Common 무기
+        new Weapon(1, 0, 0, false, 300, true), // 기본값
+        new Weapon(2, 0, 0, false, 300, true), // 기본값
+        new Weapon(3, 0, 0, false, 300, true), // 기본값
+        new Weapon(4, 0, 0, false, 300, true),  // Rare 무기
+        new Weapon(5, 0, 0, false, 300, true),  // Rare 무기
+        new Weapon(6, 0, 0, false, 300, true), // 기본값
+        new Weapon(7, 0, 0, false, 300, true), // 기본값
+        new Weapon(8, 0, 0, false, 300, true),  // Epic 무기
+        new Weapon(9, 0, 0, false, 300, true),  // Epic 무기
+        new Weapon(10, 0, 0, false, 300, true), // 기본값
+        new Weapon(11, 0, 0, false, 300, true), // Epic 무기
+        new Weapon(12, 0, 0, false, 300, true), // 기본값
+        new Weapon(13, 0, 0, false, 300, true), // Legendary 무기
+        new Weapon(14, 0, 0, false, 300, true), // 기본값
+        new Weapon(15, 0, 0, false, 300, true), // Legendary 무기
+        new Weapon(16, 0, 0, false, 300, true), // Mythic 무기
+        new Weapon(17, 0, 0, false, 300, true), // Mythic 무기
+        new Weapon(18, 0, 0, false, 300, true), // Mythic 무기
+        new Weapon(19, 0, 0, false, 300, true), // 기본값
+        new Weapon(20, 0, 0, false, 300, true), // Primordial 무기
+        new Weapon(21, 0, 0, false, 300, true), // Primordial 무기
+        new Weapon(22, 0, 0, false, 300, true), // Primordial 무기
+        new Weapon(23, 0, 0, false, 300, true), // Primordial 무기
     };
 }
 
@@ -270,24 +297,22 @@ private List<Weapon> MergeWeapons(List<Weapon> baseList, List<Weapon> overrideLi
 
 
 //Waepon Info
-public enum WeaponGrade { Common, Rare, Epic, Legendary }
+public enum WeaponGrade { Common, Rare, Epic, Legendary, Mythic, Primordial }
 public class Weapon
 {
     public int weaponId;      // 고유 번호
-    public int upgradeLevel;  // 강화 수치
-    public WeaponGrade grade; // 무기 등급
-    public int stackCount;    // 중첩 수치
+    public int upgrade;  // 강화 수치
+    public int level;    // 레벨 수치
     public bool isEquipped;   // 장착 여부
      public int weaponCount;    // 보유량 수치
      public bool isAcquired; //획득 여부
 
      // 🔹 생성자 추가 (5개의 인수를 받도록 설정)
-    public Weapon(int id, int level, WeaponGrade grade, int stack, bool equipped, int weaponCount, bool isAcquired)
+    public Weapon(int id, int upgrade, int level, bool equipped, int weaponCount, bool isAcquired)
     {
         this.weaponId = id;
-        this.upgradeLevel = level;
-        this.grade = grade;
-        this.stackCount = stack;
+        this.upgrade = upgrade;
+        this.level = level;
         this.isEquipped = equipped;
         this.weaponCount = weaponCount;
         this.isAcquired = isAcquired;
