@@ -5,7 +5,7 @@ using TMPro;
 public class AccessoryManager : MonoBehaviour
 {
     [Header("# DATA")]
-    public AccessoryData accessoryData;//악세 데이타 모음
+    public AccessoryData[] accessoryData;//악세 데이타 모음
 
     [Header("# UI_LINK")]
     public Image[] Icons;//메인 스프라이트
