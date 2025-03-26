@@ -212,10 +212,10 @@ private void UpdateTotalSpeedUpMultiplier()
     public float DamageReturn(float skillPower, out bool isCritical)
     {
         // 랜덤 오프셋 적용 (-5% ~ +5% 변동)
-        float randomOffset = Random.Range(GetTotalATK() * -0.05f, GetTotalATK() * 0.05f);
+        float randomOffset = Random.Range(ATK * -0.05f, ATK * 0.05f);
 
         // 기본 데미지 계산
-        float basicDamage = (GetTotalATK() + randomOffset) * (skillPower / 100f);
+        float basicDamage = (ATK + randomOffset) * (skillPower / 100f);
 
         // 치명타 확률 계산 (totalCriticalMultiplier 포함)
         isCritical = CriticalReturn();
@@ -244,17 +244,26 @@ private void UpdateTotalSpeedUpMultiplier()
         // 최종 공격력에 적용
         totalATK *= 1 + (finalWeaponEffectValue / 100f); // 백분율로 변환하여 적용
        // Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
-      //  Debug.Log("ToTalATK + WeaponValue= " + totalATK);
+        //  Debug.Log("ToTalATK + WeaponValue= " + totalATK);
+        ATK = totalATK;
         return totalATK;
     }
-    public float GetTotalCriDamage(){
-         float totalCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
-         float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedCRIEffect();
-          Debug.Log("ownedWeaponEffectValueCRI : " + ownedWeaponEffectValue);
-         //Debug.Log("TotalCriDamage" + totalCriDamage);
-         totalCriDamage = totalCriDamage + ownedWeaponEffectValue;
-         return totalCriDamage;
-    }
+   public float GetTotalCriDamage()
+{
+    float baseCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
+    float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedCRIEffect(); // ex: 50
+    float ownedAccEffectValue = GameManager.instance.accessoryManager.ReturnOwnedCRIEffect(); // ex: 50
+
+    Debug.Log("ownedWeaponEffectValueCRI : " + ownedWeaponEffectValue);
+    Debug.Log("ownedAccEffectValueCRI : " + ownedAccEffectValue);
+
+    float totalBonusPercent = (ownedWeaponEffectValue + ownedAccEffectValue) / 100f;
+
+    float totalCriDamage = baseCriDamage * (1f + totalBonusPercent);
+
+    return totalCriDamage;
+}
+
 
 
 

@@ -19,9 +19,11 @@ public class DataManager : MonoBehaviour
     public int stageProgressLevel;//저장된 스테이지 레벨
 
 
-    [Header("#Weapon Info")]
+    [Header("#Equiped Info")]
     public List<Weapon> weaponList = new List<Weapon>();//웨폰 데이터 저장
+    public List<Accessory> acceossryList = new List<Accessory>();//악세 데이터 저장
     public int upgradePostionCount;//강화 포션 보유량
+
 
     [Header("#Card Info")]
      public List<int>[] savedDeck = new List<int>[5]; //덱 저장 항상 8개 유지, cardId - 1은 null값
@@ -45,6 +47,7 @@ public class DataManager : MonoBehaviour
          SavedDeckSetting();
          SyncStageLevelFromServer();
          SyncWeaponData();
+         SyncAccessoryData();
          rubyPoint = 3000;
     }
 
@@ -180,12 +183,14 @@ public void ReorderSavedDeck(int selected)
     GameManager.instance.stageManager.currentStageLevel = stageProgressLevel;
 }
 
+/**
+장비-무기 관련 코드
+**/
+
     public void SyncWeaponData()
     {
         //데이터 메니저에서 받은 웨폰 데이터를 실제 웨폰 메니저에 적용
       weaponList = GetWeaponsData();
-      
-      
     }
     
    public List<Weapon> GetWeaponsData()
@@ -275,7 +280,115 @@ private List<Weapon> MergeWeapons(List<Weapon> baseList, List<Weapon> overrideLi
     return baseList;
 }
 
+/**
+장비-무기 관련 끝
+**/
 
+/**
+장비-악세 관련 시작
+**/
+      public void SyncAccessoryData()
+        {
+            //데이터 메니저에서 받은 웨폰 데이터를 실제 웨폰 메니저에 적용
+            acceossryList = GetAccessoriesData();
+
+            // 디버그 로그 출력
+                Debug.Log("=== 악세서리 데이터 동기화 완료 ===");
+                foreach (var acc in acceossryList)
+                {
+                    Debug.Log($"ID: {acc.id}, 강화 : {acc.count_Upgrade}, 레벨: {acc.count_Level}, 장착 여부: {acc.isEquipped}, 보유 여부: {acc.isAcquired}");
+                }
+        }
+    
+   public List<Accessory> GetAccessoriesData()
+{
+    List<Accessory> baseAcc = GetInitialAccessoriesData();
+    List<Accessory> overrideAcc = GetOverrideAccessoriesData();
+    return MergeAccessories(baseAcc, overrideAcc);
+}
+
+private List<Accessory> GetInitialAccessoriesData()
+{
+    return new List<Accessory>
+    {
+        new Accessory(0, 0, 0, false, 0, false),     // 기본값
+        new Accessory(1, 0, 0, false, 0, false),     // 기본값
+        new Accessory(2, 0, 0, false, 0, false),     // 기본값
+        new Accessory(3, 0, 0, false, 0, false),     // 기본값
+        new Accessory(4, 0, 0, false, 0, false),     // 기본값
+        new Accessory(5, 0, 0, false, 0, false),     // 기본값
+        new Accessory(6, 0, 0, false, 0, false),     // 기본값
+        new Accessory(7, 0, 0, false, 0, false),     // 기본값
+        new Accessory(8, 0, 0, false, 0, false),     // 기본값
+        new Accessory(9, 0, 0, false, 0, false),     // 기본값
+        new Accessory(10, 0, 0, false, 0, false),    // 기본값
+        new Accessory(11, 0, 0, false, 0, false),    // 기본값
+        new Accessory(12, 0, 0, false, 0, false),    // 기본값
+        new Accessory(13, 0, 0, false, 0, false),    // 기본값
+        new Accessory(14, 0, 0, false, 0, false),    // 기본값
+        new Accessory(15, 0, 0, false, 0, false),    // 기본값
+        new Accessory(16, 0, 0, false, 0, false),    // 기본값
+        new Accessory(17, 0, 0, false, 0, false),    // 기본값
+        new Accessory(18, 0, 0, false, 0, false),    // 기본값
+        new Accessory(19, 0, 0, false, 0, false),    // 기본값
+        new Accessory(20, 0, 0, false, 0, false),    // 기본값
+        new Accessory(21, 0, 0, false, 0, false),    // 기본값
+        new Accessory(22, 0, 0, false, 0, false),    // 기본값
+        new Accessory(23, 0, 0, false, 0, false),    // 기본값
+    };
+}
+   private List<Accessory> GetOverrideAccessoriesData()
+{
+    // 서버나 외부 데이터로부터 받은 갱신된 무기 정보
+    return new List<Accessory>
+    {
+        new Accessory(0, 0, 0, true, 300, true),  // Common 무기
+        new Accessory(1, 0, 0, false, 300, true), // 기본값
+        new Accessory(2, 0, 0, false, 300, true), // 기본값
+        new Accessory(3, 0, 0, false, 300, true), // 기본값
+        new Accessory(4, 0, 0, false, 300, true),  // Rare 무기
+        new Accessory(5, 0, 0, false, 300, true),  // Rare 무기
+        new Accessory(6, 0, 0, false, 300, true), // 기본값
+        new Accessory(7, 0, 0, false, 300, true), // 기본값
+        new Accessory(8, 0, 0, false, 300, true),  // Epic 무기
+        new Accessory(9, 0, 0, false, 300, true),  // Epic 무기
+        new Accessory(10, 0, 0, false, 300, true), // 기본값
+        new Accessory(11, 0, 0, false, 300, true), // Epic 무기
+        new Accessory(12, 0, 0, false, 300, true), // 기본값
+        new Accessory(13, 0, 0, false, 300, true), // Legendary 무기
+        new Accessory(14, 0, 0, false, 300, true), // 기본값
+        new Accessory(15, 0, 0, false, 300, true), // Legendary 무기
+        new Accessory(16, 0, 0, false, 300, true), // Mythic 무기
+        new Accessory(17, 0, 0, false, 300, true), // Mythic 무기
+        new Accessory(18, 0, 0, false, 300, true), // Mythic 무기
+        new Accessory(19, 0, 0, false, 300, true), // 기본값
+        new Accessory(20, 0, 0, false, 300, true), // Primordial 무기
+        new Accessory(21, 0, 0, false, 300, true), // Primordial 무기
+        new Accessory(22, 0, 0, false, 300, true), // Primordial 무기
+        new Accessory(23, 0, 0, false, 300, true), // Primordial 무기
+    };
+}
+
+private List<Accessory> MergeAccessories(List<Accessory> baseList, List<Accessory> overrideList)
+{
+    foreach (Accessory newAcc in overrideList)
+    {
+        int index = baseList.FindIndex(w => w.id == newAcc.id);
+        if (index >= 0)
+        {
+            baseList[index] = newAcc;
+        }
+        else
+        {
+            baseList.Add(newAcc);
+        }
+    }
+    return baseList;
+}
+
+/**
+장비 - 악세 관련 코드 끝
+**/
 
 
     public void LogDeckStatus()
@@ -315,6 +428,26 @@ public class Weapon
         this.level = level;
         this.isEquipped = equipped;
         this.weaponCount = weaponCount;
+        this.isAcquired = isAcquired;
+    }
+}
+public class Accessory
+{
+    public int id;      // 고유 번호
+    public int count_Upgrade;  // 강화 수치
+    public int count_Level;    // 레벨 수치
+     public int count_Owned;    // 보유량 수치
+     public bool isAcquired; //획득 여부
+    public bool isEquipped;   // 장착 여부
+
+     // 🔹 생성자 추가 (5개의 인수를 받도록 설정)
+    public Accessory(int id, int upgrade, int level, bool equipped, int ownedCount, bool isAcquired)
+    {
+        this.id = id;
+        this.count_Upgrade = upgrade;
+        this.count_Level = level;
+        this.isEquipped = equipped;
+        this.count_Owned = ownedCount;
         this.isAcquired = isAcquired;
     }
 }

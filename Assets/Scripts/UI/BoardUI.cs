@@ -22,6 +22,10 @@ public class BoardUI : MonoBehaviour
    public CardInfoUI cardInfoUI;
    
    public GameObject deckCardButtons;//카드 누르면 정보, 추가, 제거 버튼
+
+   //모두 레벨업 버튼
+    public GameObject allLevelUp_Weapon;
+    public GameObject allLevelUp_Acc;
   
    private void Awake() {     //Debug.Log(boards[0].GetComponent<RectTransform>().anchoredPosition);
    // HideAllBoards();
@@ -114,6 +118,19 @@ public void ShowSeletedTap(int tapNum)
       buttomTapUI.gameObject.SetActive(false);
     }
 
-     
-   }
+  public void EquipAllLevelUpButton(int index){
+    switch (index){
+      case 0 :
+      allLevelUp_Weapon.gameObject.SetActive(true);
+      allLevelUp_Weapon.gameObject.SetActive(false);
+      break;
+
+      case 1:
+      allLevelUp_Weapon.gameObject.SetActive(false);
+      allLevelUp_Weapon.gameObject.SetActive(true);
+      break;
+    }
+  }
+    
+}
 

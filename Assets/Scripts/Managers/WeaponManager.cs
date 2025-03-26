@@ -300,8 +300,6 @@ public class WeaponManager : MonoBehaviour
 
 
     public void UpgradePostionButton(){
-
-
         int weaponId = saveNowWeaponId;
         //데이터 세팅
         WeaponsData data_Staic = weaponsData[weaponId];
@@ -341,7 +339,6 @@ public class WeaponManager : MonoBehaviour
          //장착 여부 
         if(data_Var.isEquipped == true){
             //아이템을 장착한 경우 아무일도 일어나지 않음
-           
         }
         else if(data_Var.isEquipped != true && data_Var.isAcquired == true){
             
@@ -358,7 +355,8 @@ public class WeaponManager : MonoBehaviour
         }
         GameManager.instance.dataManager.weaponList = data_VarLoad;//변경된 값 리스트에 적용
         WeaponIconButton_UISetting(weaponId);//적용된 값 UI 변경
-      //  GameManager.instance.dataManager.ChageToRealValue();//캐릭터 최신화
+        
+        GameManager.instance.player.playerStatus.GetTotalATK();//ATK 적용
 
     }
    
@@ -370,31 +368,31 @@ public class WeaponManager : MonoBehaviour
      }
      
 
-   public void LevelUpButton()
-{
-    int weaponId = saveNowWeaponId;
-    List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
-    Weapon data_Var = data_VarLoad[weaponId];
-
-    // 현재 중첩 수에 따라 필요한 무기량 계산
-    int stackRequire = 2 + data_Var.level;
-
-    if (data_Var.weaponCount >= stackRequire)
+    public void LevelUpButton()
     {
-        data_Var.weaponCount -= stackRequire; // 무기 수 감소
-        data_Var.level += 1;             // 중첩 1 증가
-    }
-    else
-    {
-        // 재료가 부족할 경우 경고 UI 표시
-        warningCost.gameObject.SetActive(true);
-        warningCost_Anim.SetTrigger("Replay");
-    }
+        int weaponId = saveNowWeaponId;
+        List<Weapon> data_VarLoad = GameManager.instance.dataManager.weaponList;
+        Weapon data_Var = data_VarLoad[weaponId];
 
-    GameManager.instance.dataManager.weaponList = data_VarLoad; // 변경 사항 저장
-    WeaponIconButton_UISetting(weaponId); // UI 갱신
-    // GameManager.instance.dataManager.ChageToRealValue(); // 필요 시 적용
-}
+        // 현재 중첩 수에 따라 필요한 무기량 계산
+        int stackRequire = 2 + data_Var.level;
+
+        if (data_Var.weaponCount >= stackRequire)
+        {
+            data_Var.weaponCount -= stackRequire; // 무기 수 감소
+            data_Var.level += 1;             // 중첩 1 증가
+        }
+        else
+        {
+            // 재료가 부족할 경우 경고 UI 표시
+            warningCost.gameObject.SetActive(true);
+            warningCost_Anim.SetTrigger("Replay");
+        }
+
+        GameManager.instance.dataManager.weaponList = data_VarLoad; // 변경 사항 저장
+        WeaponIconButton_UISetting(weaponId); // UI 갱신
+        // GameManager.instance.dataManager.ChageToRealValue(); // 필요 시 적용
+    }
 
     public void StackAllButton()
     {
@@ -512,33 +510,33 @@ public class WeaponManager : MonoBehaviour
 }
 
     public Image upgradeTap;
-public Image levelUpTap;
+    public Image levelUpTap;
 
-public void SetUpgradeMode()
-{
-    upgradeType = UpgradeType.upgrade;
-    WeaponIconButton_UISetting(saveNowWeaponId);
+    public void SetUpgradeMode()
+    {
+        upgradeType = UpgradeType.upgrade;
+        WeaponIconButton_UISetting(saveNowWeaponId);
 
-    // 색상 설정 (활성화: #CF7200, 비활성화: #4B4B4B)
-    Color activeColor = new Color32(0xCF, 0x72, 0x00, 0xFF);
-    Color inactiveColor = new Color32(0x4B, 0x4B, 0x4B, 0xFF);
+        // 색상 설정 (활성화: #CF7200, 비활성화: #4B4B4B)
+        Color activeColor = new Color32(0xCF, 0x72, 0x00, 0xFF);
+        Color inactiveColor = new Color32(0x4B, 0x4B, 0x4B, 0xFF);
 
-    upgradeTap.color = activeColor;
-    levelUpTap.color = inactiveColor;
-}
+        upgradeTap.color = activeColor;
+        levelUpTap.color = inactiveColor;
+    }
 
-public void SetLevelMode()
-{
-    upgradeType = UpgradeType.levelup;
-    WeaponIconButton_UISetting(saveNowWeaponId);
+    public void SetLevelMode()
+    {
+        upgradeType = UpgradeType.levelup;
+        WeaponIconButton_UISetting(saveNowWeaponId);
 
-    // 색상 설정 (활성화: #CF7200, 비활성화: #4B4B4B)
-    Color activeColor = new Color32(0xCF, 0x72, 0x00, 0xFF);
-    Color inactiveColor = new Color32(0x4B, 0x4B, 0x4B, 0xFF);
+        // 색상 설정 (활성화: #CF7200, 비활성화: #4B4B4B)
+        Color activeColor = new Color32(0xCF, 0x72, 0x00, 0xFF);
+        Color inactiveColor = new Color32(0x4B, 0x4B, 0x4B, 0xFF);
 
-    upgradeTap.color = inactiveColor;
-    levelUpTap.color = activeColor;
-}
+        upgradeTap.color = inactiveColor;
+        levelUpTap.color = activeColor;
+    }
 
 
 }

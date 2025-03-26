@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public StageManager stageManager;
     public WeaponManager weaponManager;
     public IconManager iconManager;
+    public AccessoryManager accessoryManager;
     public BoardUI boardUI;
     [Header("#GameControl")]
     public bool cardOneTouch;

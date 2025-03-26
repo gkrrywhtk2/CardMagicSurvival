@@ -403,6 +403,7 @@ public class UpgradeUI : MonoBehaviour
 
     AllUpgradeSetting();
     GameManager.instance.player.playerStatus.GetMaxHealth();
+   GameManager.instance.player.playerStatus.GetTotalATK();
     //data.ChageToRealValue(); // 캐릭터 stats에 실제로 변경된 값 적용
 }
 
