@@ -42,15 +42,16 @@ public class ScrollBoard : MonoBehaviour
     }
 
     public void SetTaps(int index)
-    {
-        Color selectedColor = Color.white;         // 선택된 탭 색상
-        Color defaultColor = new Color(0.6f, 0.6f, 0.6f); // #9A9A9A (RGB: 154,154,154)
+{
+    Color selectedColor = new Color(0.8f, 0.8f, 0.8f);  // 선택된 탭 색상 (밝은 회색)
+    Color defaultColor = new Color(0.6f, 0.6f, 0.6f);   // 기본 탭 색상 (회색)
 
-        for (int i = 0; i < taps.Length; i++)
-        {
-            taps[i].color = (i == index) ? selectedColor : defaultColor;
-        }
+    for (int i = 0; i < taps.Length; i++)
+    {
+        taps[i].color = (i == index) ? selectedColor : defaultColor;
     }
+}
+
 
     public void OffUI(){
         GameManager.instance.boardUI.buttomTapUI.gameObject.SetActive(false);

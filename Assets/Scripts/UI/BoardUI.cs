@@ -101,6 +101,7 @@ public void ShowSeletedTap(int tapNum)
      }
      public void Show_EqipBoardUI(){
         EqipUI.gameObject.SetActive(true);
+        EquipAllLevelUpButton(0);//일단 무기로 세팅
         GameManager.instance.weaponManager.WeaponImageSetting();
         buttomTapUI.gameObject.SetActive(true);
      }
@@ -122,12 +123,12 @@ public void ShowSeletedTap(int tapNum)
     switch (index){
       case 0 :
       allLevelUp_Weapon.gameObject.SetActive(true);
-      allLevelUp_Weapon.gameObject.SetActive(false);
+      allLevelUp_Acc.gameObject.SetActive(false);
       break;
 
       case 1:
       allLevelUp_Weapon.gameObject.SetActive(false);
-      allLevelUp_Weapon.gameObject.SetActive(true);
+      allLevelUp_Acc.gameObject.SetActive(true);
       break;
     }
   }
