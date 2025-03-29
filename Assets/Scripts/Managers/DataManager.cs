@@ -204,30 +204,31 @@ private List<Weapon> GetInitialWeaponsData()
 {
     return new List<Weapon>
     {
-        new Weapon(0, 0, false, 0, false),   // 기본값
-        new Weapon(1, 0, false, 0, false),
-        new Weapon(2, 0, false, 0, false),
-        new Weapon(3, 0, false, 0, false),
-        new Weapon(4, 0, false, 0, false),
-        new Weapon(5, 0, false, 0, false),
-        new Weapon(6, 0, false, 0, false),
-        new Weapon(7, 0, false, 0, false),
-        new Weapon(8, 0, false, 0, false),
-        new Weapon(9, 0, false, 0, false),
-        new Weapon(10, 0, false, 0, false),
-        new Weapon(11, 0, false, 0, false),
-        new Weapon(12, 0, false, 0, false),
-        new Weapon(13, 0, false, 0, false),
-        new Weapon(14, 0, false, 0, false),
-        new Weapon(15, 0, false, 0, false),
-        new Weapon(16, 0, false, 0, false),
-        new Weapon(17, 0, false, 0, false),
-        new Weapon(18, 0, false, 0, false),
-        new Weapon(19, 0, false, 0, false),
-        new Weapon(20, 0, false, 0, false),
-        new Weapon(21, 0, false, 0, false),
-        new Weapon(22, 0, false, 0, false),
-        new Weapon(23, 0, false, 0, false), 
+        new Weapon(0, 1, false, 0, false),   // 기본값
+        new Weapon(1, 1, false, 0, false),
+        new Weapon(2, 1, false, 0, false),
+        new Weapon(3, 1, false, 0, false),
+        new Weapon(4, 1, false, 0, false),
+        new Weapon(5, 1, false, 0, false),
+        new Weapon(6, 1, false, 0, false),
+        new Weapon(7, 1, false, 0, false),
+        new Weapon(8, 1, false, 0, false),
+        new Weapon(9, 1, false, 0, false),
+        new Weapon(10, 1, false, 0, false),
+        new Weapon(11, 1, false, 0, false),
+        new Weapon(12, 1, false, 0, false),
+        new Weapon(13, 1, false, 0, false),
+        new Weapon(14, 1, false, 0, false),
+        new Weapon(15, 1, false, 0, false),
+        new Weapon(16, 1, false, 0, false),
+        new Weapon(17, 1, false, 0, false),
+        new Weapon(18, 1, false, 0, false),
+        new Weapon(19, 1, false, 0, false),
+        new Weapon(20, 1, false, 0, false),
+        new Weapon(21, 1, false, 0, false),
+        new Weapon(22, 1, false, 0, false),
+        new Weapon(23, 1, false, 0, false), 
+
     };
 }
 // public Weapon(int id, int level, WeaponGrade grade, int stack, bool equipped, int weaponCount, bool isAcquired)
@@ -236,20 +237,21 @@ private List<Weapon> GetInitialWeaponsData()
     // 서버나 외부 데이터로부터 받은 갱신된 무기 정보
     return new List<Weapon>
     {
-        new Weapon(0, 0, true, 300, true),   // Common 무기
-        new Weapon(1, 0, false, 300, true),  // 기본값
-        new Weapon(2, 0, false, 300, true),  // 기본값
-        new Weapon(3, 0, false, 300, true),  // 기본값
-        new Weapon(4, 0, false, 300, true),  // Rare 무기
-        new Weapon(5, 0, false, 300, true),  // Rare 무기
-        new Weapon(6, 0, false, 300, true),  // 기본값
-        new Weapon(7, 0, false, 300, true),  // 기본값
-        new Weapon(8, 0, false, 300, true),  // Epic 무기
-        new Weapon(9, 0, false, 300, true),  // Epic 무기
-        new Weapon(10, 0, false, 300, true), // 기본값
-        new Weapon(11, 0, false, 300, true), // Epic 무기
-        new Weapon(12, 0, false, 300, true), // 기본값
-        new Weapon(13, 0, false, 300, true), // Legendary 무기
+        new Weapon(0, 1, true, 50, true),   // Common 무기
+        new Weapon(1, 1, false, 50, true),  // 기본값
+        new Weapon(2, 1, false, 50, true),  // 기본값
+        new Weapon(3, 1, false, 50, true),  // 기본값
+        new Weapon(4, 1, false, 300, true),  // Rare 무기
+        new Weapon(5, 1, false, 300, true),  // Rare 무기
+        new Weapon(6, 1, false, 300, true),  // 기본값
+        new Weapon(7, 1, false, 300, true),  // 기본값
+        new Weapon(8, 1, false, 300, true),  // Epic 무기
+        new Weapon(9, 1, false, 300, true),  // Epic 무기
+        new Weapon(10, 1, false, 300, true), // 기본값
+        new Weapon(11, 1, false, 300, true), // Epic 무기
+        new Weapon(12, 1, false, 300, true), // 기본값
+        new Weapon(13, 1, false, 300, true), // Legendary 무기
+        /**
         new Weapon(14, 0, false, 300, true), // 기본값
         new Weapon(15, 0, false, 300, true), // Legendary 무기
         new Weapon(16, 0, false, 300, true), // Mythic 무기
@@ -260,6 +262,7 @@ private List<Weapon> GetInitialWeaponsData()
         new Weapon(21, 0, false, 0, false), // Primordial 무기
         new Weapon(22, 0, false, 0, false), // Primordial 무기
         new Weapon(23, 0, false, 0, false), // Primordial 무기
+        **/
     };
 }
 
@@ -296,7 +299,7 @@ private List<Weapon> MergeWeapons(List<Weapon> baseList, List<Weapon> overrideLi
                 Debug.Log("=== 악세서리 데이터 동기화 완료 ===");
                 foreach (var acc in acceossryList)
                 {
-                    Debug.Log($"ID: {acc.id}, 강화 : {acc.count_Upgrade}, 레벨: {acc.count_Level}, 장착 여부: {acc.isEquipped}, 보유 여부: {acc.isAcquired}");
+                    Debug.Log($"ID: {acc.id}, 레벨: {acc.level}, 장착 여부: {acc.isEquipped}, 보유 여부: {acc.isAcquired}");
                 }
         }
     
@@ -309,63 +312,64 @@ private List<Weapon> MergeWeapons(List<Weapon> baseList, List<Weapon> overrideLi
 
 private List<Accessory> GetInitialAccessoriesData()
 {
-    return new List<Accessory>
+        return new List<Accessory>
     {
-        new Accessory(0, 0, 0, false, 0, false),     // 기본값
-        new Accessory(1, 0, 0, false, 0, false),     // 기본값
-        new Accessory(2, 0, 0, false, 0, false),     // 기본값
-        new Accessory(3, 0, 0, false, 0, false),     // 기본값
-        new Accessory(4, 0, 0, false, 0, false),     // 기본값
-        new Accessory(5, 0, 0, false, 0, false),     // 기본값
-        new Accessory(6, 0, 0, false, 0, false),     // 기본값
-        new Accessory(7, 0, 0, false, 0, false),     // 기본값
-        new Accessory(8, 0, 0, false, 0, false),     // 기본값
-        new Accessory(9, 0, 0, false, 0, false),     // 기본값
-        new Accessory(10, 0, 0, false, 0, false),    // 기본값
-        new Accessory(11, 0, 0, false, 0, false),    // 기본값
-        new Accessory(12, 0, 0, false, 0, false),    // 기본값
-        new Accessory(13, 0, 0, false, 0, false),    // 기본값
-        new Accessory(14, 0, 0, false, 0, false),    // 기본값
-        new Accessory(15, 0, 0, false, 0, false),    // 기본값
-        new Accessory(16, 0, 0, false, 0, false),    // 기본값
-        new Accessory(17, 0, 0, false, 0, false),    // 기본값
-        new Accessory(18, 0, 0, false, 0, false),    // 기본값
-        new Accessory(19, 0, 0, false, 0, false),    // 기본값
-        new Accessory(20, 0, 0, false, 0, false),    // 기본값
-        new Accessory(21, 0, 0, false, 0, false),    // 기본값
-        new Accessory(22, 0, 0, false, 0, false),    // 기본값
-        new Accessory(23, 0, 0, false, 0, false),    // 기본값
+        new Accessory(0, 1, false, 0, false), // 기본값
+        new Accessory(1, 1, false, 0, false), // 기본값
+        new Accessory(2, 1, false, 0, false), // 기본값
+        new Accessory(3, 1, false, 0, false), // 기본값
+        new Accessory(4, 1, false, 0, false), // 기본값
+        new Accessory(5, 1, false, 0, false), // 기본값
+        new Accessory(6, 1, false, 0, false), // 기본값
+        new Accessory(7, 1, false, 0, false), // 기본값
+        new Accessory(8, 1, false, 0, false), // 기본값
+        new Accessory(9, 1, false, 0, false), // 기본값
+        new Accessory(10, 1, false, 0, false), // 기본값
+        new Accessory(11, 1, false, 0, false), // 기본값
+        new Accessory(12, 1, false, 0, false), // 기본값
+        new Accessory(13, 1, false, 0, false), // 기본값
+        new Accessory(14, 1, false, 0, false), // 기본값
+        new Accessory(15, 1, false, 0, false), // 기본값
+        new Accessory(16, 1, false, 0, false), // 기본값
+        new Accessory(17, 1, false, 0, false), // 기본값
+        new Accessory(18, 1, false, 0, false), // 기본값
+        new Accessory(19, 1, false, 0, false), // 기본값
+        new Accessory(20, 1, false, 0, false), // 기본값
+        new Accessory(21, 1, false, 0, false), // 기본값
+        new Accessory(22, 1, false, 0, false), // 기본값
+        new Accessory(23, 1, false, 0, false), // 기본값
     };
+
 }
    private List<Accessory> GetOverrideAccessoriesData()
 {
     // 서버나 외부 데이터로부터 받은 갱신된 무기 정보
     return new List<Accessory>
     {
-        new Accessory(0, 0, 0, true, 300, true),  // Common 무기
-        new Accessory(1, 0, 0, false, 300, true), // 기본값
-        new Accessory(2, 0, 0, false, 300, true), // 기본값
-        new Accessory(3, 0, 0, false, 300, true), // 기본값
-        new Accessory(4, 0, 0, false, 300, true),  // Rare 무기
-        new Accessory(5, 0, 0, false, 300, true),  // Rare 무기
-        new Accessory(6, 0, 0, false, 300, true), // 기본값
-        new Accessory(7, 0, 0, false, 300, true), // 기본값
-        new Accessory(8, 0, 0, false, 300, true),  // Epic 무기
-        new Accessory(9, 0, 0, false, 300, true),  // Epic 무기
-        new Accessory(10, 0, 0, false, 300, true), // 기본값
-        new Accessory(11, 0, 0, false, 300, true), // Epic 무기
-        new Accessory(12, 0, 0, false, 300, true), // 기본값
-        new Accessory(13, 0, 0, false, 300, true), // Legendary 무기
-        new Accessory(14, 0, 0, false, 300, true), // 기본값
-        new Accessory(15, 0, 0, false, 300, true), // Legendary 무기
-        new Accessory(16, 0, 0, false, 300, true), // Mythic 무기
-        new Accessory(17, 0, 0, false, 300, true), // Mythic 무기
-        new Accessory(18, 0, 0, false, 300, true), // Mythic 무기
-        new Accessory(19, 0, 0, false, 300, true), // 기본값
-        new Accessory(20, 0, 0, false, 300, true), // Primordial 무기
-        new Accessory(21, 0, 0, false, 300, true), // Primordial 무기
-        new Accessory(22, 0, 0, false, 300, true), // Primordial 무기
-        new Accessory(23, 0, 0, false, 300, true), // Primordial 무기
+         new Accessory(0, 1, true, 100, true), // 기본값
+        new Accessory(1, 1, false, 0, false), // 기본값
+        new Accessory(2, 1, false, 0, false), // 기본값
+        new Accessory(3, 1, false, 0, false), // 기본값
+        new Accessory(4, 1, false, 0, true), // 기본값
+        new Accessory(5, 1, false, 0, false), // 기본값
+        new Accessory(6, 1, false, 0, false), // 기본값
+        new Accessory(7, 1, false, 100, true), // 기본값
+        new Accessory(8, 1, false, 0, false), // 기본값
+        new Accessory(9, 1, false, 0, false), // 기본값
+        new Accessory(10, 1, false, 0, true), // 기본값
+        new Accessory(11, 1, false, 0, false), // 기본값
+        new Accessory(12, 1, false, 0, false), // 기본값
+        new Accessory(13, 1, false, 100, true), // 기본값
+        new Accessory(14, 1, false, 0, false), // 기본값
+        new Accessory(15, 1, false, 0, false), // 기본값
+        new Accessory(16, 1, false, 0, false), // 기본값
+        new Accessory(17, 1, false, 0, false), // 기본값
+        new Accessory(18, 1, false, 0, false), // 기본값
+        new Accessory(19, 1, false, 0, false), // 기본값
+        new Accessory(20, 1, false, 0, false), // 기본값
+        new Accessory(21, 1, false, 0, false), // 기본값
+        new Accessory(22, 1, false, 0, false), // 기본값
+        new Accessory(23, 1, false, 0, false), // 기본값
     };
 }
 
@@ -432,18 +436,16 @@ public class Weapon
 public class Accessory
 {
     public int id;      // 고유 번호
-    public int count_Upgrade;  // 강화 수치
-    public int count_Level;    // 레벨 수치
+    public int level;    // 레벨 수치
      public int count_Owned;    // 보유량 수치
      public bool isAcquired; //획득 여부
     public bool isEquipped;   // 장착 여부
 
      // 🔹 생성자 추가 (5개의 인수를 받도록 설정)
-    public Accessory(int id, int upgrade, int level, bool equipped, int ownedCount, bool isAcquired)
+    public Accessory(int id, int level, bool equipped, int ownedCount, bool isAcquired)
     {
         this.id = id;
-        this.count_Upgrade = upgrade;
-        this.count_Level = level;
+        this.level = level;
         this.isEquipped = equipped;
         this.count_Owned = ownedCount;
         this.isAcquired = isAcquired;

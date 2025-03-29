@@ -40,7 +40,7 @@ public class Icon_Weapon : MonoBehaviour
         text_LevelUp.text = "Lv." + weapons[id].level.ToString();
 
         // ✅ 중첩 요구량 계산 (현재 레벨 + 1)
-        int levelUp_Require = 1 + weapons[id].level;
+        int levelUp_Require = weaponManager.ReturnLevelUpRequire(id);
 
         //게이지 FILL 수치 세팅
         int weaponCount = weapons[id].weaponCount;
@@ -59,13 +59,13 @@ public class Icon_Weapon : MonoBehaviour
         //랭크별 프레임 색상 변경
         frame.effectColor = weaponManager.weaponsData[id].weaponGrade switch
     {
-        WeaponGrade.Common => weaponManager.commonColor,
-        WeaponGrade.Rare => weaponManager.rareColor,
-        WeaponGrade.Epic => weaponManager.epicColor,
-        WeaponGrade.Legendary => weaponManager.legendColor,
-        WeaponGrade.Mythic => weaponManager.mythicColor,
-        WeaponGrade.Primordial => weaponManager.primordialColor,
-        _ => weaponManager.commonColor,
+        WeaponGrade.Common => weaponManager.commonColor_W,
+        WeaponGrade.Rare => weaponManager.rareColor_W,
+        WeaponGrade.Epic => weaponManager.epicColor_W,
+        WeaponGrade.Legendary => weaponManager.legendColor_W,
+        WeaponGrade.Mythic => weaponManager.mythicColor_W,
+        WeaponGrade.Primordial => weaponManager.primordialColor_W,
+        _ => weaponManager.commonColor_W,
     };
     }
     public void IconTouch(){

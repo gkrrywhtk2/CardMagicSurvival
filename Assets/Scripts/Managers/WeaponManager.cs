@@ -11,6 +11,7 @@ public class WeaponManager : MonoBehaviour
     public Icon_Weapon[] icon_Weapons;//장비 아이콘 UI
     public Icon_Weapon info_Weapon;//상세 보기 아이콘
     private int saveNowWeaponId;//현재 켜져있는 아이템 UI가 무엇인지
+      public EffectPooling effectPooling;
 
     [Header("# COLOR")]
     public Color commonColor_W, commonColor;
@@ -22,6 +23,7 @@ public class WeaponManager : MonoBehaviour
     public Color blackColor;
     public Color whiteColor;
     public Color alphaColor;
+    public Color grayColor;
     
     [Header("# INFO UI")]
     public GameObject info_UI;//인포UI 오브젝트 본체
@@ -33,7 +35,8 @@ public class WeaponManager : MonoBehaviour
     public Image EquipButton;//장착 버튼
     public TMP_Text equipText;//장착 or 장착중
     public Image stackButton_WeaponSrptie;//스택 버튼에 있는 무기이미지 변경
-    public GameObject levelUpButton;//레벨업 버튼
+    public Image levelUpButton;//레벨업 버튼
+    public TMP_Text levelUpText;//레벨업 버튼 3/15
 
   private void Awake()
 {
@@ -57,6 +60,7 @@ public class WeaponManager : MonoBehaviour
     blackColor = new Color(0f, 0f, 0f, 200f / 255f); // 검은색, 알파 200
     whiteColor = new Color(1f, 1f, 1f, 1f); // 흰색, 알파 255
     alphaColor = new Color(1f, 1f, 1f, 0.3f); // 흰색, 알파 255
+    grayColor = new Color(0.8f, 0.8f, 0.8f, 1f); // 밝은 회색
 }
 
     public void WeaponImageSetting(){
@@ -128,30 +132,39 @@ public class WeaponManager : MonoBehaviour
 
     //장착 효과 텍스트
     text_EquipEffect.text = $"{equipValue_Now}%<color=#00FF00>-> </color><color=#00FF00>{equipValue_Next}</color><color=#00FF00>%</color>";
-
+    
     //보유 효과 텍스트
     SetOwnedEffectTexts(data_Staic, data_Var.level, data_Var.level + 1, true);
 
     //장착 여부 
         if(data_Var.isEquipped == true){
             EquipButton.gameObject.SetActive(true);
+            levelUpButton.gameObject.SetActive(true);
             equipText.text = "장착중";
             EquipButton.color = alphaColor;
         }
         else if(data_Var.isEquipped != true && data_Var.isAcquired == true){
             EquipButton.gameObject.SetActive(true);
+            levelUpButton.gameObject.SetActive(true);
             equipText.text = "장착";
             EquipButton.color = whiteColor;
         }
         else if(data_Var.isEquipped != true && data_Var.isAcquired != true){
             equipText.text = "미획득";
             EquipButton.color = alphaColor;
-            levelUpButton.SetActive(false);
+            levelUpButton.gameObject.SetActive(false);
             EquipButton.gameObject.SetActive(false);
         }
 
-        //선택한 무기에 따른 중첩 버튼 이미지 세팅
+        //레벨업 버튼 이미지 세팅
         stackButton_WeaponSrptie.sprite = data_Staic.weaponMainSprite;
+        int Require = ReturnLevelUpRequire(saveNowWeaponId);
+        int count = data_Var.weaponCount;
+        levelUpButton.color = count >= Require? whiteColor : grayColor;
+
+        string colorCode = count >= Require ? "#00FF00" : "#FF9999"; // 초록색 또는 옅은 붉은색
+        levelUpText.text = $"<color={colorCode}>{count}</color> / {Require}";
+
 
         //웨펀 스크롤 초기화
         WeaponImageSetting();
@@ -172,7 +185,7 @@ public class WeaponManager : MonoBehaviour
     {
         text_OwnedEffectTagName[i].text = data_Static.tags[i] switch
         {
-            WeaponsData.EffectTag.ATK => "공격력",
+            WeaponsData.EffectTag.ATK => "추가 공격력",
             WeaponsData.EffectTag.CRI => "치명타 공격력",
             _ => "알 수 없음"
         };
@@ -243,6 +256,7 @@ public class WeaponManager : MonoBehaviour
         {
             data_Var.weaponCount -= stackRequire; // 무기 수 감소
             data_Var.level += 1;             // 중첩 1 증가
+            UpgradeEffectAnim();
         }
         else
         {
@@ -294,7 +308,7 @@ public class WeaponManager : MonoBehaviour
         // 하나도 중첩되지 않았을 경우 경고 출력
         if (!didStack)
         {
-            GameManager.instance.WarningText("레벨업 가능한 장비가 없습니다!");
+            GameManager.instance.WarningText("모두 레벨업 하였습니다!");
         }
     }
         
@@ -350,6 +364,38 @@ public class WeaponManager : MonoBehaviour
             }
         }
         return valueFinal;
+    }
+
+    public int ReturnLevelUpRequire(int id)
+    {
+        Weapon data_Var = GameManager.instance.dataManager.weaponList[id];
+        int require = Mathf.Min(15, 1 + data_Var.level);
+        return require;
+    }
+        /**
+     버튼 트리거
+        **/
+
+    public void OnPointerDown()
+    {
+       InvokeRepeating(nameof(LevelUpButton), 0.5f, 0.1f); // 0.3초마다 반복 실행
+    }
+
+    public void OnPointerUp()
+    {
+       CancelInvoke(nameof(LevelUpButton)); // 업그레이드 중단
+    }
+
+      public void UpgradeEffectAnim(){
+        // 🔹 이펙트 생성
+            RectTransform effect = effectPooling.Get(0).GetComponent<RectTransform>();
+
+            // 1️⃣ 아이콘의 월드 좌표 가져오기
+           Vector3 worldPosition = info_Weapon.frame.transform.position;
+
+            // 2️⃣ 이펙트도 월드 좌표로 변경
+           
+            effect.position = worldPosition;
     }
 
     public void DebugLoadedWeapons()

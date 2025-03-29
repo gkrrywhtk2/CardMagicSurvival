@@ -7,70 +7,44 @@ public class AccessoryManager : MonoBehaviour
 {
     [Header("# DATA")]
     public AccessoryData[] accessoryData;//악세 데이타 모음
+     public Icon_Acc[] icon_Acc;//장비 아이콘 UI
+    public Icon_Acc info_Acc;//상세 보기 아이콘
+    public EffectPooling effectPooling;
 
-    [Header("# UI_LINK")]
-    public Image[] Icons;//메인 스프라이트
-    public TMP_Text[] upgradeText;//강화 수치
-    public TMP_Text[] levelCountText;//레벨 수치
-    public Image[] fills;//게이지 수치 fill 오브젝트
-    public TMP_Text[] fill_CountText;//0/5 아이템 보유 수치 텍스트
-    public GameObject[] getBackGround;//아이템 미획득 백그라운드
-    public GameObject[] E_icon;//E 장착표시
-
-    [Header("# COLOR_PRESET")]
-    private Color commonColor_W, commonColor;
-    private Color rareColor_W, rareColor;
-    private Color epicColor_W, epicColor;
-    private Color legendColor_W, legendColor;
-    private Color mythicColor_W, mythicColor;         
-    private Color primordialColor_W, primordialColor;
-    private Color blackColor;
-    private Color whiteColor;
-    private Color alphaColor;
+   
 
 
     [Header("# Main UI")]
     public GameObject mainUI; //UI 부모 오브젝트
     public TMP_Text text_Name;
     public TMP_Text text_Rank;
-    public TMP_Text text_Upgrade;
-    public TMP_Text text_Level;
-    public Image MainSprite; //메인 스프라이트
-    public Image frame; //등급에 따른 프레임 색상 변경
-    public Image fill; //게이지 수치 fill 오브젝트
-    public TMP_Text text_FillCount; //0/5 아이템 보유 수치 텍스트
-    public GameObject backGround_Unowned; //아이템 미획득 배경
-
-    [Header("# Equip UI")]
     public TMP_Text text_EquipEffectName; //장착 효과 이름
     public TMP_Text text_EquipEffectDesc; //변하는 장착 효과
     public Image EquipButton; //장착 버튼
-    public Image EuipIcon; //메인 스프라이트 위에 떠있는 E 표시
+    public Image levelUpButton; //장착 버튼
     public TMP_Text text_Equip; //장착 or 장착중
 
     [Header("# Owned Effect UI")]
     public TMP_Text[] text_OwnedEffectName; //변하는 보유 효과 이름
     public TMP_Text[] text_OwnedEffectDesc; //변하는 보유 효과 설명
 
-    [Header("# Upgrade UI")]
-    public TMP_Text text_UpgradePostionOwnedCount; //강화 포션 보유량 텍스트
-    public TMP_Text text_UpgradePosionRequireCount; //강화 포션 요구량 텍스트
+    [Header("# Level UI")]
     public Image levelButton_AccessorySrptie; //버튼에 있는 이미지 변경
-      public TMP_Text text_RequireLevelUpCount;//레벨업에 필요한 아이템의 수
-
-    [Header("# Warning UI")]
-    public GameObject warningCost; //재료가 부족합니다 알림창
-    public Animator warningCost_Anim; //알림창 애니메이션
+    public TMP_Text text_RequireLevelUpCount;//레벨업에 필요한 아이템의 수
 
     [Header("# ETC")]
     public int saveNowId; //현재 켜져있는 아이템 UI ID
-    public enum UpgradeType { upgrade, levelup };
-    public UpgradeType upgradeType = UpgradeType.upgrade;
-
-    [Header("# Buttons")]
-    public GameObject levelUpButton;//레벨업 버튼
-    public GameObject upgradeButton;//강화 버튼
-
+    [Header("# COLOR_PRESET")]
+    public Color commonColor_W, commonColor;
+    public Color rareColor_W, rareColor;
+    public Color epicColor_W, epicColor;
+    public Color legendColor_W, legendColor;
+    public Color mythicColor_W, mythicColor;         
+    public Color primordialColor_W, primordialColor;
+    public Color blackColor;
+    public Color whiteColor;
+    public Color alphaColor;
+      public Color grayColor;
         private void Awake()
     {
         // 밝은 색상 (획득한 무기)
@@ -93,40 +67,16 @@ public class AccessoryManager : MonoBehaviour
         blackColor = new Color(0f, 0f, 0f, 200f / 255f); // 검은색, 알파 200
         whiteColor = new Color(1f, 1f, 1f, 1f); // 흰색, 알파 255
         alphaColor = new Color(1f, 1f, 1f, 0.3f); // 흰색, 알파 255
+         grayColor = new Color(0.8f, 0.8f, 0.8f, 1f); // 밝은 회색
     }
 
      public void IconsSetting(){
         //아이콘 24개 세팅하는 함수
         List<Accessory> accessories = GameManager.instance.dataManager.acceossryList;
-        //현재 장비 리스트를 읽어 인게임 이미지를 보여준다
+        //아이콘 세팅
             for (int i = 0; i < accessories.Count; i++)
         {
-            // 강화 수치 세팅
-            upgradeText[i].text = "+" + accessories[i].count_Upgrade.ToString();
-
-            // 레벨 수치 세팅
-            levelCountText[i].text = "Lv." + accessories[i].count_Level.ToString();
-
-            // ✅ 중첩 요구량 계산 (기본값 2 + 현재 스택 수)
-            int stackRequire = 2 + accessories[i].count_Level;
-
-            // 게이지 FILL 수치 세팅
-            int LvCount = accessories[i].count_Owned;
-            fills[i].fillAmount = Mathf.Clamp01((float)LvCount / stackRequire);
-            fill_CountText[i].text = LvCount.ToString() + " / " + stackRequire;
-
-            // 미획득 아이템 어둡게 세팅
-            getBackGround[i].gameObject.SetActive(true); // 초기화
-            Icons[i].color = blackColor;
-
-            if (accessories[i].isAcquired)
-            {
-                getBackGround[i].gameObject.SetActive(false);
-                Icons[i].color = whiteColor;
-
-                // 장착한 무기에 E 표시
-                E_icon[i].gameObject.SetActive(accessories[i].isEquipped);
-            }
+            icon_Acc[i].Init(i);
         }
     }
 
@@ -185,98 +135,52 @@ public class AccessoryManager : MonoBehaviour
     Color selectedColor = data_Var.isAcquired ? acquiredColor : defaultColor;
 
     text_Rank.color = selectedColor;
-    frame.color = selectedColor;
+
 
         //이름 세팅
         text_Name.text = data_Staic.Name_KOR;
 
-        //강화 수치 세팅
-        text_Upgrade.text = "+" + data_Var.count_Upgrade.ToString(); 
+        //아이콘 세팅
+        info_Acc.Init(id);
 
-        //중첩 수치 세팅
-        text_Level.text = "Lv." + data_Var.count_Level.ToString();
-
-        //게이지 FILL 수치 세팅
-        // 중첩에 필요한 무기 수 = 2 + 현재 중첩 수치
-        int Require = 2 + data_Var.count_Level;
-        // 게이지 FILL 수치 세팅
-        int ownedCount = data_Var.count_Owned;
-        fill.fillAmount = Mathf.Clamp01((float)ownedCount / Require);
-        text_FillCount.text = ownedCount + " / " + Require;
-
-        //미획득 어둡게 세팅 + 메인 스프라이트 세팅
-        
-        backGround_Unowned.gameObject.SetActive(true);//어둡게 초기화
-        MainSprite.sprite = data_Staic.MainSprite;//스프라이트 세팅
-            if(data_Var.isAcquired == true){//아이템 보유중이라면 
-                backGround_Unowned.gameObject.SetActive(false);// 밝게 하고
-                  MainSprite.color = whiteColor; // 흰색 + 알파 255
-            }else{
-                backGround_Unowned.gameObject.SetActive(true);// 밝게 하고
-                   MainSprite.color = blackColor; // 흰색 + 알파 255
-            }
-
-        //장착 효과 텍스트 세팅 , 분기
-       switch (upgradeType)
-{
-    case UpgradeType.upgrade:
-        {
+        //Require = 레벨업시 필요한 아이템 수
+       
             //장착 효과 텍스트 세팅
-            SetEquipedEffectTexts(data_Staic, data_Var.count_Upgrade, data_Var.count_Upgrade + 1, true);
-            SetOwnedEffectTexts(data_Staic, data_Var.count_Level, data_Var.count_Level + 1, false);
+            SetEquipedEffectTexts(data_Staic, data_Var.level, data_Var.level + 1, true);
+            SetOwnedEffectTexts(data_Staic, data_Var.level, data_Var.level + 1, true);
 
-            //버튼 세팅
-            upgradeButton.gameObject.SetActive(true);
-            levelUpButton.gameObject.SetActive(false);
-        }
-        break;
-
-    case UpgradeType.levelup:
-        {
-           
-            SetEquipedEffectTexts(data_Staic, data_Var.count_Upgrade, data_Var.count_Upgrade + 1, false);
-            SetOwnedEffectTexts(data_Staic, data_Var.count_Level, data_Var.count_Level + 1, true);
-
-            //버튼 세팅
-            upgradeButton.gameObject.SetActive(false);
-            levelUpButton.gameObject.SetActive(true);
+            //레벨업 버튼 세팅
+            int Require = ReturnLevelUpRequire(saveNowId);
             text_RequireLevelUpCount.text = Require.ToString();
-        }
-        break;
-}
+            int count = data_Var.count_Owned;
+            levelUpButton.color = count >= Require? whiteColor : grayColor;
+        
 
-        //보유 포션량
-        text_UpgradePostionOwnedCount.text = GameManager.instance.dataManager.upgradePostionCount.ToString();
-
-       //요구 포션량 공식 = 재료 요구량 + (재료 요구량 * 강화 레벨) * 1.1 (10% 추가), 오류있음
-        int baseCost = data_Staic.UpgradeCost * data_Var.count_Upgrade;
-        int postionCost = data_Staic.UpgradeCost + (int)(baseCost * 1.1f);
-        text_UpgradePosionRequireCount.text = postionCost.ToString();//적용
 
         //장착 여부 
         if(data_Var.isEquipped == true){
             EquipButton.gameObject.SetActive(true);
+            levelUpButton.gameObject.SetActive(true);
             text_Equip.text = "장착중";
             EquipButton.color = alphaColor;
-            EuipIcon.gameObject.SetActive(true);
         }
         else if(data_Var.isEquipped != true && data_Var.isAcquired == true){
             EquipButton.gameObject.SetActive(true);
+             levelUpButton.gameObject.SetActive(true);
             text_Equip.text = "장착";
             EquipButton.color = whiteColor;
-                EuipIcon.gameObject.SetActive(false);
         }
         else if(data_Var.isEquipped != true && data_Var.isAcquired != true){
             text_Equip.text = "미획득";
             EquipButton.color = alphaColor;
-            EuipIcon.gameObject.SetActive(false);
-            upgradeButton.SetActive(false);
-            levelUpButton.SetActive(false);
             EquipButton.gameObject.SetActive(false);
+             levelUpButton.gameObject.SetActive(false);
         }
 
         //선택한 무기에 따른 중첩 버튼 이미지 세팅
         levelButton_AccessorySrptie.sprite = data_Staic.MainSprite;
+        string colorCode = count >= Require ? "#00FF00" : "#FF9999"; // 초록색 또는 옅은 붉은색
+        text_RequireLevelUpCount.text = $"<color={colorCode}>{count}</color> / {Require}";
 
 
 
@@ -365,32 +269,6 @@ public class AccessoryManager : MonoBehaviour
     }
 }
 
-      public void UpgradeButton(){
-        //데이터 세팅
-        AccessoryData data_Staic = accessoryData[saveNowId];
-        List<Accessory> data_VarLoad = GameManager.instance.dataManager.acceossryList;
-        Accessory data_Var = data_VarLoad[saveNowId];
-        DataManager data = GameManager.instance.dataManager;//데이터 메니저 호출
-
-
-        int nowUpgradeLevel = data_Var.count_Upgrade;
-        int baseCost = data_Staic.UpgradeCost * nowUpgradeLevel;
-        int postionCost = data_Staic.UpgradeCost + (int)(baseCost * 1.1f);
-
-        if(data_Var.isAcquired != true)
-            return;
-
-        //강화 포션 버튼
-        if(data.upgradePostionCount >= postionCost){
-            data.upgradePostionCount -= postionCost;//재료 감소
-            data_Var.count_Upgrade += 1;//강화 수치 1 상승
-        }else{
-            GameManager.instance.WarningText("재료가 부족합니다!");
-        }
-
-        GameManager.instance.dataManager.acceossryList = data_VarLoad;//변경된 값 데이터 메니저에 적용
-        AccessoryInfo_UISetting(saveNowId);//적용된 값 UI 변경  
-    }
 
     public void EquipedButton(){
         //장착 버튼 로직
@@ -425,12 +303,13 @@ public class AccessoryManager : MonoBehaviour
         Accessory data_Var = data_VarLoad[saveNowId];
 
         // 현재 중첩 수에 따라 필요한 무기량 계산
-        int stackRequire = 2 + data_Var.count_Level;
+        int stackRequire = 2 + data_Var.level;
 
         if (data_Var.count_Owned >= stackRequire)
         {
             data_Var.count_Owned -= stackRequire; // 무기 수 감소
-            data_Var.count_Level += 1;             // 중첩 1 증가
+            data_Var.level += 1;             // 중첩 1 증가
+            UpgradeEffectAnim();
         }
         else
         {
@@ -460,12 +339,12 @@ public class AccessoryManager : MonoBehaviour
             // 가능한 만큼 중첩
             while (true)
             {
-                int stackRequire = 2 + acc.count_Level;
+                int stackRequire = 1 + acc.level;
 
                 if (acc.count_Owned >= stackRequire)
                 {
                     acc.count_Owned -= stackRequire;
-                    acc.count_Level += 1;
+                    acc.level += 1;
                     didStack = true;
                 }
                 else
@@ -510,7 +389,7 @@ public class AccessoryManager : MonoBehaviour
             if (data_VarLoad[i].isEquipped)
             {
                 AccessoryData data_Static = accessoryData[i];
-                int nowUpgradeLevel = data_VarLoad[i].count_Upgrade;
+                int nowUpgradeLevel = data_VarLoad[i].level;
 
                 valueFinal = data_Static.equipedTag switch
                 {
@@ -535,7 +414,7 @@ public class AccessoryManager : MonoBehaviour
         float valueFinal = 0;
         for(int i =0; i<data_VarLoad.Count; i++){
             AccessoryData data_Staic = accessoryData[i];
-            int nowUpgradeLevel = data_VarLoad[i].count_Level;
+            int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedHP(nowUpgradeLevel);
             valueFinal = ownedValue;
         }
@@ -548,7 +427,7 @@ public class AccessoryManager : MonoBehaviour
         float valueFinal = 0;
         for(int i =0; i<data_VarLoad.Count; i++){
             AccessoryData data_Staic = accessoryData[i];
-            int nowUpgradeLevel = data_VarLoad[i].count_Level;
+            int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedVIT(nowUpgradeLevel);
             valueFinal = ownedValue;
         }
@@ -561,7 +440,7 @@ public class AccessoryManager : MonoBehaviour
         float valueFinal = 0;
         for(int i =0; i<data_VarLoad.Count; i++){
             AccessoryData data_Staic = accessoryData[i];
-            int nowUpgradeLevel = data_VarLoad[i].count_Level;
+            int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedCRI(nowUpgradeLevel);
             valueFinal = ownedValue;
         }
@@ -574,50 +453,46 @@ public class AccessoryManager : MonoBehaviour
         float valueFinal = 0;
         for(int i =0; i<data_VarLoad.Count; i++){
             AccessoryData data_Staic = accessoryData[i];
-            int nowUpgradeLevel = data_VarLoad[i].count_Level;
+            int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedLUK(nowUpgradeLevel);
             valueFinal = ownedValue;
         }
         return valueFinal;
+    }
+    public int ReturnLevelUpRequire(int id)
+    {
+        Accessory data_Var = GameManager.instance.dataManager.acceossryList[id];
+        int require = Mathf.Min(15, 1 + data_Var.level);
+        return require;
     }
 
     /**
     리턴 함수 종료
     **/
 
-
-    /**
-    InfoUI의 강화, 레벨업 탭 전환 관련 로직
-    **/
-    public Image upgradeTap;
-    public Image levelUpTap;
-
-    public void SetUpgradeMode()
+     public void OnPointerDown()
     {
-        upgradeType = UpgradeType.upgrade;
-        AccessoryInfo_UISetting(saveNowId);
-
-        // 색상 설정 (활성화: #CF7200, 비활성화: #4B4B4B)
-        Color activeColor = new Color32(0xCF, 0x72, 0x00, 0xFF);
-        Color inactiveColor = new Color32(0x4B, 0x4B, 0x4B, 0xFF);
-
-        upgradeTap.color = activeColor;
-        levelUpTap.color = inactiveColor;
+       InvokeRepeating(nameof(LevelUpButton), 0.5f, 0.1f); // 0.3초마다 반복 실행
     }
 
-    public void SetLevelMode()
+    public void OnPointerUp()
     {
-        upgradeType = UpgradeType.levelup;
-        AccessoryInfo_UISetting(saveNowId);
-
-        // 색상 설정 (활성화: #CF7200, 비활성화: #4B4B4B)
-        Color activeColor = new Color32(0xCF, 0x72, 0x00, 0xFF);
-        Color inactiveColor = new Color32(0x4B, 0x4B, 0x4B, 0xFF);
-
-        upgradeTap.color = inactiveColor;
-        levelUpTap.color = activeColor;
+       CancelInvoke(nameof(LevelUpButton)); // 업그레이드 중단
     }
+    public void UpgradeEffectAnim(){
+        // 🔹 이펙트 생성
+            RectTransform effect = effectPooling.Get(0).GetComponent<RectTransform>();
+
+            // 1️⃣ 아이콘의 월드 좌표 가져오기
+           Vector3 worldPosition = info_Acc.frame.transform.position;
+
+            // 2️⃣ 이펙트도 월드 좌표로 변경
+            effect.position = worldPosition;
+    }
+
+
 }
+
 
 
 
