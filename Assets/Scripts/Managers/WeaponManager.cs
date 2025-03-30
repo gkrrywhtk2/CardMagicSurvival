@@ -266,6 +266,7 @@ public class WeaponManager : MonoBehaviour
 
         GameManager.instance.dataManager.weaponList = data_VarLoad; // 변경 사항 저장
         Setting_WeaponInfoUI(weaponId); // UI 갱신
+        GameManager.instance.player.playerStatus.InitALLStat();//데이터 갱신
     }
 
     public void AllLevelUpButton()
@@ -304,6 +305,7 @@ public class WeaponManager : MonoBehaviour
 
         // UI 갱신
         WeaponImageSetting();
+        GameManager.instance.player.playerStatus.InitALLStat();//데이터 갱신
 
         // 하나도 중첩되지 않았을 경우 경고 출력
         if (!didStack)
@@ -326,6 +328,8 @@ public class WeaponManager : MonoBehaviour
             WeaponsData data_Staic = weaponsData[i];
             int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedATK(nowUpgradeLevel);
+
+            if(data_VarLoad[i].isAcquired == true)
             valueFinal += ownedValue;
         }
         return valueFinal;
@@ -339,7 +343,9 @@ public class WeaponManager : MonoBehaviour
             WeaponsData data_Staic = weaponsData[i];
             int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedCRI(nowUpgradeLevel);
-            valueFinal += ownedValue;
+
+            if(data_VarLoad[i].isAcquired == true)
+                valueFinal += ownedValue;
         }
         return valueFinal;
     }

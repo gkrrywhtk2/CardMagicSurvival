@@ -71,11 +71,15 @@ public class Player_col : MonoBehaviour
         StartCoroutine(Get_Gem(gem.rank));
     }else if(collison.CompareTag("Gold")){
         GoldCoin gold = collison.GetComponent<GoldCoin>();
-        dataManager.goldPoint += playerStatus.ReturnCoinValue(gold.value);
+        dataManager.goldPoint += ReturnGoldValue(gold.value);
         gold.gameObject.SetActive(false);
     }
+   }
 
-  
+   public int ReturnGoldValue(float value){
+    float returnValue = value * (1f + playerStatus.LUK / 100f);
+    return (int)returnValue;
+
    }
 
 

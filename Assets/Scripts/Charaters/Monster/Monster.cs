@@ -215,7 +215,7 @@ public void CallHitStop(){
     {
         while (toxicity >= 1)
         {
-            float atk = GameManager.instance.player.playerStatus.ATK;
+            float atk = GameManager.instance.player.playerStatus.totalATK;
             int damage = Mathf.CeilToInt(atk * 0.1f * toxicity);
             TakePosionDamage(damage);
             yield return new WaitForSeconds(toxicityInterval);

@@ -402,8 +402,7 @@ public class UpgradeUI : MonoBehaviour
     UpgradeEffectAnim(effectPos);
 
     AllUpgradeSetting();
-    GameManager.instance.player.playerStatus.GetMaxHealth();
-   GameManager.instance.player.playerStatus.GetTotalATK();
+    GameManager.instance.player.playerStatus.InitALLStat();
     //data.ChageToRealValue(); // 캐릭터 stats에 실제로 변경된 값 적용
 }
 
@@ -454,9 +453,8 @@ public class UpgradeUI : MonoBehaviour
                 effectPos = 0;
             break;
 
-            case TraningType.HP:
+            case TraningType.HP: 
                 mainData.traningData.hp++;
-                GameManager.instance.player.playerStatus.health += 5; // 최대 체력 증가량만큼 현재 체력 회복
                 effectPos = 1;
             break;
 
@@ -491,7 +489,7 @@ public class UpgradeUI : MonoBehaviour
       mainData.traningData.point--; //포인트 감소
       Training_UpgradeEffectAnim(effectPos);
       AllUpgradeSetting();
-      GameManager.instance.player.playerStatus.GetMaxHealth();
+      GameManager.instance.player.playerStatus.InitALLStat();
   }
 
   public void ButtonResetPoint(){

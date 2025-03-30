@@ -294,6 +294,7 @@ public class AccessoryManager : MonoBehaviour
         }
         GameManager.instance.dataManager.acceossryList = data_VarLoad;//변경된 값 리스트에 적용
         AccessoryInfo_UISetting(saveNowId);//적용된 값 UI 변경
+        GameManager.instance.player.playerStatus.InitALLStat();//데이터 갱신 
     }
 
      public void LevelUpButton()
@@ -310,6 +311,7 @@ public class AccessoryManager : MonoBehaviour
             data_Var.count_Owned -= stackRequire; // 무기 수 감소
             data_Var.level += 1;             // 중첩 1 증가
             UpgradeEffectAnim();
+            
         }
         else
         {
@@ -319,6 +321,7 @@ public class AccessoryManager : MonoBehaviour
 
         GameManager.instance.dataManager.acceossryList = data_VarLoad; // 변경 사항 저장
         AccessoryInfo_UISetting(saveNowId);// UI 갱신
+         GameManager.instance.player.playerStatus.InitALLStat();//데이터 갱신 
     }
 
 
@@ -359,6 +362,8 @@ public class AccessoryManager : MonoBehaviour
 
         // UI 갱신
         IconsSetting();
+        // 데이터 갱신
+        GameManager.instance.player.playerStatus.InitALLStat();
 
         // 하나도 중첩되지 않았을 경우 경고 출력
         if (!didStack)
@@ -379,7 +384,7 @@ public class AccessoryManager : MonoBehaviour
     장착 & 보유 효과 Return메소드 모음
     **/
 
-    public float ReturnEquipEffect()
+    public float ReturnEquipEffect_HP()
     {
         List<Accessory> data_VarLoad = GameManager.instance.dataManager.acceossryList;
         float valueFinal = 0;
@@ -390,16 +395,64 @@ public class AccessoryManager : MonoBehaviour
             {
                 AccessoryData data_Static = accessoryData[i];
                 int nowUpgradeLevel = data_VarLoad[i].level;
+                valueFinal =  data_Static.GetEuipedHP(nowUpgradeLevel);
+                break; // 장착은 1개만 가능하다고 가정
+            }
+        }
 
-                valueFinal = data_Static.equipedTag switch
-                {
-                    AccessoryData.EffectTag.HP => data_Static.GetEuipedHP(nowUpgradeLevel),
-                    AccessoryData.EffectTag.VIT => data_Static.GetEuipedVIT(nowUpgradeLevel),
-                    AccessoryData.EffectTag.CRI => data_Static.GetEuipedCRI(nowUpgradeLevel),
-                    AccessoryData.EffectTag.LUK => data_Static.GetEuipedLUK(nowUpgradeLevel),
-                    _ => 0,
-                };
+        return valueFinal;
+    }
 
+    public float ReturnEquipEffect_VIT()
+    {
+        List<Accessory> data_VarLoad = GameManager.instance.dataManager.acceossryList;
+        float valueFinal = 0;
+
+        for (int i = 0; i < data_VarLoad.Count; i++)
+        {
+            if (data_VarLoad[i].isEquipped)
+            {
+                AccessoryData data_Static = accessoryData[i];
+                int nowUpgradeLevel = data_VarLoad[i].level;
+                valueFinal = data_Static.GetEuipedVIT(nowUpgradeLevel);
+                break; // 장착은 1개만 가능하다고 가정
+            }
+        }
+
+        return valueFinal;
+    }
+
+     public float ReturnEquipEffect_CRI()
+    {
+        List<Accessory> data_VarLoad = GameManager.instance.dataManager.acceossryList;
+        float valueFinal = 0;
+
+        for (int i = 0; i < data_VarLoad.Count; i++)
+        {
+            if (data_VarLoad[i].isEquipped)
+            {
+                AccessoryData data_Static = accessoryData[i];
+                int nowUpgradeLevel = data_VarLoad[i].level;
+                valueFinal = data_Static.GetEuipedCRI(nowUpgradeLevel);
+                break; // 장착은 1개만 가능하다고 가정
+            }
+        }
+
+        return valueFinal;
+    }
+
+     public float ReturnEquipEffect_LUK()
+    {
+        List<Accessory> data_VarLoad = GameManager.instance.dataManager.acceossryList;
+        float valueFinal = 0;
+
+        for (int i = 0; i < data_VarLoad.Count; i++)
+        {
+            if (data_VarLoad[i].isEquipped)
+            {
+                AccessoryData data_Static = accessoryData[i];
+                int nowUpgradeLevel = data_VarLoad[i].level;
+                valueFinal =data_Static.GetEuipedLUK(nowUpgradeLevel);
                 break; // 장착은 1개만 가능하다고 가정
             }
         }
@@ -409,14 +462,16 @@ public class AccessoryManager : MonoBehaviour
 
 
     public float ReturnOwnedHPEffect(){
-        //무기 보유 효과 총량 계산해서 리턴해주는 함수
+        //효과 총량 계산해서 리턴해주는 함수
         List<Accessory> data_VarLoad = GameManager.instance.dataManager.acceossryList;
         float valueFinal = 0;
         for(int i =0; i<data_VarLoad.Count; i++){
             AccessoryData data_Staic = accessoryData[i];
             int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedHP(nowUpgradeLevel);
-            valueFinal = ownedValue;
+
+            if(data_VarLoad[i].isAcquired == true)
+                valueFinal = ownedValue;
         }
         return valueFinal;
     }
@@ -429,7 +484,9 @@ public class AccessoryManager : MonoBehaviour
             AccessoryData data_Staic = accessoryData[i];
             int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedVIT(nowUpgradeLevel);
-            valueFinal = ownedValue;
+
+            if(data_VarLoad[i].isAcquired == true)
+                valueFinal = ownedValue;
         }
         return valueFinal;
     }
@@ -442,7 +499,8 @@ public class AccessoryManager : MonoBehaviour
             AccessoryData data_Staic = accessoryData[i];
             int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedCRI(nowUpgradeLevel);
-            valueFinal = ownedValue;
+            if(data_VarLoad[i].isAcquired == true)
+                valueFinal = ownedValue;
         }
         return valueFinal;
     }
@@ -455,7 +513,8 @@ public class AccessoryManager : MonoBehaviour
             AccessoryData data_Staic = accessoryData[i];
             int nowUpgradeLevel = data_VarLoad[i].level;
             float ownedValue = data_Staic.GetOwnedLUK(nowUpgradeLevel);
-            valueFinal = ownedValue;
+            if(data_VarLoad[i].isAcquired == true)
+                valueFinal = ownedValue;
         }
         return valueFinal;
     }

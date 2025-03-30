@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Weapon0 7
   m_EditorClassIdentifier: 
   weaponId: 7
-  materialCost_Upgrade: 30
   weaponName_KOR: "\uD3EC\uB808\uC2A4\uD2B8 \uC2A4\uD0DC\uD504"
   weaponGrade: 1
   weaponMainSprite: {fileID: 1413749222, guid: be11a126dd0df554ab316f49f2f08a65, type: 3}
   tags: 00000000
   equippeBase_ATK: 130
   ownedBase_ATK: 40
-  ownedBase_CRI: 5
+  ownedBase_CRI: 0

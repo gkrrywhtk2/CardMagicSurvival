@@ -8,16 +8,19 @@ public class Player_Status : MonoBehaviour
 {
     public DataManager dataManager;
     public UpgradeUI upgradeUI;
+    AccessoryManager accessoryManager;
     [Header("#플레이어의 상태값")]
     public bool isLive;
     public float health;//현재 체력
     private Coroutine regenCoroutine; // 실행 중인 체력 회복 코루틴
-    [Header("#일반 성장 능력치 ")]
-    public float ATK;//공격력
-    public float maxHealth = 100;//최대 체력
-    public float healthRecoveryPer;//초당 체력 회복량
-    public float CriticalDamagePer;//치명타 배율
-    public float CriticalPer;//치명타 확율
+    [Header("#능력치 ")]
+    public float totalATK;//공격력
+    public float maxHealth;//최대 체력
+    public float totalVIT;//초당 체력 회복량
+    public float totalCriDamage;//치명타 배율
+    public float totalCriChance;//치명타 확율
+    public int LUK;//골드 추가 획득량
+    public float VIT;
 
     [Header("#특수 성장 능력치 ")]
     public float mana;
@@ -35,9 +38,12 @@ public class Player_Status : MonoBehaviour
     public Slider manaBar_UI;
     public TMP_Text nowHpText_UI;
     public TMP_Text nowManaText_UI;
+  void Start()
+  {
+    accessoryManager = GameManager.instance.accessoryManager;
+  }
 
-
-    public void PlayerInit(){
+  public void PlayerInit(){
         //게임 시작시 플레이어 변수 초기화
         isLive = true;
         GetMaxHealth();
@@ -101,11 +107,9 @@ public class Player_Status : MonoBehaviour
     while (true)
     {
          // 일시정지 상태일 경우, 대기 (코루틴이 종료되지 않도록 함)
-       yield return new WaitUntil(() => GameManager.instance.GamePlayState == true);
-
-       float recoveryAmount = upgradeUI.HpRecovery_Setting() + upgradeUI.Traning_VIT_Setting();
-        health = Mathf.Min(health + recoveryAmount, maxHealth);
-       Debug.Log("Heal : " + recoveryAmount);
+        yield return new WaitUntil(() => GameManager.instance.GamePlayState == true);
+        health = Mathf.Min(health + GetVIT(), maxHealth);
+      // Debug.Log("Heal : " + GetVIT());
         yield return new WaitForSeconds(1f); // 1초 대기 후 반복
     }
 }
@@ -212,10 +216,10 @@ private void UpdateTotalSpeedUpMultiplier()
     public float DamageReturn(float skillPower, out bool isCritical)
     {
         // 랜덤 오프셋 적용 (-5% ~ +5% 변동)
-        float randomOffset = Random.Range(ATK * -0.05f, ATK * 0.05f);
+        float randomOffset = Random.Range(totalATK * -0.05f, totalATK * 0.05f);
 
         // 기본 데미지 계산
-        float basicDamage = (ATK + randomOffset) * (skillPower / 100f);
+        float basicDamage = (totalATK + randomOffset) * (skillPower / 100f);
 
         // 치명타 확률 계산 (totalCriticalMultiplier 포함)
         isCritical = CriticalReturn();
@@ -227,43 +231,7 @@ private void UpdateTotalSpeedUpMultiplier()
     }
 
   // 총 공격력 계산
-    public float GetTotalATK()
-    {
-        // 기본 성장ATK 및 훈련ATK 계산
-        float totalATK = (dataManager.mainData.atk * 2) + (dataManager.traningData.atk * 5);
-        //Debug.Log("ToTalATK = " + totalATK);
-
-        // 무기 장착 효과 및 보유 효과를 한 번만 계산하여 저장
-        float equipWeaponEffectValue = GameManager.instance.weaponManager.ReturnEquipEffect();
-        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedATKEffect();
-        Debug.Log("ownedWeaponEffectValueATK : " + ownedWeaponEffectValue);
-
-        // 무기 효과 값 계산
-        float finalWeaponEffectValue = equipWeaponEffectValue + ownedWeaponEffectValue;
-
-        // 최종 공격력에 적용
-        totalATK *= 1 + (finalWeaponEffectValue / 100f); // 백분율로 변환하여 적용
-       // Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
-        //  Debug.Log("ToTalATK + WeaponValue= " + totalATK);
-        ATK = totalATK;
-        return totalATK;
-    }
-   public float GetTotalCriDamage()
-{
-    float baseCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
-    float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedCRIEffect(); // ex: 50
-    float ownedAccEffectValue = GameManager.instance.accessoryManager.ReturnOwnedCRIEffect(); // ex: 50
-
-    Debug.Log("ownedWeaponEffectValueCRI : " + ownedWeaponEffectValue);
-    Debug.Log("ownedAccEffectValueCRI : " + ownedAccEffectValue);
-
-    float totalBonusPercent = (ownedWeaponEffectValue + ownedAccEffectValue) / 100f;
-
-    float totalCriDamage = baseCriDamage * (1f + totalBonusPercent);
-
-    return totalCriDamage;
-}
-
+    
 
 
 
@@ -273,11 +241,8 @@ private void UpdateTotalSpeedUpMultiplier()
 
     public bool CriticalReturn()
     {
-        float totalCriPer = upgradeUI.CriticalPer_Setting();
-        totalCriPer = totalCriPer + totalCriticalMultiplier;
-    
         // 치명타 확률 계산 (기본 확률 + 추가 확률)
-        return Random.Range(0f, 100f) < totalCriPer;
+        return Random.Range(0f, 100f) < totalCriChance;
     }
 
     // 치명타 확률 증가 효과 추가
@@ -309,12 +274,86 @@ private void UpdateTotalSpeedUpMultiplier()
 
     //치명타 로직 종료*****************
 
-    public void GetMaxHealth(){
-        maxHealth = 100 + upgradeUI.MaxHp_Setting() + upgradeUI.Traning_HP_Setting();
+
+    /**
+    Get 함수 모음
+    **/
+    public float GetTotalATK()
+    {
+        // 기본 성장ATK 및 훈련ATK 계산
+        float totalATK = (dataManager.mainData.atk * 2) + (dataManager.traningData.atk * 5);
+        //Debug.Log("ToTalATK = " + totalATK);
+
+        // 무기 장착 효과 및 보유 효과를 한 번만 계산하여 저장
+        float equipWeaponEffectValue = GameManager.instance.weaponManager.ReturnEquipEffect();
+        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedATKEffect();
+        Debug.Log("ownedWeaponEffectValueATK : " + ownedWeaponEffectValue);
+
+        // 무기 효과 값 계산
+        float finalWeaponEffectValue = equipWeaponEffectValue + ownedWeaponEffectValue;
+
+        // 최종 공격력에 적용
+        totalATK *= 1 + (finalWeaponEffectValue / 100f); // 백분율로 변환하여 적용
+       // Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
+        //  Debug.Log("ToTalATK + WeaponValue= " + totalATK);
+        this.totalATK = totalATK;
+        return totalATK;
     }
-    public int ReturnCoinValue(float value){
-        value =  value + (value * (upgradeUI.Traning_LUK_Setting()/ 100));
-        return (int)value;
+    public float GetTotalCriDamage()
+    {
+        float baseCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
+
+        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedCRIEffect(); // ex: 50
+        float ownedAccEffectValue = accessoryManager.ReturnOwnedCRIEffect(); // ex: 50
+        float equipedAccEffectValue = accessoryManager.ReturnEquipEffect_CRI();
+
+        float totalBonusPercent = ownedWeaponEffectValue + ownedAccEffectValue + equipedAccEffectValue;
+        Debug.Log("ownedWeaponEffectValue : " + ownedWeaponEffectValue);
+        Debug.Log("ownedAccEffectValue : " + ownedAccEffectValue);
+        Debug.Log("equipedAccEffectValue : " + equipedAccEffectValue);
+
+        totalCriDamage = baseCriDamage + totalBonusPercent;
+       
+        return totalCriDamage;
     }
 
+    public float GetMaxHealth(){
+        int baseHp = 100;//기본 체력 100
+        float upgradeHp = upgradeUI.MaxHp_Setting();
+        float traningHp = upgradeUI.Traning_HP_Setting();
+        float accValue0 = accessoryManager.ReturnEquipEffect_HP();
+        float accValue1 = accessoryManager.ReturnOwnedHPEffect();
+        maxHealth = baseHp + upgradeHp + traningHp + accValue0 + accValue1;
+        return maxHealth;
+    }
+    public int GetLUK(){
+        float traningValue = upgradeUI.Traning_LUK_Setting();
+        float accValue = accessoryManager.ReturnEquipEffect_LUK() + 
+            accessoryManager.ReturnOwnedLUKEffect();
+
+        LUK = (int)traningValue + (int)accValue;
+        return LUK;
+    }
+    public float GetCriChance(){
+        float totalCriPer = upgradeUI.CriticalPer_Setting();
+        totalCriChance = totalCriPer + totalCriticalMultiplier;
+        return totalCriChance;
+    }
+    public float GetVIT(){
+        float recoveryAmount0 = upgradeUI.HpRecovery_Setting() + upgradeUI.Traning_VIT_Setting();//성장 수치
+        float recoveryAmount1 = accessoryManager.ReturnOwnedVITEffect();//악세 보유 수치
+        float recoveryAmount2 = accessoryManager.ReturnEquipEffect_VIT();//악세 착용 수치
+        this.VIT  = recoveryAmount0 + recoveryAmount1 + recoveryAmount2;
+        return VIT;
+    }
+
+    public void InitALLStat(){
+        //모든 스탯 초기화
+        GetTotalATK();
+        GetTotalCriDamage();
+        GetMaxHealth();
+        GetLUK();
+        GetCriChance();
+        GetVIT();
+    }
 }
