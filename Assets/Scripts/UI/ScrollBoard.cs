@@ -43,8 +43,8 @@ public class ScrollBoard : MonoBehaviour
 
     public void SetTaps(int index)
 {
-    Color selectedColor = new Color(0.8f, 0.8f, 0.8f);  // 선택된 탭 색상 (밝은 회색)
-    Color defaultColor = new Color(0.6f, 0.6f, 0.6f);   // 기본 탭 색상 (회색)
+    Color selectedColor = new Color(0.6f, 0.6f, 0.6f);  // 선택된 탭 색상 (밝은 회색)
+    Color defaultColor = new Color(0.4f, 0.4f, 0.4f);   // 기본 탭 색상 (회색)
 
     for (int i = 0; i < taps.Length; i++)
     {

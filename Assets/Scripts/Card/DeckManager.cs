@@ -3,9 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
-using RANK;
 using System.Linq;
-using Unity.Multiplayer.Center.Common;
+
 
 public class Card
 {
@@ -49,6 +48,7 @@ public class DeckManager : MonoBehaviour
     public RectTransform cardCollectionScroll_Rect;
     public Image[] card_clockBack;//카드 로딩중 카드 보드 360도 쿨타임 연출
     public PreSet_Deck[] preSet_Deck;
+    public TMP_Text text_manaAverage;//마나 평균 텍스트
 
     private void Start()
     {
@@ -180,69 +180,47 @@ for (int i = deck.Count - 1; i > 0; i--)
     //덱 관리 UI 관련
     public void ShowPlayerDeck(){
 
-        int selectedDeckNumber = GameManager.instance.dataManager.selectedSavedDeck;
+        int selectedDeckNumber = GameManager.instance.dataManager.selectedPresetDeck;
         //현재 플레이어의 활성덱을 보여주는 함수
         DataManager data = GameManager.instance.dataManager;
+        float manaAver = 0;
         //오브젝트들 초기화
                 for(int i = 0; i < 8; i++){
                         GameManager.instance.boardUI.deckCardUI[i].Init(data.savedDeck[selectedDeckNumber][i]);
+
+                            if(data.savedDeck[selectedDeckNumber][i] != -1){
+                                manaAver += cardDatas[data.savedDeck[selectedDeckNumber][i]].cardCost;
+                            }
+                            else{
+                                //빈 카드라면 마나 0
+                                manaAver += 0;
+                            }
+                       
                     }
     
         //텍스트 최산화
+
         battleDeckText.color = Color.white;
-        battleDeckText.text = "전투 덱 " + FillteringSavedDeck(selectedDeckNumber).Count + "/8";
+        battleDeckText.text = "전투 덱" + (selectedDeckNumber + 1).ToString() + "   "+ FillteringSavedDeck(selectedDeckNumber).Count + "/8";
+        text_manaAverage.text = (manaAver/ FillteringSavedDeck(selectedDeckNumber).Count).ToString("F1");//마나 평균
+
         if(FillteringSavedDeck(selectedDeckNumber).Count < 4){
             battleDeckText.color = Color.red;
         }
         ShowOwnedCards(selectedDeckNumber);
-        PersetDeckButtonSetting();//프리셋 버튼 활성화
     }
-
-   public void PersetDeckButtonSetting()
-{
-    int deckCount = GameManager.instance.dataManager.getPresetDeckCount;
-    int stack = 0;
-
-    // 📌 deckCount가 preSet_Deck.Length를 초과하지 않도록 제한
-    deckCount = Mathf.Min(deckCount, preSet_Deck.Length);
-
-    // 우선 모든 버튼 잠금
-    for (int index = 0; index < preSet_Deck.Length; index++)
-    {
-        preSet_Deck[index].NowLock();
-    }
-
-    // 해금된 버튼 활성화
-    for (int index = 0; index < deckCount; index++)
-    {
-        preSet_Deck[index].UnLock();
-        stack++;
-    }
-
-    // 📌 stack이 배열 길이를 초과하지 않도록 체크
-    if (stack < preSet_Deck.Length)
-    {
-        preSet_Deck[stack].CanUnlock(); // 다음 버튼을 구매 가능 상태로 변경
-    }
-}
 
 
     public void Click_PresetDeckButton(int touchIndex){
 
-        switch(preSet_Deck[touchIndex].buttonState){
-            case PreSet_Deck.state.unLock :
-            GameManager.instance.dataManager.selectedSavedDeck = touchIndex;
+            GameManager.instance.dataManager.selectedPresetDeck = touchIndex;
+
+            for(int index = 0; index < preSet_Deck.Length; index++){
+                preSet_Deck[index].mainPanel.color = new Color(0.6f, 0.6f, 0.6f);
+            }
+            preSet_Deck[touchIndex].mainPanel.color = new Color(1f, 1f, 1f);
             ShowPlayerDeck();
-            break;
 
-            case PreSet_Deck.state.canUnlock :
-            cardSetting_UI.OnShopPanel();
-            break;
-
-            case PreSet_Deck.state.nowLock :
-            
-            break;
-        }
     }
 
    public List<int> FillteringSavedDeck(int index)
@@ -292,28 +270,36 @@ for (int i = deck.Count - 1; i > 0; i--)
 
    public void ShowAllCards()
 {
-    // AllCardPooling 자식 오브젝트들을 비활성화
+   // AllCardPooling 자식 오브젝트들을 비활성화
     foreach (Transform child in GameManager.instance.AllCardPooling.transform)
     {
         child.gameObject.SetActive(false);
     }
 
     // 모든 보유 카드 리스트 가져오기
-    List<Card> havedCardList = GameManager.instance.dataManager.havedCardsList;
+    List<Card> allCardList = GameManager.instance.dataManager.GetALLDeckData();
 
     // 카드 데이터를 참조할 DeckManager 가져오기
     DeckManager deckManager = GameManager.instance.deckManager;
 
     // 카드 랭크 순으로 정렬 (normal → rare → epic → legend)
-    List<Card> sortedCardList = havedCardList
-        .OrderBy(card => GetCardRank(deckManager, card.ID))
+    List<Card> sortedCardList = allCardList
+        .OrderBy(card => GetCardRank(card.ID))
         .ToList();
+
+    // 보유한 카드 ID 목록 가져오기
+    HashSet<int> ownedCardIDs = new HashSet<int>(GameManager.instance.dataManager.havedCardsList.Select(card => card.ID));
 
     // 정렬된 카드 리스트로 UI 생성
     for (int i = 0; i < sortedCardList.Count; i++)
     {
         DeckCard deckCard = GameManager.instance.AllCardPooling.Get(0).GetComponent<DeckCard>();
-        deckCard.Init(sortedCardList[i].ID);
+
+        // ID가 havedCardList에 존재하면 true, 아니면 false
+        bool isAcquired = ownedCardIDs.Contains(sortedCardList[i].ID);
+
+        deckCard.Init_ForAllCard(sortedCardList[i],isAcquired);
+
         deckCard.inMyDeck = false;
         deckCard.inAllCard = true;
     }
@@ -325,16 +311,16 @@ for (int i = deck.Count - 1; i > 0; i--)
 }
 
 // 특정 카드의 Rank를 가져오는 함수
-private CardData.CardRank GetCardRank(DeckManager deckManager, int cardId)
+private CardData.CardRank GetCardRank(int cardId)
 {
-    CardData cardData = deckManager.cardDatas.FirstOrDefault(data => data.cardId == cardId);
+    CardData cardData = cardDatas.FirstOrDefault(data => data.cardId == cardId);
     return cardData != null ? cardData.rank : CardData.CardRank.normal; // 기본값 normal
 }
 
 
     public void RemoveCard(int cardId){
         //플레이어의 활성덱에서 카드 제거 deck -> owedCardList
-        int selectedPresetNumber = GameManager.instance.dataManager.selectedSavedDeck;
+        int selectedPresetNumber = GameManager.instance.dataManager.selectedPresetDeck;
         int index = GameManager.instance.dataManager.savedDeck[selectedPresetNumber].IndexOf(cardId);
         GameManager.instance.dataManager.savedDeck[selectedPresetNumber][index] = -1; //-1 is Null
 
@@ -351,7 +337,7 @@ private CardData.CardRank GetCardRank(DeckManager deckManager, int cardId)
 
   public void AddCard(int cardId)
 {
-    int selectedPresetNumber = GameManager.instance.dataManager.selectedSavedDeck;
+    int selectedPresetNumber = GameManager.instance.dataManager.selectedPresetDeck;
     List<int> selectedDeck = GameManager.instance.dataManager.savedDeck[selectedPresetNumber];
 
     // 덱 상태 확인 로그 추가
@@ -379,7 +365,7 @@ private CardData.CardRank GetCardRank(DeckManager deckManager, int cardId)
 
    public void SaveNowDeck()
 {   
-    int selectedDeckNumber = GameManager.instance.dataManager.selectedSavedDeck;
+    int selectedDeckNumber = GameManager.instance.dataManager.selectedPresetDeck;
     //순서 재배치
     GameManager.instance.dataManager.ReorderSavedDeck(selectedDeckNumber);
 
@@ -388,7 +374,7 @@ private CardData.CardRank GetCardRank(DeckManager deckManager, int cardId)
 
     if (validCardCount < 4)
     {
-        Debug.Log("플레이어의 덱은 항상 4장 이상이어야 합니다.");
+        GameManager.instance.WarningText("덱은 항상 4장 이상이어야 합니다!");
         return;
     }
 

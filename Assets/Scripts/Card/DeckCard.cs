@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq; // LINQ 사용
+using UnityEngine.EventSystems;
 
-public class DeckCard : MonoBehaviour
+public class DeckCard : MonoBehaviour , IPointerDownHandler, IPointerUpHandler
 {
     public Card deckCard;
     public Image cardSprite;//카드 메인 이미지
@@ -19,13 +20,19 @@ public class DeckCard : MonoBehaviour
     public bool inAllCard;//모든 카드 보기 안에 있는 DeckCard일 경우 true
     RectTransform rect;
     public GameObject upArrow;//업그레이드 가능 오브젝트
+    public GameObject lockImage;
+    public bool isAcquired;
 
     void Awake()
     {
         rect = GetComponent<RectTransform>();
     }
+  void OnEnable()
+  {
+    isAcquired = true;
+  }
 
-    public void Init(int cardid){
+  public void Init(int cardid){
         deckCard =  GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == cardid);
         if(deckCard == null){
             deckCard = new Card(-1, 0 , 0);
@@ -52,7 +59,7 @@ public class DeckCard : MonoBehaviour
         costText.text = deckData.cardDatas[deckCard.ID].cardCost.ToString();
         Fill.fillAmount = Mathf.Clamp01((float)deckCard.COUNT / requireCount);
         fillText.text =  deckCard.COUNT.ToString() + "/ " + requireCount;
-        stackText.text = "레벨 " + deckCard.STACK.ToString();
+        stackText.text = "Lv. " + deckCard.STACK.ToString();
         upArrow.gameObject.SetActive(Fill.fillAmount >= 1);
 
         if(deckCard.STACK >= 10){
@@ -62,6 +69,46 @@ public class DeckCard : MonoBehaviour
             upArrow.gameObject.SetActive(false);
         }
         }
+        inAllCard = false;
+
+    }
+
+    public void Init_ForAllCard(Card card, bool isAcquired){
+         //정상 처리
+         this.isAcquired = isAcquired;
+        deckCard = card;
+        DeckManager deckData = GameManager.instance.deckManager;
+        cardSprite.gameObject.SetActive(true);
+        manaSprite.gameObject.SetActive(true);
+        gaze.gameObject.SetActive(true);
+        stackBackGround.gameObject.SetActive(true);
+        lockImage.gameObject.SetActive(!isAcquired);
+         manaSprite.color = new Color(1,1,1);
+         cardSprite.color = new Color(1,1,1);
+
+       // deckCard.ID = card.ID; 이렇게 초기화 하면 안됨, 오답노트로 남겨두자 
+       // deckCard.STACK = card.STACK;
+       // deckCard.COUNT = card.COUNT;
+       int requireCount = ReturnRequireCount(card.STACK);//업그레이드에 필요한 재료 수
+        cardSprite.sprite = deckData.cardDatas[card.ID].cardImage;
+        costText.text = deckData.cardDatas[card.ID].cardCost.ToString();
+        Fill.fillAmount = Mathf.Clamp01((float)card.COUNT / requireCount);
+        fillText.text =  card.COUNT.ToString() + "/ " + requireCount;
+        stackText.text = "Lv. " + card.STACK.ToString();
+        upArrow.gameObject.SetActive(Fill.fillAmount >= 1);
+            if(card.STACK >= 10){
+                //카드 만랩은 10
+                Fill.fillAmount = 1;
+                fillText.text = "MAX";
+                upArrow.gameObject.SetActive(false);
+            }
+
+        if(isAcquired != true){
+              manaSprite.color = new Color(0.8f, 0.8f, 0.8f);
+            cardSprite.color =  new Color(0.8f, 0.8f, 0.8f);
+        }
+        inAllCard = true;
+          
 
     }
      public int ReturnRequireCount(int nowStack){
@@ -89,12 +136,18 @@ public class DeckCard : MonoBehaviour
             return;
         if(deckCard.ID == -1)
             return;
-        Debug.Log("카드 터치");
+        Debug.Log("카드 터치 : cardID: " + deckCard.ID);
+
+       //// if(isAcquired != true){
+            //CardInfoUIOn();
+           // return;
+      //  }
 
         if(inAllCard == true){
-            DeckCard touchedCard = GameManager.instance.deckManager.touchedCard[1].GetComponent<DeckCard>();
-            touchedCard.gameObject.SetActive(true);
-            touchedCard.Init(deckCard.ID);
+           // DeckCard touchedCard = GameManager.instance.deckManager.touchedCard[1].GetComponent<DeckCard>();
+           // touchedCard.gameObject.SetActive(true);
+           // touchedCard.Init(deckCard.ID);
+           CardInfoUIOn();
         }else{
             DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
             infoCard.gameObject.SetActive(true);
@@ -144,7 +197,8 @@ public class DeckCard : MonoBehaviour
     public void CardInfoUIOn(){
        CardInfoUI cardinfo =  GameManager.instance.boardUI.cardInfoUI;
        cardinfo.gameObject.SetActive(true);
-       cardinfo.Init(deckCard);
+       cardinfo.Init(deckCard, isAcquired);
+      
        GameManager.instance.deckManager.TouchedCardSetFalse();
       
     }
@@ -155,6 +209,17 @@ public class DeckCard : MonoBehaviour
     public void Button_ADDCard(){
         GameManager.instance.deckManager.AddCard(deckCard.ID);
        
+    }
+   public void OnPointerDown(PointerEventData eventData)
+    {
+        if (!isTouchInfo)
+            rect.localScale = new Vector2(2.2f, 2.95f);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (!isTouchInfo)
+            rect.localScale = new Vector2(2.3f, 3f);
     }
     
 

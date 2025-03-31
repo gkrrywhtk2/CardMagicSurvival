@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class CardSetting_UI : MonoBehaviour
 {
     public RectTransform[] scrolls;
-    public GameObject[] titleLine_Objects; //0은 프리셋 버튼, 1은 스크롤 내리기
     public Image[] taps;
 
     // 🔹 미리 세팅해둔 위치 값들 (스크롤별 기본 위치)
@@ -38,14 +37,13 @@ public class CardSetting_UI : MonoBehaviour
             }
         }
 
-        titleLine_Objects[0].SetActive(index == 0); // 덱 관리 UI라면 타이틀 라인 활성화
         SetTaps(index); // 탭 색상 변경
     }
 
     public void SetTaps(int index)
     {
-        Color selectedColor = Color.white;         // 선택된 탭 색상
-        Color defaultColor = new Color(0.6f, 0.6f, 0.6f); // #9A9A9A (RGB: 154,154,154)
+        Color selectedColor =new Color(0.6f, 0.6f, 0.6f);         // 선택된 탭 색상
+        Color defaultColor = new Color(0.4f, 0.4f, 0.4f); // #9A9A9A (RGB: 154,154,154)
 
         for (int i = 0; i < taps.Length; i++)
         {
@@ -60,7 +58,7 @@ public class CardSetting_UI : MonoBehaviour
     }
     public void BuyButton()
     {
-        GameManager.instance.dataManager.getPresetDeckCount++;
+        //GameManager.instance.dataManager.getPresetDeckCount++;
         GameManager.instance.deckManager.ShowPlayerDeck();
     }
 }

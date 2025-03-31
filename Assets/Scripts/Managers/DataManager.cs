@@ -26,10 +26,10 @@ public class DataManager : MonoBehaviour
 
 
     [Header("#Card Info")]
+     public List<Card> allCardList = new List<Card>(); //모든 카드 모음
      public List<int>[] savedDeck = new List<int>[5]; //덱 저장 항상 8개 유지, cardId - 1은 null값
-        public int getPresetDeckCount = 1;//해금된 프리셋 수
-        public int selectedSavedDeck = 0;//현재 선택된 프리셋 넘버
-      public List<Card> havedCardsList = new List<Card>(); //현재 보유한 모든 카드 모음
+    public int selectedPresetDeck = 0;//현재 선택된 프리셋 넘버
+    public List<Card> havedCardsList = new List<Card>(); //현재 보유한 모든 카드 모음
     
 
 
@@ -69,20 +69,91 @@ public class DataManager : MonoBehaviour
       //서버에서 강화 포션 보유량을 받아서 적용
       upgradePostionCount = value;
     }
+
+
+
+
      public void HavedDeckSetting(){
       //서버에서 현재 저장된 덱을 받아서 적용, 가진 모든 카드
-        havedCardsList.Add(new Card(0, 0, 10));
-        havedCardsList.Add(new Card(1, 0, 20));
-        havedCardsList.Add(new Card(2, 0, 30));
-        havedCardsList.Add(new Card(3, 0, 100));
-        havedCardsList.Add(new Card(4, 0, 1));
-        havedCardsList.Add(new Card(5, 0, 1));
-        havedCardsList.Add(new Card(6, 0, 1));
-        havedCardsList.Add(new Card(7, 0, 1));
-       
+            havedCardsList.Add(new Card(0,1,10));
+            havedCardsList.Add(new Card(1,1,20));
+            havedCardsList.Add(new Card(2,1,22));
+            havedCardsList.Add(new Card(3,1,6));
+    }
+     public void SyncDeckData()
+    {
+        //데이터 메니저에서 받은 웨폰 데이터를 실제 웨폰 메니저에 적용
+        HavedDeckSetting();
+    }
 
-     
-     }
+
+
+
+
+
+
+
+
+/**
+카드 머지 로직, 카드 도감에서 호출
+**/
+
+
+    public List<Card> GetALLDeckData()
+{
+    List<Card> baseDeck = GetInitialDeckData();
+    return MergeDeck(baseDeck, havedCardsList);
+}
+
+private List<Card> GetInitialDeckData()
+{
+    //모든 카드
+    return new List<Card>
+    {
+        new Card(0,1,0),
+        new Card(1,1,0),
+        new Card(2,1,0),
+        new Card(3,1,0),
+        new Card(4,1,0),
+        new Card(5,1,0),
+        new Card(6,1,0),
+        new Card(7,1,0),
+
+        //이후 카드 추가
+    };
+}
+private List<Card> MergeDeck(List<Card> baseList, List<Card> overrideList)
+{
+    foreach (Card newCard in overrideList)
+    {
+        int index = baseList.FindIndex(w => w.ID == newCard.ID);
+        if (index >= 0)
+        {
+            baseList[index] = newCard;
+        }
+        else
+        {
+            baseList.Add(newCard);
+        }
+    }
+
+    // 디버그 출력
+   // Debug.Log("Merged BaseList:");
+    //foreach (Card card in baseList)
+   // {
+    //   Debug.Log($"ID: {card.ID}, count: {card.COUNT}");
+    //}
+
+    return baseList;
+}
+
+
+/**
+카드 머지 로직 끝
+**/
+
+
+
     public void SavedDeckSetting(){
     // 모든 덱 초기화
     for (int i = 0; i < savedDeck.Length; i++)
@@ -91,17 +162,17 @@ public class DataManager : MonoBehaviour
     }
 
     // savedDeck[선택된 덱 프리셋]만 특정 값으로 임의 설정
-    savedDeck[selectedSavedDeck] = new List<int> { 1, 2, 3, 4, -1, -1, -1, -1 };
+    savedDeck[selectedPresetDeck] = new List<int> { 0, 1, 2, 3, -1, -1, -1, -1 };
 
     // 모든 savedDeck 디버깅
-    for (int i = 0; i < savedDeck.Length; i++)
-    {
-        string deckStatus = string.Join(", ", savedDeck[i]);
+    //for (int i = 0; i < savedDeck.Length; i++)
+   // {
+       // string deckStatus = string.Join(", ", savedDeck[i]);
         //Debug.Log("Deck " + i + ": " + deckStatus);
-    }
+   // }
 
     // 덱 정보 갱신
-    GameManager.instance.deckManager.GetSavedDeck(savedDeck[selectedSavedDeck]);
+    GameManager.instance.deckManager.GetSavedDeck(savedDeck[selectedPresetDeck]);
 }
 
 

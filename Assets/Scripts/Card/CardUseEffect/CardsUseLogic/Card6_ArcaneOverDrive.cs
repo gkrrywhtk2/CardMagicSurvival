@@ -41,6 +41,7 @@ public class Card6_ArcaneOverDrive : MonoBehaviour, ICardUse
         // 기존 효과 제거 (이미 적용된 효과가 있다면 리셋)
         player.RemoveCriticalEffect(per);
         player.AddCriticalEffect(per);
+        player.InitALLStat();//스탯 적용
 
         //IconUI 생성
         GameManager.instance.iconManager.AddOrUpdateIcon(6, duration);
@@ -49,6 +50,7 @@ public class Card6_ArcaneOverDrive : MonoBehaviour, ICardUse
 
         // 지속시간 종료 후 효과 제거
         player.RemoveCriticalEffect(per);
+         player.InitALLStat();//스탯 적용
         GameManager.instance.player.playerEffect.card6_Effect1.SetActive(false);
         criticalCoroutine = null; // 코루틴 종료 시 변수 초기화
     }

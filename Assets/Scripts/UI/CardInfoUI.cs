@@ -46,7 +46,7 @@ public class CardInfoUI : MonoBehaviour
     epicColor = new Color(0.4f, 0.2f, 0.5f, 1f);
     legendColor = new Color(0.8f, 0.5f, 0.1f, 1f);
     }
-    public void Init(Card card){
+    public void Init(Card card, bool isAcquired){
     //데이터 세팅
         thisCard = card;
         cardData = GameManager.instance.deckManager.cardDatas[card.ID];
@@ -74,7 +74,7 @@ public class CardInfoUI : MonoBehaviour
     cardName_Text.text = cardData.cardName;
 
     //카드 이미지 세팅
-    deckCard.Init(thisCard.ID);
+    deckCard.Init_ForAllCard(thisCard, isAcquired);
 
     //카드 효과 설명 세팅
     cardEffect_VarText.text = cardData.cardDesc_Main;
@@ -149,7 +149,7 @@ public void OnButton(){
 }
     public void StackUpgradeButton(){
          Card targetCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == thisCard.ID);
-         int selectedDeckNumber = GameManager.instance.dataManager.selectedSavedDeck;
+         int selectedDeckNumber = GameManager.instance.dataManager.selectedPresetDeck;
 
         if(thisCard.STACK >= 10){
             maxWariningText.gameObject.SetActive(true);
@@ -160,7 +160,7 @@ public void OnButton(){
         // ID가 1인 카드 찾기
         targetCard.COUNT -= 5;//카드 5개 소진
         targetCard.STACK += 1;//카드 업그레이드
-        Init(targetCard);
+        Init(targetCard, true);
         GameManager.instance.deckManager.ShowPlayerDeck();//덱 설정 최신화
         GameManager.instance.deckManager.ShowAllCards();
         DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
