@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Card1_Meteor Fall2_0: 6264112795571472057
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

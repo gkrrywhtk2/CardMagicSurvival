@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cardTest_Epic2_0: 4619456437353872596
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

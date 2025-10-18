@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Card6_IceShiled2_0: 5233923940455845738
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

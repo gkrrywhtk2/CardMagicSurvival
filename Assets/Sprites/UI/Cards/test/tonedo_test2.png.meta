@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tonedo_test2_0: -5582152882144525674
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
