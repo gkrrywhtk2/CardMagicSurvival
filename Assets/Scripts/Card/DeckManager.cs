@@ -314,7 +314,7 @@ for (int i = deck.Count - 1; i > 0; i--)
 private CardData.CardRank GetCardRank(int cardId)
 {
     CardData cardData = cardDatas.FirstOrDefault(data => data.cardId == cardId);
-    return cardData != null ? cardData.rank : CardData.CardRank.normal; // 기본값 normal
+    return cardData != null ? cardData.rank : CardData.CardRank.Normal; // 기본값 normal
 }
 
 

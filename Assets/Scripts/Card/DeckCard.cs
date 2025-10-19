@@ -147,7 +147,7 @@ public class DeckCard : MonoBehaviour , IPointerDownHandler, IPointerUpHandler
            // DeckCard touchedCard = GameManager.instance.deckManager.touchedCard[1].GetComponent<DeckCard>();
            // touchedCard.gameObject.SetActive(true);
            // touchedCard.Init(deckCard.ID);
-           CardInfoUIOn();
+          // CardInfoUIOn();
         }else{
             DeckCard infoCard = GameManager.instance.boardUI.deckCardButtons.GetComponent<DeckCard>();
             infoCard.gameObject.SetActive(true);
@@ -194,14 +194,14 @@ public class DeckCard : MonoBehaviour , IPointerDownHandler, IPointerUpHandler
         }
         
     }
-    public void CardInfoUIOn(){
-       CardInfoUI cardinfo =  GameManager.instance.boardUI.cardInfoUI;
-       cardinfo.gameObject.SetActive(true);
-       cardinfo.Init(deckCard, isAcquired);
+    // public void CardInfoUIOn(){
+    //    CardInfoUI cardinfo =  GameManager.instance.boardUI.cardInfoUI;
+    //    cardinfo.gameObject.SetActive(true);
+    //    cardinfo.Init(deckCard, isAcquired);
       
-       GameManager.instance.deckManager.TouchedCardSetFalse();
+    //    GameManager.instance.deckManager.TouchedCardSetFalse();
       
-    }
+    // }
     public void Button_RemoveCard(){
         GameManager.instance.deckManager.RemoveCard(deckCard.ID);
       

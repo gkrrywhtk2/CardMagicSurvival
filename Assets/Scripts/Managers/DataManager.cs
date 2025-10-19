@@ -30,8 +30,9 @@ public class DataManager : MonoBehaviour
      public List<int>[] savedDeck = new List<int>[5]; //덱 저장 항상 8개 유지, cardId - 1은 null값
     public int selectedPresetDeck = 0;//현재 선택된 프리셋 넘버
     public List<Card> havedCardsList = new List<Card>(); //현재 보유한 모든 카드 모음
-    
 
+    [Header("#Color Datas")]
+    public ColorDatas colorDatas;
 
     private void Awake() {
         //임시로 레벨 세팅

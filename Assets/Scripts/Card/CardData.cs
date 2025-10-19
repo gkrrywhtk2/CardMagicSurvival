@@ -3,7 +3,13 @@ using UnityEngine;
 
 public class CardData : ScriptableObject
 {
-  public enum CardRank{normal, rare, epic, legend};
+  public enum CardRank{  
+    Normal,   // 일반
+    Rare,     // 고급
+    Epic,     // 특급
+    Legendary,// 전설
+    Mythic    // 신화
+    };
   public enum InfoTag{damage, count, duration, range, manarecovery, speedUp, Heal}
   [Header("#Main Info")]
   public int cardId;

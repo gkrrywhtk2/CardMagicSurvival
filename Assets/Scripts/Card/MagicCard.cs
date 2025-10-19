@@ -19,7 +19,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     [Header("Card Info")]
     public CardData cardData;
-   public Card magicCard;
+    public Card magicCard;
     //public int cardId;       // 카드 ID
    // public int cardCost;     // 카드 비용
     //public int cardRank;//{1,2,3}
@@ -27,15 +27,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public bool cardOn;//코스트 체크
     public bool cardDrawLock;//카드 드로우 애니메이션 연출시 카드 터치 금지용
 
-    [Header("Object Connect")]
-     public Image cardImage;  // 카드 이미지
-
-
-   // public Image[] stars;// 카드 등급 이미지 개발 중단
-    //public Sprite star_True;
-    //public Sprite star_False;
-
-    public TMP_Text costText;//코스트 숫자
+   
     public Image dropPoint;//드랍 포인트
     public Image CoolTimeImage;//시계 방향 쿨타임 이미지
     public GameObject range;//스킬 범위 이미지 오브젝트
@@ -45,9 +37,9 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private bool lastRangeState = false; // 이전 상태를 저장할 변수
     private bool lastCardReadyState = false;
     public Image manaCost;//마나 보석 이미지
-    public TMP_Text cardLevelText;//카드 레벨 텍스트
+   // public TMP_Text cardLevelText;//카드 레벨 텍스트
     public DIr_FrontForCard dIr_FrontForCard;
-    
+    private CardImage cardImage;
 
     private void Awake()
     {
@@ -58,8 +50,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         originalPosition = rect.position;
         anim = GetComponent<Animator>();
         cardDrawLock = false;
-       
-   
+        cardImage = GetComponent<CardImage>();
     }
 
     private void Update(){
@@ -69,38 +60,45 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// <summary>
     /// 카드 데이터를 초기화하는 메서드
     /// </summary>
-    
-   public void CardReload(){
-    anim.enabled = false;//애니메이션 비활성화하여 앵커드 포지션 적용되게 변경
-    rect.anchoredPosition = new Vector3(-5000, -5000, 0);
-   // Debug.Log("위치 조정");
-   }
+
+    public void CardReload()
+    {
+        anim.enabled = false;//애니메이션 비활성화하여 앵커드 포지션 적용되게 변경
+        rect.anchoredPosition = new Vector3(-5000, -5000, 0);
+        // Debug.Log("위치 조정");
+    }
+    public void CardImageInit(int id)
+    {
+        cardImage.Init(id);
+    }
     public void CardInit(int cardid)
     {
         cardData = GameManager.instance.deckManager.cardDatas[cardid];
         magicCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == cardid);
         cardOn = false;
         cardReady = false;
-        cardLevelText.gameObject.SetActive(true);
-        cardLevelText.text = "Lv." + magicCard.STACK.ToString();
-        cardLevelText.gameObject.SetActive(false);//우선 감추기
+        // cardLevelText.gameObject.SetActive(true);
+        // cardLevelText.text = "Lv." + magicCard.STACK.ToString();
+        // cardLevelText.gameObject.SetActive(false);//우선 감추기
+        CardImageInit(cardid);//카드의 이미지 초기화
         //RankImageSetting(cardRank); 별 연출 개발 중단
         //cardCost = cardData.cardCost;
-        cardImage.sprite = cardData.cardImage;
-        costText.text = cardData.cardCost.ToString();
+       // cardImage.sprite = cardData.cardImage;
+        //costText.text = cardData.cardCost.ToString();
         rangeOn = cardData.isRangeCard;
         range.GetComponent<RectTransform>().localScale = cardData.rangeScale_Card;
         directionCard = cardData.isDirCard;
-        CardAlpha1_Range();
+        cardImage.CardAlpha1_Range();
         CardDrawAni(0);
+        
           //StartCoroutine(CardDrawAnimation());
     }
 
     public void CardInitWhenStackUpgrade(){
         int id = magicCard.ID;
-        cardLevelText.gameObject.SetActive(true);
-        cardLevelText.text = "Lv." + magicCard.STACK.ToString();
-        cardLevelText.gameObject.SetActive(false);//우선 감추기
+        // cardLevelText.gameObject.SetActive(true);
+        // cardLevelText.text = "Lv." + magicCard.STACK.ToString();
+        // cardLevelText.gameObject.SetActive(false);//우선 감추기
     }
     /**
     public void Init_CardUpgrade(int rank){
@@ -179,14 +177,14 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     bool shouldCardReadyBeActive = (cardReady == true);
 
     if(shouldCardReadyBeActive != lastCardReadyState){
-        cardLevelText.gameObject.SetActive(shouldCardReadyBeActive);
+        // cardLevelText.gameObject.SetActive(shouldCardReadyBeActive);
          lastCardReadyState = shouldCardReadyBeActive;  // 상태 갱신
     }
 
     // 범위 이미지의 활성 상태가 변경되었을 때만 SetActive 호출
     if (shouldRangeBeActive != lastRangeState)
     {
-        CardAlpha0_Range(shouldRangeBeActive);
+        cardImage.CardAlpha0_Range(shouldRangeBeActive);
         range.gameObject.SetActive(shouldRangeBeActive);
         lastRangeState = shouldRangeBeActive;  // 상태 갱신
     }
@@ -215,7 +213,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         dropPoint.raycastTarget = false;//드롭 포인트 활성화
         range.gameObject.SetActive(false);//범위 이미지 비활성화
-        CardAlpha1_Range();
+        cardImage.CardAlpha1_Range();
 
         if(cardReady != true || cardOn != true)//카드가 사용되어지지 않았다면 기존 위치로 복귀
             anim.enabled = true; // 드래그 중지 시 애니메이션 연출 가능
@@ -264,58 +262,7 @@ private void SetCardVisibility(bool isCardOn)
     CoolTimeImage.color = currentColor;
 }
 
-public void CardAlpha0_Range(bool shouldRangeBeActive){
-    //카드 드래그시 카드가 범위 카드라면 카드를 투명화
-    if(shouldRangeBeActive == true){
-        Color cardColor = cardImage.color;
-        Color manaColor = manaCost.color;
-        Color textColor = costText.color;
-       // Color starColor0 = stars[0].color; 개발 중단
-       // Color starColor1 = stars[1].color;
-      //  Color starColor2 = stars[2].color;
 
-        cardColor.a = 0;
-        manaColor.a = 0;
-        textColor.a = 0;
-       // starColor0.a = 0; 개발 중단]
-      //  starColor1.a = 0;
-       // starColor2.a = 0;
-
-        cardImage.color = cardColor;
-        manaCost.color = manaColor;
-        costText.color = textColor;
-       // stars[0].color = starColor0; 개발 중단
-      //  stars[1].color = starColor1;
-      //  stars[2].color = starColor2;
-        //카드 레벨 이미지도 투명화 
-    }else{
-       CardAlpha1_Range();
-    }
-}
-public void CardAlpha1_Range(){
-
-       Color cardColor = cardImage.color;
-        Color manaColor = manaCost.color;
-        Color textColor = costText.color;
-      //  Color starColor0 = stars[0].color; 개발 중단
-      //  Color starColor1 = stars[1].color;
-     //  Color starColor2 = stars[2].color;
-
-        cardColor.a = 1;
-        manaColor.a = 1;
-        textColor.a = 1;
-       // starColor0.a = 1; 개발 중단
-       // starColor1.a = 1;
-       // starColor2.a = 1;
-
-
-        cardImage.color = cardColor;
-        manaCost.color = manaColor;
-        costText.color = textColor;
-       // stars[0].color = starColor0; 개발 중단
-      //  stars[1].color = starColor1;
-       // stars[2].color = starColor2;
-    }
 
     /**
     public void RankImageSetting(int rank){

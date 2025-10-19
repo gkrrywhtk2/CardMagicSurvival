@@ -34,17 +34,20 @@ public class RandomCardDescPanel : MonoBehaviour
 
         //랭크 text 세팅
         switch(data.rank){
-            case  CardData.CardRank.normal :
+            case  CardData.CardRank.Normal :
             rankText.text  = "일반";
             break;
-            case CardData.CardRank.rare :
+            case CardData.CardRank.Rare :
             rankText.text = "희귀";
             break;
-            case CardData.CardRank.epic :
+            case CardData.CardRank.Epic :
             rankText.text = "영웅";
             break;
-            case CardData.CardRank.legend :
+            case CardData.CardRank.Legendary :
             rankText.text = "전설";
+            break;
+            case CardData.CardRank.Mythic :
+            rankText.text = "신화";
             break;
         }
         rankText.color = colors[CardRank];
