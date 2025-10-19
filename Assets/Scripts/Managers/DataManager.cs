@@ -78,8 +78,12 @@ public class DataManager : MonoBehaviour
       //서버에서 현재 저장된 덱을 받아서 적용, 가진 모든 카드
             havedCardsList.Add(new Card(0,1,10));
             havedCardsList.Add(new Card(1,1,20));
-            havedCardsList.Add(new Card(2,1,22));
-            havedCardsList.Add(new Card(3,1,6));
+        havedCardsList.Add(new Card(2, 1, 22));
+              havedCardsList.Add(new Card(3,1,22));
+        havedCardsList.Add(new Card(4, 1, 6));
+        havedCardsList.Add(new Card(5, 1, 6));
+        havedCardsList.Add(new Card(6, 1, 6));
+        havedCardsList.Add(new Card(7, 1, 6));
     }
      public void SyncDeckData()
     {
@@ -163,7 +167,7 @@ private List<Card> MergeDeck(List<Card> baseList, List<Card> overrideList)
     }
 
     // savedDeck[선택된 덱 프리셋]만 특정 값으로 임의 설정
-    savedDeck[selectedPresetDeck] = new List<int> { 0, 1, 2, 3, -1, -1, -1, -1 };
+    savedDeck[selectedPresetDeck] = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7 };
 
     // 모든 savedDeck 디버깅
     //for (int i = 0; i < savedDeck.Length; i++)

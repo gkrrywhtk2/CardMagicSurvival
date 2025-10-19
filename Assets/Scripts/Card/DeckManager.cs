@@ -90,16 +90,17 @@ for (int i = deck.Count - 1; i > 0; i--)
     deck[randomIndex] = temp;
 }
 
-    // **2. 덱에서 3장 뽑아 핸드에 배치**
-    int handCount = 3;
+    // **2. 덱에서 3장 뽑아 핸드에 배치** -> 4장으로 변경해보자
+    int handCount = 4;
 
     //카드 리로딩
     magicCards[0].CardReload();
     magicCards[1].CardReload();
-    magicCards[2].CardReload();
+        magicCards[2].CardReload();
+     magicCards[3].CardReload();
 
     // 모든 카드 딜레이 완료될 때까지 대기
-    yield return StartCoroutine(ClockBackGroundAnim(1, 0, 1, 2));
+    //yield return StartCoroutine(ClockBackGroundAnim(1, 0, 1, 3));
 
     for (int i = 0; i < handCount; i++)
     {
@@ -133,7 +134,7 @@ for (int i = deck.Count - 1; i > 0; i--)
         // 선택된 카드들만 fillAmount 증가
         foreach (int index in cardIndexes)
         {
-            card_clockBack[index].fillAmount = progress;
+            //card_clockBack[index].fillAmount = progress;
         }
 
         yield return null;

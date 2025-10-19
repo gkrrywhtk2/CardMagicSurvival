@@ -18,8 +18,9 @@ MonoBehaviour:
   infoTags: 00000000
   cardName: "\uC6B4\uC11D \uB099\uD558"
   cardDesc_Main: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uC6B4\uC11D\uC744 \uB099\uD558\uD569\uB2C8\uB2E4"
-  cardImage: {fileID: -6287250751935635100, guid: c75d942da998e4d43bd62a47c8c915cf, type: 3}
+  cardImage: {fileID: 21300000, guid: 02083fdd5d9ecb6408a58e8ad5ae5771, type: 3}
   isRangeCard: 1
+  isDirCard: 0
   rangeScale_Card: {x: 2, y: 1, z: 0}
   nextcardImage: {fileID: 21300000, guid: 02083fdd5d9ecb6408a58e8ad5ae5771, type: 3}
   baseDamage: 500
@@ -32,3 +33,7 @@ MonoBehaviour:
   growthValue_Range: 0.1
   baseManaRecovery: 0
   growthValue_ManaRecovery: 0
+  baseSpeedUp: 0
+  growthValue_baseSpeedUp: 0
+  heal: 0
+  growthValue_heal: 0

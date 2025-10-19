@@ -18,7 +18,7 @@ MonoBehaviour:
   infoTags: 06000000
   cardName: "\uAE09\uC18D \uCE58\uC720"
   cardDesc_Main: "\uCCB4\uB825\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
-  cardImage: {fileID: 9178533011511149936, guid: cb50d5076bd9d45a28b6a77f63125fd0, type: 3}
+  cardImage: {fileID: 21300000, guid: 67323d8f230d3094b8ae399f6f02e693, type: 3}
   isRangeCard: 0
   isDirCard: 0
   rangeScale_Card: {x: 0, y: 0, z: 0}
