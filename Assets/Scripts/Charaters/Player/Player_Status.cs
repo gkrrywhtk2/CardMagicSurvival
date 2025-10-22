@@ -23,21 +23,26 @@ public class Player_Status : MonoBehaviour
     public float VIT;
 
     [Header("#특수 성장 능력치 ")]
-    public float mana;
+    public float _mana;//내부 변수
+    public float mana
+    {
+        get => _mana;
+        set
+        {
+            // 최소 0, 최대 maxMana 사이로 제한
+            _mana = Mathf.Clamp(value, 0f, maxMana);
+        }
+    }
     public float maxMana = 9;
     public float baseManaRecovery;//기본 마나회복량; 일단 0.5로 세팅하였음 초당 0.5회복
     [Header("Bar")]
     public Slider attackBar;
     public Slider hpBar;
-    public Slider manaBar;
-    public TMP_Text manaText;
     public Slider MagicArrow;
 
-    //메인 UI 슬라이드_ SlideLine 오브젝트에 있다.
     public Slider hpBar_UI;
-    public Slider manaBar_UI;
     public TMP_Text nowHpText_UI;
-    public TMP_Text nowManaText_UI;
+
   void Start()
   {
     accessoryManager = GameManager.instance.accessoryManager;
@@ -76,25 +81,6 @@ public class Player_Status : MonoBehaviour
 
     }
 
-    private void ManaBarUpdate()
-    {
-        int currentMana = Mathf.FloorToInt(mana); // 정수로 변환
-        manaText.text = currentMana.ToString();
-        manaBar.value = mana / maxMana;
-        manaBar_UI.value = manaBar.value;
-        nowManaText_UI.text = currentMana.ToString();//UI 마나바에 적용
-        
-
-        if (mana < maxMana)
-            return;
-
-        if (mana > maxMana)
-        {
-            mana = maxMana;
-            return;
-        }
-
-    }
    public void StartHealthRegen()
 {
     if (regenCoroutine == null) // 중복 실행 방지
@@ -129,7 +115,7 @@ public void StopHealthRegen()
             return;
         HpBarUpdate();
         AttackBarUpdate();
-        ManaBarUpdate();
+        //ManaBarUpdate();
         ManaRecovery();
        // ExpBarUpdate(); 경험치 삭제 예정
     }
@@ -347,7 +333,8 @@ private void UpdateTotalSpeedUpMultiplier()
         return VIT;
     }
 
-    public void InitALLStat(){
+    public void InitALLStat()
+    {
         //모든 스탯 초기화
         GetTotalATK();
         GetTotalCriDamage();
@@ -355,5 +342,10 @@ private void UpdateTotalSpeedUpMultiplier()
         GetLUK();
         GetCriChance();
         GetVIT();
+    }
+    
+    public void ATKTest()
+    {
+        totalATK += 10;
     }
 }

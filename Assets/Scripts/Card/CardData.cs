@@ -69,8 +69,8 @@ public class CardData : ScriptableObject
       }
 
        [Header("# Mana Info")]//마나 정보
-      public int baseManaRecovery;// 기본 마나 회복량
-    public int growthValue_ManaRecovery;//성장 계수
+      public float baseManaRecovery;// 기본 마나 회복량
+    public float growthValue_ManaRecovery;//성장 계수
 
     public float GetManaRecovery(int stack)
       {

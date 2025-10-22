@@ -178,7 +178,7 @@ public void CallHitStop(){
         isCoroutineRunning_Hit = true;
         //피격시 일시정지
         nowHit = true;
-        Vector3 playerpos = GameManager.instance.playerMove.transform.position;
+        Vector3 playerpos = GameManager.instance.player.transform.position;
         Vector3 dirvec = transform.position - playerpos;
         rigid.AddForce(dirvec.normalized * 0.1f, ForceMode2D.Impulse);
         sprite.color = hitColor;

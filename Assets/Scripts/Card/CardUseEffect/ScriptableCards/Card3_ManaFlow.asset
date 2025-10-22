@@ -27,12 +27,12 @@ MonoBehaviour:
   growthValue: 0
   baseCount: 0
   growthValue_Count: 0
-  baseDuration: 3
+  baseDuration: 1
   growthValue_Duration: 0.1
   rangeScale_: {x: 0, y: 0, z: 0}
   growthValue_Range: 0
-  baseManaRecovery: 100
-  growthValue_ManaRecovery: 10
+  baseManaRecovery: 0.1
+  growthValue_ManaRecovery: 1
   baseSpeedUp: 0
   growthValue_baseSpeedUp: 0
   heal: 0

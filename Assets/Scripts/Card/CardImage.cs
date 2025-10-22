@@ -42,16 +42,19 @@ public class CardImage : MonoBehaviour
     public void CardAlpha0_Range(bool shouldRangeBeActive){
     //카드 드래그시 카드가 범위 카드라면 카드를 투명화
     if(shouldRangeBeActive == true){
+        Color main = mainImage.color;
         Color cardColor = cardFrame.color;
         Color manaColor = manaCostImage.color;
         Color textColor = manaCost_text.color;
         Color decoColor = cardDeco.color;
 
+        main.a = 0;
         cardColor.a = 0;
         manaColor.a = 0;
         textColor.a = 0;
-            decoColor.a = 0;
-        
+        decoColor.a = 0;
+
+        mainImage.color = main;
         cardFrame.color = cardColor;
         manaCostImage.color = manaColor;
         manaCost_text.color = textColor;
@@ -62,16 +65,19 @@ public class CardImage : MonoBehaviour
 }
 public void CardAlpha1_Range(){
 
+    Color main = mainImage.color;
     Color cardColor = cardFrame.color;
     Color manaColor = manaCostImage.color;
     Color textColor = manaCost_text.color;
     Color decoColor = cardDeco.color;
 
+    main.a = 1;
     cardColor.a = 1;
     manaColor.a = 1;
     textColor.a = 1;
     decoColor.a = 1;
 
+    mainImage.color = main;
     cardFrame.color = cardColor;
     manaCostImage.color = manaColor;
     manaCost_text.color = textColor;

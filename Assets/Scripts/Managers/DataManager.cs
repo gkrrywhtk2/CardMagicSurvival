@@ -58,7 +58,8 @@ public class DataManager : MonoBehaviour
       traningData.level = 1;//레벨은 1로 고정
     }
      public void SettingPlayerMainData(){
-      mainData = new Main_PlayerStatData();//훈련 스탯 우선 0으로 전부 초기화 
+        mainData = new Main_PlayerStatData();//훈련 스탯 우선 0으로 전부 초기화 
+        mainData.atk = 10;
     }
 
 
@@ -76,10 +77,10 @@ public class DataManager : MonoBehaviour
 
      public void HavedDeckSetting(){
       //서버에서 현재 저장된 덱을 받아서 적용, 가진 모든 카드
-            havedCardsList.Add(new Card(0,1,10));
-            havedCardsList.Add(new Card(1,1,20));
+        havedCardsList.Add(new Card(0,1,10));
+        havedCardsList.Add(new Card(1,1,20));
         havedCardsList.Add(new Card(2, 1, 22));
-              havedCardsList.Add(new Card(3,1,22));
+        havedCardsList.Add(new Card(3,1,22));
         havedCardsList.Add(new Card(4, 1, 6));
         havedCardsList.Add(new Card(5, 1, 6));
         havedCardsList.Add(new Card(6, 1, 6));
