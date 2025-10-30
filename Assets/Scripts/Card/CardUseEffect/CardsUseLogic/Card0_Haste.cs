@@ -14,12 +14,19 @@ public class Card0_Haste : MonoBehaviour, ICardUse
         GameManager.instance.player.playerEffect.HasteEffect();
 
         // 지속시간 가져오기
-        float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-            .GetDuration(card.magicCard.STACK);
+        float duration = 1;
+
+        //   // 지속시간 가져오기
+        // float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
+        //     .GetDuration(card.magicCard.STACK);
 
         // 추가 이동속도 값 가져오기
-        float speedUpValue = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-            .GetSpeedUp(card.magicCard.STACK);
+        float speedUpValue = 1;
+
+              // 추가 이동속도 값 가져오기
+        // float speedUpValue = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
+        //     .GetSpeedUp(card.magicCard.STACK);
+
 
         // 기존 효과가 진행 중이라면 중지
         if (hasteCoroutine != null)
@@ -41,8 +48,7 @@ public class Card0_Haste : MonoBehaviour, ICardUse
         player.RemoveSpeedUpEffect(value);
         player.AddSpeedUpEffect(value);
 
-        //IconUI 생성
-        GameManager.instance.iconManager.AddOrUpdateIcon(0, duration);
+       
 
         yield return new WaitForSeconds(duration);
 

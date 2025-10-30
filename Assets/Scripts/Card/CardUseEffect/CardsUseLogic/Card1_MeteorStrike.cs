@@ -24,7 +24,7 @@ public class Card1_MeteorStrike : MonoBehaviour, ICardUse
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
         targetPosition.z = 0;
 
-        meteor.Init(targetPosition,  card.magicCard.STACK); // 🌟STACK 값을 넘겨줌
+        meteor.Init(targetPosition); 
 
         // 방향 벡터 계산
         Vector3 direction = targetPosition - startPosition;

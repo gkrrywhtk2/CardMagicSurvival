@@ -16,8 +16,10 @@ public class Card6_ArcaneOverDrive : MonoBehaviour, ICardUse
         GameManager.instance.player.playerEffect.card6_Effect1.SetActive(true);
 
         // 지속시간 가져오기
-        float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-            .GetDuration(card.magicCard.STACK);
+        float duration = 1;
+
+            //   float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
+            // .GetDuration(card.magicCard.STACK);
 
         //추가 치명타 확률
         float percent = 100;
@@ -43,8 +45,7 @@ public class Card6_ArcaneOverDrive : MonoBehaviour, ICardUse
         player.AddCriticalEffect(per);
         player.InitALLStat();//스탯 적용
 
-        //IconUI 생성
-        GameManager.instance.iconManager.AddOrUpdateIcon(6, duration);
+        
 
         yield return new WaitForSeconds(duration);
 

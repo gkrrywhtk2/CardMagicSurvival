@@ -23,7 +23,10 @@ public class Card5_FireBall : MonoBehaviour, ICardUse
         float bulletSpeed = 7;
         int per = -1;//무한
         //레벨에 따른 조정(데미지, 지속시간)   
-        float damage = GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDamage(card.magicCard.STACK);
+        float damage = 1;
+
+
+        //  float damage = GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDamage(card.magicCard.STACK);
         float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(damage,out bool isCritical);
         fireBall.Init(direction,bulletSpeed,per,finalDamage,isCritical);
     }

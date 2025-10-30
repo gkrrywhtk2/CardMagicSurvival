@@ -17,15 +17,19 @@ public class Card4_FlameBurst : MonoBehaviour, ICardUse
             StopCoroutine(flameBurstCorutine);
         }
     
-        int STACK = card.magicCard.STACK;
+
         // 새로운 Coroutine 시작
-        flameBurstCorutine = StartCoroutine(FlameBurstRoutine(STACK));
+        flameBurstCorutine = StartCoroutine(FlameBurstRoutine(5));
 
     }
 
        private IEnumerator FlameBurstRoutine(int stack){
-        int repeatCount = GameManager.instance.deckManager.cardDatas[magicID].GetCount(stack);
-        float damage = GameManager.instance.deckManager.cardDatas[magicID].GetDamage(stack);
+
+        //    int repeatCount = GameManager.instance.deckManager.cardDatas[magicID].GetCount(stack);
+        // float damage = GameManager.instance.deckManager.cardDatas[magicID].GetDamage(stack);
+
+        int repeatCount = 5;
+        float damage = 5;
         int flameburstObjectNum = 7; // 오브젝트 풀에서 가져올 ID
 
         //repeatCount만큼 반복 -> repeatCount만큼 화염 생성

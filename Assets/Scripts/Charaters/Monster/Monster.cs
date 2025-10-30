@@ -245,7 +245,7 @@ public void CallHitStop(){
         nowHit = true; 
         coll.isTrigger = true;
         anim.SetBool("Dead", true);
-        GameManager.instance.dataManager.traningData.expPoint += 103;
+      //경험치있었던 자리
     }
    public void Deletemob(){
     switch(mobType){
@@ -260,7 +260,7 @@ public void CallHitStop(){
         gold.transform.position = transform.position;
     }
    // GameManager.instance.spawnManager.mobCount--;
-    GameManager.instance.stageManager.CheckStageProgress();//스테이지 진행률 증가
+   // GameManager.instance.stageManager.CheckStageProgress();//스테이지 진행률 삭제
     // 현재 오브젝트 비활성화
     gameObject.SetActive(false);
         break;

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
+using Game.InGameCardManager;
 
 
 
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerGameObject;
     public GameObject gameStartButton;//게임 시작 버튼
     public GameObject nextWaveButton;//다음 웨이브 버튼
-    public PurchaseUI purchaseUI;//구매 UI
+
 
 
     [Header("#ManagerConnect")]
@@ -24,18 +25,11 @@ public class GameManager : MonoBehaviour
     public EffectPooling effectPoolManager;//이펙트 풀링
     public DamageTextPooling damageTextPooling;//데미지 텍스트 풀링
     public MobPooling mobPooling;//몬스터 오브잭트 풀링
-    public DeckCardPooling deckCardPooling;// 덱 카드 풀링
-    public DeckCardPooling AllCardPooling;//모든 카드 보기 풀링
     public MobSpawnManager spawnManager;
-    public DeckManager deckManager;
     public WaveManager waveManager;
-    public ItemManager itemManager;
-    public DataManager dataManager;
     public StageManager stageManager;
-    public WeaponManager weaponManager;
-    public IconManager iconManager;
-    public AccessoryManager accessoryManager;
-    public BoardUI boardUI;
+    public InGameCardManager inGameCardManager;
+
     [Header("#GameControl")]
     public bool cardOneTouch;
     public bool GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)
@@ -63,10 +57,12 @@ public class GameManager : MonoBehaviour
         gameStartButton.gameObject.SetActive(false);
         GamePlayState = true;
         ItemSelectState = false;
-        deckManager.HandSetting();
+        inGameCardManager.InitDeck();
+
+
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
-         
+        
          instance.player.playerStatus.PlayerInit();
          //instance.boardUI.ShowSeletedTap(2);//2는 카드 탭 세팅,삭제 예정
          
@@ -127,8 +123,8 @@ public class GameManager : MonoBehaviour
 
     public void LinkToData(){
         //DataManager에 접근하여 현재 상태를 불러옴
-        instance.dataManager.SyncStageLevelFromServer();
-        instance.dataManager.SyncWeaponData();
+        //instance.dataManager.SyncStageLevelFromServer();
+       // instance.dataManager.SyncWeaponData();
     }
     public void WarningText(string warn){
         warningUI.gameObject.SetActive(true);

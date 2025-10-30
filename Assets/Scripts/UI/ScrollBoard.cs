@@ -54,7 +54,7 @@ public class ScrollBoard : MonoBehaviour
 
 
     public void OffUI(){
-        GameManager.instance.boardUI.buttomTapUI.gameObject.SetActive(false);
+        //GameManager.instance.boardUI.buttomTapUI.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 

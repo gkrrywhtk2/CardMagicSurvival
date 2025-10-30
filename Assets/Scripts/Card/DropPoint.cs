@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Game.InGameCardManager;
 
 
 public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public DeckManager deckManager;
+    public InGameCardManager inGameCardManager;
     
      // 카드 효과를 ID로 매핑하기 위한 딕셔너리
     private Dictionary<int, ICardUse> cardAbility;
@@ -57,27 +58,31 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
         if( eventData.pointerDrag != null )
         {
-            //card.CardLock();
+            card.CardLock();
             //사용 이펙트
-            if(card.rangeOn != true){
-            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
-                    targetPosition.z = 0; // 2D 환경이라면 Z축을 고정
-                    int cardUseEffectNum = 1;
+            if (card.rangeOn != true)
+            {
+                Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
+                targetPosition.z = 0; // 2D 환경이라면 Z축을 고정
+                int cardUseEffectNum = 1;
                 GameObject effect = GameManager.instance.poolManager.Get(cardUseEffectNum);
                 effect.transform.position = targetPosition;
             }
-            
+
             //마나 소모
-            float cost = card.cardData.cardCost;
+            float cost = card.cardScritableData.cardCost;
             GameManager.instance.player.playerStatus.mana -= cost;
 
             //카드 사용 로직
             UseCard(eventData);
-    
-            //사용된 카드 덱 맨 아래로
-            deckManager.deck.Add(card.magicCard.ID);
 
-            deckManager.DrawCard(card.fixedCardNumber);
+            //사용된 카드 덱 맨 아래로
+            inGameCardManager.deck.Enqueue(card.id);
+
+           // deckManager.deck.Add(card.magicCard.ID); 아마도 이번 로직에선 필요없음
+            inGameCardManager.DrawCard(card.fixedCardNumber);
+
+
         }
     }
 
@@ -85,9 +90,9 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
       // 카드 ID에 따라 효과를 실행하는 함수
     public void UseCard(PointerEventData eventData)
     {
-        MagicCard card =  eventData.pointerDrag.GetComponent<MagicCard>();
-        int ID = card.magicCard.ID;
-        int STACK = card.magicCard.STACK;
+        MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+
+        int ID = card.id;
 
         if (cardAbility.ContainsKey(ID))
         {

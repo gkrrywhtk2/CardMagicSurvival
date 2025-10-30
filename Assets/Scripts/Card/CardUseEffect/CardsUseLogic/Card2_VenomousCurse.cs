@@ -18,11 +18,17 @@ public class Card2_VenomousCurse : MonoBehaviour, ICardUse
         posion.transform.position = targetPosition;
 
         //레벨에 따른 조정(데미지, 지속시간)   
-        float damage = GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDamage(card.magicCard.STACK);
-        float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(damage,out bool isCritical);
-        float duration =  GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDuration(card.magicCard.STACK);
-      // global::bullet.bulletType type = global::bullet.bulletType.placement;
-        posion.Init(finalDamage,isCritical,duration, Bullet_Placement.elementType.posion);
+    //     float damage = GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDamage(card.magicCard.STACK);
+    //     float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(damage,out bool isCritical);
+    // float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDuration(card.magicCard.STACK);
+
+
+
+    float finalDamage = 1;
+    float duration = 1;
+    // global::bullet.bulletType type = global::bullet.bulletType.placement;
+    posion.Init(finalDamage, true, duration, Bullet_Placement.elementType.posion);
+        //iscritical true로 임시 조정
     }
 
    

@@ -64,17 +64,14 @@ public class Player_col : MonoBehaviour
     GameManager.instance.restartButton.SetActive(true);
    }
 
-   private void OnTriggerEnter2D(Collider2D collison) {
-    if(collison.CompareTag("Gem_Item")){
-        Gem_Item gem = collison.GetComponent<Gem_Item>();
-        gem.Gem_Point.gameObject.SetActive(false);
-        StartCoroutine(Get_Gem(gem.rank));
-    }else if(collison.CompareTag("Gold")){
-        GoldCoin gold = collison.GetComponent<GoldCoin>();
-        dataManager.goldPoint += ReturnGoldValue(gold.value);
-        gold.gameObject.SetActive(false);
+    private void OnTriggerEnter2D(Collider2D collison) 
+    {
+        if(collison.CompareTag("Gold")){
+            GoldCoin gold = collison.GetComponent<GoldCoin>();
+            dataManager.goldPoint += ReturnGoldValue(gold.value);
+            gold.gameObject.SetActive(false);
+        }
     }
-   }
 
    public int ReturnGoldValue(float value){
     float returnValue = value * (1f + playerStatus.LUK / 100f);
@@ -83,14 +80,14 @@ public class Player_col : MonoBehaviour
    }
 
 
-   IEnumerator Get_Gem(Rank rank){
-    GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
-    GameManager.instance.player.joystickP.speed = 0;
-    GameManager.instance.itemManager.SpawnItems_(rank);
-    GameManager.instance.ItemPause();
-    yield return new WaitForSeconds(2);
-     GameManager.instance.player.joystickP.speed = 3;
+//    IEnumerator Get_Gem(Rank rank){
+//     GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
+//     GameManager.instance.player.joystickP.speed = 0;
+//     GameManager.instance.itemManager.SpawnItems_(rank);
+//     GameManager.instance.ItemPause();
+//     yield return new WaitForSeconds(2);
+//      GameManager.instance.player.joystickP.speed = 3;
    
-   }
+//    }
    
 }

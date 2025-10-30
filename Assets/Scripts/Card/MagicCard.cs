@@ -18,16 +18,13 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Vector3 cardDrawStartPosition;//카드 드로우 연출시 시작하는 위치
 
     [Header("Card Info")]
-    public CardData cardData;
-    public Card magicCard;
-    //public int cardId;       // 카드 ID
-   // public int cardCost;     // 카드 비용
-    //public int cardRank;//{1,2,3}
+    public CardScritableData cardScritableData;
+    //public Card magicCard;
+    public int id;
     public int fixedCardNumber;//012 어떤 위치의 카드인지
     public bool cardOn;//코스트 체크
     public bool cardDrawLock;//카드 드로우 애니메이션 연출시 카드 터치 금지용
 
-   
     public Image dropPoint;//드랍 포인트
     public Image CoolTimeImage;//시계 방향 쿨타임 이미지
     public GameObject range;//스킬 범위 이미지 오브젝트
@@ -46,14 +43,14 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // RectTransform 및 CanvasGroup 초기화
         rect = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-        //cardImage = GetComponent<Image>();
         originalPosition = rect.position;
         anim = GetComponent<Animator>();
         cardDrawLock = false;
         cardImage = GetComponent<CardImage>();
     }
 
-    private void Update(){
+    private void Update()
+    {
         ClockCoolTime();
     }
 
@@ -67,27 +64,30 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         rect.anchoredPosition = new Vector3(-5000, -5000, 0);
         // Debug.Log("위치 조정");
     }
+    public void CardFalse()
+    {
+        //애니메이션 비활성화하여 앵커드 포지션 적용되게 변경
+        anim.enabled = false;
+        rect.anchoredPosition = new Vector3(-5000, -5000, 0);
+    }
     public void CardImageInit(int id)
     {
         cardImage.Init(id);
     }
     public void CardInit(int cardid)
     {
-        cardData = GameManager.instance.deckManager.cardDatas[cardid];
-        magicCard = GameManager.instance.dataManager.havedCardsList.FirstOrDefault(card => card.ID == cardid);
+    
+        id = cardid;
+        cardScritableData = LocalDataManager.Instance.cardData.cardScritableData[id];
         cardOn = false;
+
         cardReady = false;
-        // cardLevelText.gameObject.SetActive(true);
-        // cardLevelText.text = "Lv." + magicCard.STACK.ToString();
-        // cardLevelText.gameObject.SetActive(false);//우선 감추기
-        CardImageInit(cardid);//카드의 이미지 초기화
-        //RankImageSetting(cardRank); 별 연출 개발 중단
-        //cardCost = cardData.cardCost;
-       // cardImage.sprite = cardData.cardImage;
-        //costText.text = cardData.cardCost.ToString();
-        rangeOn = cardData.isRangeCard;
-        range.GetComponent<RectTransform>().localScale = cardData.rangeScale_Card;
-        directionCard = cardData.isDirCard;
+    
+        CardImageInit(id);//카드의 이미지 초기화
+    
+        rangeOn = cardScritableData.isRangeCard;
+        range.GetComponent<RectTransform>().localScale = cardScritableData.rangeScale_Card;
+        directionCard = cardScritableData.isDirCard;
         cardImage.CardAlpha1_Range();
         CardDrawAni(0);
         
@@ -95,7 +95,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void CardInitWhenStackUpgrade(){
-        int id = magicCard.ID;
+        // int id = magicCard.ID;
         // cardLevelText.gameObject.SetActive(true);
         // cardLevelText.text = "Lv." + magicCard.STACK.ToString();
         // cardLevelText.gameObject.SetActive(false);//우선 감추기
@@ -224,16 +224,15 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     }
 
-    public void ClockCoolTime(){
-        if(cardData == null)
+    public void ClockCoolTime()
+    {
+        if(cardScritableData == null)
         return;//카드가 생성되기전에는 실행 X
 
-     // 현재 마나와 카드 비용 비율 계산
-    float mana = GameManager.instance.player.playerStatus.mana;
-    float value = Mathf.Clamp01(mana / cardData.cardCost);
- 
+        // 현재 마나와 카드 비용 비율 계산
+        float mana = GameManager.instance.player.playerStatus.mana;
+        float value = Mathf.Clamp01(mana / cardScritableData.cardCost);
     
-
     // 쿨타임 UI 업데이트
     CoolTimeImage.fillAmount = value;
 
@@ -243,9 +242,9 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     // 상태가 변경된 경우만 투명도 조정
     
-        SetCardVisibility(cardOn);
+    SetCardVisibility(cardOn);
     
-}
+    }
 // 카드의 투명도 조정
 private void SetCardVisibility(bool isCardOn)
 {
@@ -328,10 +327,10 @@ private void SetCardVisibility(bool isCardOn)
     }
     public void CardDescUiSeind(){
         //deckmanager한테 카드 정보 보내어, ui에 카드 설명창 연출
-        GameManager.instance.deckManager.CardDescInit(magicCard.ID);
+        //GameManager.instance.deckManager.CardDescInit(magicCard.ID); 삭제 예정
     }
     public void CardDescUiOff(){
-        GameManager.instance.deckManager.CardDescUi.gameObject.SetActive(false);
+        //GameManager.instance.deckManager.CardDescUi.gameObject.SetActive(false);
     }
 }
 

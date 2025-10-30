@@ -14,12 +14,16 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
         GameManager.instance.player.playerEffect.PlayManaUp();
 
         // 지속시간 가져오기
-        float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-            .GetDuration(card.magicCard.STACK);
+        float duration = 1;
+
+        //  float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
+        // .GetDuration(card.magicCard.STACK);
 
         // 마나 회복량 가져오기
-        float recoveryAmount = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-            .GetManaRecovery(card.magicCard.STACK);
+        float recoveryAmount = 1;
+            
+            //  float recoveryAmount = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
+            // .GetManaRecovery(card.magicCard.STACK);
 
         // 기존 효과가 진행 중이라면 중지
         if (manaRecoveryCoroutine != null)
@@ -40,8 +44,7 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
     player.RemoveManaRecoveryFlat(flatValue);
     player.AddManaRecoveryFlat(flatValue);
 
-    // UI 아이콘 표시 (예: 3번 슬롯에 duration 동안 표시)
-    GameManager.instance.iconManager.AddOrUpdateIcon(3, duration);
+  
 
     yield return new WaitForSeconds(duration);
 

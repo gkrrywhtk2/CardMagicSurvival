@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class Player_Status : MonoBehaviour
 {
     public DataManager dataManager;
-    public UpgradeUI upgradeUI;
-    AccessoryManager accessoryManager;
+
+    //AccessoryManager accessoryManager;
     [Header("#플레이어의 상태값")]
     public bool isLive;
     public float health;//현재 체력
@@ -36,19 +36,9 @@ public class Player_Status : MonoBehaviour
     public float maxMana = 9;
     public float baseManaRecovery;//기본 마나회복량; 일단 0.5로 세팅하였음 초당 0.5회복
     [Header("Bar")]
-    public Slider attackBar;
     public Slider hpBar;
-    public Slider MagicArrow;
-
-    public Slider hpBar_UI;
-    public TMP_Text nowHpText_UI;
-
-  void Start()
-  {
-    accessoryManager = GameManager.instance.accessoryManager;
-  }
-
-  public void PlayerInit(){
+    public void PlayerInit()
+    {
         //게임 시작시 플레이어 변수 초기화
         isLive = true;
         GetMaxHealth();
@@ -57,12 +47,8 @@ public class Player_Status : MonoBehaviour
     }
     private void HpBarUpdate()
     {
-            // 체력 바 갱신
+        // 체력 바 갱신
         hpBar.value = health / maxHealth;
-        hpBar_UI.value = hpBar.value;
-
-        // 🔹 체력을 자연수로 표시
-        nowHpText_UI.text = Mathf.FloorToInt(health).ToString();
     }
 
     
@@ -73,21 +59,21 @@ public class Player_Status : MonoBehaviour
       //  GameManager.instance.deckManager.StartUpgradeEvent();//카드 랜덤 선택 이벤트
 
     }
-    private void AttackBarUpdate(){
-        float automaxpoint = GameManager.instance.player.autoAttack.autoAttackMaxPoint;
-        float autocurpoint = GameManager.instance.player.autoAttack.autoAttackCurrentPoint;
-        attackBar.value = autocurpoint/automaxpoint;
-        MagicArrow.value = autocurpoint/automaxpoint;
+    // private void AttackBarUpdate(){
+    //     float automaxpoint = GameManager.instance.player.autoAttack.autoAttackMaxPoint;
+    //     float autocurpoint = GameManager.instance.player.autoAttack.autoAttackCurrentPoint;
+    //     attackBar.value = autocurpoint/automaxpoint;
+    //     MagicArrow.value = autocurpoint/automaxpoint;
 
-    }
+    // }
 
-   public void StartHealthRegen()
-{
-    if (regenCoroutine == null) // 중복 실행 방지
+    public void StartHealthRegen()
     {
-        regenCoroutine = StartCoroutine(HealthRecoveryCoroutine());
+        if (regenCoroutine == null) // 중복 실행 방지
+        {
+            regenCoroutine = StartCoroutine(HealthRecoveryCoroutine());
+        }
     }
-}
     private IEnumerator HealthRecoveryCoroutine()
 {
     while (true)
@@ -114,7 +100,6 @@ public void StopHealthRegen()
         if(isLive != true)
             return;
         HpBarUpdate();
-        AttackBarUpdate();
         //ManaBarUpdate();
         ManaRecovery();
        // ExpBarUpdate(); 경험치 삭제 예정
@@ -157,13 +142,11 @@ private void UpdateTotalSpeedUpMultiplier()
 
         public void ManaRecovery()
         {
-            if (!GameManager.instance.GamePlayState || GameManager.instance.ItemSelectState)
+            if (!GameManager.instance.GamePlayState)
                 return;
 
-            float traningManaRecovery = upgradeUI.Traning_MRP_Setting();
-
             // 기본 회복량 + 추가 회복량 적용
-            mana += (baseManaRecovery + totalFlatManaRecovery + traningManaRecovery) * Time.deltaTime;
+            mana += (baseManaRecovery + totalFlatManaRecovery ) * Time.deltaTime;
         }
 
         // 🔹 고정 마나 회복량 추가
@@ -271,15 +254,15 @@ private void UpdateTotalSpeedUpMultiplier()
         //Debug.Log("ToTalATK = " + totalATK);
 
         // 무기 장착 효과 및 보유 효과를 한 번만 계산하여 저장
-        float equipWeaponEffectValue = GameManager.instance.weaponManager.ReturnEquipEffect();
-        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedATKEffect();
-        Debug.Log("ownedWeaponEffectValueATK : " + ownedWeaponEffectValue);
+        //float equipWeaponEffectValue = GameManager.instance.weaponManager.ReturnEquipEffect();
+       // float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedATKEffect();
+       // Debug.Log("ownedWeaponEffectValueATK : " + ownedWeaponEffectValue);
 
         // 무기 효과 값 계산
-        float finalWeaponEffectValue = equipWeaponEffectValue + ownedWeaponEffectValue;
+       // float finalWeaponEffectValue = equipWeaponEffectValue + ownedWeaponEffectValue;
 
         // 최종 공격력에 적용
-        totalATK *= 1 + (finalWeaponEffectValue / 100f); // 백분율로 변환하여 적용
+       // totalATK *= 1 + (finalWeaponEffectValue / 100f); // 백분율로 변환하여 적용
        // Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
         //  Debug.Log("ToTalATK + WeaponValue= " + totalATK);
         this.totalATK = totalATK;
@@ -287,50 +270,44 @@ private void UpdateTotalSpeedUpMultiplier()
     }
     public float GetTotalCriDamage()
     {
-        float baseCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
+        //loat baseCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
 
-        float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedCRIEffect(); // ex: 50
-        float ownedAccEffectValue = accessoryManager.ReturnOwnedCRIEffect(); // ex: 50
-        float equipedAccEffectValue = accessoryManager.ReturnEquipEffect_CRI();
+        // float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedCRIEffect(); // ex: 50
+        // float ownedAccEffectValue = accessoryManager.ReturnOwnedCRIEffect(); // ex: 50
+        //  float equipedAccEffectValue = accessoryManager.ReturnEquipEffect_CRI();
 
-        float totalBonusPercent = ownedWeaponEffectValue + ownedAccEffectValue + equipedAccEffectValue;
-        Debug.Log("ownedWeaponEffectValue : " + ownedWeaponEffectValue);
-        Debug.Log("ownedAccEffectValue : " + ownedAccEffectValue);
-        Debug.Log("equipedAccEffectValue : " + equipedAccEffectValue);
+        //  float totalBonusPercent = ownedWeaponEffectValue + ownedAccEffectValue + equipedAccEffectValue;
+        // Debug.Log("ownedWeaponEffectValue : " + ownedWeaponEffectValue);
+        // Debug.Log("ownedAccEffectValue : " + ownedAccEffectValue);
+        //  Debug.Log("equipedAccEffectValue : " + equipedAccEffectValue);
 
-        totalCriDamage = baseCriDamage + totalBonusPercent;
+        // totalCriDamage = baseCriDamage + totalBonusPercent;
+
+        totalCriDamage = 1;
        
         return totalCriDamage;
     }
 
     public float GetMaxHealth(){
         int baseHp = 100;//기본 체력 100
-        float upgradeHp = upgradeUI.MaxHp_Setting();
-        float traningHp = upgradeUI.Traning_HP_Setting();
-        float accValue0 = accessoryManager.ReturnEquipEffect_HP();
-        float accValue1 = accessoryManager.ReturnOwnedHPEffect();
-        maxHealth = baseHp + upgradeHp + traningHp + accValue0 + accValue1;
-        return maxHealth;
+        return baseHp;
     }
     public int GetLUK(){
-        float traningValue = upgradeUI.Traning_LUK_Setting();
-        float accValue = accessoryManager.ReturnEquipEffect_LUK() + 
-            accessoryManager.ReturnOwnedLUKEffect();
+        float traningValue = 1;
+        // float accValue = accessoryManager.ReturnEquipEffect_LUK() + 
+        //     accessoryManager.ReturnOwnedLUKEffect();
 
-        LUK = (int)traningValue + (int)accValue;
+        LUK = (int)traningValue;
         return LUK;
     }
     public float GetCriChance(){
-        float totalCriPer = upgradeUI.CriticalPer_Setting();
+        float totalCriPer = 1;
         totalCriChance = totalCriPer + totalCriticalMultiplier;
         return totalCriChance;
     }
     public float GetVIT(){
-        float recoveryAmount0 = upgradeUI.HpRecovery_Setting() + upgradeUI.Traning_VIT_Setting();//성장 수치
-        float recoveryAmount1 = accessoryManager.ReturnOwnedVITEffect();//악세 보유 수치
-        float recoveryAmount2 = accessoryManager.ReturnEquipEffect_VIT();//악세 착용 수치
-        this.VIT  = recoveryAmount0 + recoveryAmount1 + recoveryAmount2;
-        return VIT;
+        float recoveryAmount0 = 1;
+        return recoveryAmount0;
     }
 
     public void InitALLStat()

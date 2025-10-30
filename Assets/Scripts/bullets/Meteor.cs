@@ -11,11 +11,10 @@ public class Meteor : MonoBehaviour
       private int STACK;
        
     //private Quaternion initialRotation;
-    public void Init(Vector3 target, int stack)
+    public void Init(Vector3 target)
     {
         targetPosition = target;
         isMoving = true; // 이동 시작
-        STACK = stack;
     }
      private void Update()
     {
@@ -38,17 +37,17 @@ public class Meteor : MonoBehaviour
    public void CreateImpactArea(){
     int poolNumber = 3;
     GameObject impactArea = GameManager.instance.effectPoolManager.Get(poolNumber);
-    
-    //Vector3 impactRange; 스택에 따른 범위 증가 삭제
-   //impactRange = GameManager.instance.deckManager.cardDatas[ID].GetRange(STACK);
-    impactArea.transform.position = targetPosition;
-    impactArea.transform.localScale = GameManager.instance.deckManager.cardDatas[ID].rangeScale_;
-   // Debug.Log(STACK);
-    // Debug.Log(impactRange);
-    //  Debug.Log("Impact Area Scale: " + impactArea.transform.localScale);
 
-    //화염구 충돌 오브젝트 초기화
-    float magicPower = GameManager.instance.deckManager.cardDatas[ID].GetDamage(STACK);
+
+    impactArea.transform.position = targetPosition;
+
+        // impactArea.transform.localScale = GameManager.instance.deckManager.cardDatas[ID].rangeScale_;
+        impactArea.transform.localScale = new Vector3(1, 1, 1); //임시
+
+
+        //화염구 충돌 오브젝트 초기화
+        //float magicPower = GameManager.instance.deckManager.cardDatas[ID].GetDamage(STACK);
+        float magicPower = 1;
     float damage = GameManager.instance.player.playerStatus.DamageReturn(magicPower,out bool isCritical);
     impactArea.GetComponent<Melee>().Init(damage, isCritical);
    

@@ -14,11 +14,10 @@ public class Icon_MagicCard : MonoBehaviour
     public void Init(int ID, float time)
     {
         iconID = ID;
-        iconImage.sprite = GameManager.instance.deckManager.cardDatas[iconID].cardImage;
+        //iconImage.sprite = GameManager.instance.deckManager.cardDatas[iconID].cardImage; 필수
         duration = time;
         usedTime = 0;
         durationImage.fillAmount = 0;
-        iconManager = GameManager.instance.iconManager;
     }
 
     private void Update()

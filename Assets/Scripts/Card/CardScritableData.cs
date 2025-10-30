@@ -1,21 +1,12 @@
+using Game.RankSystem;
 using UnityEngine;
 [CreateAssetMenu(fileName = "Card", menuName = "Scriptable Object/CardData")]
 
-public class CardData : ScriptableObject
+public class CardScritableData : ScriptableObject
 {
-  public enum CardRank{  
-    Normal,   // 일반
-    Rare,     // 고급
-    Epic,     // 특급
-    Legendary,// 전설
-    Mythic    // 신화
-    };
-  public enum InfoTag{damage, count, duration, range, manarecovery, speedUp, Heal}
   [Header("#Main Info")]
   public int cardId;
   public int cardCost;
-  public CardRank rank;
-  public InfoTag[] infoTags;
   public string cardName;
   public string cardDesc_Main;
   public Sprite cardImage;
