@@ -11,7 +11,7 @@ public class Card5_FireBall : MonoBehaviour, ICardUse
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
         int fireBallNum = 7;
        
-        Bullet_2 fireBall = GameManager.instance.poolManager.Get(fireBallNum).GetComponent<Bullet_2>();
+        Bullet_2 fireBall = GameManager.instance.objectPooling.Get(fireBallNum).GetComponent<Bullet_2>();
        // Vector2 cardVec = eventData.pointerDrag.GetComponent<Vector2>();
         Vector2 targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(eventData.position.x, eventData.position.y));
         Vector2 playerVec = GameManager.instance.player.playerCenterPivot.position;

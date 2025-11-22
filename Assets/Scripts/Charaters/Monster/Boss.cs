@@ -156,7 +156,7 @@ public class Boss : MonoBehaviour
     {
         int goldCoinPoolNum = 6;
         int randomOffSet =  Random.Range(1,5);
-        GoldCoin gold = GameManager.instance.poolManager.Get(goldCoinPoolNum).GetComponent<GoldCoin>();
+        GoldCoin gold = GameManager.instance.objectPooling.Get(goldCoinPoolNum).GetComponent<GoldCoin>();
         gold.value = randomOffSet;
         gold.transform.position = transform.position;
     }

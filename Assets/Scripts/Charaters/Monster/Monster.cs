@@ -245,7 +245,8 @@ public void CallHitStop(){
         nowHit = true; 
         coll.isTrigger = true;
         anim.SetBool("Dead", true);
-      //경험치있었던 자리
+        //경험치있었던 자리
+
     }
    public void Deletemob(){
     switch(mobType){
@@ -253,11 +254,18 @@ public void CallHitStop(){
                   //아이템 드랍
       if (Random.Range(0, 2) == 0) // 0 또는 1 반환, 50% 확률
     {
-        int goldCoinPoolNum = 6;
-        int randomOffSet =  Random.Range(1,5);
-        GoldCoin gold = GameManager.instance.poolManager.Get(goldCoinPoolNum).GetComponent<GoldCoin>();
-        gold.value = randomOffSet;
-        gold.transform.position = transform.position;
+        // int goldCoinPoolNum = 6;
+        // int randomOffSet =  Random.Range(1,5);
+        // GoldCoin gold = GameManager.instance.objectPooling.Get(goldCoinPoolNum).GetComponent<GoldCoin>();
+        // gold.value = randomOffSet;
+        // gold.transform.position = transform.position;
+
+        int ExpGemNum = 5;
+        int randomOffSet =  Random.Range(80,100);
+        EXP_GEM expGem = GameManager.instance.objectPooling.Get(ExpGemNum).GetComponent<EXP_GEM>();
+        expGem.value = randomOffSet;
+        expGem.transform.position = transform.position;
+        
     }
    // GameManager.instance.spawnManager.mobCount--;
    // GameManager.instance.stageManager.CheckStageProgress();//스테이지 진행률 삭제

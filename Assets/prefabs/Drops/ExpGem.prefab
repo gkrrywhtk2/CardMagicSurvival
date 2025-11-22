@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 3585991034394095501}
   - component: {fileID: 8070521177310085203}
   m_Layer: 0
-  m_Name: GemstonePurple
-  m_TagString: Untagged
+  m_Name: ExpGem
+  m_TagString: Drops
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5683923007643258251}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.047077, y: 0.65284026, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,10 +76,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -399729173
+  m_SortingLayerID: 363184477
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8802978331890681932, guid: 7925c5a97139a264499510ff29e4e028, type: 3}
+  m_Sprite: {fileID: 896008859028648996, guid: 7925c5a97139a264499510ff29e4e028, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -175,4 +175,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2785647dafc5c47259c641ee02cd1b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  point: 10
+  value: 0

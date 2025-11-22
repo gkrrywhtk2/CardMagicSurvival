@@ -65,7 +65,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
                 Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
                 targetPosition.z = 0; // 2D 환경이라면 Z축을 고정
                 int cardUseEffectNum = 1;
-                GameObject effect = GameManager.instance.poolManager.Get(cardUseEffectNum);
+                GameObject effect = GameManager.instance.objectPooling.Get(cardUseEffectNum);
                 effect.transform.position = targetPosition;
             }
 

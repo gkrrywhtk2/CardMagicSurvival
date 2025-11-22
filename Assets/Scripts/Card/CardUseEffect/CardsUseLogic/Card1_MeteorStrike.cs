@@ -14,7 +14,7 @@ public class Card1_MeteorStrike : MonoBehaviour, ICardUse
         }
          // 화염구 생성
         int poolNumber = 2;
-        Meteor meteor = GameManager.instance.poolManager.Get(poolNumber).GetComponent<Meteor>();
+        Meteor meteor = GameManager.instance.objectPooling.Get(poolNumber).GetComponent<Meteor>();
 
         // 생성 위치 설정
         Vector3 startPosition = GameManager.instance.player.fireBallPoint.transform.position;

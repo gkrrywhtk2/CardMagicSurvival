@@ -13,6 +13,7 @@ public class Player_Status : MonoBehaviour
     public bool isLive;
     public float health;//현재 체력
     private Coroutine regenCoroutine; // 실행 중인 체력 회복 코루틴
+    public Player_EXP playerEXP;//플레이어 경험치 스크립트 연동
     [Header("#능력치 ")]
     public float totalATK;//공격력
     public float maxHealth;//최대 체력
