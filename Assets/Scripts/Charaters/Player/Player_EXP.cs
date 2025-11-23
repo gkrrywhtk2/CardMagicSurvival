@@ -75,6 +75,8 @@ public class Player_EXP : MonoBehaviour
     {
         Debug.Log($"[Level Up!] 현재 레벨: {level} >> 카드 선택 창이 열립니다.");
         // 나중에 여기에 Time.timeScale = 0 (게임 일시정지) 및 UI 팝업 로직을 추가하면 됩니다.
+        GameManager.instance.cardSelect.gameObject.SetActive(true);
+        GameManager.instance.cardSelect.EventStart();
     }
 
     void SliderUpdate()

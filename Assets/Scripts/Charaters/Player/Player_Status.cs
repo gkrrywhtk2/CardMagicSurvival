@@ -12,6 +12,7 @@ public class Player_Status : MonoBehaviour
     [Header("#플레이어의 상태값")]
     public bool isLive;
     public float health;//현재 체력
+    public bool gameStop;//게임이 일시정지 중이면 true 입니다.
     private Coroutine regenCoroutine; // 실행 중인 체력 회복 코루틴
     public Player_EXP playerEXP;//플레이어 경험치 스크립트 연동
     [Header("#능력치 ")]

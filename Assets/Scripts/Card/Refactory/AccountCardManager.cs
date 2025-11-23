@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class AccountCardManager : MonoBehaviour
 {
+    public static AccountCardManager Instance { get; private set; }//싱글톤
     public MockServer mockServer;
 
     public List<PlayerCard> accountCardPool = new(); // 전체 카드
@@ -15,9 +16,13 @@ public class AccountCardManager : MonoBehaviour
         public int[] deckSlots;
     }
 
-    private void Awake()
+    
+    void Awake()
     {
-       // DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     public void LoadFromServer()
@@ -29,6 +34,18 @@ public class AccountCardManager : MonoBehaviour
         deckSlots = new List<int>(data.deckSlots);
 
         Debug.Log($"[AccountCardManager] 카드 {accountCardPool.Count}개, 덱 {deckSlots.Count}개 로드 완료");
+    }
+
+     // ✅ 안전하게 카드풀 읽기 (복사본 반환)
+    public List<PlayerCard> GetAccountCardPool()
+    {
+        return new List<PlayerCard>(accountCardPool);
+    }
+    
+     // ✅ [추가] 특정 카드 ID로 카드 찾기
+    public PlayerCard GetCardById(int cardId)
+    {
+        return accountCardPool.Find(c => c.cardId == cardId);
     }
 
     public void SaveToServer()

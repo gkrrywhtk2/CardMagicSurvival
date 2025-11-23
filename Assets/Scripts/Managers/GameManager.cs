@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public WaveManager waveManager;
     public StageManager stageManager;
     public InGameCardManager inGameCardManager;
+    public CardSelect cardSelect;// 카드 선택 이벤트
 
     [Header("#GameControl")]
     public bool cardOneTouch;

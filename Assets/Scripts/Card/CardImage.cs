@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Game.RankSystem;
-using Game.CardData;
 
 public class CardImage : MonoBehaviour
 {
@@ -12,80 +11,78 @@ public class CardImage : MonoBehaviour
     public Image mainImage;
     public Image manaCostImage;
     public TMP_Text manaCost_text;
-    private MagicCard card;
+    
+    private int currentCardId;
   
-    void Awake()
-    {
-        card = transform.GetComponentInParent<MagicCard>();
-
-    }
-
     public void Init(int id)
     {
+        currentCardId = id;
         FrameInit();
-        mainImageInit();
+        MainImageInit();
         CostInit();
     }
+    
     public void FrameInit()
     {
-        int cardid = card.id;
-        RankType rank = ServerDataManager.Instance.accountCardManager.accountCardPool[cardid].currentRarity;
+        // ✅ AccountCardManager에서 카드 정보 가져오기
+        PlayerCard card = AccountCardManager.Instance.GetCardById(currentCardId);
+        
+        if (card == null)
+        {
+            Debug.LogError($"[CardImage] 카드 ID {currentCardId}를 찾을 수 없습니다!");
+            return;
+        }
+        
+        RankType rank = card.currentRarity;
         Color rankColor = RankDatas.GetColor(rank);
         cardFrame.color = rankColor;
         cardDeco.color = rankColor;
     }
-    public void mainImageInit()
+    
+    public void MainImageInit()
     {
-        mainImage.sprite = card.cardScritableData.cardImage;
-     }
+        // ✅ LocalDataManager를 통해 카드 이미지 가져오기
+        mainImage.sprite = LocalDataManager.Instance.cardData.cardScritableData[currentCardId].cardImage;
+    }
+    
     public void CostInit()
     {
-        int cost = card.cardScritableData.cardCost;
+        // ✅ LocalDataManager를 통해 카드 코스트 가져오기
+        int cost = LocalDataManager.Instance.cardData.cardScritableData[currentCardId].cardCost;
         manaCost_text.text = cost.ToString();
     }
 
     public void CardAlpha0_Range(bool shouldRangeBeActive)
     {
-        //카드 드래그시 카드가 범위 카드라면 카드를 투명화
-        if (shouldRangeBeActive == true)
+        if (shouldRangeBeActive)
         {
-            Color main = mainImage.color;
-            Color cardColor = cardFrame.color;
-            Color manaColor = manaCostImage.color;
-            Color textColor = manaCost_text.color;
-            Color decoColor = cardDeco.color;
-
-            main.a = 0;
-            cardColor.a = 0;
-            manaColor.a = 0;
-            textColor.a = 0;
-            decoColor.a = 0;
-
-            mainImage.color = main;
-            cardFrame.color = cardColor;
-            manaCostImage.color = manaColor;
-            manaCost_text.color = textColor;
-            cardDeco.color = decoColor;
+            SetAlpha(0f);
         }
         else
         {
             CardAlpha1_Range();
         }
     }
+    
     public void CardAlpha1_Range()
     {
-
+        SetAlpha(1f);
+    }
+    
+    // ✅ 리팩토링: 중복 코드 제거
+    private void SetAlpha(float alpha)
+    {
         Color main = mainImage.color;
         Color cardColor = cardFrame.color;
         Color manaColor = manaCostImage.color;
         Color textColor = manaCost_text.color;
         Color decoColor = cardDeco.color;
 
-        main.a = 1;
-        cardColor.a = 1;
-        manaColor.a = 1;
-        textColor.a = 1;
-        decoColor.a = 1;
+        main.a = alpha;
+        cardColor.a = alpha;
+        manaColor.a = alpha;
+        textColor.a = alpha;
+        decoColor.a = alpha;
 
         mainImage.color = main;
         cardFrame.color = cardColor;
@@ -93,5 +90,4 @@ public class CardImage : MonoBehaviour
         manaCost_text.color = textColor;
         cardDeco.color = decoColor;
     }
-
 }
