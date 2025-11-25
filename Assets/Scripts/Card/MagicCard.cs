@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq; // LINQ 사용
+using Game.RankSystem;
 
 public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -93,20 +94,6 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         
           //StartCoroutine(CardDrawAnimation());
     }
-
-    public void CardInitWhenStackUpgrade(){
-        // int id = magicCard.ID;
-        // cardLevelText.gameObject.SetActive(true);
-        // cardLevelText.text = "Lv." + magicCard.STACK.ToString();
-        // cardLevelText.gameObject.SetActive(false);//우선 감추기
-    }
-    /**
-    public void Init_CardUpgrade(int rank){
-        cardRank = rank;
-     //   RankImageSetting(cardRank); 별 연출 개발 중단
-
-    }
-    *///
 
     /// <summary>
     /// 드래그 시작 시 호출
@@ -260,40 +247,6 @@ private void SetCardVisibility(bool isCardOn)
 
     CoolTimeImage.color = currentColor;
 }
-
-
-
-    /**
-    public void RankImageSetting(int rank){
-        /
-    //카드 등급 이미지(별) 세팅 개발 중단
-
-    //초기화
-    //stars[0].sprite = star_False; 개발 중단
-   // stars[1].sprite = star_False;
-   // stars[2].sprite = star_False;
-
-        switch(rank){
-            case 1:
-                stars[0].sprite = star_True;
-            break;
-
-            case 2:
-              stars[0].sprite = star_True;
-              stars[1].sprite = star_True;
-            break;
-
-            case 3:
-               stars[0].sprite = star_True;
-               stars[1].sprite = star_True;
-               stars[2].sprite = star_True;
-            break;
-
-            default:
-            break;
-        }
-    }
-    **/
     public void CardDrawAni(float coolTime){
         anim.enabled = true;//애니메이션 활성화
         StartCoroutine(DrawAnimation(coolTime));
@@ -331,6 +284,15 @@ private void SetCardVisibility(bool isCardOn)
     }
     public void CardDescUiOff(){
         //GameManager.instance.deckManager.CardDescUi.gameObject.SetActive(false);
+    }
+
+    // ✅ 등급 색상 업데이트
+    public void RefreshRankColor(RankType rank)
+    {
+        if (cardImage != null)
+        {
+            cardImage.UpdateFrameColor(rank);
+        }
     }
 }
 

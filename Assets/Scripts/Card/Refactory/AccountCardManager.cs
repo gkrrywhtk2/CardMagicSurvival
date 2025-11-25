@@ -7,7 +7,7 @@ public class AccountCardManager : MonoBehaviour
     public MockServer mockServer;
 
     public List<PlayerCard> accountCardPool = new(); // 전체 카드
-    public List<int> deckSlots = new();              // 서버에 저장된 선택된 카드 ID 5개
+    public List<int> deckSlots = new();              // 서버에 저장된 선택된 스타팅 카드 ID 5개
 
     [System.Serializable]
     private class AccountCardData

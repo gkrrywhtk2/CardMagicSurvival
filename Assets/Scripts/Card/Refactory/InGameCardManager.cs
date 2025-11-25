@@ -5,6 +5,7 @@ using System.Collections;
 using TMPro;
 using System.Linq;
 using Unity.VisualScripting;
+using Game.RankSystem;
 
 namespace Game.InGameCardManager
 {
@@ -14,7 +15,7 @@ namespace Game.InGameCardManager
     // 1. 게임중 덱을 관리 
     public AccountCardManager accountCardManager; // 참조 연결
     public Queue<int> deck = new Queue<int>();    // 인게임 덱
-    public int[] hand = new int[4];               // 고정 핸드
+    public List<PlayerCard> deckManage = new(); // 인게임 덱 관리, 카드 전체보기 현재 카드의 등급(인게임에서 달라지니까)
 
     //오브젝트
     public MagicCard[] magicCards; //카드 오브젝트
@@ -23,14 +24,50 @@ namespace Game.InGameCardManager
 
     public void InitDeck()
     {
-        // 1.AccountCardManager에서 현재 선택된 덱 슬롯을 가져온다.
-        // 2.덱 초기세팅
-
+        // 1. AccountCardManager에서 현재 선택된 덱 슬롯 가져오기
         List<int> deckIds = accountCardManager.GetDeckSlotIds();
+        
+        // 2. 덱 ID 큐 초기화
         deck = new Queue<int>(deckIds);
+        
+        // ✅ 3. deckManage 초기화 - 계정 카드 정보의 인게임 복사본 생성
+        InitDeckManage(deckIds);
+        
         ShuffleDeck();
         HandInit();
     }
+
+    // ✅ 인게임 덱 관리 리스트 초기화
+        private void InitDeckManage(List<int> deckIds)
+        {
+            deckManage.Clear();
+            
+            foreach (int cardId in deckIds)
+            {
+                // 계정에서 해당 카드 정보 가져오기
+                PlayerCard originalCard = accountCardManager.GetCardById(cardId);
+                
+                if (originalCard != null)
+                {
+                    // ✅ 인게임용 복사본 생성 (깊은 복사)
+                    PlayerCard inGameCard = new PlayerCard(cardId)
+                    {
+                        currentRarity = originalCard.currentRarity,
+                        quantity = originalCard.quantity,
+                        islocked = originalCard.islocked
+                    };
+                    
+                    deckManage.Add(inGameCard);
+                    Debug.Log($"[InitDeckManage] 카드 {cardId} 추가 - 초기 등급: {inGameCard.currentRarity}");
+                }
+                else
+                {
+                    Debug.LogWarning($"[InitDeckManage] 카드 ID {cardId}를 찾을 수 없습니다!");
+                }
+            }
+            
+            Debug.Log($"<color=#00FFFF>[InitDeckManage] 인게임 덱 관리 초기화 완료 - 총 {deckManage.Count}장</color>");
+        }
 
 
     public void ShuffleDeck()
@@ -82,7 +119,7 @@ namespace Game.InGameCardManager
         }
 
         // 마지막에 다음 카드 이미지 설정
-        //NextCardImageSetting();
+            NextCardImageSetting();
     }
 
     public void DrawCard(int handNumber)
@@ -104,7 +141,24 @@ namespace Game.InGameCardManager
 
         //카드 데이터 세팅
         magicCards[handNumber].CardInit(cardId);
-        //NextCardImageSetting();
+        NextCardImageSetting();
+    }
+
+        // ✅ 카드 업그레이드 했을 때 전체 핸드 현제 인게임덱에 맞게 새로고침
+    public void RefreshAllHand()
+    {
+        for (int i = 0; i < magicCards.Length; i++)
+        {
+            CardImage cardImage = magicCards[i].GetComponent<CardImage>();
+            
+            if (cardImage != null && cardImage.cardId != 0)
+            {
+                RankType currentRank = GetInGameCardRarity(cardImage.cardId);
+                cardImage.UpdateFrameColor(currentRank);
+                
+                Debug.Log($"<color=#00FFFF>[RefreshAllHand] 핸드 슬롯 {i} 업데이트 → 카드ID: {cardImage.cardId}, 등급: {currentRank}</color>");
+            }
+        }
     }
     public void NextCardImageSetting()
     {
@@ -112,5 +166,41 @@ namespace Game.InGameCardManager
         nextcardImage.sprite = LocalDataManager.Instance.cardData.cardScritableData[nextCardId].cardImage;
 
     }
+
+
+    // ✅ 인게임에서 특정 카드의 등급 가져오기
+        public RankType GetInGameCardRarity(int cardId)
+        {
+            PlayerCard card = deckManage.Find(c => c.cardId == cardId);
+            return card != null ? card.currentRarity : RankType.Uncommon;
+        }
+
+        // ✅ 인게임에서 특정 카드의 등급 업그레이드
+    public void UpgradeInGameCardRarity(int cardId)
+    {
+        PlayerCard card = deckManage.Find(c => c.cardId == cardId);
+        if (card != null)
+        {
+            // ✅ 일반 카드의 최대 등급은 Legendary (Mythic은 특별 카드 전용)
+            if (card.currentRarity < RankType.Legendary)
+            {
+                RankType oldRarity = card.currentRarity;
+                card.currentRarity = (RankType)((int)card.currentRarity + 1);
+                
+                Color newColor = RankDatas.GetColor(card.currentRarity);
+                
+                Debug.Log($"<color=#FFD700>[InGameCardManager] 카드 {cardId} 등급 상승: {oldRarity} → {card.currentRarity}</color>");
+            }
+            else
+            {
+                Debug.Log($"<color=#FF6B6B>[InGameCardManager] 카드 {cardId}는 이미 최대 등급(Legendary)입니다!</color>");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[InGameCardManager] 카드 {cardId}를 deckManage에서 찾을 수 없습니다!");
+        }
+    }
 }
+
 }

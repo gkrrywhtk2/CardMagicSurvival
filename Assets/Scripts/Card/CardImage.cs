@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Game.RankSystem;
+using Game.InGameCardManager;
 
 public class CardImage : MonoBehaviour
 {
@@ -12,11 +13,11 @@ public class CardImage : MonoBehaviour
     public Image manaCostImage;
     public TMP_Text manaCost_text;
     
-    private int currentCardId;
+    public int cardId { get; private set; }
   
     public void Init(int id)
     {
-        currentCardId = id;
+        cardId = id;
         FrameInit();
         MainImageInit();
         CostInit();
@@ -24,16 +25,41 @@ public class CardImage : MonoBehaviour
     
     public void FrameInit()
     {
-        // ✅ AccountCardManager에서 카드 정보 가져오기
-        PlayerCard card = AccountCardManager.Instance.GetCardById(currentCardId);
+        RankType rank;
         
-        if (card == null)
+        // ✅ GameManager를 통해 InGameCardManager 접근
+        if (GameManager.instance != null && 
+            GameManager.instance.inGameCardManager != null && 
+            GameManager.instance.inGameCardManager.deckManage != null)
         {
-            Debug.LogError($"[CardImage] 카드 ID {currentCardId}를 찾을 수 없습니다!");
-            return;
+            PlayerCard inGameCard = GameManager.instance.inGameCardManager.deckManage.Find(c => c.cardId == cardId);
+            
+            if (inGameCard != null)
+            {
+                // ✅ 인게임 덱에 있으면 인게임 등급 사용
+                rank = inGameCard.currentRarity;
+                Debug.Log($"[CardImage] 카드 {cardId} - InGame 등급: {rank}");
+            }
+            else
+            {
+                // ✅ 인게임 덱에 없으면 계정 등급 사용
+                PlayerCard accountCard = AccountCardManager.Instance.GetCardById(cardId);
+                rank = accountCard != null ? accountCard.currentRarity : RankType.Uncommon;
+                Debug.Log($"[CardImage] 카드 {cardId} - Account 등급: {rank}");
+            }
+        }
+        else
+        {
+            // ✅ GameManager가 없거나 InGameCardManager가 없으면 계정 등급 사용
+            PlayerCard accountCard = AccountCardManager.Instance.GetCardById(cardId);
+            rank = accountCard != null ? accountCard.currentRarity : RankType.Uncommon;
         }
         
-        RankType rank = card.currentRarity;
+        UpdateFrameColor(rank);
+    }
+    
+    public void UpdateFrameColor(RankType rank)
+    {
         Color rankColor = RankDatas.GetColor(rank);
         cardFrame.color = rankColor;
         cardDeco.color = rankColor;
@@ -41,14 +67,12 @@ public class CardImage : MonoBehaviour
     
     public void MainImageInit()
     {
-        // ✅ LocalDataManager를 통해 카드 이미지 가져오기
-        mainImage.sprite = LocalDataManager.Instance.cardData.cardScritableData[currentCardId].cardImage;
+        mainImage.sprite = LocalDataManager.Instance.cardData.cardScritableData[cardId].cardImage;
     }
     
     public void CostInit()
     {
-        // ✅ LocalDataManager를 통해 카드 코스트 가져오기
-        int cost = LocalDataManager.Instance.cardData.cardScritableData[currentCardId].cardCost;
+        int cost = LocalDataManager.Instance.cardData.cardScritableData[cardId].cardCost;
         manaCost_text.text = cost.ToString();
     }
 
@@ -69,7 +93,6 @@ public class CardImage : MonoBehaviour
         SetAlpha(1f);
     }
     
-    // ✅ 리팩토링: 중복 코드 제거
     private void SetAlpha(float alpha)
     {
         Color main = mainImage.color;
