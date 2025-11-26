@@ -4,20 +4,25 @@ public class MockServer : MonoBehaviour
 {
     private string mockJson = @"
     {
-        ""cards"": [
-        { ""cardId"": 0, ""currentRarity"": ""Uncommon"", ""quantity"": 1, ""islocked"": false },
-        { ""cardId"": 1, ""currentRarity"": ""Uncommon"", ""quantity"": 1, ""islocked"": false },
-        { ""cardId"": 2, ""currentRarity"": ""Uncommon"", ""quantity"": 1, ""islocked"": false },
-        { ""cardId"": 3, ""currentRarity"": ""Uncommon"", ""quantity"": 1, ""islocked"": false },
-        { ""cardId"": 4, ""currentRarity"": ""Uncommon"", ""quantity"": 1, ""islocked"": false },
-        { ""cardId"": 5, ""currentRarity"": ""Uncommon"", ""quantity"": 1, ""islocked"": false },
-        { ""cardId"": 6, ""currentRarity"": ""Uncommon"", ""quantity"": 1, ""islocked"": false },
-        { ""cardId"": 7, ""currentRarity"": ""Uncommon"", ""quantity"": 1, ""islocked"": false }
-    ],
-    
-    ""deckSlots"": [0, 1, 2, 3, 4]
+        ""accountCards"": [
+            { ""cardId"": 0, ""quantity"": 3, ""isUnlocked"": true },
+            { ""cardId"": 1, ""quantity"": 2, ""isUnlocked"": true },
+            { ""cardId"": 2, ""quantity"": 5, ""isUnlocked"": true },
+            { ""cardId"": 3, ""quantity"": 1, ""isUnlocked"": true },
+            { ""cardId"": 4, ""quantity"": 4, ""isUnlocked"": true },
+            { ""cardId"": 5, ""quantity"": 2, ""isUnlocked"": true },
+            { ""cardId"": 6, ""quantity"": 1, ""isUnlocked"": true },
+            { ""cardId"": 7, ""quantity"": 1, ""isUnlocked"": true }
+        ],
+        
+        ""deckSlots"": [
+            { ""cardId"": 0, ""currentRarity"": ""Uncommon"" },
+            { ""cardId"": 1, ""currentRarity"": ""Rare"" },
+            { ""cardId"": 2, ""currentRarity"": ""Epic"" },
+            { ""cardId"": 3, ""currentRarity"": ""Uncommon"" },
+            { ""cardId"": 4, ""currentRarity"": ""Legendary"" }
+        ]
     }";
-
 
     public string GetPlayerCardJson()
     {

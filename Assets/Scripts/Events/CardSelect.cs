@@ -4,22 +4,37 @@ using System.Linq;
 using Game.InGameCardManager;
 using RANK;
 using Game.RankSystem;
+using TMPro;
+using Game.CardData;
 
 public class CardSelect : MonoBehaviour
 {
     public SelectCard[] selectCards;
     public int currentFocusedCard;
     public InGameCardManager inGameCardManager;
+    
+    // ✅ 이번 이벤트의 등급 (3장 모두 동일)
+    private RankType eventRank;
+
+    // ✅ 텍스트 매핑용
+    public TMP_Text rank;
+    public TMP_Text title;
+    public TMP_Text description;
 
     public void EventStart()
     {
         Time.timeScale = 0;
         
-        List<PlayerCard> allCards = AccountCardManager.Instance.GetAccountCardPool();
+        // ✅ 잠금 해제된 계정 카드만 가져오기
+        List<AccountCard> allCards = AccountCardManager.Instance.GetUnlockedCards();
         Debug.Log($"[CardSelect] 보유 카드 수: {allCards.Count}개");
 
-        // ✅ 인게임에서 이미 Legendary인 카드를 제외하고 랜덤 선택
-        List<PlayerCard> randomCards = GetRandomCardsExcludingMaxRarity(allCards, 3);
+        // ✅ 이벤트 등급 결정 (3장 모두 이 등급으로)
+        eventRank = GetRandomRank();
+        Debug.Log($"<color=#FFFF00>==== 이벤트 등급: {eventRank} ====</color>");
+
+        // ✅ 랜덤으로 3장 뽑기
+        List<AccountCard> randomCards = GetRandomCards(allCards, 3);
         
         Debug.Log("<color=#FFFF00>==== 랜덤으로 뽑힌 3장 ====</color>");
         
@@ -27,64 +42,86 @@ public class CardSelect : MonoBehaviour
         {
             int cardId = randomCards[i].cardId;
             
+            // ✅ 카드 이미지 초기화
             selectCards[i].cardImage.Init(cardId);
+
+            // ✅ SelectCard 초기화 (cardId와 등급 저장)
+            selectCards[i].Init(cardId, eventRank);
+        
+            // ✅ 모두 동일한 eventRank로 프레임 색상 변경
+            selectCards[i].cardImage.UpdateFrameColor(eventRank);
             
-            if (IsCardInCurrentDeck(cardId))
-            {
-                RankType currentInGameRank = inGameCardManager.GetInGameCardRarity(cardId);
-                
-                // ✅ 다음 등급 표시 (Legendary가 최대)
-                if (currentInGameRank < RankType.Legendary)
-                {
-                    RankType nextRank = (RankType)((int)currentInGameRank + 1);
-                    selectCards[i].cardImage.UpdateFrameColor(nextRank);
-                    
-                    Debug.Log($"<color=#FFD700>[Random Card {i}] 카드ID: {cardId} - 현재: {currentInGameRank} → 업그레이드 시: {nextRank}</color>");
-                }
-            }
-            else
-            {
-                Debug.Log($"<color=#00FF00>[Random Card {i}] 카드ID: {cardId}, 계정 등급: {randomCards[i].currentRarity}</color>");
-            }
+            Debug.Log($"<color=#00FF00>[Random Card {i}] 카드ID: {cardId}, 등급: {eventRank}</color>");
         }
 
         currentFocusedCard = 1;
         Focus(currentFocusedCard);
     }
     
-    // ✅ 인게임에서 이미 Legendary인 카드를 제외하고 랜덤 선택
-    private List<PlayerCard> GetRandomCardsExcludingMaxRarity(List<PlayerCard> cardPool, int count)
+    // ✅ 등급 랜덤 결정 (노말 40%, 레어 30%, 에픽 20%, 레전더리 10%)
+    private RankType GetRandomRank()
     {
-        // ✅ 인게임 덱에서 이미 Legendary인 카드 ID 목록
-        List<int> legendaryCardIds = inGameCardManager.deckManage
-            .Where(card => card.currentRarity >= RankType.Legendary)
-            .Select(card => card.cardId)
-            .ToList();
+        float randomValue = Random.Range(0f, 100f);
         
-        // ✅ Legendary 카드 제외한 풀
-        List<PlayerCard> filteredPool = cardPool
-            .Where(card => !legendaryCardIds.Contains(card.cardId))
-            .ToList();
-        
-        Debug.Log($"[CardSelect] 전체 카드: {cardPool.Count}장, 선택 가능: {filteredPool.Count}장, 제외된 Legendary: {legendaryCardIds.Count}장");
-        
-        if (filteredPool.Count < count)
+        if (randomValue < 40f) // 40%
         {
-            Debug.LogWarning($"[CardSelect] 선택 가능한 카드({filteredPool.Count}장)가 요청된 개수({count}장)보다 적습니다!");
-            return GetRandomCards(filteredPool, filteredPool.Count);
+            return RankType.Uncommon;
         }
-
-        return GetRandomCards(filteredPool, count);
+        else if (randomValue < 70f) // 30% (40 + 30)
+        {
+            return RankType.Rare;
+        }
+        else if (randomValue < 90f) // 20% (70 + 20)
+        {
+            return RankType.Epic;
+        }
+        else // 10% (90 ~ 100)
+        {
+            return RankType.Legendary;
+        }
     }
     
-    private List<PlayerCard> GetRandomCards(List<PlayerCard> cardPool, int count)
+    // ✅ 카드 선택 시 호출
+    public void OnCardSelected()
+    {
+        int selectedCardId = selectCards[currentFocusedCard].cardId;
+        
+        // ✅ 선택한 카드를 이벤트 등급으로 덱에 추가
+        AddCardToDeck(selectedCardId, eventRank);
+        
+        Debug.Log($"<color=#00FF00>[CardSelect] 카드 {selectedCardId} (등급: {eventRank})를 덱에 추가했습니다!</color>");
+        
+        EventEnd();
+    }
+    
+    // ✅ 덱에 카드 추가 (특정 등급으로)
+    private void AddCardToDeck(int cardId, RankType rank)
+    {
+        // ✅ 새로운 PlayerCard 생성 (등급 지정)
+        PlayerCard newInGameCard = new PlayerCard(cardId, rank);
+        
+        // 1. 덱 큐에 추가
+        inGameCardManager.deck.Enqueue(newInGameCard);
+        
+        // 2. deckManage에도 추가
+        inGameCardManager.deckManage.Add(newInGameCard);
+        
+        // 3. 전체 핸드 새로고침 필요없어짐
+       // inGameCardManager.RefreshAllHand();
+        
+        Debug.Log($"<color=#00FF00>[CardSelect] 카드 {cardId} (등급: {rank}) 인게임 덱에 추가 완료!</color>");
+    }
+    
+    // ✅ AccountCard 리스트에서 랜덤 선택
+    private List<AccountCard> GetRandomCards(List<AccountCard> cardPool, int count)
     {
         if (cardPool.Count < count)
         {
-            return new List<PlayerCard>(cardPool);
+            Debug.LogWarning($"[CardSelect] 카드풀({cardPool.Count}장)이 요청된 개수({count}장)보다 적습니다!");
+            return new List<AccountCard>(cardPool);
         }
 
-        List<PlayerCard> shuffled = new List<PlayerCard>(cardPool);
+        List<AccountCard> shuffled = new List<AccountCard>(cardPool);
         
         for (int i = shuffled.Count - 1; i > 0; i--)
         {
@@ -93,54 +130,6 @@ public class CardSelect : MonoBehaviour
         }
 
         return shuffled.GetRange(0, count);
-    }
-    
-    public void OnCardSelected()
-    {
-        //선택한 카드 덱에 추가
-        int selectedCardId = selectCards[currentFocusedCard].cardImage.cardId;
-        
-        bool isInDeck = IsCardInCurrentDeck(selectedCardId);
-        
-        if (isInDeck)
-        {
-            inGameCardManager.UpgradeInGameCardRarity(selectedCardId);
-            
-            // ✅ 전체 핸드 새로고침
-            inGameCardManager.RefreshAllHand();
-            
-            Debug.Log($"<color=#FFD700>[CardSelect] 카드 {selectedCardId} 업그레이드 및 전체 핸드 새로고침 완료!</color>");
-        }
-        else
-        {
-            AddCardToDeck(selectedCardId);
-            Debug.Log($"<color=#00FF00>[CardSelect] 카드 {selectedCardId}를 덱에 추가했습니다!</color>");
-        }
-        
-        EventEnd();
-    }
-    private bool IsCardInCurrentDeck(int cardId)
-    {
-        return inGameCardManager.deckManage.Exists(card => card.cardId == cardId);
-    }
-    
-    private void AddCardToDeck(int cardId)
-    {
-        inGameCardManager.deck.Enqueue(cardId);
-        
-        PlayerCard originalCard = AccountCardManager.Instance.GetCardById(cardId);
-        if (originalCard != null)
-        {
-            PlayerCard newInGameCard = new PlayerCard(cardId)
-            {
-                currentRarity = originalCard.currentRarity,
-                quantity = originalCard.quantity,
-                islocked = originalCard.islocked
-            };
-            
-            inGameCardManager.deckManage.Add(newInGameCard);
-            Debug.Log($"<color=#00FF00>[CardSelect] 카드 {cardId}를 인게임 덱에 추가 완료!</color>");
-        }
     }
     
     public void EventEnd()
@@ -157,5 +146,16 @@ public class CardSelect : MonoBehaviour
         }
         currentFocusedCard = index;
         selectCards[currentFocusedCard].OnFocusCard();
+
+        // ✅ 카드 이름 매핑
+        title.text = CardData.Instance.cardScritableData[selectCards[currentFocusedCard].cardId].cardName;
+        
+        // ✅ 카드 설명 매핑
+        description.text = CardData.Instance.cardScritableData[selectCards[currentFocusedCard].cardId].cardDesc_Main;
+        
+        // ✅ 카드 등급 텍스트 및 색상 매핑
+        RankType currentRank = selectCards[currentFocusedCard].rank;
+        rank.text = RankDatas.GetRankString(currentRank);
+        rank.color = RankDatas.GetColor(currentRank);
     }
 }

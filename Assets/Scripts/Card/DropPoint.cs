@@ -76,8 +76,16 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             //카드 사용 로직
             UseCard(eventData);
 
-            //사용된 카드 덱 맨 아래로
-            inGameCardManager.deck.Enqueue(card.id);
+           // ✅ 사용된 카드를 덱 맨 아래로 (직접 참조!)
+            if (card.currentPlayerCard != null)
+            {
+                inGameCardManager.deck.Enqueue(card.currentPlayerCard);
+                Debug.Log($"[DropPoint] 카드 {card.id} (등급: {card.currentPlayerCard.currentRarity})를 덱 맨 아래로 이동");
+            }
+            else
+            {
+                Debug.LogWarning($"[DropPoint] MagicCard의 currentPlayerCard가 null입니다!");
+            }
 
            // deckManager.deck.Add(card.magicCard.ID); 아마도 이번 로직에선 필요없음
             inGameCardManager.DrawCard(card.fixedCardNumber);

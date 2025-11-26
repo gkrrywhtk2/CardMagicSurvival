@@ -15,44 +15,42 @@ public class CardImage : MonoBehaviour
     
     public int cardId { get; private set; }
   
-    public void Init(int id)
+    // ✅ PlayerCard를 직접 받는 Init (권장)
+    public void Init(PlayerCard playerCard)
     {
-        cardId = id;
-        FrameInit();
+        cardId = playerCard.cardId;
+        FrameInit(playerCard.currentRarity); // 등급 직접 전달
         MainImageInit();
         CostInit();
     }
     
+    // ✅ int만 받는 Init (호환성 유지)
+    public void Init(int id)
+    {
+        cardId = id;
+        FrameInit(); // 덱에서 찾기
+        MainImageInit();
+        CostInit();
+    }
+    
+    // ✅ 등급을 직접 받는 FrameInit
+    public void FrameInit(RankType rank)
+    {
+        UpdateFrameColor(rank);
+    }
+    
+    // ✅ 덱에서 찾는 FrameInit
     public void FrameInit()
     {
-        RankType rank;
+        RankType rank = RankType.Uncommon; // 기본값
         
-        // ✅ GameManager를 통해 InGameCardManager 접근
-        if (GameManager.instance != null && 
-            GameManager.instance.inGameCardManager != null && 
-            GameManager.instance.inGameCardManager.deckManage != null)
+        if (GameManager.instance?.inGameCardManager?.deckManage != null)
         {
             PlayerCard inGameCard = GameManager.instance.inGameCardManager.deckManage.Find(c => c.cardId == cardId);
-            
             if (inGameCard != null)
             {
-                // ✅ 인게임 덱에 있으면 인게임 등급 사용
                 rank = inGameCard.currentRarity;
-                Debug.Log($"[CardImage] 카드 {cardId} - InGame 등급: {rank}");
             }
-            else
-            {
-                // ✅ 인게임 덱에 없으면 계정 등급 사용
-                PlayerCard accountCard = AccountCardManager.Instance.GetCardById(cardId);
-                rank = accountCard != null ? accountCard.currentRarity : RankType.Uncommon;
-                Debug.Log($"[CardImage] 카드 {cardId} - Account 등급: {rank}");
-            }
-        }
-        else
-        {
-            // ✅ GameManager가 없거나 InGameCardManager가 없으면 계정 등급 사용
-            PlayerCard accountCard = AccountCardManager.Instance.GetCardById(cardId);
-            rank = accountCard != null ? accountCard.currentRarity : RankType.Uncommon;
         }
         
         UpdateFrameColor(rank);

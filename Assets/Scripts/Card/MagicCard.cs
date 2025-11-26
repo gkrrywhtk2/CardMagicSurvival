@@ -21,6 +21,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [Header("Card Info")]
     public CardScritableData cardScritableData;
     //public Card magicCard;
+    public PlayerCard currentPlayerCard; // ✅ 현재 카드 정보
     public int id;
     public int fixedCardNumber;//012 어떤 위치의 카드인지
     public bool cardOn;//코스트 체크
@@ -71,28 +72,27 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         anim.enabled = false;
         rect.anchoredPosition = new Vector3(-5000, -5000, 0);
     }
-    public void CardImageInit(int id)
+    // ✅ PlayerCard를 받도록 수정
+    public void CardImageInit(PlayerCard playerCard)
     {
-        cardImage.Init(id);
+        cardImage.Init(playerCard); // PlayerCard 전달
     }
-    public void CardInit(int cardid)
+    public void CardInit(PlayerCard playerCard)
     {
-    
-        id = cardid;
+        currentPlayerCard = playerCard; // ✅ 참조 저장
+        id = currentPlayerCard.cardId;
         cardScritableData = LocalDataManager.Instance.cardData.cardScritableData[id];
         cardOn = false;
-
         cardReady = false;
-    
-        CardImageInit(id);//카드의 이미지 초기화
-    
+
+        // ✅ PlayerCard를 전달! (등급 정보 포함)
+        CardImageInit(currentPlayerCard);
+
         rangeOn = cardScritableData.isRangeCard;
         range.GetComponent<RectTransform>().localScale = cardScritableData.rangeScale_Card;
         directionCard = cardScritableData.isDirCard;
         cardImage.CardAlpha1_Range();
         CardDrawAni(0);
-        
-          //StartCoroutine(CardDrawAnimation());
     }
 
     /// <summary>
