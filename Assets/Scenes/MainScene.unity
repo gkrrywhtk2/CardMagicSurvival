@@ -11268,7 +11268,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.g
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.r
+      value: 0.43137255
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5255005111306612609, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -33321,7 +33334,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.g
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.r
+      value: 0.43137255
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5255005111306612609, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -218502,6 +218528,8 @@ GameObject:
   - component: {fileID: 2095612376}
   - component: {fileID: 2095612378}
   - component: {fileID: 2095612377}
+  - component: {fileID: 2095612379}
+  - component: {fileID: 2095612380}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -218627,6 +218655,94 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095612375}
   m_CullTransparentMesh: 1
+--- !u!114 &2095612379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095612375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:2661cc5a5689a42cc94a8bc77c31b67a
+    m_TableEntryReference:
+      m_KeyId: 284108513280
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2095612377}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &2095612380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095612375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 5121042798759379215
+  references:
+    version: 2
+    RefIds:
+    - rid: 5121042798759379215
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 2095612377}
+        m_TrackedProperties:
+          items:
+          - rid: 5121042798759379216
+          - rid: 5121042798759379217
+        m_UpdateType: 0
+    - rid: 5121042798759379216
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_fontSize
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: ko-KR
+          value: 24
+        - localeIdentifier:
+            m_Code: ja-JP
+          value: 33
+    - rid: 5121042798759379217
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_fontSizeBase
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: ko-KR
+          value: 24
+        - localeIdentifier:
+            m_Code: ja-JP
+          value: 33
 --- !u!224 &2102571426 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 375658212527208919, guid: 14c49444f548e46708042dd7406de679, type: 3}
@@ -218653,6 +218769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2109143566}
   - component: {fileID: 2109143567}
+  - component: {fileID: 2109143568}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -218709,9 +218826,22 @@ MonoBehaviour:
   joystick: {fileID: 759965006}
   pixelPerfectCamera: {fileID: 519420033}
   warningUI: {fileID: 1142655185}
+  loadlocale: {fileID: 2109143568}
   night: 0
   cheatBoxTogle: 0
   GoldCheat: {fileID: 2077084168}
+--- !u!114 &2109143568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109143565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e2be0dc130f411495d87c6c6bc6b2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2109150796
 GameObject:
   m_ObjectHideFlags: 0
@@ -244426,7 +244556,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.g
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119259765387501021, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
+      propertyPath: m_Color.r
+      value: 0.43137255
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5255005111306612609, guid: 796ba0d7fd2004d58b07260b7f70eb32, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

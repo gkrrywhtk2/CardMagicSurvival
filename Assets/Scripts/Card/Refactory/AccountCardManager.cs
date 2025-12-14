@@ -49,7 +49,7 @@ public class AccountCardManager : MonoBehaviour
     // ✅ 덱 슬롯 ID 리스트 가져오기
     public List<int> GetDeckSlotIds()
     {
-        return deckSlots.Select(card => card.cardId).ToList();
+        return deckSlots.Select(card => card.ID).ToList();
     }
 
     public void LoadCardData()

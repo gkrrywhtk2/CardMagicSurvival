@@ -18,7 +18,7 @@ public class CardImage : MonoBehaviour
     // ✅ PlayerCard를 직접 받는 Init (권장)
     public void Init(PlayerCard playerCard)
     {
-        cardId = playerCard.cardId;
+        cardId = playerCard.ID;
         FrameInit(playerCard.currentRarity); // 등급 직접 전달
         MainImageInit();
         CostInit();
@@ -46,7 +46,7 @@ public class CardImage : MonoBehaviour
         
         if (GameManager.instance?.inGameCardManager?.deckManage != null)
         {
-            PlayerCard inGameCard = GameManager.instance.inGameCardManager.deckManage.Find(c => c.cardId == cardId);
+            PlayerCard inGameCard = GameManager.instance.inGameCardManager.deckManage.Find(c => c.ID == cardId);
             if (inGameCard != null)
             {
                 rank = inGameCard.currentRarity;

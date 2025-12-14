@@ -27,7 +27,7 @@ namespace Game.RankSystem
 
         private static readonly Dictionary<RankType, Color> colorMap = new()
     {
-        { RankType.Uncommon,  new Color32(0x50, 0xAC, 0x86, 0xFF) },
+         { RankType.Uncommon,  new Color32(0x8A, 0x8D, 0x93, 0xFF) },
         { RankType.Rare,      new Color32(0x3D, 0x75, 0xB3, 0xFF) },
         { RankType.Epic,      new Color32(0xB3, 0x63, 0xDF, 0xFF) },
         { RankType.Legendary, new Color32(0xEB, 0xB6, 0x2D, 0xFF) },

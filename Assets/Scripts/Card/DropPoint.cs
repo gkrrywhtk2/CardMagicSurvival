@@ -100,7 +100,9 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     {
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
 
+
         int ID = card.id;
+ 
 
         if (cardAbility.ContainsKey(ID))
         {

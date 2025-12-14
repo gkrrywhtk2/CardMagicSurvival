@@ -1,59 +1,77 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using Game.RankSystem;
 
 public class Card0_Haste : MonoBehaviour, ICardUse
 {
-    private Coroutine hasteCoroutine; // 현재 실행 중인 코루틴을 저장할 변수
+    private Coroutine hasteCoroutine;
+
+    private bool isApplied;
+    private float appliedValue;
 
     public void Use(PointerEventData eventData)
     {
-        MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        var card = eventData.pointerDrag.GetComponent<MagicCard>();
+        var rank = card.currentPlayerCard.currentRarity;
 
         // 이펙트 연출
         GameManager.instance.player.playerEffect.HasteEffect();
 
-        // 지속시간 가져오기
-        float duration = 1;
+        // 랭크 기반 지속시간
+        float duration = GetDurationByRank(rank);
 
-        //   // 지속시간 가져오기
-        // float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-        //     .GetDuration(card.magicCard.STACK);
+        // (원하면 이것도 랭크 기반으로 바꾸면 됨)
+        float speedUpValue = 1f;
 
-        // 추가 이동속도 값 가져오기
-        float speedUpValue = 1;
-
-              // 추가 이동속도 값 가져오기
-        // float speedUpValue = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-        //     .GetSpeedUp(card.magicCard.STACK);
-
-
-        // 기존 효과가 진행 중이라면 중지
+        // 기존 코루틴/효과 정리
         if (hasteCoroutine != null)
         {
             StopCoroutine(hasteCoroutine);
+            RemoveAppliedEffect();
+            hasteCoroutine = null;
         }
 
-        // 새 코루틴 시작 후 변수에 저장
         hasteCoroutine = StartCoroutine(TemporarySpeedUp(speedUpValue, duration));
-
-
     }
 
-    public IEnumerator TemporarySpeedUp(float value, float duration)
+    private IEnumerator TemporarySpeedUp(float value, float duration)
     {
-        Player_Status player = GameManager.instance.player.playerStatus;
+        var player = GameManager.instance.player.playerStatus;
 
-        // 기존 효과 제거 (이미 적용된 효과가 있다면 리셋)
-        player.RemoveSpeedUpEffect(value);
+        // 안전하게 기존 적용값 제거 후 다시 적용
+        RemoveAppliedEffect();
+
+        appliedValue = value;
+        isApplied = true;
         player.AddSpeedUpEffect(value);
-
-       
 
         yield return new WaitForSeconds(duration);
 
-        // 지속시간 종료 후 효과 제거
-        player.RemoveSpeedUpEffect(value);
-        hasteCoroutine = null; // 코루틴 종료 시 변수 초기화
+        RemoveAppliedEffect();
+        hasteCoroutine = null;
+    }
+
+    private void RemoveAppliedEffect()
+    {
+        if (!isApplied) return;
+
+        var player = GameManager.instance.player.playerStatus;
+        player.RemoveSpeedUpEffect(appliedValue);
+
+        isApplied = false;
+        appliedValue = 0f;
+    }
+
+    private float GetDurationByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon:   return 1f;
+            case RankType.Rare:       return 2f;
+            case RankType.Epic:       return 3f;
+            case RankType.Legendary:  return 4f;
+            default:                 return 1f;
+        }
     }
 }

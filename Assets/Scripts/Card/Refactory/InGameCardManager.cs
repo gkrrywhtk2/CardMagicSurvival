@@ -41,10 +41,10 @@ namespace Game.InGameCardManager
             foreach (PlayerCard card in deckSlots)
             {
                 // ✅ 인게임용 복사본 생성 (깊은 복사)
-                PlayerCard inGameCard = new PlayerCard(card.cardId, card.currentRarity);
+                PlayerCard inGameCard = new PlayerCard(card.ID, card.currentRarity);
                 
                 deckManage.Add(inGameCard);
-                Debug.Log($"[InitDeckManage] 카드 {card.cardId} 추가 - 초기 등급: {inGameCard.currentRarity}");
+                Debug.Log($"[InitDeckManage] 카드 {card.ID} 추가 - 초기 등급: {inGameCard.currentRarity}");
             }
             
             Debug.Log($"<color=#00FFFF>[InitDeckManage] 인게임 덱 관리 초기화 완료 - 총 {deckManage.Count}장</color>");
@@ -140,21 +140,21 @@ namespace Game.InGameCardManager
             {
                 // ✅ PlayerCard를 Peek
                 PlayerCard nextCard = deck.Peek();
-                nextcardImage.sprite = LocalDataManager.Instance.cardData.cardScritableData[nextCard.cardId].cardImage;
+                nextcardImage.sprite = LocalDataManager.Instance.cardData.cardScritableData[nextCard.ID].cardImage;
             }
         }
 
         // ✅ 인게임에서 특정 카드의 등급 가져오기
         public RankType GetInGameCardRarity(int cardId)
         {
-            PlayerCard card = deckManage.Find(c => c.cardId == cardId);
+            PlayerCard card = deckManage.Find(c => c.ID == cardId);
             return card != null ? card.currentRarity : RankType.Uncommon;
         }
 
         // ✅ 인게임에서 특정 카드의 등급 업그레이드
         public void UpgradeInGameCardRarity(int cardId)
         {
-            PlayerCard card = deckManage.Find(c => c.cardId == cardId);
+            PlayerCard card = deckManage.Find(c => c.ID == cardId);
             if (card != null)
             {
                 if (card.currentRarity < RankType.Legendary)

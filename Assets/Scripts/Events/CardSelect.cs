@@ -95,7 +95,7 @@ public class CardSelect : MonoBehaviour
     }
     
     // ✅ 덱에 카드 추가 (특정 등급으로)
-    private void AddCardToDeck(int cardId, RankType rank)
+    private void AddCardToDeck(int cardId,  RankType rank)
     {
         // ✅ 새로운 PlayerCard 생성 (등급 지정)
         PlayerCard newInGameCard = new PlayerCard(cardId, rank);

@@ -80,7 +80,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void CardInit(PlayerCard playerCard)
     {
         currentPlayerCard = playerCard; // ✅ 참조 저장
-        id = currentPlayerCard.cardId;
+        id = currentPlayerCard.ID;
         cardScritableData = LocalDataManager.Instance.cardData.cardScritableData[id];
         cardOn = false;
         cardReady = false;

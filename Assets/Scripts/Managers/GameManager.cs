@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public FloatingJoystick joystick;//조이스틱
     public PixelPerfectCamera pixelPerfectCamera;
     public WarningUI warningUI;
+    public Loadlocale loadlocale;
 
     public bool night;
 
@@ -46,12 +47,13 @@ public class GameManager : MonoBehaviour
      public bool cheatBoxTogle;
      public GameObject GoldCheat;
 
- public void Awake()
+    public void Awake()
     {
         instance = this;
         restartButton.gameObject.SetActive(false);
         Application.targetFrameRate = 80;
           Screen.fullScreen = true;//풀스크린
+          loadlocale.LoadLocale("ko-KR");
     }
 
     public void GameStart(){

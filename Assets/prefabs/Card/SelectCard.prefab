@@ -185,8 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e399e2a1da5ea4b008c21ba6f53fad3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   focus: {fileID: 7119259765387501021}
   cardImage: {fileID: 4382038609290833555}
+  cardId: 0
+  rank: 0
 --- !u!114 &5678239799642634622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,7 +525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1469980311556133543
 RectTransform:
   m_ObjectHideFlags: 0
