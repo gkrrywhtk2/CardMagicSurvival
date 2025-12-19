@@ -1,4 +1,5 @@
 using UnityEngine;
+using Game.RankSystem;
 
 
 public class Meteor : MonoBehaviour
@@ -8,11 +9,13 @@ public class Meteor : MonoBehaviour
   //  public GameObject impactEffect; // 충돌 시 이펙트 Prefab
       private bool isMoving = false; // 이동 상태 확인
       private int STACK;
+      private RankType rank;
        
     //private Quaternion initialRotation;
-    public void Init(Vector3 target)
+    public void Init(Vector3 target, RankType rank)
     {
         targetPosition = target;
+        this.rank = rank;
         isMoving = true; // 이동 시작
     }
      private void Update()
@@ -33,24 +36,28 @@ public class Meteor : MonoBehaviour
     }
    
 
-   public void CreateImpactArea(){
+    public void CreateImpactArea(){
     int poolNumber = 3;
     GameObject impactArea = GameManager.instance.effectPoolManager.Get(poolNumber);
-
-
     impactArea.transform.position = targetPosition;
+    impactArea.transform.localScale = GetDurationByRank(rank);
 
-        // impactArea.transform.localScale = GameManager.instance.deckManager.cardDatas[ID].rangeScale_;
-        impactArea.transform.localScale = new Vector3(1, 1, 1); //임시
-
-
-        //화염구 충돌 오브젝트 초기화
-        //float magicPower = GameManager.instance.deckManager.cardDatas[ID].GetDamage(STACK);
-        float magicPower = 1;
+    float magicPower = 1;
     float damage = GameManager.instance.player.playerStatus.DamageReturn(magicPower,out bool isCritical);
     impactArea.GetComponent<Melee>().Init(damage, isCritical);
-   
-  
+
     gameObject.SetActive(false);
    }
+
+    private Vector3 GetDurationByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon:   return  new Vector3(2f, 2f, 1); //임시;
+            case RankType.Rare:       return new Vector3(2.5f, 2.5f, 1); //임시;;
+            case RankType.Epic:       return new Vector3(4f, 4f, 1); //임시;;
+            case RankType.Legendary:  return new Vector3(5, 5, 1); //임시;;
+            default:                 return new Vector3(1, 1, 1); //임시;;
+        }
+    }
 }

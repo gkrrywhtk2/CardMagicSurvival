@@ -8,7 +8,7 @@ public class PlayerCard
     public int ID;               // 카드 고유 ID
     public RankType currentRarity;   // 현재 등급
 
-    public PlayerCard(int cardId, RankType rarity = RankType.Uncommon)
+    public PlayerCard(int cardId, RankType rarity)
     {
         ID = cardId;
         currentRarity = rarity;

@@ -12,8 +12,8 @@ public class CardScritableData : ScriptableObject
   public Sprite cardImage;
   public bool isRangeCard;
   public bool isDirCard;//방향 벡터가 필요한 카드인지? ex) 화염구
-  public Vector3 rangeScale_Card;
   public Sprite nextcardImage;
+  public Vector3[] hitRange;
 
   [Header("# Damage Info")]
     public float baseDamage; // 기본 공격력
@@ -42,24 +42,7 @@ public class CardScritableData : ScriptableObject
           return baseDuration + (growthValue_Duration * stack);
       }
 
-      [Header("# Range Info")]//범위 정보
-        public Vector3 rangeScale_;
-        public float growthValue_Range;//성장 계수
-         public Vector3 GetRange(int stack)
-{
-    // rangeScale_.x와 rangeScale_.y에 성장 계수를 곱해서 증가시킨 값으로 새로운 Vector3를 반환
-        return new Vector3(
-        rangeScale_.x + (growthValue_Range * stack), // x축 값 증가
-        rangeScale_.y + (growthValue_Range * stack), // y축 값 증가
-        0 // z축 값은 고정
-    );
-}
-      public float GetRangeForUser(int stack)
-    {
-        return Mathf.Round(GetRange(stack).x * 10) / 10f; // 소수점 한 자리로 고정
-      }
-
-       [Header("# Mana Info")]//마나 정보
+      [Header("# Mana Info")]//마나 정보
       public float baseManaRecovery;// 기본 마나 회복량
     public float growthValue_ManaRecovery;//성장 계수
 

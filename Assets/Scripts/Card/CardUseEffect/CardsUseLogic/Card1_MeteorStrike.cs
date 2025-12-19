@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Game.RankSystem;
 
 public class Card1_MeteorStrike : MonoBehaviour, ICardUse
 {
 
     public void Use(PointerEventData eventData)
     {
-         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        var rank = card.currentPlayerCard.currentRarity;
         if (card == null)
         {
             Debug.LogError("MagicCard component is missing on pointerDrag object!");
@@ -24,7 +26,7 @@ public class Card1_MeteorStrike : MonoBehaviour, ICardUse
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
         targetPosition.z = 0;
 
-        meteor.Init(targetPosition); 
+        meteor.Init(targetPosition, rank); 
 
         // 방향 벡터 계산
         Vector3 direction = targetPosition - startPosition;
@@ -35,5 +37,6 @@ public class Card1_MeteorStrike : MonoBehaviour, ICardUse
         // 화염구 회전 적용
         meteor.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
+
 
 }

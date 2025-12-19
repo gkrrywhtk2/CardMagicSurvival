@@ -81,15 +81,17 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         currentPlayerCard = playerCard; // ✅ 참조 저장
         id = currentPlayerCard.ID;
+        
         cardScritableData = LocalDataManager.Instance.cardData.cardScritableData[id];
         cardOn = false;
         cardReady = false;
 
         // ✅ PlayerCard를 전달! (등급 정보 포함)
         CardImageInit(currentPlayerCard);
-
         rangeOn = cardScritableData.isRangeCard;
-        range.GetComponent<RectTransform>().localScale = cardScritableData.rangeScale_Card;
+            if(rangeOn)
+                range.GetComponent<RectTransform>().localScale = cardScritableData.hitRange[(int)currentPlayerCard.currentRarity];
+
         directionCard = cardScritableData.isDirCard;
         cardImage.CardAlpha1_Range();
         CardDrawAni(0);

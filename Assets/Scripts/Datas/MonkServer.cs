@@ -16,11 +16,11 @@ public class MockServer : MonoBehaviour
         ],
         
         ""deckSlots"": [
-            { ""ID"": 0, ""currentRarity"": ""Uncommon"" },
-            { ""ID"": 1, ""currentRarity"": ""Rare"" },
-            { ""ID"": 2, ""currentRarity"": ""Epic"" },
-            { ""ID"": 3, ""currentRarity"": ""Uncommon"" },
-            { ""ID"": 4, ""currentRarity"": ""Legendary"" }
+        { ""ID"": 1, ""currentRarity"": 0 },
+        { ""ID"": 1, ""currentRarity"": 1 },
+        { ""ID"": 1, ""currentRarity"": 2 },
+        { ""ID"": 1, ""currentRarity"": 3 },
+        { ""ID"": 1, ""currentRarity"": 3 }
         ]
     }";
 
