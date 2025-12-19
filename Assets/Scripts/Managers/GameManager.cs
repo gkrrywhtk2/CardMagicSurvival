@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     public GameObject backG;//background image
     public FloatingJoystick joystick;//조이스틱
     public PixelPerfectCamera pixelPerfectCamera;
-    public WarningUI warningUI;
     public Loadlocale loadlocale;
 
     public bool night;
@@ -127,9 +126,6 @@ public class GameManager : MonoBehaviour
         //instance.dataManager.SyncStageLevelFromServer();
        // instance.dataManager.SyncWeaponData();
     }
-    public void WarningText(string warn){
-        warningUI.gameObject.SetActive(true);
-        warningUI.text.text = warn;
-    }
+
 
 }

@@ -8080,52 +8080,6 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!1 &530980645
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 530980646}
-  - component: {fileID: 530980647}
-  m_Layer: 0
-  m_Name: IconManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &530980646
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 530980645}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1719360434}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &530980647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 530980645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2297303288405474e98c8d470d5bb2cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 2000516386716863366, guid: c5e52001f4e834eeda16b5d29dd0ea1a, type: 3}
-  iconParent: {fileID: 0}
 --- !u!1 &531370440
 GameObject:
   m_ObjectHideFlags: 0
@@ -26848,7 +26802,6 @@ Transform:
   - {fileID: 2109143566}
   - {fileID: 92140057}
   - {fileID: 2058404477}
-  - {fileID: 530980646}
   - {fileID: 1051194064}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27651,7 +27604,6 @@ MonoBehaviour:
   dirFront_forCard: {fileID: 0}
   fireBallPoint: {fileID: 1995595264}
   playerCenterPivot: {fileID: 902407476}
-  statCheak: {fileID: 0}
 --- !u!114 &1868871103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33676,26 +33628,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldPoint: 0
-  rubyPoint: 0
-  traningData:
-    level: 0
-    atk: 0
-    hp: 0
-    vit: 0
-    cri: 0
-    luk: 0
-    mrp: 0
-    dcd: 0
-    point: 0
-    expPoint: 0
-  mainData:
-    atk: 0
-    hp: 0
-    vit: 0
-    criticalDamage: 0
-    criticalPer: 0
-  stageProgressLevel: 0
-  upgradePostionCount: 0
 --- !u!4 &2058404477
 Transform:
   m_ObjectHideFlags: 0
@@ -34361,7 +34293,6 @@ MonoBehaviour:
   damageTextPooling: {fileID: 570609508}
   mobPooling: {fileID: 570609509}
   spawnManager: {fileID: 788219886}
-  stageManager: {fileID: 0}
   inGameCardManager: {fileID: 1051194066}
   cardSelect: {fileID: 222428795}
   cardOneTouch: 0
@@ -34370,7 +34301,6 @@ MonoBehaviour:
   backG: {fileID: 1324821746}
   joystick: {fileID: 759965006}
   pixelPerfectCamera: {fileID: 519420033}
-  warningUI: {fileID: 0}
   loadlocale: {fileID: 2109143568}
   night: 0
   cheatBoxTogle: 0
@@ -34765,7 +34695,6 @@ GameObject:
   - component: {fileID: 1395729374933125365}
   - component: {fileID: 5775788280638915376}
   - component: {fileID: 5775788280638915375}
-  - component: {fileID: 5775788280638915377}
   m_Layer: 0
   m_Name: Gem
   m_TagString: Gem_Item
@@ -35157,20 +35086,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.121637955, y: 0.31098253}
   m_EdgeRadius: 0
---- !u!114 &5775788280638915377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 84853747509596134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29c4f806afa649ff9ea7b833e8cc146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rank: 0
-  Gem_Point: {fileID: 368201003}
 --- !u!1 &7351903597539296262
 GameObject:
   m_ObjectHideFlags: 0
