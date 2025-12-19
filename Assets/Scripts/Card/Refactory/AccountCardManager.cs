@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;  // ✅ 추가!
-using RANK;
 using Game.RankSystem;
 
 public class AccountCardManager : MonoBehaviour

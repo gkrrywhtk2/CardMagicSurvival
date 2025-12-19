@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Game.InGameCardManager;
-using RANK;
 using Game.RankSystem;
 using TMPro;
 using Game.CardData;

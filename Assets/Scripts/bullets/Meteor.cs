@@ -7,7 +7,6 @@ public class Meteor : MonoBehaviour
       public float speed = 10f;      // 낙하 속도
   //  public GameObject impactEffect; // 충돌 시 이펙트 Prefab
       private bool isMoving = false; // 이동 상태 확인
-      private int ID = 1;
       private int STACK;
        
     //private Quaternion initialRotation;

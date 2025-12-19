@@ -16,8 +16,7 @@ public class Player_Main : MonoBehaviour
   public Transform fireBallPoint;
   public Transform playerCenterPivot;
 
-  //UI
-  public StatCheak statCheak;
+  
  
    private void Awake() {
     playerMove = GetComponent<PlayerMove>();
@@ -32,7 +31,7 @@ public class Player_Main : MonoBehaviour
 
     public void StatCheak(int value){
         bool cheak = value == 1? true : false;
-        statCheak.gameObject.SetActive(cheak);
+    
     }
 
 

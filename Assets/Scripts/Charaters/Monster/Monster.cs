@@ -274,8 +274,8 @@ public void CallHitStop(){
         break;
 
         case MobType.boss :
-        GameManager.instance.stageManager.BossDeadEvent();
-        gameObject.SetActive(false);
+        // GameManager.instance.stageManager.BossDeadEvent();
+        // gameObject.SetActive(false);
         break;
 
     }

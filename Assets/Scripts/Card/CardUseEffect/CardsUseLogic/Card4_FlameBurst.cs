@@ -6,7 +6,6 @@ using System.Collections;
 public class Card4_FlameBurst : MonoBehaviour, ICardUse
 {
       public Coroutine flameBurstCorutine;
-      private int magicID = 4;
 
       public void Use(PointerEventData eventData)
     {

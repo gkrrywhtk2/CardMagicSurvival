@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using RANK;
 
 
 public class Player_col : MonoBehaviour
@@ -67,9 +66,7 @@ public class Player_col : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collison) 
     {
         if(collison.CompareTag("Gold")){
-            GoldCoin gold = collison.GetComponent<GoldCoin>();
-            dataManager.goldPoint += ReturnGoldValue(gold.value);
-            gold.gameObject.SetActive(false);
+           
         }
     }
 

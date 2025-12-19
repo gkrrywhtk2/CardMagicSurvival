@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour
     public DamageTextPooling damageTextPooling;//데미지 텍스트 풀링
     public MobPooling mobPooling;//몬스터 오브잭트 풀링
     public MobSpawnManager spawnManager;
-    public WaveManager waveManager;
-    public StageManager stageManager;
     public InGameCardManager inGameCardManager;
     public CardSelect cardSelect;// 카드 선택 이벤트
 

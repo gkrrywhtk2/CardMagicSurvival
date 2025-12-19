@@ -196,7 +196,7 @@ private void UpdateTotalSpeedUpMultiplier()
         isCritical = CriticalReturn();
 
         // 최종 데미지 계산 (치명타 적용)
-        float finalDamage = isCritical ? basicDamage + (basicDamage * (GetTotalCriDamage() / 100f)) : basicDamage;
+        float finalDamage = isCritical ? basicDamage + basicDamage  : basicDamage;
         //Debug.Log("CriticalDamage :" + GetTotalCriDamage());
         return finalDamage;
     }
@@ -249,46 +249,8 @@ private void UpdateTotalSpeedUpMultiplier()
     /**
     Get 함수 모음
     **/
-    public float GetTotalATK()
-    {
-        // 기본 성장ATK 및 훈련ATK 계산
-        float totalATK = (dataManager.mainData.atk * 2) + (dataManager.traningData.atk * 5);
-        //Debug.Log("ToTalATK = " + totalATK);
+    
 
-        // 무기 장착 효과 및 보유 효과를 한 번만 계산하여 저장
-        //float equipWeaponEffectValue = GameManager.instance.weaponManager.ReturnEquipEffect();
-       // float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedATKEffect();
-       // Debug.Log("ownedWeaponEffectValueATK : " + ownedWeaponEffectValue);
-
-        // 무기 효과 값 계산
-       // float finalWeaponEffectValue = equipWeaponEffectValue + ownedWeaponEffectValue;
-
-        // 최종 공격력에 적용
-       // totalATK *= 1 + (finalWeaponEffectValue / 100f); // 백분율로 변환하여 적용
-       // Debug.Log("finalWeaponvalue = "+finalWeaponEffectValue );
-        //  Debug.Log("ToTalATK + WeaponValue= " + totalATK);
-        this.totalATK = totalATK;
-        return totalATK;
-    }
-    public float GetTotalCriDamage()
-    {
-        //loat baseCriDamage = upgradeUI.CriticalDamage_Setting() + upgradeUI.Traning_CRI_Setting();
-
-        // float ownedWeaponEffectValue = GameManager.instance.weaponManager.ReturnOwnedCRIEffect(); // ex: 50
-        // float ownedAccEffectValue = accessoryManager.ReturnOwnedCRIEffect(); // ex: 50
-        //  float equipedAccEffectValue = accessoryManager.ReturnEquipEffect_CRI();
-
-        //  float totalBonusPercent = ownedWeaponEffectValue + ownedAccEffectValue + equipedAccEffectValue;
-        // Debug.Log("ownedWeaponEffectValue : " + ownedWeaponEffectValue);
-        // Debug.Log("ownedAccEffectValue : " + ownedAccEffectValue);
-        //  Debug.Log("equipedAccEffectValue : " + equipedAccEffectValue);
-
-        // totalCriDamage = baseCriDamage + totalBonusPercent;
-
-        totalCriDamage = 1;
-       
-        return totalCriDamage;
-    }
 
     public float GetMaxHealth(){
         int baseHp = 100;//기본 체력 100
@@ -315,16 +277,8 @@ private void UpdateTotalSpeedUpMultiplier()
     public void InitALLStat()
     {
         //모든 스탯 초기화
-        GetTotalATK();
-        GetTotalCriDamage();
+
         GetMaxHealth();
-        GetLUK();
-        GetCriChance();
-        GetVIT();
     }
     
-    public void ATKTest()
-    {
-        totalATK += 10;
-    }
 }

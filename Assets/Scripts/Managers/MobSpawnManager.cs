@@ -80,15 +80,15 @@ public class MobSpawnManager : MonoBehaviour
         }else if(monster.mobType == MobType.boss){
             monster.transform.localScale = new Vector3(3,3,1);
             monster.transform.position = bossSpawnPoint.position;
-            GameManager.instance.stageManager.bossObject = monster;//보스몬스터 링크
+           // GameManager.instance.stageManager.bossObject = monster;//보스몬스터 링크
         }
     
     }
 
     public void BossSpawn(int boss_id){
-        GameObject boss = GameManager.instance.mobPooling.Get(1);
-        boss.GetComponent<Boss>().Init(bossSpawndata[boss_id]);
-        boss.transform.position = bossSpawnPoint.position;
+        // GameObject boss = GameManager.instance.mobPooling.Get(1);
+        // boss.GetComponent<Boss>().Init(bossSpawndata[boss_id]);
+        // boss.transform.position = bossSpawnPoint.position;
     }
 
 

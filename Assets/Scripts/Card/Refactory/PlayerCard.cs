@@ -1,4 +1,3 @@
-using RANK;
 using UnityEngine;
 using Game.RankSystem;
 

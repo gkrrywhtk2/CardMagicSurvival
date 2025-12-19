@@ -14,9 +14,6 @@ public class JoyStick_P : MonoBehaviour
     public float totalSpeedUpPlusValue;//모든 추가 이동속도
     //next stage
     public bool nextStageSetting = false;
-    //weaponSetting
-        public SpriteRenderer weaponR;
-    public SpriteRenderer weaponL;
 
     private void Awake()
     {
@@ -71,8 +68,6 @@ public class JoyStick_P : MonoBehaviour
     if (inputVec.x != 0 && spr.flipX != isFlipped)
     {
         spr.flipX = isFlipped;
-        weaponR.gameObject.SetActive(!isFlipped);
-        weaponL.gameObject.SetActive(isFlipped);
     }
 }
 
