@@ -2,38 +2,43 @@ using UnityEngine;
 
 public class Dir_Front : MonoBehaviour
 {
-    public Transform playerTransform; // 플레이어의 Transform
-    public float skillOffset = 0.5f;  // 플레이어로부터 얼마나 떨어질지
+    [Header("Refs")]
+    public Transform playerTransform;     // 플레이어 Transform
+    public JoyStick_P joystickP;          // JoyStick_P 참조 (인스펙터에 연결)
 
-    private Vector2 direction; // 이동 방향 벡터
-    private Vector2 previousPosition; // 이전 프레임의 플레이어 위치
-    public Vector2 skillPosition; // 스킬이 연출될 좌표
+    [Header("Settings")]
+    public float skillOffset = 10f;
+    public float inputThreshold = 0.01f;  // 입력 감지 임계값
+
+    private Vector2 lastInputDir = Vector2.right; // 입력 없을 때 유지할 마지막 방향
+    public Vector2 skillPosition;
     public float angle;
-    
-    void Start()
+
+    private void Reset()
     {
-        previousPosition = playerTransform.position; // 초기 위치 저장
+        // 같은 오브젝트/부모에서 자동 연결 시도(선택)
+        if (playerTransform == null) playerTransform = GameObject.FindWithTag("Player")?.transform;
+        if (joystickP == null && playerTransform != null) joystickP = playerTransform.GetComponent<JoyStick_P>();
     }
 
     void Update()
     {
-        Vector2 currentPosition = playerTransform.position;
-        
-        // 🔹 이동한 경우에만 업데이트
-        if ((currentPosition - previousPosition).sqrMagnitude > 0.0001f) // (0.01f)^2보다 크면 이동 감지
+        if (playerTransform == null || joystickP == null) return;
+
+        // ✅ "조작 중일 때만" 방향 갱신 (몬스터 밀림은 inputVec=0이라 무시됨)
+        Vector2 input = joystickP.inputVec;
+        if (input.sqrMagnitude > inputThreshold * inputThreshold)
         {
-            direction = (currentPosition - previousPosition).normalized;
-
-            // 2. 스킬 위치 설정
-            skillPosition = currentPosition + direction * skillOffset;
-            transform.position = skillPosition;
-
-            // 3. 스킬 회전 설정
-            angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle);
-
-            // 🔹 이전 위치 갱신
-            previousPosition = currentPosition;
+            lastInputDir = input.normalized;
         }
+
+        // ✅ 위치는 항상 플레이어 기준으로 따라감 (밀려도 따라가되 방향은 유지)
+        Vector2 playerPos = playerTransform.position;
+        skillPosition = playerPos + lastInputDir * skillOffset;
+        transform.position = skillPosition;
+
+        // ✅ 회전도 lastInputDir 기준
+        angle = Mathf.Atan2(lastInputDir.y, lastInputDir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }

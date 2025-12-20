@@ -22850,7 +22850,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 902407476}
-  skillOffset: 1
+  joystickP: {fileID: 1868871105}
+  skillOffset: 1.3
+  inputThreshold: 0.01
   skillPosition: {x: 0, y: 0}
   angle: 0
 --- !u!1 &1273251630
@@ -27352,6 +27354,7 @@ GameObject:
   - component: {fileID: 1868871107}
   - component: {fileID: 1868871108}
   - component: {fileID: 1868871109}
+  - component: {fileID: 1868871110}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -27534,6 +27537,7 @@ MonoBehaviour:
   health: 0
   gameStop: 0
   playerEXP: {fileID: 1868871109}
+  playerMana: {fileID: 1868871110}
   totalATK: 0
   maxHealth: 100
   totalVIT: 0
@@ -27541,12 +27545,8 @@ MonoBehaviour:
   totalCriChance: 0
   LUK: 0
   VIT: 0
-  _mana: 0
-  maxMana: 9
-  baseManaRecovery: 0.5
   hpBar: {fileID: 291079790}
   speedUpEffects: []
-  manaRecoveryFlatBonusList: []
   criticalEffects: []
 --- !u!114 &1868871100
 MonoBehaviour:
@@ -27727,6 +27727,21 @@ MonoBehaviour:
   expGrowthFactor: 1.2
   expSlider: {fileID: 990225026}
   currentLevelText: {fileID: 990225025}
+--- !u!114 &1868871110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868871092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1fb9e64673ea45b0a928e31483375b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMana: 9
+  baseManaRecoveryRaw: 0.5
+  _mana: 0
 --- !u!1 &1881727115
 GameObject:
   m_ObjectHideFlags: 0

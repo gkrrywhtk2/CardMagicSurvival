@@ -219,7 +219,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         return;//카드가 생성되기전에는 실행 X
 
         // 현재 마나와 카드 비용 비율 계산
-        float mana = GameManager.instance.player.playerStatus.mana;
+        float mana = GameManager.instance.player.playerStatus.playerMana.mana;
         float value = Mathf.Clamp01(mana / cardScritableData.cardCost);
     
     // 쿨타임 UI 업데이트

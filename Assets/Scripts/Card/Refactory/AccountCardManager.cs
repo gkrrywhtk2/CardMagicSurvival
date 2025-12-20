@@ -15,19 +15,13 @@ public class AccountCardManager : MonoBehaviour
     // ✅ 덱 슬롯 (PlayerCard로 유지 - 등급 정보 포함)
     public List<PlayerCard> deckSlots = new();
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
+   private void Awake()
+{
+    if (Instance == null)
+        Instance = this;
+    else
+        Destroy(gameObject);
+}
     private void Start()
     {
         LoadCardData();

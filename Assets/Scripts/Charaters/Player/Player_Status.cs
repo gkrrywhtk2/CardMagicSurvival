@@ -15,7 +15,9 @@ public class Player_Status : MonoBehaviour
     public bool gameStop;//게임이 일시정지 중이면 true 입니다.
     private Coroutine regenCoroutine; // 실행 중인 체력 회복 코루틴
     public Player_EXP playerEXP;//플레이어 경험치 스크립트 연동
+    public PlayerMana playerMana;//플레이어 마나 스크립트 연동
     [Header("#능력치 ")]
+    
     public float totalATK;//공격력
     public float maxHealth;//최대 체력
     public float totalVIT;//초당 체력 회복량
@@ -24,19 +26,6 @@ public class Player_Status : MonoBehaviour
     public int LUK;//골드 추가 획득량
     public float VIT;
 
-    [Header("#특수 성장 능력치 ")]
-    public float _mana;//내부 변수
-    public float mana
-    {
-        get => _mana;
-        set
-        {
-            // 최소 0, 최대 maxMana 사이로 제한
-            _mana = Mathf.Clamp(value, 0f, maxMana);
-        }
-    }
-    public float maxMana = 9;
-    public float baseManaRecovery;//기본 마나회복량; 일단 0.5로 세팅하였음 초당 0.5회복
     [Header("Bar")]
     public Slider hpBar;
     public void PlayerInit()
@@ -102,9 +91,6 @@ public void StopHealthRegen()
         if(isLive != true)
             return;
         HpBarUpdate();
-        //ManaBarUpdate();
-        ManaRecovery();
-       // ExpBarUpdate(); 경험치 삭제 예정
     }
 
     //이동속도 변경 관련 로직*****
@@ -135,54 +121,6 @@ private void UpdateTotalSpeedUpMultiplier()
 }
 
   //이동 속도 변경 관련 로직 끝
-
-
-
-   // 마나 회복 관련 로직 시작********
-        public List<float> manaRecoveryFlatBonusList = new List<float>(); // 고정 마나 회복 보너스
-        private float totalFlatManaRecovery = 0f; // 총 고정 회복량
-
-        public void ManaRecovery()
-        {
-            if (!GameManager.instance.GamePlayState)
-                return;
-
-            // 기본 회복량 + 추가 회복량 적용
-            mana += (baseManaRecovery + totalFlatManaRecovery ) * Time.deltaTime;
-        }
-
-        // 🔹 고정 마나 회복량 추가
-        public void AddManaRecoveryFlat(float value)
-        {
-            manaRecoveryFlatBonusList.Add(value);
-            UpdateFlatManaRecovery();
-        }
-
-        // 🔹 고정 마나 회복량 제거
-        public void RemoveManaRecoveryFlat(float value)
-        {
-            manaRecoveryFlatBonusList.Remove(value);
-            UpdateFlatManaRecovery();
-        }
-
-        // 🔹 총 고정 마나 회복량 업데이트
-        private void UpdateFlatManaRecovery()
-        {
-            totalFlatManaRecovery = 0f;
-            foreach (float value in manaRecoveryFlatBonusList)
-            {
-                totalFlatManaRecovery += value;
-            }
-        }
-
-
-// 마나 회복 관련 로직 끝***********************//
-
-
-
-
-
-
 
     public float DamageReturn(float skillPower, out bool isCritical)
     {

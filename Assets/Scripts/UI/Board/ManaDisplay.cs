@@ -20,13 +20,13 @@ public class ManaDisplay : MonoBehaviour
     }
     private void ManaBarUpdate()
     {
-        float mana = player.mana;
-        float maxMana = player.maxMana;
+        float mana = player.playerMana.mana;
+        float maxMana = player.playerMana.maxMana;
         manaBar.value = mana / maxMana;
 
         //아래는 텍스트
         int manaInt = Mathf.FloorToInt(mana); // 정수로 변환
-        manaText.text = $"{manaInt} <color={maxManaColor}>/ {Mathf.FloorToInt(player.maxMana)}</color>";
+        manaText.text = $"{manaInt} <color={maxManaColor}>/ {Mathf.FloorToInt(player.playerMana.maxMana)}</color>";
     }
 
     

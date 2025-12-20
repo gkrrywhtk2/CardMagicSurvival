@@ -15,7 +15,7 @@ namespace Game.CardData
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject); // (선택사항) 씬 전환 시에도 유지
+              ///DontDestroyOnLoad(gameObject); // (선택사항) 씬 전환 시에도 유지
             }
             else
             {

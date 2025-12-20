@@ -22,4 +22,7 @@ public class Melee : MonoBehaviour
         //애니메이션이 종료되고 오브젝트 비활성화
         gameObject.SetActive(false);
       }
+      public void ScaleSetting(Vector3 scale){
+        transform.localScale = scale;
+      }
 }

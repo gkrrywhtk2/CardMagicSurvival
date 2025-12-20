@@ -71,7 +71,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
             //마나 소모
             float cost = card.cardScritableData.cardCost;
-            GameManager.instance.player.playerStatus.mana -= cost;
+            GameManager.instance.player.playerStatus.playerMana.mana -= cost;
 
             //카드 사용 로직
             UseCard(eventData);

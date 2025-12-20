@@ -1,53 +1,36 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections;
 using Game.RankSystem;
 
 public class Card3_ManaFlow : MonoBehaviour, ICardUse
 {
-    private Coroutine manaRecoveryCoroutine; // 현재 실행 중인 코루틴을 저장할 변수
-
     public void Use(PointerEventData eventData)
     {
-        MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
-        var rank = card.currentPlayerCard.currentRarity;
+        if (eventData == null || eventData.pointerDrag == null)
+            return;
 
-        // 이펙트 연출
+        MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        if (card == null || card.currentPlayerCard == null)
+            return;
+
+        RankType rank = card.currentPlayerCard.currentRarity;
+
+        // 이펙트
         GameManager.instance.player.playerEffect.PlayManaUp();
 
-        // 지속시간 가져오기
+        // 지속시간 / 추가 회복량
         float duration = GetDurationByRank(rank);
+        float bonusFlatRecovery = GetBonusFlatRecoveryByRank(rank);
 
-        // 마나 회복량 가져오기
-        float recoveryAmount = 1;
-            
-        // 기존 효과가 진행 중이라면 중지
-        if (manaRecoveryCoroutine != null)
-        {
-            StopCoroutine(manaRecoveryCoroutine);
-        }
+        // PlayerMana 가져오기
+        PlayerMana mana = GameManager.instance.player.playerStatus.playerMana;
+        if (mana == null)
+            return;
 
-        // 새 코루틴 시작 후 변수에 저장
-        manaRecoveryCoroutine = StartCoroutine(TemporaryManaRecovery(recoveryAmount, duration));
-
+        // ✅ 핵심: "추가 회복량"을 시간제로 추가 (중첩 가능, 각자 만료)
+        mana.AddBonusManaRecoveryFlatTimed(bonusFlatRecovery, duration);
     }
 
-   public IEnumerator TemporaryManaRecovery(float flatValue, float duration)
-{
-    Player_Status player = GameManager.instance.player.playerStatus;
-
-    // 기존 동일한 수치 제거 (중복 방지용)
-    player.RemoveManaRecoveryFlat(flatValue);
-    player.AddManaRecoveryFlat(flatValue);
-
-  
-
-    yield return new WaitForSeconds(duration);
-
-    // 지속시간이 끝나면 해당 효과 제거
-    player.RemoveManaRecoveryFlat(flatValue);
-    manaRecoveryCoroutine = null;
-}
     private float GetDurationByRank(RankType rank)
     {
         switch (rank)
@@ -60,4 +43,16 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
         }
     }
 
+    // 등급별 추가 회복량(원하면 조절)
+    private float GetBonusFlatRecoveryByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon: return 1f;
+            case RankType.Rare: return 1f;
+            case RankType.Epic: return 1f;
+            case RankType.Legendary: return 1f;
+            default: return 1f;
+        }
+    }
 }

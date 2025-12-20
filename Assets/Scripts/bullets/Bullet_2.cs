@@ -68,6 +68,9 @@ public class Bullet_2 : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    public void ScaleSetting(Vector3 scale){
+        transform.localScale = scale;
+    }
 
     
 }
