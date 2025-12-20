@@ -71,7 +71,7 @@ public class AutoAttack : MonoBehaviour
     }
     private bool PasueState()
     {
-        if (player.playerStatus.isLive != true)
+        if (player.playerStatus.playerHP.isLive != true)
         return false;
         if (GameManager.instance.GamePlayState != true)
         return false;

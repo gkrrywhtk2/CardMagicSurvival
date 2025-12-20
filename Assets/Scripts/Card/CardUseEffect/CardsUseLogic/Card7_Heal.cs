@@ -1,27 +1,44 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections;
+using Game.RankSystem;
 
 public class Card7_Heal : MonoBehaviour, ICardUse
 {
+    public void Use(PointerEventData eventData)
+    {
+        if (eventData == null || eventData.pointerDrag == null)
+            return;
 
-   public void Use(PointerEventData eventData)
-{
-    MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
-    Player_Status player = GameManager.instance.player.playerStatus;
+        MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        if (card == null || card.currentPlayerCard == null)
+            return;
 
-    // 이펙트 연출
-    GameManager.instance.player.playerEffect.card6_Effect0.SetActive(true);
+        Player_Status status = GameManager.instance.player.playerStatus;
+        if (status == null || status.playerHP == null)
+            return;
 
-        // 회복량 가져오기 (heal_per이 %단위라면)
-        float heal_per = 1;
-        
-        //   float heal_per = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-        // .GetHeal(card.magicCard.STACK);
-    float healValue = player.maxHealth * (heal_per / 100f); //퍼센트 회복 계산
+        RankType rank = card.currentPlayerCard.currentRarity;
 
-    // 체력 회복 (최대 체력 초과 방지)
-    player.health = Mathf.Min(player.health + healValue, player.maxHealth);
-}
+        // 이펙트 연출 (원래 card6 이펙트 쓰고 있었는데, 네 프로젝트 사정상 유지)
+        GameManager.instance.player.playerEffect.card6_Effect0.SetActive(true);
 
+        // ✅ 최대 체력 기준 퍼센트 힐
+        float healPercent = GetHealPerByRank(rank);   // 10/20/30/40
+        float healValue = status.playerHP.maxHealth * (healPercent / 100f);
+
+        // ✅ 체력 회복 (클램프는 playerHP.Heal 내부에서 처리)
+        status.playerHP.Heal(healValue);
+    }
+
+    private float GetHealPerByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon:  return 10f;
+            case RankType.Rare:      return 20f;
+            case RankType.Epic:      return 30f;
+            case RankType.Legendary: return 40f;
+            default:                 return 10f;
+        }
+    }
 }

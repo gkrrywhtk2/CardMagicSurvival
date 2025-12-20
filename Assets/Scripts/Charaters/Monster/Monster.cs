@@ -77,7 +77,7 @@ public class Monster : MonoBehaviour
             return;
         if(nowStop == true)
             return;
-        if(GameManager.instance.player.playerStatus.isLive != true)
+        if(GameManager.instance.player.playerStatus.playerHP.isLive != true)
             return;
         if(GameManager.instance.GamePlayState != true)
             return;

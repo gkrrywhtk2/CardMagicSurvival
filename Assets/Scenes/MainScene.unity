@@ -27355,6 +27355,9 @@ GameObject:
   - component: {fileID: 1868871108}
   - component: {fileID: 1868871109}
   - component: {fileID: 1868871110}
+  - component: {fileID: 1868871111}
+  - component: {fileID: 1868871112}
+  - component: {fileID: 1868871113}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -27533,21 +27536,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataManager: {fileID: 2058404476}
-  isLive: 0
   health: 0
   gameStop: 0
   playerEXP: {fileID: 1868871109}
   playerMana: {fileID: 1868871110}
+  playerCritical: {fileID: 1868871111}
+  playerHP: {fileID: 1868871112}
+  playerMoveSpeed: {fileID: 1868871113}
   totalATK: 0
-  maxHealth: 100
-  totalVIT: 0
-  totalCriDamage: 0
-  totalCriChance: 0
   LUK: 0
   VIT: 0
-  hpBar: {fileID: 291079790}
-  speedUpEffects: []
-  criticalEffects: []
 --- !u!114 &1868871100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27582,6 +27580,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   nearestTarget: {fileID: 0}
+  playerHp: {fileID: 0}
+  bufferSize: 64
 --- !u!114 &1868871102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27616,7 +27616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a15d9416793c464e858472f4f53645c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataManager: {fileID: 2058404476}
+  hitCoolTime: 0.5
 --- !u!114 &1868871105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27630,11 +27630,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joy: {fileID: 759965006}
+  playerHp: {fileID: 0}
+  moveSpeed: {fileID: 0}
   inputVec: {x: 0, y: 0}
   nowMove: 0
-  speed: 3
-  totalSpeedUpPlusValue: 0
   nextStageSetting: 0
+  nextStageAutoSpeed: 5
 --- !u!114 &1868871106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27742,6 +27743,51 @@ MonoBehaviour:
   maxMana: 9
   baseManaRecoveryRaw: 0.5
   _mana: 0
+--- !u!114 &1868871111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868871092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587e1e3f473a64dc28b9230abd4b80a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCritChance: 5
+  critMultiplier: 2
+--- !u!114 &1868871112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868871092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c414d26ac86a4491940fd1287a37049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLive: 1
+  health: 0
+  maxHealth: 100
+  enableRegen: 1
+  regenPerSecond: 1
+  hpBar: {fileID: 291079790}
+--- !u!114 &1868871113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868871092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f425a5d966934fd29a7a832181e9b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSpeed: 5
 --- !u!1 &1881727115
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,58 +1,56 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections;
+using Game.RankSystem;
 
 public class Card6_ArcaneOverDrive : MonoBehaviour, ICardUse
 {
-     private Coroutine criticalCoroutine; // 현재 실행 중인 코루틴을 저장할 변수
-
     public void Use(PointerEventData eventData)
     {
+        if (eventData == null || eventData.pointerDrag == null)
+            return;
+
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        if (card == null || card.currentPlayerCard == null)
+            return;
+
+        RankType rank = card.currentPlayerCard.currentRarity;
 
         // 이펙트 연출
         GameManager.instance.player.playerEffect.card6_Effect0.SetActive(true);
-        // 이펙트 연출
         GameManager.instance.player.playerEffect.card6_Effect1.SetActive(true);
 
-        // 지속시간 가져오기
-        float duration = 1;
+        float duration = GetDurationByRank(rank);
 
-            //   float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-            // .GetDuration(card.magicCard.STACK);
+        // ✅ 추가 치명타 확률 (0~100 단위로 쓰는 구조)
+        float bonusCritChance = 100f;
 
-        //추가 치명타 확률
-        float percent = 100;
+        // ✅ PlayerCritical 참조
+        var crit = GameManager.instance.player.playerStatus.playerCritical;
+        if (crit == null)
+            return;
 
-        // 기존 효과가 진행 중이라면 중지
-        if (criticalCoroutine != null)
-        {
-            StopCoroutine(criticalCoroutine);
-        }
+        // ✅ 중첩 + 개별 만료는 PlayerCritical이 처리
+        crit.AddBonusCritChanceTimed(bonusCritChance, duration);
 
-        // 새 코루틴 시작 후 변수에 저장
-        criticalCoroutine = StartCoroutine(VisionOverDrive(duration, percent));
-
-
+        // ✅ 이펙트 끄는 타이밍도 duration 후 꺼야 하면 "별도 코루틴"만 이펙트용으로 둔다
+        StartCoroutine(DisableEffectAfter(duration));
     }
 
-    public IEnumerator VisionOverDrive(float duration, float per)
+    private System.Collections.IEnumerator DisableEffectAfter(float duration)
     {
-        Player_Status player = GameManager.instance.player.playerStatus;
-
-        // 기존 효과 제거 (이미 적용된 효과가 있다면 리셋)
-        player.RemoveCriticalEffect(per);
-        player.AddCriticalEffect(per);
-        player.InitALLStat();//스탯 적용
-
-        
-
         yield return new WaitForSeconds(duration);
-
-        // 지속시간 종료 후 효과 제거
-        player.RemoveCriticalEffect(per);
-         player.InitALLStat();//스탯 적용
         GameManager.instance.player.playerEffect.card6_Effect1.SetActive(false);
-        criticalCoroutine = null; // 코루틴 종료 시 변수 초기화
+    }
+
+    private float GetDurationByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon:  return 1f;
+            case RankType.Rare:      return 2f;
+            case RankType.Epic:      return 3f;
+            case RankType.Legendary: return 4f;
+            default:                return 1f;
+        }
     }
 }

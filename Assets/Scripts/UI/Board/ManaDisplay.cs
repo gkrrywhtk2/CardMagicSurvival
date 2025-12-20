@@ -13,7 +13,7 @@ public class ManaDisplay : MonoBehaviour
 
     private void Update()
     {
-        if (player.isLive != true)
+        if (player.playerHP.isLive != true)
             return;
 
         ManaBarUpdate();

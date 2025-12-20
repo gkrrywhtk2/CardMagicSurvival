@@ -1,90 +1,84 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-
 
 public class Player_col : MonoBehaviour
 {
-    
-    Player_Status playerStatus;
-    public DataManager dataManager;
+    private Player_Status playerStatus;
+    private PlayerHP playerHP;
+
     private bool nowHit;
-    private float hitCoolTime = 0.5f;
-    Animator ani;
-    Rigidbody2D rigid;
-    CapsuleCollider2D capsuleCollider;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private float hitCoolTime = 0.5f;
+
+    private Animator ani;
+    private Rigidbody2D rigid;
+    private CapsuleCollider2D capsuleCollider;
+
+    private void Awake()
     {
-        
+        playerStatus = GetComponent<Player_Status>();
+        playerHP = playerStatus != null ? playerStatus.playerHP : GetComponent<PlayerHP>();
+
+        ani = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
-    public void Awake(){
-    playerStatus = GetComponent<Player_Status>();
-    ani = GetComponent<Animator>();
-    rigid = GetComponent<Rigidbody2D>();
-    capsuleCollider = GetComponent<CapsuleCollider2D>();
 
-}
-    // Update is called once per frame
-
-   public void HitCalCulator(float damage){
-    //몬스터로부터 피격시 호출
-    if(nowHit == true)
-        return;
-    if(playerStatus.isLive != true)
-        return;
-    if(GameManager.instance.ItemSelectState == true)
-        return;
-    
-    playerStatus.health -= damage;
-    if(playerStatus.health <= 0){
-
-       PlayerDeathSetting();
-    }
-    nowHit = true;
-    StartCoroutine(HitTimer());
-
-   }
-   private IEnumerator HitTimer(){
-    yield return new WaitForSeconds(hitCoolTime);
-    nowHit = false;
-   }
-
-   public void PlayerDeathSetting(){
-      playerStatus.isLive = false;
-        //rigid.bodyType = RigidbodyType2D.Static;
-        capsuleCollider.isTrigger = true;
-        ani.SetTrigger("Death");
-        //이 함수 후에 playerDeath에서 실제 플레이어 사망
-   }
-   public void PlayerDeath(){
-    playerStatus.isLive = false;
-    GameManager.instance.restartButton.SetActive(true);
-   }
-
-    private void OnTriggerEnter2D(Collider2D collison) 
+    public void HitCalCulator(float damage)
     {
-        if(collison.CompareTag("Gold")){
-           
+        // 몬스터로부터 피격 시 호출
+        if (nowHit) return;
+        if (playerHP == null) return;
+        if (!playerHP.isLive) return;
+
+        // ✅ 데미지 적용
+        playerHP.TakeDamage(damage);
+
+        // ✅ 사망 체크는 PlayerHP 기준
+        if (!playerHP.isLive)
+        {
+            PlayerDeathSetting();
+            return;
+        }
+
+        nowHit = true;
+        StartCoroutine(HitTimer());
+    }
+
+    private IEnumerator HitTimer()
+    {
+        yield return new WaitForSeconds(hitCoolTime);
+        nowHit = false;
+    }
+
+    public void PlayerDeathSetting()
+    {
+        // ✅ 여기서 isLive를 또 만져도 되지만, 이미 TakeDamage에서 false로 됐을 가능성이 큼
+        if (playerHP != null) playerHP.isLive = false;
+
+        // rigid.bodyType = RigidbodyType2D.Static;
+        if (capsuleCollider != null) capsuleCollider.isTrigger = true;
+        if (ani != null) ani.SetTrigger("Death");
+    }
+
+    public void PlayerDeath()
+    {
+        if (playerHP != null) playerHP.isLive = false;
+        GameManager.instance.restartButton.SetActive(true);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Gold"))
+        {
+            // TODO: 골드 획득 처리
         }
     }
 
-   public int ReturnGoldValue(float value){
-    float returnValue = value * (1f + playerStatus.LUK / 100f);
-    return (int)returnValue;
-
-   }
-
-
-//    IEnumerator Get_Gem(Rank rank){
-//     GameManager.instance.player.playerEffect.levelUpCircleTimeStop.gameObject.SetActive(true);
-//     GameManager.instance.player.joystickP.speed = 0;
-//     GameManager.instance.itemManager.SpawnItems_(rank);
-//     GameManager.instance.ItemPause();
-//     yield return new WaitForSeconds(2);
-//      GameManager.instance.player.joystickP.speed = 3;
-   
-//    }
-   
+    public int ReturnGoldValue(float value)
+    {
+        // LUK은 Player_Status에 남아있으니 그대로 사용
+        float luk = (playerStatus != null) ? playerStatus.LUK : 0f;
+        float returnValue = value * (1f + luk / 100f);
+        return (int)returnValue;
+    }
 }
