@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using Game.RankSystem;
 
 public class Card3_ManaFlow : MonoBehaviour, ICardUse
 {
@@ -9,22 +10,17 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
     public void Use(PointerEventData eventData)
     {
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        var rank = card.currentPlayerCard.currentRarity;
 
         // 이펙트 연출
         GameManager.instance.player.playerEffect.PlayManaUp();
 
         // 지속시간 가져오기
-        float duration = 1;
-
-        //  float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-        // .GetDuration(card.magicCard.STACK);
+        float duration = GetDurationByRank(rank);
 
         // 마나 회복량 가져오기
         float recoveryAmount = 1;
             
-            //  float recoveryAmount = GameManager.instance.deckManager.cardDatas[card.magicCard.ID]
-            // .GetManaRecovery(card.magicCard.STACK);
-
         // 기존 효과가 진행 중이라면 중지
         if (manaRecoveryCoroutine != null)
         {
@@ -52,5 +48,16 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
     player.RemoveManaRecoveryFlat(flatValue);
     manaRecoveryCoroutine = null;
 }
+    private float GetDurationByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon: return 1f;
+            case RankType.Rare: return 1.5f;
+            case RankType.Epic: return 2f;
+            case RankType.Legendary: return 2.5f;
+            default: return 1f;
+        }
+    }
 
 }
