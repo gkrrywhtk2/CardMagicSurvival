@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Game.RankSystem;
 public class Card2_VenomousCurse : MonoBehaviour, ICardUse
 {
        public void Use(PointerEventData eventData){
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
+        var rank = card.currentPlayerCard.currentRarity;
 
         int splashEffect = 4;
         int poisonEffect = 5;
@@ -17,20 +19,35 @@ public class Card2_VenomousCurse : MonoBehaviour, ICardUse
         poisonSplash.transform.position = targetPosition;
         posion.transform.position = targetPosition;
 
-        //레벨에 따른 조정(데미지, 지속시간)   
-    //     float damage = GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDamage(card.magicCard.STACK);
-    //     float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(damage,out bool isCritical);
-    // float duration = GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDuration(card.magicCard.STACK);
 
+        float magicDamage = GetDamageByRank(rank);//기본 데미지
+        float duration = GetDurationByRank(rank);
 
-
-    float finalDamage = 1;
-    float duration = 1;
-    // global::bullet.bulletType type = global::bullet.bulletType.placement;
-    posion.Init(finalDamage, true, duration, Bullet_Placement.elementType.posion);
-        //iscritical true로 임시 조정
+        float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(magicDamage,out bool isCritical);//최종 데미지(아이템 수치 반영)
+        posion.Init(finalDamage, isCritical, duration, Bullet_Placement.elementType.posion);
     }
 
-   
-   
+    private float GetDamageByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon:   return  1;
+            case RankType.Rare:       return 1.5f;
+            case RankType.Epic:       return 2;
+            case RankType.Legendary:  return 2.5f;
+            default:                 return 1;
+        }
+    }
+
+    private float GetDurationByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon:   return  3;
+            case RankType.Rare:       return 4;
+            case RankType.Epic:       return 5;
+            case RankType.Legendary:  return 6;
+            default:                 return 1;
+        }
+    }
 }

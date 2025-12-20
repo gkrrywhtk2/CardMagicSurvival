@@ -1,5 +1,5 @@
 # ninja log v5
-166	306	1760874573336747562	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/72b232u5/obj/armeabi-v7a/libswappywrapper.so	99096b23f46d43ed
-0	165	1760874573198044859	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	9ceccc2ce19bad42
 0	140	1763890411289127439	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	9ceccc2ce19bad42
 140	263	1763890411411566885	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/72b232u5/obj/armeabi-v7a/libswappywrapper.so	99096b23f46d43ed
+1	148	1766146557891115818	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	9ceccc2ce19bad42
+148	272	1766146558013447826	/Users/fastkim99/Documents/Git_2025/CardMagicSurvival/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/72b232u5/obj/armeabi-v7a/libswappywrapper.so	99096b23f46d43ed

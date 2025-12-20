@@ -42,7 +42,7 @@ public class Meteor : MonoBehaviour
     impactArea.transform.position = targetPosition;
     impactArea.transform.localScale = GetDurationByRank(rank);
 
-    float magicPower = 1;
+    float magicPower = GetDamageByRank(rank);
     float damage = GameManager.instance.player.playerStatus.DamageReturn(magicPower,out bool isCritical);
     impactArea.GetComponent<Melee>().Init(damage, isCritical);
 
@@ -58,6 +58,17 @@ public class Meteor : MonoBehaviour
             case RankType.Epic:       return new Vector3(4f, 4f, 1); //임시;;
             case RankType.Legendary:  return new Vector3(5, 5, 1); //임시;;
             default:                 return new Vector3(1, 1, 1); //임시;;
+        }
+    }
+     private float GetDamageByRank(RankType rank)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon:   return  10;
+            case RankType.Rare:       return 20;
+            case RankType.Epic:       return 30;
+            case RankType.Legendary:  return 40;
+            default:                 return 10;
         }
     }
 }
