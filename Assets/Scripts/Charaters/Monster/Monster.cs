@@ -3,10 +3,15 @@ using UnityEngine;
 using MonsterType;
 using TMPro;
 
+public enum DamageType
+{
+    Normal,
+    Poison
+}
+
 public class Monster : MonoBehaviour
 {
-[Header("Components")]
- 
+    [Header("Components")]
     public MobType mobType;
     SpriteRenderer sprite;
     Rigidbody2D rigid;
@@ -20,26 +25,22 @@ public class Monster : MonoBehaviour
     [Header("Scaner")]
     public Rigidbody2D moveTarget;
     public Player_Main player;
-   
-     [Header("Stat")]
-    bool isLive;//생존 상태
-    bool nowHit;//피격 상태
-    bool nowStop;//정지 상태
+
+    [Header("Stat")]
+    [SerializeField] private bool isLive; // 외부에서 상태 읽을 수 있게 프로퍼티 제공
+    bool nowHit;
+    bool nowStop;
     float hittime = 0.1f;
     public float speed;
     public float health;
     public float maxHealth;
     public float damage;
-    private bool isCoroutineRunning_Hit = false;//Hit코루틴 중복실행 방지
+    private bool isCoroutineRunning_Hit = false;
 
-    [Header("poison")]
-    public int toxicity;//독성 중첩 상태. 0 이면 평시
-    public float toxicityDamage;//독 데미지
-    public float toxicityInterval = 1;//이 시간초마다 도트 데미지 입음
-    public GameObject toxicityEffect;//중독 상태일때 머리위에 독 표시
-    public TMP_Text toxicityStackText;//중독 중첩 수치 표시
-    private Coroutine toxicityCoroutine;//중독 코루틴
-      private void Awake()
+    // ✅ 외부 컴포넌트(PoisonStatus 등)에서 읽기만
+    public bool IsLive => isLive;
+
+    private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
@@ -47,9 +48,9 @@ public class Monster : MonoBehaviour
         anim = GetComponent<Animator>();
         originalColor = sprite.color;
     }
-     public void Init(MobSpawnData data)
-    {   
-       
+
+    public void Init(MobSpawnData data)
+    {
         anim.runtimeAnimatorController = animCon[data.mob_id];
         speed = data.speed;
         maxHealth = data.maxHealth;
@@ -57,253 +58,208 @@ public class Monster : MonoBehaviour
         damage = data.damage;
         mobType = data.mobType;
 
-        //중독 상태 초기화
-        RemovePoison();
-
-        //몬스터들 애니메이션 겹치지 않게끔.
         RandomizeAnimation();
     }
-     private void FixedUpdate()
+
+    private void FixedUpdate()
     {
         MoveToPlayer();
     }
 
-  
-     private void MoveToPlayer()
+    private void MoveToPlayer()
     {
-        if (isLive != true)
-            return;
-        if (nowHit == true)
-            return;
-        if(nowStop == true)
-            return;
-        if(GameManager.instance.player.playerStatus.playerHP.isLive != true)
-            return;
-        if(GameManager.instance.GamePlayState != true)
-            return;
-        
+        if (!isLive) return;
+        if (nowHit) return;
+        if (nowStop) return;
+        if (!GameManager.instance.player.playerStatus.playerHP.isLive) return;
+        if (!GameManager.instance.GamePlayState) return;
+
         Vector2 moveVec = moveTarget.position - rigid.position;
         Vector2 nextVec = moveVec.normalized * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
-        //rigid.velocity = Vector2.zero;
     }
-     private void LateUpdate()
+
+    private void LateUpdate()
     {
-        //진행 방향에 따른 좌우 반전
         sprite.flipX = moveTarget.position.x < rigid.position.x;
     }
+
     private void OnEnable()
     {
-        //재생성 될때마다 초기화
-       
         moveTarget = GameManager.instance.player.GetComponent<Rigidbody2D>();
         player = GameManager.instance.player.GetComponent<Player_Main>();
-        transform.localScale = new Vector3(1,1,1);
+
+        transform.localScale = new Vector3(1, 1, 1);
         health = maxHealth;
+
         coll.enabled = true;
         rigid.simulated = true;
+
         isLive = true;
         nowHit = false;
         nowStop = false;
-        toxicity = 0;//독성 초기화
-        sprite.color = originalColor;//색상 초기화
+
+        sprite.color = originalColor;
         coll.isTrigger = false;
+
+        // ✅ 상태이상 컴포넌트 초기화가 필요하면 컴포넌트가 스스로 OnDisable/Clear 하게 두는게 베스트
+        // (원하면 여기서 GetComponent<PoisonStatus>()?.Clear(); 호출해도 역할 분리 유지됨)
     }
 
-     private void RandomizeAnimation()
+    private void RandomizeAnimation()
     {
         if (anim != null)
         {
-            // 0~1 사이의 랜덤 값을 생성하여 애니메이션 진행 상태를 랜덤화
             float randomStartTime = Random.Range(0f, 1f);
             anim.Play(0, -1, randomStartTime);
         }
     }
-    public void DamageCalculator(float damage, bool isCritical){
 
-        int damageOffSet = Random.Range(0,10);
-        float finalDamage = (damage + damageOffSet);
-        finalDamage = Mathf.Max(finalDamage, 1); // finalDamage 1 이하로 내려가지 않도록 설정
+    // =========================
+    // 피해 처리 (통합)
+    // =========================
+
+    // ✅ 기존 코드 호환용: 다른 곳에서 DamageCalculator 호출하고 있을 수 있어서 남겨둠
+    public void DamageCalculator(float damage, bool isCritical)
+    {
+        TakeDamage(damage, isCritical, DamageType.Normal);
+    }
+
+    // ✅ 앞으로는 이거로 통일 추천
+    public void TakeDamage(float baseDamage, bool isCritical, DamageType type)
+    {
+        if (!isLive) return;
+
+        float finalDamage = baseDamage;
+
+        // 정책: 일반 데미지에만 랜덤 오프셋
+        if (type == DamageType.Normal)
+        {
+            int damageOffSet = Random.Range(0, 10);
+            finalDamage += damageOffSet;
+        }
+
+        finalDamage = Mathf.Max(finalDamage, 1f);
         health -= finalDamage;
 
-        ShowDamageText(finalDamage,isCritical);
-        if(health <= 0){
-        death();
+        if (type == DamageType.Poison)
+            ShowPoisonDamageText(finalDamage);
+        else
+            ShowDamageText(finalDamage, isCritical);
 
-        }
-        
+        if (health <= 0) death();
     }
 
     public void ShowDamageText(float damage, bool isCritical)
     {
-        Vector3 position = transform.position; // 기본 위치
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        
-            if (spriteRenderer != null)
-            {
-                //position.y += spriteRenderer.bounds.extents.y;
-                position = damageTextPos.transform.position;
-            }
+        Vector3 position = damageTextPos != null ? damageTextPos.position : transform.position;
 
-        DamageText damageText = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>(); // 오브젝트 풀에서 가져오기
-        damageText.transform.position = position;
-        damageText.value = damage;
-        damageText.Init(isCritical);
+        DamageText dt = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>();
+        dt.transform.position = position;
+        dt.value = damage;
+        dt.Init(DamageType.Normal, isCritical);
     }
-     public void ShowPosionDamageText(float damage)
+
+    public void ShowPoisonDamageText(float damage)
     {
-        Vector3 position = transform.position; // 기본 위치
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        
-            if (spriteRenderer != null)
-            {
-                //position.y += spriteRenderer.bounds.extents.y;
-                position = damageTextPos.transform.position;
-            }
-        bool nonCritical = false;
-        DamageText damageText = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>(); // 오브젝트 풀에서 가져오기
-        damageText.transform.position = position;
-        damageText.value = damage;
-        damageText.GetComponentInChildren<TMP_Text>().color = Color.green;
-        damageText.Init(nonCritical);
-       
+        Vector3 position = damageTextPos != null ? damageTextPos.position : transform.position;
+
+        DamageText dt = GameManager.instance.damageTextPooling.Get(0).GetComponent<DamageText>();
+        dt.transform.position = position;
+        dt.value = damage;
+        dt.Init(DamageType.Poison, false); 
     }
 
-public void CallHitStop(){
- StartCoroutine(HitStop());
-}
-    IEnumerator HitStop(){
+    // =========================
+    // 피격 연출
+    // =========================
 
-         if (isCoroutineRunning_Hit) yield break; // 중복 실행 방지
+    public void CallHitStop()
+    {
+        StartCoroutine(HitStop());
+    }
+
+    IEnumerator HitStop()
+    {
+        if (isCoroutineRunning_Hit) yield break;
         isCoroutineRunning_Hit = true;
-        //피격시 일시정지
+
         nowHit = true;
+
         Vector3 playerpos = GameManager.instance.player.transform.position;
         Vector3 dirvec = transform.position - playerpos;
         rigid.AddForce(dirvec.normalized * 0.1f, ForceMode2D.Impulse);
+
         sprite.color = hitColor;
-        yield return new WaitForSeconds(hittime);  // 0.1초 동안 빨갛게 변함
+        yield return new WaitForSeconds(hittime);
+
         nowHit = false;
         sprite.color = originalColor;
         isCoroutineRunning_Hit = false;
     }
 
-    public void ApplyPoison()
+    public void death()
     {
-        if (toxicityCoroutine == null)
-        {
-            toxicityCoroutine = StartCoroutine(ApplyPoisonDamage());
-            toxicityEffect.gameObject.SetActive(true);//중독 이펙트
-        }
-        
-    }
-     public void RemovePoison()
-    {
-        //몬스터 생성시 호출하여 초기화
-        if (toxicityCoroutine != null)
-        {
-            StopCoroutine(toxicityCoroutine);
-            toxicityCoroutine = null;
-        }
-            //중독 효과 초기화
-            toxicityEffect.gameObject.SetActive(false);
-            toxicity = 0;
-            toxicityStackText.text = "";
-        
-    }
-     private IEnumerator ApplyPoisonDamage()
-    {
-        while (toxicity >= 1)
-        {
-            float atk = GameManager.instance.player.playerStatus.totalATK;
-            int damage = Mathf.CeilToInt(atk * 0.1f * toxicity);
-            TakePosionDamage(damage);
-            yield return new WaitForSeconds(toxicityInterval);
-        }
-
-        toxicityCoroutine = null;
-    }
-
-    public void toxicityPlus(){
-        //독성 상태 추가 중첩
-        toxicity++;
-        toxicityStackText.text = toxicity.ToString();
-    }
-     private void TakePosionDamage(int damage)
-    {
-        Debug.Log($"몬스터가 {damage} 중독 피해를 입음!");
-        // HP 감소 로직 추가
-        health -= damage;
-        ShowPosionDamageText(damage);
-        if(health <= 0){
-        death();
-            }
-    }
-
-    public void death(){
         isLive = false;
-        nowHit = true; 
+        nowHit = true;
         coll.isTrigger = true;
         anim.SetBool("Dead", true);
-        //경험치있었던 자리
-
     }
-   public void Deletemob(){
-    switch(mobType){
-        case MobType.normal:
-                  //아이템 드랍
-      if (Random.Range(0, 2) == 0) // 0 또는 1 반환, 50% 확률
+
+    public void Deletemob()
     {
-        // int goldCoinPoolNum = 6;
-        // int randomOffSet =  Random.Range(1,5);
-        // GoldCoin gold = GameManager.instance.objectPooling.Get(goldCoinPoolNum).GetComponent<GoldCoin>();
-        // gold.value = randomOffSet;
-        // gold.transform.position = transform.position;
+        switch (mobType)
+        {
+            case MobType.normal:
+                if (Random.Range(0, 2) == 0)
+                {
+                    int ExpGemNum = 5;
+                    int randomOffSet = Random.Range(80, 100);
+                    EXP_GEM expGem = GameManager.instance.objectPooling.Get(ExpGemNum).GetComponent<EXP_GEM>();
+                    expGem.value = randomOffSet;
+                    expGem.transform.position = transform.position;
+                }
 
-        int ExpGemNum = 5;
-        int randomOffSet =  Random.Range(80,100);
-        EXP_GEM expGem = GameManager.instance.objectPooling.Get(ExpGemNum).GetComponent<EXP_GEM>();
-        expGem.value = randomOffSet;
-        expGem.transform.position = transform.position;
-        
+                gameObject.SetActive(false);
+                break;
+
+            case MobType.boss:
+                // boss 처리
+                break;
+        }
     }
-   // GameManager.instance.spawnManager.mobCount--;
-   // GameManager.instance.stageManager.CheckStageProgress();//스테이지 진행률 삭제
-    // 현재 오브젝트 비활성화
-    gameObject.SetActive(false);
-        break;
 
-        case MobType.boss :
-        // GameManager.instance.stageManager.BossDeadEvent();
-        // gameObject.SetActive(false);
-        break;
-
-    }
-    
-  
-   }
-   private void OnCollisionStay2D(Collision2D other) {
-        if(other.gameObject.CompareTag("Player")){
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
             player.playerCol.HitCalCulator(damage);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.CompareTag("Stop")){
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Stop"))
+        {
             anim.speed = 0;
             nowStop = true;
-            rigid.linearVelocity = Vector2.zero; // Rigidbody2D 정지
-            rigid.bodyType = RigidbodyType2D.Kinematic;// 물리적 반응 비활성화
+            rigid.linearVelocity = Vector2.zero;
+            rigid.bodyType = RigidbodyType2D.Kinematic;
         }
-        if(other.gameObject.CompareTag("Cleaner")){
-            gameObject.SetActive(false);//다음 스테이지 진입시 클리너 발동, 몬스터 전부 삭제 
+
+        if (other.gameObject.CompareTag("Cleaner"))
+        {
+            gameObject.SetActive(false);
         }
     }
-    private void OnTriggerExit2D(Collider2D other) {
-         if(other.gameObject.CompareTag("Stop")){
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Stop"))
+        {
             anim.speed = 1;
             nowStop = false;
-             rigid.bodyType = RigidbodyType2D.Dynamic;// 물리적 반응 비활성화
+            rigid.bodyType = RigidbodyType2D.Dynamic;
         }
     }
 }

@@ -40,7 +40,7 @@ public class Bullet_Placement : MonoBehaviour
             affectedEnemies.Add(enemy);
             StartCoroutine(ApplyDotDamage(enemy));
         }
-        enemy.CallHitStop(); // 몬스터 충돌 연산
+        //enemy.CallHitStop(); // 몬스터 충돌 연산은 삭제
     }
 
      private void OnTriggerExit2D(Collider2D collision)
@@ -50,7 +50,7 @@ public class Bullet_Placement : MonoBehaviour
         Monster enemy = collision.GetComponent<Monster>();
         if (enemy != null && affectedEnemies.Contains(enemy))
         {
-            affectedEnemies.Remove(enemy);
+            enemy.speed += 0.3f;
         }
     }
 
@@ -60,12 +60,11 @@ public class Bullet_Placement : MonoBehaviour
         {
             // 몬스터에게 도트 데미지 적용
             enemy.DamageCalculator(damage, critical);
-            enemy.speed = 0.3f;
+            enemy.speed -= 0.3f;
 
 
             //몬스터에게 맹독 데미지 적용
-            enemy.toxicityPlus();//중독 수치 추가++
-            enemy.ApplyPoison();//중독 데미지 실행
+            //enemy.ApplyPoison();//중독 데미지 실행
             yield return new WaitForSeconds(1f); // 1초 간격으로 데미지
         }
     }

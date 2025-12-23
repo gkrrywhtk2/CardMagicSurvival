@@ -44,7 +44,7 @@ public class Meteor : MonoBehaviour
 
     float magicPower = GetDamageByRank(rank);
     float damage = GameManager.instance.player.playerStatus.DamageReturn(magicPower,out bool isCritical);
-    impactArea.GetComponent<Melee>().Init(damage, isCritical);
+    impactArea.GetComponent<Bullet_ExplosionNormal>().Init(damage, isCritical);
 
     gameObject.SetActive(false);
    }

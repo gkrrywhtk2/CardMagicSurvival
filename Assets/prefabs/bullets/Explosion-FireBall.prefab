@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1262556245235475441}
   - component: {fileID: 6818963153346807497}
   - component: {fileID: 4731889635916309990}
-  - component: {fileID: 1787203290906736007}
+  - component: {fileID: 2947288222080654691}
   m_Layer: 0
   m_Name: Explosion-FireBall
   m_TagString: Bullet
@@ -199,7 +199,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1787203290906736007
+--- !u!114 &2947288222080654691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,8 +208,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8614012045703189330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d96e1f72f6eaa4dac82bbf665ffdb04b, type: 3}
+  m_Script: {fileID: 11500000, guid: f640c1fd2f3694b7f9d9ef513349681d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  isCritical: 0
+  critical: 0

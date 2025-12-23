@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 4159983162732943208}
   - component: {fileID: 684526394370173304}
   - component: {fileID: 8393932444755220102}
-  - component: {fileID: 124478433751955023}
+  - component: {fileID: 2239079810036028932}
   m_Layer: 0
   m_Name: Poison_Effect_Venom
   m_TagString: Bullet
@@ -269,7 +269,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.2582088, y: 1.7198124}
   m_EdgeRadius: 0
---- !u!114 &124478433751955023
+--- !u!114 &2239079810036028932
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,6 +278,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7210187084471673681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59e9c1dc27df845e2892dfd4e492cd80, type: 3}
+  m_Script: {fileID: 11500000, guid: ab88bd8b90ca940fc9957e1bec888447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneDuration: 0
+  poisonDuration: 0
+  poisonDps: 0
