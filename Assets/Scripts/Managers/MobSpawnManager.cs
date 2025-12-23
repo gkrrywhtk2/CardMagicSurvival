@@ -69,7 +69,7 @@ public class MobSpawnManager : MonoBehaviour
             if(GameManager.instance.GamePlayState == false)
                 return;
 
-            if(GameManager.instance.ItemSelectState == true)
+            if(GameManager.instance.ArtefactSelectState == true)
                 return;
 
         Monster monster = GameManager.instance.objectPooling.Get(0).GetComponent<Monster>();

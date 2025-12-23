@@ -40,6 +40,13 @@ public class Monster : MonoBehaviour
     // ✅ 외부 컴포넌트(PoisonStatus 등)에서 읽기만
     public bool IsLive => isLive;
 
+        private bool CanMove => isLive 
+                        && !nowHit 
+                        && !nowStop 
+                        && IsPlayerAlive() 
+                        && GameManager.instance.ArtefactSelectState == false
+                        && GameManager.instance.GamePlayState;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -66,13 +73,17 @@ public class Monster : MonoBehaviour
         MoveToPlayer();
     }
 
+                        
+                        
+
+    private bool IsPlayerAlive()
+    {
+        return GameManager.instance?.player?.playerStatus?.playerHP?.isLive ?? false;
+    }
+
     private void MoveToPlayer()
     {
-        if (!isLive) return;
-        if (nowHit) return;
-        if (nowStop) return;
-        if (!GameManager.instance.player.playerStatus.playerHP.isLive) return;
-        if (!GameManager.instance.GamePlayState) return;
+        if (!CanMove) return;
 
         Vector2 moveVec = moveTarget.position - rigid.position;
         Vector2 nextVec = moveVec.normalized * speed * Time.fixedDeltaTime;

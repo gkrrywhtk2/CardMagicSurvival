@@ -10,11 +10,11 @@ TagManager:
   - Ground
   - Area
   - Stop
-  - Gem_Item
   - Gold
   - Boss
   - Cleaner
   - Drops
+  - ArtefactStone
   layers:
   - Default
   - TransparentFX

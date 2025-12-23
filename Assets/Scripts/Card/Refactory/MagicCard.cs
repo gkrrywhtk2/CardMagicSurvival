@@ -113,7 +113,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 eventData.pointerDrag = null; 
                 return;
             }
-            if(GameManager.instance.ItemSelectState == true){
+            if(GameManager.instance.ArtefactSelectState == true){
                 eventData.pointerDrag = null; 
                 return;
             }
@@ -151,7 +151,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 eventData.pointerDrag = null; 
                 return;
             }
-            if(GameManager.instance.ItemSelectState == true){
+            if(GameManager.instance.ArtefactSelectState == true){
                 eventData.pointerDrag = null; 
                 return;
             }

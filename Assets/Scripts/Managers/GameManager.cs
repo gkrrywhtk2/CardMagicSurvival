@@ -28,11 +28,12 @@ public class GameManager : MonoBehaviour
     public MobSpawnManager spawnManager;
     public InGameCardManager inGameCardManager;
     public CardSelect cardSelect;// 카드 선택 이벤트
+    public InGameArtefactManager inGameArtefactManager;//인게임 유물 매니저
 
     [Header("#GameControl")]
     public bool cardOneTouch;
     public bool GamePlayState = false;//(이동, 카드 사용, 마나 회복, 자동 공격 불가)
-    public bool ItemSelectState = false;//true시 이동만 가능
+    public bool ArtefactSelectState = false;//true시 이동만 가능
     public GameObject backG;//background image
     public FloatingJoystick joystick;//조이스틱
     public PixelPerfectCamera pixelPerfectCamera;
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
     public void GameStart(){
         gameStartButton.gameObject.SetActive(false);
         GamePlayState = true;
-        ItemSelectState = false;
+        ArtefactSelectState = false;
         inGameCardManager.InitDeck();
 
 
@@ -98,17 +99,13 @@ public class GameManager : MonoBehaviour
     public void GamePlay(){
         GamePlayState = true;
          backG.gameObject.SetActive(false);
-        ItemSelectState = false;
+        ArtefactSelectState = false;
         instance.player.playerCol.GetComponent<Collider2D>().isTrigger = false; 
         joystick.GetComponent<Image>().raycastTarget = true;
         Time.timeScale = 1;
        
     }
-    public void ItemPause(){
-        //아이템 획득 이벤트시 특수 이벤트 중지(마나획복, 몬스터 충돌 등)
-        instance.player.playerCol.GetComponent<Collider2D>().isTrigger = true; 
-       ItemSelectState = true;
-    }
+  
  
 
     public void CheatBoxTogle(){

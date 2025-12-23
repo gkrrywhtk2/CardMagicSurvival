@@ -72,6 +72,15 @@ public class Player_col : MonoBehaviour
         {
             // TODO: 골드 획득 처리
         }
+        if (collision.CompareTag("ArtefactStone"))
+        {
+            // TODO: 아티팩트 이벤트 처리
+            ArtefactStone artefactStone = collision.GetComponent<ArtefactStone>();
+            if (artefactStone != null)
+            {
+                artefactStone.TriggerArtefactEvent();
+            }
+        }
     }
 
     public int ReturnGoldValue(float value)

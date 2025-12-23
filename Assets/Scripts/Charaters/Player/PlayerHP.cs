@@ -22,6 +22,8 @@ public class PlayerHP : MonoBehaviour
     private void Update()
     {
         if (!isLive) return;
+        if(GameManager.instance.GamePlayState == false) return;
+        if(GameManager.instance.ArtefactSelectState == true) return;
         UpdateHpBar();
     }
 

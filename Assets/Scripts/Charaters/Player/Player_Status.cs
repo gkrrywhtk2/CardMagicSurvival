@@ -12,20 +12,32 @@ public class Player_Status : MonoBehaviour
     [Header("#플레이어의 상태값")]
     public float health;//현재 체력
     public bool gameStop;//게임이 일시정지 중이면 true 입니다.
+    public bool artefactEvent;//아티팩트 이벤트 중이면 true 입니다.
+    [Header("#스크립트 연동")]
     public Player_EXP playerEXP;//플레이어 경험치 스크립트 연동
     public PlayerMana playerMana;//플레이어 마나 스크립트 연동
     public PlayerCritical playerCritical; //플레이어 치명타 스크립트 연동
     public PlayerHP playerHP;//플레이어 HP 스크립트 연동
     public PlayerMoveSpeed playerMoveSpeed;//플레이어 이동속도 스크립트 연동
+    private Player_col playerCol;//플레이어 충돌 스크립트 연동
+
+     [Header("#상태 저장 ")]
+     private Vector3 StonePointPos;//스톤포인트 위치 저장용
     [Header("#능력치 ")]
     
     public float totalATK;//공격력
     public int LUK;//골드 추가 획득량
     public float VIT;
-    public void PlayerInit()
+
+    void Awake()
+    {
+        playerCol = GetComponent<Player_col>();
+    }
+  public void PlayerInit()
     {
         //게임 시작시 플레이어 변수 초기화
         playerHP.InitHealth(100);
+        artefactEvent = false;
     
     }
     public void LevelUpEvent(){
@@ -44,6 +56,19 @@ public class Player_Status : MonoBehaviour
 
         float mult = (playerCritical != null) ? playerCritical.critMultiplier : 2f;
         return isCritical ? basicDamage * mult : basicDamage;
+    }
+    public void StartArtefactEvent()
+    {
+        GameManager.instance.ArtefactSelectState = true;
+        StonePointPos = transform.position;
+        playerCol.GetComponent<Collider2D>().isTrigger = true;
+    }
+
+    public void EndArtefactEvent()
+    {
+        GameManager.instance.ArtefactSelectState = false;
+        transform.position = StonePointPos;
+        playerCol.GetComponent<Collider2D>().isTrigger = false;
     }
 
     /**

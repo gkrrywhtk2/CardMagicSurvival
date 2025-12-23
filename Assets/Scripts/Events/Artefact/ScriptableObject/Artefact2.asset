@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b917c0d53fb7d412a9f19235445ea7e5, type: 3}
+  m_Name: Artefact2
+  m_EditorClassIdentifier: 
+  artefactId: 2
+  artefactName: "\uD0D0\uD5D8 \uBAA8\uC790"
+  artefactDesc_Main: "\uC774\uB3D9 \uC18D\uB3C4 +0.3"
+  artefactImage: {fileID: 192147006, guid: 484c8a929b722fe4cb6342f35095ca52, type: 3}

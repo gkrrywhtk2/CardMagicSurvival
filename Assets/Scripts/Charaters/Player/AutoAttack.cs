@@ -40,7 +40,11 @@ public class AutoAttack : MonoBehaviour
     }
     }
     private void AutoAttack_exe(){
-          if (scaner.nearestTarget == null)
+        if (scaner.nearestTarget == null)
+            return;
+        if(GameManager.instance.GamePlayState == false)
+            return;
+        if(GameManager.instance.ArtefactSelectState == true)
             return;
 
             

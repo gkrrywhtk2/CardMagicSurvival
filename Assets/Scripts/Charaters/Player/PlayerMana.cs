@@ -42,6 +42,8 @@ public float mana
   // 매 프레임 회복 (Update에서 호출)
     void Update()
     {
+        if(!GameManager.instance.GamePlayState) return;
+        if(GameManager.instance.ArtefactSelectState) return;
         ManaRecovery();
     }
     public void ManaRecovery()
