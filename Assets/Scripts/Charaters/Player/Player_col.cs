@@ -81,6 +81,16 @@ public class Player_col : MonoBehaviour
                 artefactStone.TriggerArtefactEvent();
             }
         }
+        if (collision.CompareTag("Artefact"))
+        {
+            Artefact_Object artefact = collision.GetComponent<Artefact_Object>();
+            if (artefact != null)
+            {
+                ArtefactInstance artefactInstance = artefact.aretefactInstance;
+                GameManager.instance.inGameArtefactManager.ApplyArtefactEffect(artefactInstance);
+                artefact.EndEvent();
+            } 
+        }
     }
 
     public int ReturnGoldValue(float value)

@@ -7,7 +7,7 @@ public class Arte_1 : MonoBehaviour, IArtefact
     public void Apply()
     {
         // 여기에 "무딘 검"이나 "사과" 같은 아이템의 구체적인 효과를 코딩합니다.
-        Debug.Log("Arte_0: 효과가 적용되었습니다!");
+        Debug.Log("Arte_: 효과가 적용되었습니다!");
         GameManager.instance.player.playerStatus.totalATK += 5; //플레이어의 총 공격력을 5 증가시킴
         GameManager.instance.inGameArtefactManager.nowArtefacts.Add(new ArtefactInstance(0, 1));//현재 보유 아티팩트 리스트에 추가
     }

@@ -3,13 +3,31 @@ using UnityEngine.UI;
 
 public class Artefact_Object : MonoBehaviour
 {
-    public ArtefactInstance artefactInstance;
-    public GameObject image;
     
-
-    public void Init(ArtefactInstance artefactInstance)
+    public SpriteRenderer image;
+    public ArtefactInstance aretefactInstance;
+    public ArtefactStone artefactStone;
+    private void Awake()
     {
-        this.artefactInstance = artefactInstance;
-        image.GetComponent<Image>().sprite = GameManager.instance.inGameArtefactManager.artefactScriptableDatas[artefactInstance.ID].artefactImage;
+      
+    }
+
+
+  public void Init(ArtefactInstance artefact)
+    {
+        aretefactInstance = artefact;
+        image.sprite = GameManager.instance.inGameArtefactManager.artefactScriptableDatas[aretefactInstance.ID].artefactImage;
+    }
+    public void EndEvent()
+    {
+        artefactStone.EndArtefactEvent();
+    }
+    public string GetName()
+    {
+        return GameManager.instance.inGameArtefactManager.artefactScriptableDatas[aretefactInstance.ID].artefactName;
+    }
+     public string GetDesc()
+    {
+        return GameManager.instance.inGameArtefactManager.artefactScriptableDatas[aretefactInstance.ID].artefactDesc_Main;
     }
 }

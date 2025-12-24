@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class InGameArtefactManager : MonoBehaviour
 {
     public ArtefactScriptableData[] artefactScriptableDatas;
-    public ArtefactSelect artefactSelect;
 
     private Dictionary<int, IArtefact> artefactDictionary;
 
@@ -31,16 +30,22 @@ public class InGameArtefactManager : MonoBehaviour
         };
     }
 
-     public void ApplyArtefactEffect(int artefactID)
+        public void ApplyArtefactEffect(ArtefactInstance artefactInstance)
     {
-        if (artefactDictionary.ContainsKey(artefactID))
+        int ID = artefactInstance.ID;
+        int level = artefactInstance.level;
+        
+        if (artefactDictionary.ContainsKey(ID))
         {
-            artefactDictionary[artefactID].Apply();
+            artefactDictionary[ID].Apply();
+            nowArtefacts.Add(new ArtefactInstance(ID, level));
+            
+            // ✅ 추가된 직후 로그
+            Debug.Log($"[Artefact] Added ID:{ID}, Level:{level} | Total Count: {nowArtefacts.Count}");
         }
         else
         {
-            Debug.LogWarning("아티팩트 효과가 정의되지 않았습니다.");
+            Debug.LogWarning($"[Artefact] Effect not defined for ID:{ID}");
         }
     }
-
 }
