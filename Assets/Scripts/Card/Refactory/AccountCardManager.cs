@@ -47,7 +47,7 @@ public class AccountCardManager : MonoBehaviour
 
     public void LoadCardData()
     {
-        string json = mockServer.GetPlayerCardJson();
+        string json = mockServer.GetServerJson();
         PlayerCardData data = JsonUtility.FromJson<PlayerCardData>(json);
 
         accountCardPool.Clear();
@@ -74,7 +74,7 @@ public class AccountCardManager : MonoBehaviour
         };
 
         string json = JsonUtility.ToJson(data, true);
-        mockServer.SavePlayerCardJson(json);
+        mockServer.SaveServerJson(json);
     }
 }
 

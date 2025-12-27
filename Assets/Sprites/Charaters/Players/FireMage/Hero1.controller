@@ -36,7 +36,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -4394886792741333542}
-    m_Position: {x: 250, y: 120, z: 0}
+    m_Position: {x: 260, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -219780280101439157}
     m_Position: {x: 20, y: 130, z: 0}
@@ -78,7 +78,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 197a7360d589749e9ab58f26aa90ed20, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1f990117c38384af4b02f25dac216fb9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -129,7 +129,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 222cf3e9b633246fb83b61f745395b63, type: 2}
+  m_Motion: {fileID: 7400000, guid: c5e851103d1a04ef2b625d136a04fdc1, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -219,7 +219,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FireMage
+  m_Name: Hero1
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: speed
@@ -275,7 +275,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ce1fd4660008a4e3480c534c5a47b2a4, type: 2}
+  m_Motion: {fileID: 7400000, guid: 6e16d95f0aa054cb1a2436fdcbb8a28b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

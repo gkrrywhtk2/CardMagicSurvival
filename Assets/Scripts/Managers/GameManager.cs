@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public InGameCardManager inGameCardManager;
     public CardSelect cardSelect;// 카드 선택 이벤트
     public InGameArtefactManager inGameArtefactManager;//인게임 유물 매니저
+    public HeroManager heroManager;//히어로 매니저
 
     [Header("#GameControl")]
     public bool cardOneTouch;
@@ -64,9 +65,10 @@ public class GameManager : MonoBehaviour
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
         
-         instance.player.playerStatus.PlayerInit();
+        int heroId = 1; // 예시로 히어로 ID 1을 사용
+        heroManager.ApplyHeroToPlayer(heroId);
+        instance.player.playerStatus.PlayerInit();
          //instance.boardUI.ShowSeletedTap(2);//2는 카드 탭 세팅,삭제 예정
-         
         // LinkToData();//데이터 불러오기
     }
 

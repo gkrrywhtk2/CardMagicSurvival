@@ -36,7 +36,6 @@ public class Player_Status : MonoBehaviour
   public void PlayerInit()
     {
         //게임 시작시 플레이어 변수 초기화
-        playerHP.InitHealth(100);
         artefactEvent = false;
     
     }

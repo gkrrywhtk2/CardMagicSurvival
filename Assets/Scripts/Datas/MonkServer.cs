@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MockServer : MonoBehaviour
 {
+    [TextArea(10, 60)]
     private string mockJson = @"
     {
         ""accountCards"": [
@@ -16,22 +17,31 @@ public class MockServer : MonoBehaviour
         ],
         
         ""deckSlots"": [
-        { ""ID"": 1, ""currentRarity"": 0 },
-        { ""ID"": 1, ""currentRarity"": 1 },
-        { ""ID"": 2, ""currentRarity"": 2 },
-        { ""ID"": 2, ""currentRarity"": 3 },
-        { ""ID"": 1, ""currentRarity"": 3 }
+            { ""ID"": 1, ""currentRarity"": 0 },
+            { ""ID"": 1, ""currentRarity"": 1 },
+            { ""ID"": 2, ""currentRarity"": 2 },
+            { ""ID"": 2, ""currentRarity"": 3 },
+            { ""ID"": 1, ""currentRarity"": 3 }
+        ],   
+        ""heroAccounts"": [
+            { ""heroId"": 0, ""level"": 10, ""rank"": 0, ""isUnlocked"": true,  ""exp"": 0 },
+            { ""heroId"": 1, ""level"": 5, ""rank"": 1, ""isUnlocked"": true,  ""exp"": 0 },
+            { ""heroId"": 2, ""level"": 8, ""rank"": 2, ""isUnlocked"": false,  ""exp"": 40 },
+            { ""heroId"": 3, ""level"": 1, ""rank"": 0, ""isUnlocked"": false, ""exp"": 0 }
         ]
     }";
 
-    public string GetPlayerCardJson()
+    // ✅ 서버에서 "전체 JSON" 내려주는 느낌
+    public string GetServerJson()
     {
-        Debug.Log("[MockServer] 카드 데이터 요청 → 더미 JSON 반환");
+        Debug.Log("[MockServer] GetServerJson()");
         return mockJson;
     }
 
-    public void SavePlayerCardJson(string json)
+    // ✅ 서버에 "전체 JSON" 저장하는 느낌
+    public void SaveServerJson(string json)
     {
-        Debug.Log($"[MockServer] 서버로 저장된 JSON:\n{json}");
+        mockJson = json;
+        Debug.Log($"[MockServer] SaveServerJson() len={json?.Length ?? 0}");
     }
 }

@@ -6,11 +6,11 @@ public class PlayerCritical : MonoBehaviour
 {
     [Header("Critical Chance")]
     [Range(0f, 100f)]
-    public float baseCritChance = 5f;     // 기본 치확(0~100)
+    public float baseCritChance = 0f;     // 기본 치확(0~100)
 
     [Header("Critical Damage")]
     [Min(1f)]
-    public float critMultiplier = 2f;     // ✅ 치명타 배율 (2 = 2배)
+    public float critMultiplier = 0f;     // ✅ 치명타 배율 (2 = 2배)
 
     private float totalBonusCritChance = 0f;
     private int _nextId = 1;

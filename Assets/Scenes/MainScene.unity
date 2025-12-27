@@ -11631,6 +11631,54 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3500726147569879814, guid: 31c4e5a95050043369f4914fd1444774, type: 3}
   m_PrefabInstance: {fileID: 398366006}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &693381541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 693381542}
+  - component: {fileID: 693381543}
+  m_Layer: 0
+  m_Name: HeroManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &693381542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693381541}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719360434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &693381543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693381541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868cd7022676546d1b507b4744454837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mockServer: {fileID: 2058404479}
+  heroes:
+  - {fileID: 11400000, guid: e771a74787f8f4c728687ae90f262c0e, type: 2}
+  - {fileID: 11400000, guid: 146bd56204ee14e6183c1e837e1282e7, type: 2}
 --- !u!1001 &694008895
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33217,6 +33265,7 @@ Transform:
   - {fileID: 2058404477}
   - {fileID: 1051194064}
   - {fileID: 1033250557}
+  - {fileID: 693381542}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1731523137
@@ -34204,6 +34253,7 @@ GameObject:
   - component: {fileID: 1868871111}
   - component: {fileID: 1868871112}
   - component: {fileID: 1868871113}
+  - component: {fileID: 1868871114}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -34451,6 +34501,18 @@ MonoBehaviour:
   dirFront_forCard: {fileID: 0}
   fireBallPoint: {fileID: 1995595264}
   playerCenterPivot: {fileID: 902407476}
+  playerCritical: {fileID: 0}
+  playerHP: {fileID: 0}
+  playerVisual: {fileID: 0}
+  currentHeroId: 0
+  currentLevel: 0
+  currentRank: 0
+  currentExp: 0
+  baseHP: 0
+  baseATK: 0
+  baseMoveSpeed: 0
+  baseCritChance: 0
+  baseCritDamage: 0
 --- !u!114 &1868871103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34602,8 +34664,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587e1e3f473a64dc28b9230abd4b80a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseCritChance: 5
-  critMultiplier: 2
+  baseCritChance: 0
+  critMultiplier: 1
 --- !u!114 &1868871112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34635,6 +34697,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseSpeed: 3
+--- !u!114 &1868871114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868871092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a4df2c6702564ccf80f50f142c70531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &1881727115
 GameObject:
   m_ObjectHideFlags: 0
@@ -41714,6 +41789,7 @@ MonoBehaviour:
   inGameCardManager: {fileID: 1051194066}
   cardSelect: {fileID: 222428795}
   inGameArtefactManager: {fileID: 1033250556}
+  heroManager: {fileID: 693381543}
   cardOneTouch: 0
   GamePlayState: 0
   ArtefactSelectState: 0
@@ -48601,7 +48677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.140015, y: 10.854996}
+  m_AnchoredPosition: {x: -12.140137, y: 10.854996}
   m_SizeDelta: {x: 24.29, y: -21.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &3267751598775753347 stripped
@@ -49630,7 +49706,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -120.59}
+  m_AnchoredPosition: {x: 0, y: -120.59009}
   m_SizeDelta: {x: 0, y: -235.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5516664571551793345
@@ -49824,7 +49900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 89.62781}
+  m_AnchoredPosition: {x: 0, y: 89.62793}
   m_SizeDelta: {x: 0, y: -179.2556}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5516664571918503415

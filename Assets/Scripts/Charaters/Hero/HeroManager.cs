@@ -1,0 +1,132 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using Game.RankSystem;
+
+public class HeroManager : MonoBehaviour
+{
+    public static HeroManager Instance { get; private set; }
+
+    [Header("Refs")]
+    public MockServer mockServer;
+
+    [Header("Hero ScriptableObjects")]
+    public HeroScriptableObject[] heroes;   // ✅ 배열
+
+    private Dictionary<int, HeroScriptableObject> heroMap;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+        BuildMap();
+    }
+
+    private void BuildMap()
+    {
+        heroMap = new Dictionary<int, HeroScriptableObject>();
+
+        if (heroes == null) return;
+
+        foreach (var hero in heroes)
+        {
+            if (hero == null) continue;
+
+            if (heroMap.ContainsKey(hero.heroId))
+            {
+                Debug.LogError($"[HeroManager] Duplicate heroId: {hero.heroId}", this);
+                continue;
+            }
+
+            heroMap.Add(hero.heroId, hero);
+        }
+    }
+
+    public HeroScriptableObject GetHeroSO(int heroId)
+    {
+        if (heroMap == null) BuildMap();
+
+        if (heroMap.TryGetValue(heroId, out var hero))
+            return hero;
+
+        Debug.LogError($"[HeroManager] HeroSO not found. heroId={heroId}", this);
+        return null;
+    }
+
+        public bool ApplyHeroToPlayer(int heroId)
+    {
+        if (mockServer == null)
+        {
+            Debug.LogError("[HeroManager] mockServer is null", this);
+            return false;
+        }
+
+        Player_Main player = GameManager.instance.player;
+        if (player == null)
+        {
+            Debug.LogError("[HeroManager] GameManager.instance.player is null", this);
+            return false;
+        }
+
+        var heroSO = GetHeroSO(heroId);
+        if (heroSO == null) return false;
+
+        var acc = LoadHeroAccountFromServer(heroId);
+        if (acc == null)
+        {
+            Debug.LogError($"[HeroManager] heroAccount not found. heroId={heroId}", this);
+            return false;
+        }
+        if (!acc.isUnlocked)
+        {
+            Debug.LogWarning($"[HeroManager] hero locked. heroId={heroId}", this);
+            return false;
+        }
+
+        var rankType = (RankType)acc.rank;
+
+        var calc = new ProgressionV2Calculator(heroSO);
+        var stats = calc.GetStats(rankType, acc.level);
+
+        // ✅ Player_Main에 base로 저장만 (heroSO 인자 제거)
+        player.ApplyHeroStats(heroId, acc.level, rankType, acc.exp, stats);
+
+                // animator 적용(있으면)
+        if (heroSO.animatorController != null)
+        {
+            var visual = player.GetComponent<PlayerVisual>();
+            if (visual != null)
+                visual.ApplyController(heroSO.animatorController);
+            else
+                Debug.LogWarning("[HeroManager] PlayerVisual not found on player.", this);
+        }
+
+        return true;
+    }
+
+
+    // -------- MockServer JSON 읽기 --------
+    [Serializable] private class ServerData { public System.Collections.Generic.List<HeroAccount> heroAccounts; }
+    [Serializable] private class HeroAccount
+    {
+        public int heroId;
+        public int level;
+        public int rank;
+        public bool isUnlocked;
+        public int exp;
+    }
+
+    private HeroAccount LoadHeroAccountFromServer(int heroId)
+    {
+        string json = mockServer.GetServerJson();
+        var data = JsonUtility.FromJson<ServerData>(json);
+
+        if (data == null || data.heroAccounts == null) return null;
+
+        for (int i = 0; i < data.heroAccounts.Count; i++)
+            if (data.heroAccounts[i].heroId == heroId)
+                return data.heroAccounts[i];
+
+        return null;
+    }
+}

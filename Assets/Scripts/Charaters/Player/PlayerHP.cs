@@ -9,7 +9,7 @@ public class PlayerHP : MonoBehaviour
 
     [Header("Health")]
     public float health;
-    public float maxHealth = 100f;
+    public float maxHealth;
 
     [Header("Regen")]
     public bool enableRegen = true;
