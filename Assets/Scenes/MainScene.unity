@@ -11755,8 +11755,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mockServer: {fileID: 2058404479}
   heroes:
-  - {fileID: 11400000, guid: e771a74787f8f4c728687ae90f262c0e, type: 2}
-  - {fileID: 11400000, guid: 146bd56204ee14e6183c1e837e1282e7, type: 2}
+  - {fileID: 11400000, guid: 76a8d63cad51340449480c8450fd4c61, type: 2}
+  - {fileID: 11400000, guid: 4420ed00325dd490283eb5570336a620, type: 2}
 --- !u!1001 &694008895
 PrefabInstance:
   m_ObjectHideFlags: 0

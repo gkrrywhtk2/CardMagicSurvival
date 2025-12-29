@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 57141528574241550}
   - component: {fileID: 6269481701259805115}
   - component: {fileID: 4178082805641448262}
-  - component: {fileID: 4203478704655328692}
   m_Layer: 0
   m_Name: gold
   m_TagString: Gold
@@ -135,16 +134,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.08, y: 0.08}
   m_EdgeRadius: 0
---- !u!114 &4203478704655328692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844304833831374671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1781ee8bda3cd488b98a1b37683358d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value: 0

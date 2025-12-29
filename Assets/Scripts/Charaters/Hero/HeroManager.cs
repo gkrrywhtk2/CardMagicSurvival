@@ -19,28 +19,39 @@ public class HeroManager : MonoBehaviour
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+    }
+    void Start()
+    {
         BuildMap();
     }
 
-    private void BuildMap()
+  private void BuildMap()
+{
+    heroMap = new Dictionary<int, HeroScriptableObject>();
+
+    Debug.Log($"[HeroManager] heroes length={(heroes==null? -1: heroes.Length)}", this); // ✅ return 전에
+
+    if (heroes == null) return;
+
+    foreach (var hero in heroes)
     {
-        heroMap = new Dictionary<int, HeroScriptableObject>();
+        if (hero == null) continue;
 
-        if (heroes == null) return;
-
-        foreach (var hero in heroes)
+        if (heroMap.ContainsKey(hero.heroId))
         {
-            if (hero == null) continue;
-
-            if (heroMap.ContainsKey(hero.heroId))
-            {
-                Debug.LogError($"[HeroManager] Duplicate heroId: {hero.heroId}", this);
-                continue;
-            }
-
-            heroMap.Add(hero.heroId, hero);
+            Debug.LogError($"[HeroManager] Duplicate heroId: {hero.heroId}", this);
+            continue;
         }
+
+        heroMap.Add(hero.heroId, hero);
     }
+
+    int nullCount = 0;
+    foreach (var h in heroes) if (h == null) nullCount++;
+    Debug.Log($"[HeroManager] null heroes count={nullCount}", this);
+    Debug.Log($"[HeroManager] heroMap count={heroMap.Count}", this);
+}
+
 
     public HeroScriptableObject GetHeroSO(int heroId)
     {
