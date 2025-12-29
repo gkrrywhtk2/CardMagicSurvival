@@ -83,7 +83,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 758257489
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -123726580, guid: 54f4aaa4054fd184eaf66d208189cc38, type: 3}
   m_Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
@@ -151,8 +151,6 @@ MonoBehaviour:
   health: 0
   maxHealth: 0
   damage: 0
-  normalDamageColor: {r: 1, g: 1, b: 1, a: 1}
-  poisonDamageColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!95 &8154650899129440113
 Animator:
   serializedVersion: 7
@@ -312,7 +310,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 758257489
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 1304559308, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -402,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8694186100329343256, guid: 47151453fcdb0254dab75298821d7cb2, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8694186100329343256, guid: 47151453fcdb0254dab75298821d7cb2, type: 3}
       propertyPath: m_SortingOrder

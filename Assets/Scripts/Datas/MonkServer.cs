@@ -24,8 +24,8 @@ public class MockServer : MonoBehaviour
             { ""ID"": 1, ""currentRarity"": 3 }
         ],   
         ""heroAccounts"": [
-            { ""heroId"": 0, ""level"": 10, ""rank"": 0, ""isUnlocked"": true,  ""exp"": 0 },
-            { ""heroId"": 1, ""level"": 5, ""rank"": 1, ""isUnlocked"": true,  ""exp"": 0 },
+            { ""heroId"": 0, ""level"": 10, ""rank"": 1, ""isUnlocked"": true,  ""exp"": 0 },
+            { ""heroId"": 1, ""level"": 5, ""rank"": 3, ""isUnlocked"": true,  ""exp"": 0 },
             { ""heroId"": 2, ""level"": 8, ""rank"": 2, ""isUnlocked"": false,  ""exp"": 40 },
             { ""heroId"": 3, ""level"": 1, ""rank"": 0, ""isUnlocked"": false, ""exp"": 0 }
         ]

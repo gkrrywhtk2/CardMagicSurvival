@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Hero_0
   m_EditorClassIdentifier: Assembly-CSharp::HeroScriptableObject
   heroId: 0
-  animatorController: {fileID: 9100000, guid: de7c83bf4843542e2a1b48eba34e29e4, type: 2}
-  hp: 90
+  animatorController: {fileID: 9100000, guid: 9973dc25f8066419ca6e672d2901bdb8, type: 2}
+  hp: 100
   moveSpeed: 3
   critChance: 0.1
   critDamage: 2

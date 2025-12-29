@@ -19,6 +19,7 @@ public class Player_Main : MonoBehaviour
     public PlayerCritical playerCritical;
     public PlayerHP playerHP;
     public PlayerVisual playerVisual;
+    public AutoAttackManager autoAttackManager;
 
     // =========================
     // ✅ Hero 적용 결과 "저장만"
