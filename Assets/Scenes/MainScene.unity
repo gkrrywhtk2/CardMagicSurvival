@@ -7993,12 +7993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroId: 1
-  bombardInterval: 0.2
-  poisonBurstPoolId: 8
-  baseScale: {x: 1, y: 1, z: 1}
-  poisonDpsRate: 1
-  poisonDuration: 3
-  damageBase: 1
 --- !u!1 &344394498
 GameObject:
   m_ObjectHideFlags: 0
@@ -10803,7 +10797,7 @@ MonoBehaviour:
   - {fileID: 7210187084471673681, guid: 3376bbc70bb7e4ba586009abf269a440, type: 3}
   - {fileID: 5948834059414962944, guid: 96353d9aa9ced4092852dbc0db592aa1, type: 3}
   - {fileID: 858325372065776370, guid: f2e04ddebe6734cb790bb6c34d05d587, type: 3}
-  - {fileID: 2312366774729725670, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
+  - {fileID: 7405033603794731269, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
 --- !u!114 &570609508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30606,24 +30600,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450738497}
   m_CullTransparentMesh: 1
---- !u!1 &1451235186 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2312366774729725670, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-  m_PrefabInstance: {fileID: 6562407044886897775}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1451235188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1451235186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aafa2335d43644ae28bbd5883c5f7256, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootPS: {fileID: 8436184136225497964}
 --- !u!1 &1461794219
 GameObject:
   m_ObjectHideFlags: 0
@@ -50339,74 +50315,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5841730942841918254}
   m_CullTransparentMesh: 1
---- !u!1001 &6562407044886897775
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2312366774729725670, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_Name
-      value: PoisonBurst
-      objectReference: {fileID: 0}
-    - target: {fileID: 5091733250689598954, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: stopAction
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5091733250689598954, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: lengthInSec
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.525197
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.0387313
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739377622025189966, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2312366774729725670, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1451235188}
-  m_SourcePrefab: {fileID: 100100000, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
 --- !u!1 &6565542825395631403
 GameObject:
   m_ObjectHideFlags: 0
@@ -74594,11 +74502,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!198 &8436184136225497964 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5091733250689598954, guid: 5cc17c9c1c59f41728e898b83077f1a4, type: 3}
-  m_PrefabInstance: {fileID: 6562407044886897775}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9054005828686071052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74775,4 +74678,3 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 717973916}
   - {fileID: 968093111}
-  - {fileID: 6562407044886897775}

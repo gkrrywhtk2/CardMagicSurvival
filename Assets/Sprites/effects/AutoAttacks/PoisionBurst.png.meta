@@ -1,0 +1,664 @@
+fileFormatVersion: 2
+guid: 4e0e2f6babae04046bf789f7e56b806c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6717647925042736694
+    second: PoisionBurst_0
+  - first:
+      213: 6121057613011062223
+    second: PoisionBurst_1
+  - first:
+      213: 7738311185436550693
+    second: PoisionBurst_2
+  - first:
+      213: 8687162557250326557
+    second: PoisionBurst_3
+  - first:
+      213: 2535062773506895328
+    second: PoisionBurst_4
+  - first:
+      213: -5541576898983505351
+    second: PoisionBurst_5
+  - first:
+      213: -1923509292621565740
+    second: PoisionBurst_6
+  - first:
+      213: 3106456590174210456
+    second: PoisionBurst_7
+  - first:
+      213: -51604042508510654
+    second: PoisionBurst_8
+  - first:
+      213: 548617022413198259
+    second: PoisionBurst_9
+  - first:
+      213: -823658341354516418
+    second: PoisionBurst_10
+  - first:
+      213: -4722853910776312949
+    second: PoisionBurst_11
+  - first:
+      213: 1346069295376660569
+    second: PoisionBurst_12
+  - first:
+      213: 4216592651810677998
+    second: PoisionBurst_13
+  - first:
+      213: 7198755429667258731
+    second: PoisionBurst_14
+  - first:
+      213: -6789015805923732208
+    second: PoisionBurst_15
+  - first:
+      213: 635097513500869340
+    second: PoisionBurst_16
+  - first:
+      213: 299663186620136600
+    second: PoisionBurst_17
+  - first:
+      213: -3114020082358358049
+    second: PoisionBurst_18
+  - first:
+      213: 4820373454989409391
+    second: PoisionBurst_19
+  - first:
+      213: -2289384923918329854
+    second: PoisionBurst_20
+  - first:
+      213: -5662213685369309931
+    second: PoisionBurst_21
+  - first:
+      213: 1729935477493711184
+    second: PoisionBurst_22
+  - first:
+      213: -6606542809120484551
+    second: PoisionBurst_23
+  - first:
+      213: -1969326108760643592
+    second: PoisionBurst_24
+  - first:
+      213: -5084524528359324149
+    second: PoisionBurst_25
+  - first:
+      213: 1215933522099097503
+    second: PoisionBurst_26
+  - first:
+      213: -1307789741624964699
+    second: PoisionBurst_27
+  - first:
+      213: -2310683661744566009
+    second: PoisionBurst_28
+  - first:
+      213: 3445445696184172610
+    second: PoisionBurst_29
+  - first:
+      213: -6586071612050209887
+    second: PoisionBurst_30
+  - first:
+      213: -8513549456556215665
+    second: PoisionBurst_31
+  - first:
+      213: 6310656283346703629
+    second: PoisionBurst_32
+  - first:
+      213: -4089644759654054919
+    second: PoisionBurst_33
+  - first:
+      213: 8803863570253455459
+    second: PoisionBurst_34
+  - first:
+      213: 5248528841224147242
+    second: PoisionBurst_35
+  - first:
+      213: -4328246441650071846
+    second: PoisionBurst_36
+  - first:
+      213: 6818363507786481
+    second: PoisionBurst_37
+  - first:
+      213: -2568401298825472840
+    second: PoisionBurst_38
+  - first:
+      213: 2500812887916915622
+    second: PoisionBurst_39
+  - first:
+      213: -1252131076551521429
+    second: PoisionBurst_40
+  - first:
+      213: -3670748798547214528
+    second: PoisionBurst_41
+  - first:
+      213: 1089415524334780345
+    second: PoisionBurst_42
+  - first:
+      213: -6293850158969720704
+    second: PoisionBurst_43
+  - first:
+      213: 4706976361009870472
+    second: PoisionBurst_44
+  - first:
+      213: -4390574705203556878
+    second: PoisionBurst_45
+  - first:
+      213: -7414779826308378063
+    second: PoisionBurst_46
+  - first:
+      213: -776536649140039154
+    second: PoisionBurst_47
+  - first:
+      213: -1991551916389676409
+    second: PoisionBurst_48
+  - first:
+      213: 2702597219716539109
+    second: PoisionBurst_49
+  - first:
+      213: -8895156374229415037
+    second: PoisionBurst_50
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PoisionBurst_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63eef4a3231e93d50800000000000000
+      internalID: 6717647925042736694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_1
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcd8931e77d52f450800000000000000
+      internalID: 6121057613011062223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_2
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 526a0691601046b60800000000000000
+      internalID: 7738311185436550693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d10dafab1500f8870800000000000000
+      internalID: 8687162557250326557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ede132492a5e2320800000000000000
+      internalID: 2535062773506895328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_5
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 932d390cb2d5813b0800000000000000
+      internalID: -5541576898983505351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_6
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d0f0235d725e45e0800000000000000
+      internalID: -1923509292621565740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_7
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 899418f5fc95c1b20800000000000000
+      internalID: 3106456590174210456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24a5e41956aa84ff0800000000000000
+      internalID: -51604042508510654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_9
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b3dba276441d9700800000000000000
+      internalID: 548617022413198259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_10
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e30d64b3a17c194f0800000000000000
+      internalID: -823658341354516418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_11
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8b0d12146d057eb0800000000000000
+      internalID: -4722853910776312949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9587cf174e23ea210800000000000000
+      internalID: 1346069295376660569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_13
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee4a2b52da8548a30800000000000000
+      internalID: 4216592651810677998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_14
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b614b323ced17e360800000000000000
+      internalID: 7198755429667258731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PoisionBurst_15
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0155761281298c1a0800000000000000
+      internalID: -6789015805923732208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 88ea6e4236384464e87f8c6c14a21758
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PoisionBurst_0: 6717647925042736694
+      PoisionBurst_1: 6121057613011062223
+      PoisionBurst_10: -823658341354516418
+      PoisionBurst_11: -4722853910776312949
+      PoisionBurst_12: 1346069295376660569
+      PoisionBurst_13: 4216592651810677998
+      PoisionBurst_14: 7198755429667258731
+      PoisionBurst_15: -6789015805923732208
+      PoisionBurst_2: 7738311185436550693
+      PoisionBurst_3: 8687162557250326557
+      PoisionBurst_4: 2535062773506895328
+      PoisionBurst_5: -5541576898983505351
+      PoisionBurst_6: -1923509292621565740
+      PoisionBurst_7: 3106456590174210456
+      PoisionBurst_8: -51604042508510654
+      PoisionBurst_9: 548617022413198259
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
