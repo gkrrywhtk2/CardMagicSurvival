@@ -37,6 +37,8 @@ public class HeroScriptableObject : ScriptableObject
 
     [Header("Visual")]
     public RuntimeAnimatorController animatorController;
+    public Sprite heroSprite_ForHeroCard;
+    public String nameKor;
 
     [Header("Base Stats")]
     public float hp = 90;

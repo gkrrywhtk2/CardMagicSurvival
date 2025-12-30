@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroId: 0
   animatorController: {fileID: 9100000, guid: 9973dc25f8066419ca6e672d2901bdb8, type: 2}
+  heroSprite_ForHeroCard: {fileID: -855298285791758126, guid: 7c8860b126591ac45a355960238802f4, type: 3}
   hp: 100
   moveSpeed: 3
   critChance: 0.1
