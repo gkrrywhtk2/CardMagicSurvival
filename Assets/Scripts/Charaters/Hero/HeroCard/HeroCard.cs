@@ -33,17 +33,11 @@ public class HeroCard : MonoBehaviour
         ownedBool = isUnlocked;
 
         ColorSetting();
-        MaxExpSetting(heroLevel);
+        HeroManager.Instance.MaxExpSetting(heroLevel);
         SliderSetting();
 
         heroImage.sprite = GameManager.instance.heroManager.heroes[heroID].heroSprite_ForHeroCard;
         TextSetting();
-    }
-
-    public void MaxExpSetting(int level)
-    {
-        maxExp = level + 4; //1레벨에 필요량 5, 2레벨에 필요량 6 ...
-
     }
     public void SliderSetting()
     {
@@ -99,5 +93,10 @@ public class HeroCard : MonoBehaviour
 
         if (frameImage != null) frameImage.color = frameColor;
         if (innerImage != null) innerImage.color = innerColor;
+    }
+
+    public void CallHeroInfo()
+    {
+        HeroManager.Instance.ApplyHeroToHeroInfo(heroID);
     }
 }

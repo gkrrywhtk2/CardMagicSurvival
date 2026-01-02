@@ -9,6 +9,7 @@ public class HeroManager : MonoBehaviour
 
     [Header("Refs")]
     public MockServer mockServer;
+    public HeroInfo heroInfo;
 
     [Header("Hero ScriptableObjects")]
     public HeroScriptableObject[] heroes;   // ✅ 배열
@@ -114,6 +115,49 @@ public class HeroManager : MonoBehaviour
         }
 
         return true;
+    }
+
+        public bool ApplyHeroToHeroInfo(int heroId)
+    {
+        if (mockServer == null)
+        {
+            Debug.LogError("[HeroManager] mockServer is null", this);
+            return false;
+        }
+
+        Player_Main player = GameManager.instance.player;
+        if (player == null)
+        {
+            Debug.LogError("[HeroManager] GameManager.instance.player is null", this);
+            return false;
+        }
+
+        var heroSO = GetHeroSO(heroId);
+        if (heroSO == null) return false;
+
+        var acc = LoadHeroAccountFromServer(heroId);
+        if (acc == null)
+        {
+            Debug.LogError($"[HeroManager] heroAccount not found. heroId={heroId}", this);
+            return false;
+        }
+        
+        if (!acc.isUnlocked)
+        {
+            Debug.LogWarning($"[HeroManager] hero locked. heroId={heroId}", this);
+            return false;
+        }
+
+        var rankType = (RankType)acc.rank;
+        heroInfo.Init(heroId, acc.level, acc.exp, rankType);
+        heroInfo.Calculate();
+        
+        return true;
+    }
+
+    public int MaxExpSetting(int level)
+    {
+         return level + 4; //1레벨에 필요량 5, 2레벨에 필요량 6 ...
     }
 
 
