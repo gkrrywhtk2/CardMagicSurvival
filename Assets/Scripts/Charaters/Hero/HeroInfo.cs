@@ -2,6 +2,7 @@ using Game.RankSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class HeroInfo : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class HeroInfo : MonoBehaviour
     public TMP_Text hp_text;
     public TMP_Text moveSpeed_text;
     public TMP_Text criChance_text;
-    public TMP_Text criPer_text;
+    public TMP_Text criPer_text;    
 
     public LevelUpStatUI[] levelUpStats;
 
@@ -31,6 +32,7 @@ public class HeroInfo : MonoBehaviour
         level = heroLevel;
         exp = heroExp;
         rank = heroRank;
+        AnimationSetup(id);
     }
 
     public void Calculate()
@@ -62,8 +64,12 @@ public class HeroInfo : MonoBehaviour
         atk_text.text = stats.attack.ToString();
         hp_text.text = stats.hp.ToString("F0");
         moveSpeed_text.text = stats.moveSpeed.ToString("F1");
-        criChance_text.text = stats.critChance.ToString("F1") + "%";
-        criPer_text.text = stats.critDamage.ToString("F1") + "%";
+
+        // 0.1 -> 10%
+        criChance_text.text = (stats.critChance * 100f).ToString("F1") + "%";
+
+        // 2.0 -> 200% (2배로 인식)
+        criPer_text.text = (stats.critDamage * 100f).ToString("F0") + "%";
     }
 
     private void UpdateExpSlider()
@@ -72,6 +78,19 @@ public class HeroInfo : MonoBehaviour
         exp_slider.maxValue = expForNextLevel;
         exp_slider.value = Mathf.Min(exp, expForNextLevel);
         slider_text.text = $"{exp_slider.value}/{exp_slider.maxValue}";
+    }
+
+    [Header("Per Hero Run Clips (UI Image용)")]
+    public Animator animator;
+
+    // 캐싱(히어로 바꿀 때 매번 새로 생성 안 하게)
+
+    public RuntimeAnimatorController[] animatorController;
+
+    public void AnimationSetup(int heroId)
+    {
+        if (animator == null) { Debug.LogError("Animator 없음"); return; }
+        animator.runtimeAnimatorController = animatorController[heroId];
     }
 }
 
