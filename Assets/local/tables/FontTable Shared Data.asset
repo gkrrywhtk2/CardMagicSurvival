@@ -19,6 +19,10 @@ MonoBehaviour:
     m_Key: font
     m_Metadata:
       m_Items: []
+  - m_Id: 8068437313052672
+    m_Key: PLAY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 5121042798759379208

@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Japanese (Japan) (ja-JP)
   m_GUID: c5eab9124bcd14723b0883faf6911306
   m_SerializeEntries:
+  - m_GUID: 27a548d8f117f439ba592f5b132af7a6
+    m_Address: PlayTable_ja-JP
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja-JP
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f6b0f59de106c40fdb25ebe7999c2180
     m_Address: My Table_ja-JP
     m_ReadOnly: 1
