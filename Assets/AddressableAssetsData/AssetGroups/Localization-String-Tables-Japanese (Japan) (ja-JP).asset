@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja-JP
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c079ec980b4074489b642969ede1360e
+    m_Address: UI_Milestones_ja-JP
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja-JP
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f6b0f59de106c40fdb25ebe7999c2180
     m_Address: My Table_ja-JP
     m_ReadOnly: 1

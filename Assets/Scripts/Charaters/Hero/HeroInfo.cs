@@ -35,7 +35,7 @@ public class HeroInfo : MonoBehaviour
         AnimationSetup(id);
     }
 
-    public void Calculate()
+    public void RefreshUI()
     {
         var heroSO = HeroManager.Instance.GetHeroSO(id);
         if (heroSO == null)
@@ -48,6 +48,9 @@ public class HeroInfo : MonoBehaviour
         UpdateStats(heroSO);
         UpdateExpSlider();
         rankLabel.SetRank(rank);
+
+        // ✅ 마일스톤 UI 갱신
+        RefreshMilestonesFixed(heroSO);
     }
 
     private void UpdateBasicInfo(HeroScriptableObject heroSO)
@@ -79,6 +82,21 @@ public class HeroInfo : MonoBehaviour
         exp_slider.value = Mathf.Min(exp, expForNextLevel);
         slider_text.text = $"{exp_slider.value}/{exp_slider.maxValue}";
     }
+        private List<StatMod> GetActiveMilestoneMods(HeroScriptableObject heroSO, int currentLevel)
+    {
+        var result = new List<StatMod>();
+        if (heroSO.levelMilestones == null) return result;
+
+        foreach (var ms in heroSO.levelMilestones)
+        {
+            if (ms == null || ms.mods == null) continue;
+            if (ms.level > currentLevel) continue;
+
+            result.AddRange(ms.mods);
+        }
+
+        return result;
+    }
 
     [Header("Per Hero Run Clips (UI Image용)")]
     public Animator animator;
@@ -92,6 +110,79 @@ public class HeroInfo : MonoBehaviour
         if (animator == null) { Debug.LogError("Animator 없음"); return; }
         animator.runtimeAnimatorController = animatorController[heroId];
     }
+
+
+     [Header("Mailstone UI")]
+
+    [Header("Milestone UI (Fixed Slots: 3/6/9/12/15)")]
+    [SerializeField] private MilestoneRowUI[] milestoneRows; // size=5, [0]=Lv3 ...
+public TMP_Text tmp;
+            private void RefreshMilestonesFixed(HeroScriptableObject heroSO)
+    {
+        if (milestoneRows == null || milestoneRows.Length < 5)
+        {
+            Debug.LogError("[HeroInfo] milestoneRows 배열(5개) 할당 필요", this);
+            return;
+        }
+
+        // 1) 기본 초기화: 5개 슬롯 모두 표시 + 잠김 아이콘 ON
+        for (int i = 0; i < milestoneRows.Length; i++)
+        {
+            var row = milestoneRows[i];
+            if (row == null) continue;
+
+            row.gameObject.SetActive(true);
+            row.SetLocked(true);
+        }
+
+        if (heroSO == null || heroSO.levelMilestones == null) return;
+
+        // 2) 각 milestone을 고정 슬롯에 채우기
+        foreach (var ms in heroSO.levelMilestones)
+        {
+            if (ms == null || ms.mods == null || ms.mods.Count == 0) continue;
+
+            int idx = MilestoneIndex(ms.level);
+            if (idx < 0 || idx >= milestoneRows.Length) continue;
+
+            var row = milestoneRows[idx];
+            if (row == null) continue;
+
+            var mod = ms.mods[0]; // 1개 고정
+            if (mod == null) continue;
+
+            // 문구는 항상 세팅(잠김이어도 “무슨 효과인지” 보여주려면)
+            row.Bind(mod);
+
+            // ✅ 잠김 여부에 따라 자물쇠 아이콘 토글
+            bool unlocked = level >= ms.level;
+            row.SetLocked(!unlocked);
+
+
+                var t = tmp; // TMP_Text
+    Debug.Log($"Base Font = {t.font?.name}");
+    if (t.font != null && t.font.fallbackFontAssetTable != null)
+    {
+        Debug.Log("Fallbacks:");
+        foreach (var f in t.font.fallbackFontAssetTable)
+            Debug.Log($" - {f?.name}");
+    }
+
+        }
+    }
+
+    
+
+
+        private int MilestoneIndex(int lv) => lv switch
+    {
+        3  => 0,
+        6  => 1,
+        9  => 2,
+        12 => 3,
+        15 => 4,
+        _  => -1
+    };
 }
 
 [System.Serializable]

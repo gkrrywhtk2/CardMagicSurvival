@@ -150,7 +150,7 @@ public class HeroManager : MonoBehaviour
 
         var rankType = (RankType)acc.rank;
         heroInfo.Init(heroId, acc.level, acc.exp, rankType);
-        heroInfo.Calculate();
+        heroInfo.RefreshUI();
         
         return true;
     }

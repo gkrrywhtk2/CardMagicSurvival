@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94b2d10c1fd874fa39affca3bf253ca1
+    m_Address: Assets/local/tables/UI_Milestones Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c11eacb46c0d428380994f1713b69e1
     m_Address: DNFBitBitTTF SDF_02
     m_ReadOnly: 1

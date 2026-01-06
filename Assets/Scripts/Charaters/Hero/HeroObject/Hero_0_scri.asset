@@ -28,7 +28,7 @@ MonoBehaviour:
     mods:
     - stat: 2
       op: 1
-      value: 0.1
+      value: 0.2
   - level: 6
     mods:
     - stat: 2
@@ -36,9 +36,9 @@ MonoBehaviour:
       value: 0.1
   - level: 9
     mods:
-    - stat: 2
-      op: 1
-      value: 0.1
+    - stat: 1
+      op: 0
+      value: 0.2
   - level: 12
     mods:
     - stat: 2
