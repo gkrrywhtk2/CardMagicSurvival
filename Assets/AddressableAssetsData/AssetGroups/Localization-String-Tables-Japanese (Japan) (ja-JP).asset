@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja-JP
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e4298ff36b594543a6b430dd56e3ff9
+    m_Address: UI_HeroInfo_ja-JP
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja-JP
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c079ec980b4074489b642969ede1360e
     m_Address: UI_Milestones_ja-JP
     m_ReadOnly: 1

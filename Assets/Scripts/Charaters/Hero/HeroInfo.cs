@@ -16,7 +16,9 @@ public class HeroInfo : MonoBehaviour
     public TMP_Text hp_text;
     public TMP_Text moveSpeed_text;
     public TMP_Text criChance_text;
-    public TMP_Text criPer_text;    
+    public TMP_Text criPer_text;   
+    public GameObject isSlectedButton;//선택중 버튼
+    public GameObject isSelectButton;//선택 버튼
 
     public LevelUpStatUI[] levelUpStats;
 
@@ -25,13 +27,16 @@ public class HeroInfo : MonoBehaviour
     public int level;
     public int exp;
     public RankType rank;
+    public bool isSelected;
 
-    public void Init(int heroId, int heroLevel, int heroExp, RankType heroRank)
+    public void Init(int heroId, int heroLevel, int heroExp, RankType heroRank, bool isSelected)
     {
         id = heroId;
         level = heroLevel;
         exp = heroExp;
         rank = heroRank;
+        this.isSelected = isSelected;
+        IsSelectedButtonSetting(isSelected);
         AnimationSetup(id);
     }
 
@@ -51,6 +56,20 @@ public class HeroInfo : MonoBehaviour
 
         // ✅ 마일스톤 UI 갱신
         RefreshMilestonesFixed(heroSO);
+    }
+
+    public void IsSelectedButtonSetting(bool selected)
+    {
+        if (selected)
+        {
+            isSlectedButton.SetActive(true);
+            isSelectButton.SetActive(false);
+        }
+        else
+        {
+            isSlectedButton.SetActive(false);
+            isSelectButton.SetActive(true);
+        }
     }
 
     private void UpdateBasicInfo(HeroScriptableObject heroSO)

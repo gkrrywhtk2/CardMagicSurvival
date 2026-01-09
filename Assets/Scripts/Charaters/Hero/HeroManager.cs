@@ -149,7 +149,7 @@ public class HeroManager : MonoBehaviour
         }
 
         var rankType = (RankType)acc.rank;
-        heroInfo.Init(heroId, acc.level, acc.exp, rankType);
+        heroInfo.Init(heroId, acc.level, acc.exp, rankType, acc.isSelected);
         heroInfo.RefreshUI();
         
         return true;
@@ -170,6 +170,7 @@ public class HeroManager : MonoBehaviour
         public int rank;
         public bool isUnlocked;
         public int exp;
+        public bool isSelected;
     }
 
     private HeroAccount LoadHeroAccountFromServer(int heroId)

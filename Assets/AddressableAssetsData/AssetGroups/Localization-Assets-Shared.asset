@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 982e2022c0a1948bcb04898ca12565ff
+    m_Address: Assets/local/tables/UI_HeroInfo Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c11eacb46c0d428380994f1713b69e1
     m_Address: DNFBitBitTTF SDF_02
     m_ReadOnly: 1
