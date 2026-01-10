@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerGameObject;
     public GameObject gameStartButton;//게임 시작 버튼
     public GameObject nextWaveButton;//다음 웨이브 버튼
+    public TopBar topBar;//탑 네비
 
 
 
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     public CardSelect cardSelect;// 카드 선택 이벤트
     public InGameArtefactManager inGameArtefactManager;//인게임 유물 매니저
     public HeroManager heroManager;//히어로 매니저
+    public HeroCardManager herocardManager;//히어로 카드 매니저
 
     [Header("#GameControl")]
     public bool cardOneTouch;
@@ -51,8 +53,8 @@ public class GameManager : MonoBehaviour
         instance = this;
         restartButton.gameObject.SetActive(false);
         Application.targetFrameRate = 80;
-          Screen.fullScreen = true;//풀스크린
-          loadlocale.LoadLocale("ko-KR");
+        Screen.fullScreen = true;//풀스크린
+        loadlocale.LoadLocale("ko-KR");
     }
 
     public void GameStart(){
@@ -65,7 +67,7 @@ public class GameManager : MonoBehaviour
         spawnManager.Spawn_Slime_0();
         spawnManager.Spawn_Slime_1();
         
-        int heroId = 1; // 예시로 히어로 ID 1을 사용
+        int heroId = ServerDataManager.instance.GetSelectedHeroId();
         heroManager.ApplyHeroToPlayer(heroId);
         instance.player.playerStatus.PlayerInit();
          //instance.boardUI.ShowSeletedTap(2);//2는 카드 탭 세팅,삭제 예정

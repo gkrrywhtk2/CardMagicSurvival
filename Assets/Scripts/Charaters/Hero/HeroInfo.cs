@@ -19,6 +19,7 @@ public class HeroInfo : MonoBehaviour
     public TMP_Text criPer_text;   
     public GameObject isSlectedButton;//선택중 버튼
     public GameObject isSelectButton;//선택 버튼
+    public TMP_Text requireGold;//경험치 증가 필요 골드량 텍스트
 
     public LevelUpStatUI[] levelUpStats;
 
@@ -56,6 +57,41 @@ public class HeroInfo : MonoBehaviour
 
         // ✅ 마일스톤 UI 갱신
         RefreshMilestonesFixed(heroSO);
+
+        //선택 버튼 갱신
+        SelectButtonSetting();
+
+        //3000보다 낮으면 텍스트 색상 빨간색으로
+        UpdateRequireGoldColor();
+    }
+
+    private void UpdateRequireGoldColor()
+    {
+        int currentGold = ServerDataManager.instance.GetCurrentGold();
+        int EXP_COST = 3000;
+        
+        if (currentGold >= EXP_COST)
+        {
+            requireGold.color = Color.white;
+        }
+        else
+        {
+            requireGold.color = Color.red;
+        }
+    }
+
+    public void SelectButtonSetting()
+    {
+        isSlectedButton.SetActive(isSelected);
+        isSelectButton.SetActive(!isSelected);
+    }
+    public void SelectButton()
+    {
+        // 서버 데이터 업데이트
+        ServerDataManager.instance.UpdateSelectedHero(this.id);
+        
+        // UI 갱신
+        GameManager.instance.herocardManager.UpdateAllHeroCardFrames();
     }
 
     public void IsSelectedButtonSetting(bool selected)
@@ -71,6 +107,7 @@ public class HeroInfo : MonoBehaviour
             isSelectButton.SetActive(true);
         }
     }
+
 
     private void UpdateBasicInfo(HeroScriptableObject heroSO)
     {
@@ -100,6 +137,46 @@ public class HeroInfo : MonoBehaviour
         exp_slider.maxValue = expForNextLevel;
         exp_slider.value = Mathf.Min(exp, expForNextLevel);
         slider_text.text = $"{exp_slider.value}/{exp_slider.maxValue}";
+    }
+
+        public void ExpUpButton()
+    {
+        var heroSO = HeroManager.Instance.GetHeroSO(id);
+        if (heroSO == null)
+        {
+            Debug.LogError($"[HeroInfo] Hero SO not found for id={id}");
+            return;
+        }
+
+        // 현재 레벨의 최대 경험치
+        int maxExp = HeroManager.Instance.MaxExpSetting(level);
+        
+        // 경험치 구매 시도
+        bool success = ServerDataManager.instance.BuyExp(id, maxExp);
+        
+        if (success)
+        {
+            // 서버에서 최신 데이터 가져오기
+            var data = ServerDataManager.instance.GetParsedServerData();
+            var hero = System.Array.Find(data.heroAccounts, h => h.heroId == id);
+            
+            if (hero != null)
+            {
+                // 데이터 업데이트
+                level = hero.level;
+                exp = hero.exp;
+                
+                // UI 갱신 (RefreshUI 재활용)
+                RefreshUI();
+                
+                Debug.Log($"[HeroInfo] Exp purchased! Level: {level}, Exp: {exp}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[HeroInfo] Failed to purchase exp - not enough gold!");
+            // 여기에 골드 부족 팝업 등 추가 가능
+        }
     }
         private List<StatMod> GetActiveMilestoneMods(HeroScriptableObject heroSO, int currentLevel)
     {
@@ -189,6 +266,8 @@ public TMP_Text tmp;
 
         }
     }
+
+    
 
     
 

@@ -1,4 +1,8 @@
+using System;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class MockServer : MonoBehaviour
 {
@@ -26,7 +30,8 @@ public class MockServer : MonoBehaviour
         ""heroAccounts"": [
             { ""heroId"": 0, ""level"": 3, ""rank"": 2, ""isUnlocked"": true,  ""exp"": 3, ""isSelected"": true },
             { ""heroId"": 1, ""level"": 20, ""rank"": 3, ""isUnlocked"": true,  ""exp"": 0, ""isSelected"": false }
-        ]
+        ],
+        ""Gold"": { ""Gold"": 9999999 }
     }";
 
     // ✅ 서버에서 "전체 JSON" 내려주는 느낌

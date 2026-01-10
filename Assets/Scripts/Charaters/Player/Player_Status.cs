@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class Player_Status : MonoBehaviour
 {
-    public DataManager dataManager;
+    public ServerDataManager dataManager;
 
     //AccessoryManager accessoryManager;
     [Header("#플레이어의 상태값")]

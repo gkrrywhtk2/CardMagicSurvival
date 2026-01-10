@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,53 +6,35 @@ using Game.RankSystem;
 public class HeroCardManager : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private MockServer mockServer;
+    [SerializeField] private ServerDataManager serverDataManager;
     public HeroCard[] heroCards;
 
-    // ===== JsonUtility용 (매니저 내부 중첩 DTO) =====
-    [Serializable]
-    private class Root
-    {
-        public List<HeroAccount> heroAccounts;
-    }
-
-    [Serializable]
-    private class HeroAccount
-    {
-        public int heroId;
-        public int level;
-        public int rank;
-        public bool isUnlocked;
-        public int exp;
-    }
-
-    // 캐시(원하면 제거 가능)
+    // 캐시 (옵션)
     private string cachedJson;
-    private Root cachedRoot;
+    private ServerDataManager.ServerData cachedData;
 
     // =====================
-    // ✅ 기존 기능 (유지)
+    // ✅ 영웅 카드 업데이트
     // =====================
     public void UpdateAllHeroCardFrames()
     {
-        if (mockServer == null)
+        if (serverDataManager == null)
         {
-            Debug.LogError("[HeroCardManager] mockServer is null");
+            Debug.LogError("[HeroCardManager] serverDataManager is null");
             return;
         }
 
-        string json = mockServer.GetServerJson();
-        Root root = GetParsedRoot(json);
+        var serverData = GetCachedServerData();
 
-        if (root == null || root.heroAccounts == null)
+        if (serverData == null || serverData.heroAccounts == null)
         {
             Debug.LogError("[HeroCardManager] heroAccounts parse failed");
             return;
         }
 
-        // heroId -> HeroAccount
-        var map = new Dictionary<int, HeroAccount>();
-        foreach (var h in root.heroAccounts)
+        // heroId -> HeroAccount 매핑
+        var map = new Dictionary<int, ServerDataManager.HeroAccount>();
+        foreach (var h in serverData.heroAccounts)
             map[h.heroId] = h;
 
         foreach (var card in heroCards)
@@ -62,31 +43,32 @@ public class HeroCardManager : MonoBehaviour
 
             if (map.TryGetValue(card.heroID, out var dto))
             {
-                card.Init(dto.level, dto.exp, dto.rank, dto.isUnlocked);
+                card.Init(dto.level, dto.exp, dto.rank, dto.isUnlocked, dto.isSelected);
             }
             else
             {
                 // 서버에 없는 heroID면 잠금 기본 처리
-                card.Init(level: 0, exp: 0, rankInt: 0, isUnlocked: false);
+                card.Init(level: 0, exp: 0, rankInt: 0, isUnlocked: false, isSelected: false);
             }
         }
     }
 
-    private Root GetParsedRoot(string json)
+    private ServerDataManager.ServerData GetCachedServerData()
     {
-        if (!string.IsNullOrEmpty(cachedJson) && cachedJson == json && cachedRoot != null)
-            return cachedRoot;
+        string currentJson = serverDataManager.GetServerJson();
+        
+        if (!string.IsNullOrEmpty(cachedJson) && cachedJson == currentJson && cachedData != null)
+            return cachedData;
 
-        cachedJson = json;
-        cachedRoot = JsonUtility.FromJson<Root>(json);
-        return cachedRoot;
+        cachedJson = currentJson;
+        cachedData = serverDataManager.GetParsedServerData();
+        return cachedData;
     }
 
     // =====================
-    // ✅ 정렬 기능 (추가)
+    // ✅ 정렬 기능
     // =====================
 
-    // enum 값이 바뀌어도 정렬 기준이 안정적으로 유지되게 매핑
     private int RankOrder(RankType r)
     {
         return r switch
@@ -100,12 +82,11 @@ public class HeroCardManager : MonoBehaviour
         };
     }
 
-    // 등급 오름차 (낮은 등급 -> 높은 등급)
     public void SortByRankAsc()
     {
         heroCards = heroCards
             .Where(c => c != null)
-            .OrderByDescending(c => c.ownedBool)   // 보유 먼저 (원치 않으면 삭제)
+            .OrderByDescending(c => c.ownedBool)
             .ThenBy(c => RankOrder(c.rank))
             .ThenByDescending(c => c.heroLevel)
             .ThenBy(c => c.heroID)
@@ -114,7 +95,6 @@ public class HeroCardManager : MonoBehaviour
         ApplyUISiblingOrder();
     }
 
-    // 등급 내림차 (높은 등급 -> 낮은 등급)
     public void SortByRankDesc()
     {
         heroCards = heroCards
@@ -128,7 +108,6 @@ public class HeroCardManager : MonoBehaviour
         ApplyUISiblingOrder();
     }
 
-    // 레벨 오름차 (낮은 레벨 -> 높은 레벨)
     public void SortByLevelAsc()
     {
         heroCards = heroCards
@@ -142,7 +121,6 @@ public class HeroCardManager : MonoBehaviour
         ApplyUISiblingOrder();
     }
 
-    // 레벨 내림차 (높은 레벨 -> 낮은 레벨)
     public void SortByLevelDesc()
     {
         heroCards = heroCards
@@ -156,7 +134,6 @@ public class HeroCardManager : MonoBehaviour
         ApplyUISiblingOrder();
     }
 
-    // UI 순서 반영
     private void ApplyUISiblingOrder()
     {
         for (int i = 0; i < heroCards.Length; i++)

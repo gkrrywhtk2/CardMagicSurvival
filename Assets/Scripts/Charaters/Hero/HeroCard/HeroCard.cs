@@ -22,15 +22,17 @@ public class HeroCard : MonoBehaviour
     public TMP_Text nameText;
     public TMP_Text sliderText;//4/5 형식
     public Slider expSlider;//경험치 슬라이더
+    public Image selectedImage;//선택 표시 이미지
 
 
     // ✅ 매니저가 파싱한 값들을 여기에 넣어줌
-    public void Init(int level, int exp, int rankInt, bool isUnlocked)
+    public void Init(int level, int exp, int rankInt, bool isUnlocked, bool isSelected)
     {
         heroLevel = level;
         nowExp = exp;
         rank = (RankType)rankInt;
         ownedBool = isUnlocked;
+        isselected = isSelected;
 
         ColorSetting();
         HeroManager.Instance.MaxExpSetting(heroLevel);
@@ -38,14 +40,21 @@ public class HeroCard : MonoBehaviour
 
         heroImage.sprite = GameManager.instance.heroManager.heroes[heroID].heroSprite_ForHeroCard;
         TextSetting();
+        SelectedImageSetting(isselected);
     }
     public void SliderSetting()
     {
+        maxExp = HeroManager.Instance.MaxExpSetting(heroLevel);
         float ratio = (maxExp <= 0) ? 0f : nowExp / (float)maxExp;
         expSlider.minValue = 0f;
         expSlider.maxValue = 1f;
         expSlider.value = ratio;           // 0.0 ~ 1.0
         sliderText.text = $"{nowExp}/{maxExp}";
+    }
+    public void SelectedImageSetting(bool isSelected)
+    {
+        if (selectedImage != null)
+            selectedImage.gameObject.SetActive(isSelected);
     }
     public void TextSetting()
     {
