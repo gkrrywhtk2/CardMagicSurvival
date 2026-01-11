@@ -238,6 +238,34 @@ public class ServerDataManager : MonoBehaviour
         return data.Gold.Gold;
     }
 
+    public bool LevelUp(int heroId)
+    {
+            var data = GetParsedServerData();
+            if (data == null || data.heroAccounts == null)
+            {
+                Debug.LogError("[ServerDataManager] Failed to get server data");
+                return false;
+            }
+             // 2. 해당 영웅 찾기
+            var hero = Array.Find(data.heroAccounts, h => h.heroId == heroId);
+            if (hero == null)
+            {
+                Debug.LogError($"[ServerDataManager] Hero {heroId} not found!");
+                return false;
+            }
+
+             //레벨업
+            
+                hero.level += 1;
+                hero.exp = 0;
+               // Debug.Log($"[ServerDataManager] Hero {heroId} leveled up to {hero.level}!");
+            
+             // 서버에 저장
+            string updatedJson = JsonUtility.ToJson(data, true);
+            mockServer.SaveServerJson(updatedJson);
+            return true;
+    }
+
 
     /// <summary>
     /// 경험치 구매 (골드 소비, 경험치 1 획득)
@@ -279,14 +307,7 @@ public class ServerDataManager : MonoBehaviour
             
             // 4. 경험치 추가
             hero.exp += 1;
-            
-            // 5. 레벨업 체크
-            if (hero.exp >= maxExp)
-            {
-                hero.level += 1;
-                hero.exp = 0;
-                Debug.Log($"[ServerDataManager] Hero {heroId} leveled up to {hero.level}!");
-            }
+
             
             Debug.Log($"[ServerDataManager] Hero {heroId} - Gold: -{goldCost}, Exp: {hero.exp}/{maxExp}, Level: {hero.level}");
             

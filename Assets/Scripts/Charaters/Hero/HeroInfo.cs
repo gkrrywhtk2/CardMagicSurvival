@@ -11,17 +11,17 @@ public class HeroInfo : MonoBehaviour
     public TMP_Text lv_text;
     public RankLabelUI rankLabel;
     public Slider exp_slider;
+        public Color blue_Color;
+        public Color green_Color;
+        public Image exp_Slider_Fill;
+        public GameObject UpArrow_Exp;
     public TMP_Text slider_text;
-    public TMP_Text atk_text;
-    public TMP_Text hp_text;
-    public TMP_Text moveSpeed_text;
-    public TMP_Text criChance_text;
-    public TMP_Text criPer_text;   
     public GameObject isSlectedButton;//선택중 버튼
     public GameObject isSelectButton;//선택 버튼
     public TMP_Text requireGold;//경험치 증가 필요 골드량 텍스트
 
     public LevelUpStatUI[] levelUpStats;
+    public StatBg[] statBg;//스탯 블럭들 0 공격력, 1 체력, 2 이동속도 3  치명타확률 , 4 치명타 배율
 
     [Header("Data")]
     public int id;
@@ -51,8 +51,9 @@ public class HeroInfo : MonoBehaviour
         }
 
         UpdateBasicInfo(heroSO);
-        UpdateStats(heroSO);
-        UpdateExpSlider();
+       
+        bool levelupReady = UpdateExpSlider();
+        UpdateStats(heroSO, levelupReady);
         rankLabel.SetRank(rank);
 
         // ✅ 마일스톤 UI 갱신
@@ -115,28 +116,50 @@ public class HeroInfo : MonoBehaviour
         lv_text.text = $"Lv. {level}";
     }
 
-    private void UpdateStats(HeroScriptableObject heroSO)
+    private void UpdateStats(HeroScriptableObject heroSO, bool LvUpready)
     {
         var calc = new ProgressionV2Calculator(heroSO);
         var stats = calc.GetStats(rank, level);
+        var nextlevelStats= calc.GetStats(rank, level + 1);
 
-        atk_text.text = stats.attack.ToString();
-        hp_text.text = stats.hp.ToString("F0");
-        moveSpeed_text.text = stats.moveSpeed.ToString("F1");
+        int atkValue = stats.attack;
+        float hpValue = stats.hp;
+        float moveSpeedValue = stats.moveSpeed;
+        float critChanceValue = stats.critChance;
+        float critDamageValue = stats.critDamage;
 
-        // 0.1 -> 10%
-        criChance_text.text = (stats.critChance * 100f).ToString("F1") + "%";
+        int atkValue_next = nextlevelStats.attack;
+        float hpValue_next = nextlevelStats.hp;
+        float moveSpeedValue_next = nextlevelStats.moveSpeed;
+        float critChanceValue_next = nextlevelStats.critChance;
+        float critDamageValue_next = nextlevelStats.critDamage;
 
-        // 2.0 -> 200% (2배로 인식)
-        criPer_text.text = (stats.critDamage * 100f).ToString("F0") + "%";
+        
+        statBg[0].Init(atkValue, atkValue_next,LvUpready);
+        statBg[1].Init(hpValue, hpValue_next,LvUpready);
+        statBg[2].Init(moveSpeedValue, moveSpeedValue_next,LvUpready);
+        statBg[3].Init(critChanceValue,critChanceValue_next,LvUpready);
+        statBg[4].Init(critDamageValue,critDamageValue_next,LvUpready);
     }
 
-    private void UpdateExpSlider()
+    private bool UpdateExpSlider()
     {
         int expForNextLevel = HeroManager.Instance.MaxExpSetting(level);
         exp_slider.maxValue = expForNextLevel;
         exp_slider.value = Mathf.Min(exp, expForNextLevel);
         slider_text.text = $"{exp_slider.value}/{exp_slider.maxValue}";
+        if(exp == expForNextLevel)
+        {
+            exp_Slider_Fill.color = green_Color;
+            UpArrow_Exp.SetActive(true);
+            return true;//레벨업 준비 완
+        }
+        else
+        {
+            exp_Slider_Fill.color = blue_Color;
+            UpArrow_Exp.SetActive(false);
+            return false;//레벨업 준비 미완
+        }
     }
 
         public void ExpUpButton()
@@ -150,6 +173,12 @@ public class HeroInfo : MonoBehaviour
 
         // 현재 레벨의 최대 경험치
         int maxExp = HeroManager.Instance.MaxExpSetting(level);
+        int nowExp = exp;
+        if (nowExp == maxExp)
+        {
+            CallLevelUp(id);
+            return;
+        }
         
         // 경험치 구매 시도
         bool success = ServerDataManager.instance.BuyExp(id, maxExp);
@@ -176,6 +205,32 @@ public class HeroInfo : MonoBehaviour
         {
             Debug.LogWarning("[HeroInfo] Failed to purchase exp - not enough gold!");
             // 여기에 골드 부족 팝업 등 추가 가능
+        }
+    }
+    public void CallLevelUp(int id)
+    {
+        bool success =  ServerDataManager.instance.LevelUp(id);
+        if (success)
+        {
+            // 서버에서 최신 데이터 가져오기
+            var data = ServerDataManager.instance.GetParsedServerData();
+            var hero = System.Array.Find(data.heroAccounts, h => h.heroId == id);
+            
+            if (hero != null)
+            {
+                // 데이터 업데이트
+                level = hero.level;
+                exp = hero.exp;
+                
+                // UI 갱신 (RefreshUI 재활용)
+                RefreshUI();
+                
+                Debug.Log($"[HeroInfo] Exp purchased! Level: {level}, Exp: {exp}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[HeroInfo] Failed to level Up");
         }
     }
         private List<StatMod> GetActiveMilestoneMods(HeroScriptableObject heroSO, int currentLevel)
