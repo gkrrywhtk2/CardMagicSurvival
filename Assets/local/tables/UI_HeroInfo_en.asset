@@ -26,6 +26,46 @@ MonoBehaviour:
     m_Localized: selected
     m_Metadata:
       m_Items: []
+  - m_Id: 795218742861824
+    m_Localized: Level Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 801471766454272
+    m_Localized: ATK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 801785609445376
+    m_Localized: HP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 801870443438080
+    m_Localized: SPD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 801978027335680
+    m_Localized: CRIT Rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 802137532522496
+    m_Localized: CRIT DMG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 802885460811776
+    m_Localized: Level Info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 802972089966592
+    m_Localized: Rank Info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 804084402610176
+    m_Localized: Mysterious Mage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 804336408977408
+    m_Localized: Witch
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

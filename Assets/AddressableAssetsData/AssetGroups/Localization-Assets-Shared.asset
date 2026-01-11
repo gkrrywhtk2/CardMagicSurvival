@@ -42,6 +42,11 @@ MonoBehaviour:
     - Locale-en
     - Locale-ko-KR
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4664c1ae9bf64c67a3ff664d2b03b69
+    m_Address: Assets/local/tables/UI_Rank Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c5f51f38f0b374bf19dc1fb355249b6b
     m_Address: Assets/local/FontTable Shared Data.asset
     m_ReadOnly: 1

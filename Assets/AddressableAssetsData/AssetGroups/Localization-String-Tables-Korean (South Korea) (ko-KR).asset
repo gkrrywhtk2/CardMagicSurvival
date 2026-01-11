@@ -33,6 +33,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko-KR
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e96ba99c8004b4e5db2da89dc08b1eb5
+    m_Address: UI_Rank_ko-KR
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko-KR
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fa6203873037d452f893ba28c2548046
     m_Address: UI_Milestones_ko-KR
     m_ReadOnly: 1

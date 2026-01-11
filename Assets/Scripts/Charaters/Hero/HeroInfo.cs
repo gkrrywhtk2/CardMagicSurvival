@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 public class HeroInfo : MonoBehaviour
 {
+    [Header("Localization")]
+    public HeroNameUI heroNameUI;
+    public RankLocalization rankLocalization;
     [Header("Refs")]
     public TMP_Text name_text;
     public TMP_Text lv_text;
@@ -18,6 +21,8 @@ public class HeroInfo : MonoBehaviour
     public TMP_Text slider_text;
     public GameObject isSlectedButton;//선택중 버튼
     public GameObject isSelectButton;//선택 버튼
+    public GameObject expUpButton;//경험치업 버튼
+    public GameObject levelUpButton;//레벨업 버튼
     public TMP_Text requireGold;//경험치 증가 필요 골드량 텍스트
 
     public LevelUpStatUI[] levelUpStats;
@@ -39,6 +44,8 @@ public class HeroInfo : MonoBehaviour
         this.isSelected = isSelected;
         IsSelectedButtonSetting(isSelected);
         AnimationSetup(id);
+        heroNameUI.BindHeroName(id);//이름 세팅
+        rankLocalization.BindRank(rank);//랭크 세팅
     }
 
     public void RefreshUI()
@@ -51,7 +58,7 @@ public class HeroInfo : MonoBehaviour
         }
 
         UpdateBasicInfo(heroSO);
-       
+
         bool levelupReady = UpdateExpSlider();
         UpdateStats(heroSO, levelupReady);
         rankLabel.SetRank(rank);
@@ -64,6 +71,9 @@ public class HeroInfo : MonoBehaviour
 
         //3000보다 낮으면 텍스트 색상 빨간색으로
         UpdateRequireGoldColor();
+
+        //레벨업 버튼 세팅
+        ExpUpButtonVisualSetting(levelupReady);
     }
 
     private void UpdateRequireGoldColor()
@@ -79,6 +89,21 @@ public class HeroInfo : MonoBehaviour
         {
             requireGold.color = Color.red;
         }
+    }
+    public void ExpUpButtonVisualSetting(bool ready)
+    {
+        //경험치 상승 버튼 레벨업 가능시 비주얼 변경
+        if (ready)
+        {
+            levelUpButton.SetActive(true);
+            expUpButton.SetActive(false);
+        }
+        else
+        {
+            levelUpButton.SetActive(false);
+            expUpButton.SetActive(true);
+        }
+        
     }
 
     public void SelectButtonSetting()
@@ -112,7 +137,6 @@ public class HeroInfo : MonoBehaviour
 
     private void UpdateBasicInfo(HeroScriptableObject heroSO)
     {
-        name_text.text = heroSO.nameKor;
         lv_text.text = $"Lv. {level}";
     }
 
@@ -162,7 +186,7 @@ public class HeroInfo : MonoBehaviour
         }
     }
 
-        public void ExpUpButton()
+    public void ExpUpButton()
     {
         var heroSO = HeroManager.Instance.GetHeroSO(id);
         if (heroSO == null)
@@ -263,12 +287,12 @@ public class HeroInfo : MonoBehaviour
     }
 
 
-     [Header("Mailstone UI")]
+    [Header("Mailstone UI")]
 
     [Header("Milestone UI (Fixed Slots: 3/6/9/12/15)")]
     [SerializeField] private MilestoneRowUI[] milestoneRows; // size=5, [0]=Lv3 ...
-public TMP_Text tmp;
-            private void RefreshMilestonesFixed(HeroScriptableObject heroSO)
+    public TMP_Text tmp;
+    private void RefreshMilestonesFixed(HeroScriptableObject heroSO)
     {
         if (milestoneRows == null || milestoneRows.Length < 5)
         {
@@ -310,14 +334,14 @@ public TMP_Text tmp;
             row.SetLocked(!unlocked);
 
 
-                var t = tmp; // TMP_Text
-    Debug.Log($"Base Font = {t.font?.name}");
-    if (t.font != null && t.font.fallbackFontAssetTable != null)
-    {
-        Debug.Log("Fallbacks:");
-        foreach (var f in t.font.fallbackFontAssetTable)
-            Debug.Log($" - {f?.name}");
-    }
+            var t = tmp; // TMP_Text
+            //Debug.Log($"Base Font = {t.font?.name}");
+            // if (t.font != null && t.font.fallbackFontAssetTable != null)
+            // {
+            //     //Debug.Log("Fallbacks:");
+            //     foreach (var f in t.font.fallbackFontAssetTable)
+            //         Debug.Log($" - {f?.name}");
+            // }
 
         }
     }
@@ -348,8 +372,7 @@ public class RankLabelUI
     public void SetRank(RankType rank)
     {
         var (rankName, frameColor, innerColor) = GetRankColors(rank);
-        
-        text.text = rankName;
+    
         background.color = frameColor;
         inner.color = innerColor;
     }

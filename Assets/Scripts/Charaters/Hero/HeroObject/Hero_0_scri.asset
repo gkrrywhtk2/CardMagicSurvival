@@ -44,7 +44,7 @@ MonoBehaviour:
     - stat: 2
       op: 1
       value: 0.1
-  - level: 12
+  - level: 15
     mods:
     - stat: 2
       op: 1
