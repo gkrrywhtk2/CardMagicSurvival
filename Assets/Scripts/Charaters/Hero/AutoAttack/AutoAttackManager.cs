@@ -10,6 +10,13 @@ public class AutoAttackManager : MonoBehaviour
     private Dictionary<int, HeroAutoAttackBase> map;
     private HeroAutoAttackBase current;
 
+    [Header("Level")]
+    public int CskillLv;
+    public int RskillLv;
+    public int EskillLv;
+    public int LskillLv;
+    public int MskillLv;
+
     private void Awake()
     {
         BuildMap();
@@ -41,7 +48,7 @@ public class AutoAttackManager : MonoBehaviour
         }
     }
 
-    public void Apply(int heroId, RankType rank)
+    public void Apply(int heroId, RankType rank, int C, int R, int E, int L, int M)
     {
         if (map == null) BuildMap();
 
@@ -57,6 +64,13 @@ public class AutoAttackManager : MonoBehaviour
 
         current = handler;
         current.StartForRank(rank);
+
+        //스킬 레벨 적용
+        CskillLv = C;
+        RskillLv = R;
+        EskillLv = E;
+        LskillLv = L;
+        MskillLv = M;
     }
 
     public void StopAll()

@@ -28,10 +28,17 @@ public class MockServer : MonoBehaviour
             { ""ID"": 1, ""currentRarity"": 3 }
         ],   
         ""heroAccounts"": [
-            { ""heroId"": 0, ""level"": 3, ""rank"": 2, ""isUnlocked"": true,  ""exp"": 3, ""isSelected"": true },
-            { ""heroId"": 1, ""level"": 20, ""rank"": 3, ""isUnlocked"": true,  ""exp"": 0, ""isSelected"": false }
-        ],
-        ""Gold"": { ""Gold"": 9999999 }
+        {
+        ""heroId"": 0, ""level"": 3, ""rank"": 3, ""isUnlocked"": true, ""exp"": 3, ""isSelected"": true,
+        ""cSkillLevel"": 10, ""rSkillLevel"": 10, ""eSkillLevel"": 10, ""lSkillLevel"": 10, ""mSkillLevel"": 1
+        },
+        {
+        ""heroId"": 1, ""level"": 20, ""rank"": 3, ""isUnlocked"": true, ""exp"": 0, ""isSelected"": false,
+        ""cSkillLevel"": 1, ""rSkillLevel"": 1, ""eSkillLevel"": 1, ""lSkillLevel"": 1, ""mSkillLevel"": 1
+        }
+    ],
+
+    ""Gold"": { ""Gold"": 9999999 }
     }";
 
     // ✅ 서버에서 "전체 JSON" 내려주는 느낌

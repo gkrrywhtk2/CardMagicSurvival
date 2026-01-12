@@ -432,6 +432,13 @@ public class ServerDataManager : MonoBehaviour
         public bool isUnlocked;
         public int exp;
         public bool isSelected;
+
+         // ✅ 스킬 레벨
+        public int cSkillLevel;
+        public int rSkillLevel;
+        public int eSkillLevel;
+        public int lSkillLevel;
+        public int mSkillLevel;
     }
 
     [Serializable]

@@ -106,8 +106,8 @@ public class ProgressionV2Calculator
         // ✅ 현재 랭크 이하 해금 전부 누적
         foreach (var ru in data.rankUnlocks)
         {
-            if (ru.rank <= currentRank)
-                list.AddRange(ru.skillIds);
+            // if (ru.rank <= currentRank)
+            //     list.AddRange(ru.skillIds);
         }
 
         skillCache[currentRank] = list;

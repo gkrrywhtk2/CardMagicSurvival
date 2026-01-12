@@ -49,4 +49,16 @@ MonoBehaviour:
     - stat: 2
       op: 1
       value: 0.1
-  rankUnlocks: []
+  rankUnlocks:
+  - rank: 0
+    skillIds: MagicMissile
+    skillSpite: {fileID: 21300000, guid: 87916df7b6773404a9568f0dfde01a8b, type: 3}
+  - rank: 1
+    skillIds: Pierce Missile
+    skillSpite: {fileID: 21300000, guid: 3ff77ec3867153043a785bacef7d0a31, type: 3}
+  - rank: 2
+    skillIds: Giant Blast
+    skillSpite: {fileID: 21300000, guid: 8900deffeca9705458e255c2b2989e89, type: 3}
+  - rank: 3
+    skillIds: Triple Burst
+    skillSpite: {fileID: 21300000, guid: 8b363bc7bda4f29418e0b1386a3378c2, type: 3}

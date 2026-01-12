@@ -25,7 +25,8 @@ public class LevelMilestone
 public class RankUnlock
 {
     public RankType rank;     
-    public List<string> skillIds = new();
+    public string skillIds;
+    public Sprite skillSpite;
 }
 
 [CreateAssetMenu(menuName = "Game/Progression/Hero Scriptable Object")]
@@ -61,5 +62,4 @@ public class HeroScriptableObject : ScriptableObject
 
     private static readonly HashSet<int> AllowedMilestones = new() { 3, 6, 9, 12, 15 };
 
-    
 }

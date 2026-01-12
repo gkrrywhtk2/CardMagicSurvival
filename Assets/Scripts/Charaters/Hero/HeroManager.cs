@@ -99,10 +99,9 @@ public class HeroManager : MonoBehaviour
 
         var calc = new ProgressionV2Calculator(heroSO);
         var stats = calc.GetStats(rankType, acc.level);
-
         // ✅ Player_Main에 base로 저장만 (heroSO 인자 제거)
         player.ApplyHeroStats(heroId, acc.level, rankType, acc.exp, stats);
-        player.autoAttackManager.Apply(heroId, rankType);
+        player.autoAttackManager.Apply(heroId, rankType, acc.cSkillLevel,acc.rSkillLevel,acc.eSkillLevel, acc.lSkillLevel, acc.mSkillLevel);
 
                 // animator 적용(있으면)
         if (heroSO.animatorController != null)
@@ -171,6 +170,11 @@ public class HeroManager : MonoBehaviour
         public bool isUnlocked;
         public int exp;
         public bool isSelected;
+        public int cSkillLevel;
+        public int rSkillLevel;
+        public int eSkillLevel;
+        public int lSkillLevel;
+        public int mSkillLevel;
     }
 
     private HeroAccount LoadHeroAccountFromServer(int heroId)

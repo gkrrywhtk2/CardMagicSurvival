@@ -5,7 +5,7 @@ using Game.RankSystem; // RankType
 public class Hero0AutoAttack : HeroAutoAttackBase
 {
     [Header("Attack Interval")]
-    [SerializeField] private float attackInterval = 1.0f;
+    [SerializeField] private float attackInterval = 2.0f;
 
     [Header("Shotgun")]
     [SerializeField] private float shotgunSpreadAngle = 15f; // 좌/우 벌어지는 각도
@@ -14,6 +14,7 @@ public class Hero0AutoAttack : HeroAutoAttackBase
     private Animator anim;
     private Scaner scaner;
     private SpriteRenderer sprite;
+    private AutoAttackManager autoAttackManager;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class Hero0AutoAttack : HeroAutoAttackBase
         anim = GetComponentInParent<Animator>();
         scaner = GetComponentInParent<Scaner>();
         sprite = GetComponentInParent<SpriteRenderer>();
+        autoAttackManager = GetComponent<AutoAttackManager>();
 
         if (player == null) Debug.LogError("[Hero1AutoAttack] Player_Main not found in parent.", this);
         if (scaner == null) Debug.LogError("[Hero1AutoAttack] Scaner not found in parent.", this);
@@ -37,7 +39,12 @@ public class Hero0AutoAttack : HeroAutoAttackBase
                 AutoAttack_Exe(rank);
             }
 
-            yield return new WaitForSeconds(attackInterval);
+            float interval = attackInterval; // 기본값
+
+            if (rank >= RankType.Legendary)
+                interval = GetLSkillInterval(attackInterval, autoAttackManager.LskillLv);
+
+            yield return new WaitForSeconds(interval);
         }
     }
 
@@ -65,7 +72,9 @@ public class Hero0AutoAttack : HeroAutoAttackBase
         Vector3 targetPos = scaner.nearestTarget.position;
         Vector3 dir = (targetPos - spawnPos).normalized;
 
-        float damage = GameManager.instance.player.playerStatus.DamageReturn(1, out bool isCritical);
+        var skillDamage = GetCSkillValue(autoAttackManager.CskillLv);
+
+        float damage = GameManager.instance.player.playerStatus.DamageReturn(skillDamage, out bool isCritical);
 
         int bulletNumber = 0;
         int effectNumber = 1;
@@ -76,13 +85,16 @@ public class Hero0AutoAttack : HeroAutoAttackBase
         Vector3 scale = Vector3.one;         // 기본 크기
         bool shotgun = false;
 
-        // Rare 이상: 관통 추가 (총 2히트 가능)
+        // Rare 이상: 관통 추가
         if (rank >= RankType.Rare)
-            per = -1;
+            per = GetRSkillValue(autoAttackManager.RskillLv);
 
-        // Epic 이상: 크기 증가
+         // Epic 이상: 크기 증가
         if (rank >= RankType.Epic)
-            scale = new Vector3(1.5f, 1.5f, 1f);
+        {
+            float eMul = GetESkillValue(autoAttackManager.EskillLv);
+            scale = new Vector3(eMul, eMul, 1f);
+        }
 
         // Legendary 이상: 산탄
         if (rank >= RankType.Legendary)
@@ -124,5 +136,27 @@ public class Hero0AutoAttack : HeroAutoAttackBase
 
         global::bullet.bulletType type = global::bullet.bulletType.bullet;
         bulletTr.GetComponent<bullet>().Init(damage, per, bulletSpeed, dir, effectNumber, type, isCritical);
+    }
+
+    public int GetCSkillValue(int lv)
+    {
+        lv = Mathf.Max(1, lv);
+        return 100 + (lv - 1) * 10;
+    }
+    public int GetRSkillValue(int lv)
+    {
+        lv = Mathf.Max(1, lv);
+        return 1 + lv;
+    }
+    public float GetESkillValue(int lv)
+    {
+        lv = Mathf.Max(1, lv);
+        return 1f + (lv - 1) * 0.10f; // 1=>1.0, 2=>1.1, 3=>1.2 ...
+    }
+    public float GetLSkillInterval(float baseInterval, int lv)
+    {
+        lv = Mathf.Max(1, lv);
+        float reduced = lv * 0.05f;           // ✅ lv=1이면 0.05초 감소
+        return Mathf.Max(1f, baseInterval - reduced);
     }
 }
