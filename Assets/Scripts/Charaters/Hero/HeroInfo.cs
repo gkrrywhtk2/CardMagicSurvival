@@ -27,6 +27,7 @@ public class HeroInfo : MonoBehaviour
 
     public LevelUpStatUI[] levelUpStats;
     public StatBg[] statBg;//스탯 블럭들 0 공격력, 1 체력, 2 이동속도 3  치명타확률 , 4 치명타 배율
+    public HeroSkillFrame[] heroSkillFrames;
 
     [Header("Data")]
     public int id;
@@ -74,6 +75,9 @@ public class HeroInfo : MonoBehaviour
 
         //레벨업 버튼 세팅
         ExpUpButtonVisualSetting(levelupReady);
+
+        //등급정보 -> 스킬 프레임 세팅
+        SettingHeroSkillFrame(id);
     }
 
     private void UpdateRequireGoldColor()
@@ -90,6 +94,48 @@ public class HeroInfo : MonoBehaviour
             requireGold.color = Color.red;
         }
     }
+
+    public void SettingHeroSkillFrame(int heroId)
+{
+    var sdm = ServerDataManager.instance;
+    if (sdm == null) return;
+
+    var data = sdm.GetParsedServerData();
+    if (data == null || data.heroAccounts == null || data.heroAccounts.Length == 0) return;
+
+    // ✅ 터치한 영웅 ID로 찾기
+    var hero = System.Array.Find(data.heroAccounts, h => h.heroId == heroId);
+    if (hero == null)
+    {
+        Debug.LogWarning($"[HeroInfo] heroId={heroId} not found. Fallback to first hero.");
+        hero = data.heroAccounts[0];
+        if (hero == null) return;
+    }
+
+    // ✅ 종자 판정: mSkillLevel로 M 슬롯 존재 여부 판단
+    bool canHaveMythicSkill = hero.mSkillLevel >= 1;
+
+    for (int i = 0; i < heroSkillFrames.Length; i++)
+    {
+        var frame = heroSkillFrames[i];
+        if (frame == null) continue;
+
+        bool isMythicFrame = frame.slotType == SkillSlotType.M;
+
+        if (isMythicFrame)
+        {
+            frame.gameObject.SetActive(canHaveMythicSkill);
+            if (!canHaveMythicSkill) continue;
+        }
+        else
+        {
+            frame.gameObject.SetActive(true);
+        }
+
+        frame.Init(hero);
+    }
+}
+
     public void ExpUpButtonVisualSetting(bool ready)
     {
         //경험치 상승 버튼 레벨업 가능시 비주얼 변경

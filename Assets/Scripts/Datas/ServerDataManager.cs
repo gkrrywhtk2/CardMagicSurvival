@@ -14,6 +14,9 @@ public class ServerDataManager : MonoBehaviour
 
     public TopBar topBar;//탑 네비
 
+     // ✅ 캐시
+    public ServerData cachedData { get; private set; }
+
     private void Awake()
     {
         // 싱글톤 설정
@@ -33,8 +36,49 @@ public class ServerDataManager : MonoBehaviour
         {
             Debug.LogError("[ServerDataManager] MockServer component not found!");
         }
+         RefreshFromServer();   // ✅ 시작 시 파싱해서 세팅
 
         topBar.gameObject.SetActive(true);//세팅 끝난뒤에 네비게이션 호출
+    }
+
+    /// <summary>
+    /// MockServer JSON을 파싱해서 캐시 갱신
+    /// </summary>
+    public void RefreshFromServer()
+    {
+        cachedData = GetParsedServerData();
+
+        if (cachedData == null)
+        {
+            Debug.LogError("[ServerDataManager] RefreshFromServer failed: cachedData is null");
+            return;
+        }
+
+        // null 방지
+        cachedData.heroAccounts ??= Array.Empty<HeroAccount>();
+        cachedData.accountCards ??= Array.Empty<AccountCard>();
+        cachedData.deckSlots ??= Array.Empty<DeckSlot>();
+        cachedData.Gold ??= new Currency_Gold { Gold = 0 };
+
+        Debug.Log($"[ServerDataManager] RefreshFromServer OK. heroes={cachedData.heroAccounts.Length}");
+    }
+
+     /// <summary>
+    /// 캐시에 있는 heroAccounts 반환(편의)
+    /// </summary>
+    public HeroAccount[] GetHeroAccounts()
+    {
+        if (cachedData == null) RefreshFromServer();
+        return cachedData != null ? cachedData.heroAccounts : Array.Empty<HeroAccount>();
+    }
+
+    /// <summary>
+    /// 선택된 영웅 반환(편의)
+    /// </summary>
+    public HeroAccount GetSelectedHero()
+    {
+        var heroes = GetHeroAccounts();
+        return Array.Find(heroes, h => h.isSelected) ?? (heroes.Length > 0 ? heroes[0] : null);
     }
 
     /// <summary>
@@ -67,43 +111,20 @@ public class ServerDataManager : MonoBehaviour
     /// </summary>
     public void UpdateSelectedHero(int newSelectedHeroId)
     {
-        try
-        {
-            // 1. 현재 서버 데이터 가져오기
-            var data = GetParsedServerData();
-            if (data == null || data.heroAccounts == null)
-            {
-                Debug.LogError("[ServerDataManager] Failed to get server data");
-                return;
-            }
-            
-            // 2. 모든 영웅의 isSelected를 false로 설정
-            foreach (var hero in data.heroAccounts)
-            {
-                hero.isSelected = false;
-            }
-            
-            // 3. 선택된 영웅만 true로 설정
-            var selectedHero = Array.Find(data.heroAccounts, h => h.heroId == newSelectedHeroId);
-            if (selectedHero != null)
-            {
-                selectedHero.isSelected = true;
-                Debug.Log($"[ServerDataManager] Hero {newSelectedHeroId} selected");
-            }
-            else
-            {
-                Debug.LogWarning($"[ServerDataManager] Hero {newSelectedHeroId} not found!");
-            }
-            
-            // 4. 수정된 데이터를 다시 서버에 저장
-            string updatedJson = JsonUtility.ToJson(data, true);
-            mockServer.SaveServerJson(updatedJson);
-            
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"[ServerDataManager] UpdateSelectedHero failed: {e.Message}");
-        }
+        if (cachedData == null) RefreshFromServer();
+        if (cachedData == null) return;
+
+        foreach (var hero in cachedData.heroAccounts)
+            hero.isSelected = false;
+
+        var selectedHero = Array.Find(cachedData.heroAccounts, h => h.heroId == newSelectedHeroId);
+        if (selectedHero != null) selectedHero.isSelected = true;
+
+        // 저장
+        mockServer.SaveServerJson(JsonUtility.ToJson(cachedData, true));
+
+        // 필요하면 다시 파싱해서 확정(선택)
+        // RefreshFromServer();
     }
 
         /// <summary>
@@ -439,6 +460,13 @@ public class ServerDataManager : MonoBehaviour
         public int eSkillLevel;
         public int lSkillLevel;
         public int mSkillLevel;
+
+        //스킬 경험치
+        public int cSkillExp;
+        public int rSkillExp;
+        public int eSkillExp;
+        public int lSkillExp;
+        public int mSkillExp;
     }
 
     [Serializable]
