@@ -12,11 +12,12 @@ public class ServerDataManager : MonoBehaviour
     [Header("UI")]
     public TopBar topBar;
 
-    // ✅ 골드만 이벤트로 방송
-    public static event Action<int> OnGoldChanged; // newGold
+    // ✅ 이벤트 (UI 방송용)
+    public static event Action<int> OnGoldChanged;           // newGold
+    public static event Action<int> OnUpgradeStoneChanged;   // newStone
 
     // 편의: 항상 root 데이터 참조
-    private ServerData Data => mockServer.GetData();
+    private ServerData Data => mockServer != null ? mockServer.GetData() : null;
 
     private void Awake()
     {
@@ -39,6 +40,10 @@ public class ServerDataManager : MonoBehaviour
 
         if (topBar != null)
             topBar.gameObject.SetActive(true);
+
+        // (선택) 처음 UI 동기화 1회
+        OnGoldChanged?.Invoke(GetCurrentGold());
+        OnUpgradeStoneChanged?.Invoke(GetCurrentUpgradeStone());
     }
 
     // =========================
@@ -51,7 +56,7 @@ public class ServerDataManager : MonoBehaviour
         data.heroAccounts ??= Array.Empty<HeroAccount>();
         data.accountCards ??= Array.Empty<AccountCard>();
         data.deckSlots ??= Array.Empty<DeckSlot>();
-        data.Gold ??= new Currency_Gold { Gold = 0 };
+        data.Currency ??= new Currency { Gold = 0, UpgradeStone = 0 };
     }
 
     // =========================
@@ -94,18 +99,24 @@ public class ServerDataManager : MonoBehaviour
     {
         var d = Data;
         EnsureNonNull(d);
-        return d.Gold.Gold;
+        return d.Currency.Gold;
+    }
+
+    public int GetCurrentUpgradeStone()
+    {
+        var d = Data;
+        EnsureNonNull(d);
+        return d.Currency.UpgradeStone;
     }
 
     // 저장/전송 payload (웹서버 붙이면 이 JSON을 POST)
     public string BuildSavePayloadJson(bool pretty = true)
     {
-        return mockServer.ExportJson(pretty);
+        return mockServer != null ? mockServer.ExportJson(pretty) : "{}";
     }
 
     // =========================
     // Write APIs (Data 직접 수정)
-    // 이벤트는 Gold만
     // =========================
 
     /// <summary>
@@ -131,26 +142,50 @@ public class ServerDataManager : MonoBehaviour
         var d = Data;
         EnsureNonNull(d);
 
-        int prev = d.Gold.Gold;
-        d.Gold.Gold = Mathf.Max(0, d.Gold.Gold + amount);
+        int prev = d.Currency.Gold;
+        d.Currency.Gold = Mathf.Max(0, d.Currency.Gold + amount);
 
-        Debug.Log($"[ServerDataManager] Gold updated: {prev} -> {d.Gold.Gold} (change: {amount})");
-        OnGoldChanged?.Invoke(d.Gold.Gold);
+        Debug.Log($"[ServerDataManager] Gold updated: {prev} -> {d.Currency.Gold} (change: {amount})");
+        OnGoldChanged?.Invoke(d.Currency.Gold);
     }
 
-    /// <summary>
-    /// 골드 직접 설정 (이벤트 있음)
-    /// </summary>
     public void SetGold(int amount)
     {
         var d = Data;
         EnsureNonNull(d);
 
-        int prev = d.Gold.Gold;
-        d.Gold.Gold = Mathf.Max(0, amount);
+        int prev = d.Currency.Gold;
+        d.Currency.Gold = Mathf.Max(0, amount);
 
-        Debug.Log($"[ServerDataManager] Gold set: {prev} -> {d.Gold.Gold}");
-        OnGoldChanged?.Invoke(d.Gold.Gold);
+        Debug.Log($"[ServerDataManager] Gold set: {prev} -> {d.Currency.Gold}");
+        OnGoldChanged?.Invoke(d.Currency.Gold);
+    }
+
+    /// <summary>
+    /// 강화석 추가/차감 (이벤트 있음)
+    /// </summary>
+    public void AddUpgradeStone(int amount)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        int prev = d.Currency.UpgradeStone;
+        d.Currency.UpgradeStone = Mathf.Max(0, d.Currency.UpgradeStone + amount);
+
+        Debug.Log($"[ServerDataManager] UpgradeStone updated: {prev} -> {d.Currency.UpgradeStone} (change: {amount})");
+        OnUpgradeStoneChanged?.Invoke(d.Currency.UpgradeStone);
+    }
+
+    public void SetUpgradeStone(int amount)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        int prev = d.Currency.UpgradeStone;
+        d.Currency.UpgradeStone = Mathf.Max(0, amount);
+
+        Debug.Log($"[ServerDataManager] UpgradeStone set: {prev} -> {d.Currency.UpgradeStone}");
+        OnUpgradeStoneChanged?.Invoke(d.Currency.UpgradeStone);
     }
 
     /// <summary>
@@ -181,9 +216,9 @@ public class ServerDataManager : MonoBehaviour
         var d = Data;
         EnsureNonNull(d);
 
-        if (d.Gold.Gold < goldCost)
+        if (d.Currency.Gold < goldCost)
         {
-            Debug.LogWarning($"[ServerDataManager] Not enough gold! Current: {d.Gold.Gold}, Required: {goldCost}");
+            Debug.LogWarning($"[ServerDataManager] Not enough gold! Current: {d.Currency.Gold}, Required: {goldCost}");
             return false;
         }
 
@@ -194,12 +229,12 @@ public class ServerDataManager : MonoBehaviour
             return false;
         }
 
-        d.Gold.Gold -= goldCost;
+        d.Currency.Gold -= goldCost;
         hero.exp += 1;
 
         Debug.Log($"[ServerDataManager] Hero {heroId} - Gold: -{goldCost}, Exp: {hero.exp}/{maxExp}, Level: {hero.level}");
 
-        OnGoldChanged?.Invoke(d.Gold.Gold);
+        OnGoldChanged?.Invoke(d.Currency.Gold);
         return true;
     }
 
@@ -213,9 +248,9 @@ public class ServerDataManager : MonoBehaviour
         EnsureNonNull(d);
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
-
         sb.AppendLine("========== DATA(ROOT) STATUS ==========");
-        sb.AppendLine($"\n💰 GOLD: {d.Gold.Gold}");
+        sb.AppendLine($"\n💰 GOLD: {d.Currency.Gold}");
+        sb.AppendLine($"🪨 UPGRADE STONE: {d.Currency.UpgradeStone}");
 
         sb.AppendLine("\n👤 HERO ACCOUNTS:");
         if (d.heroAccounts.Length > 0)
@@ -273,7 +308,14 @@ public class ServerDataManager : MonoBehaviour
         public AccountCard[] accountCards;
         public DeckSlot[] deckSlots;
         public HeroAccount[] heroAccounts;
-        public Currency_Gold Gold;
+        public Currency Currency; // ✅ JSON의 "Currency"와 동일
+    }
+
+    [Serializable]
+    public class Currency
+    {
+        public int Gold;
+        public int UpgradeStone;
     }
 
     [Serializable]
@@ -314,11 +356,5 @@ public class ServerDataManager : MonoBehaviour
     {
         public int ID;
         public int currentRarity;
-    }
-
-    [Serializable]
-    public class Currency_Gold
-    {
-        public int Gold;
     }
 }

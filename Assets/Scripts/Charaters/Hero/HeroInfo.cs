@@ -18,7 +18,11 @@ public class HeroInfo : MonoBehaviour
         public Color green_Color;
         public Image exp_Slider_Fill;
         public GameObject UpArrow_Exp;
-    public TMP_Text slider_text;
+        public TMP_Text slider_text;
+    public Slider upgrade_slider;
+        public Image upgrade_Slider_Fill;
+        public GameObject UpArrow_Upgrade;
+        public TMP_Text upgrade_slider_text;
     public GameObject isSlectedButton;//선택중 버튼
     public GameObject isSelectButton;//선택 버튼
     public GameObject expUpButton;//경험치업 버튼
@@ -35,6 +39,21 @@ public class HeroInfo : MonoBehaviour
     public int exp;
     public RankType rank;
     public bool isSelected;
+    public int UpgradeStone;
+
+    [Header("PanelControl")]
+    public GameObject HeadView;
+    public GameObject MiddleView_Level;
+    public GameObject MiddleView_Rank;
+    public GameObject[] lines;
+    public GameObject BottomView_Level;
+    public GameObject BottomView_Rank;
+    public RectTransform MileStoneScroll;
+    public Image LevelInfoButton;
+    public Image RankInfoButton;
+        public Color Pupple_Color;
+        public Color DarkPupple_Color;
+    public UpgradeStoneLabel upgradeStoneLabel;
 
         public void Init(int heroId, int heroLevel, int heroExp, RankType heroRank, bool isSelected)
     {
@@ -57,6 +76,7 @@ public class HeroInfo : MonoBehaviour
     {
         // ✅ 항상 root(단일 상태)에서 최신 값으로 덮어쓰기
         var heroAccount = ServerDataManager.instance.GetHeroAccount(id);
+        var upgradeStoneCount = ServerDataManager.instance.GetCurrentUpgradeStone();
         if (heroAccount == null)
         {
             Debug.LogWarning($"[HeroInfo] HeroAccount not found for id={id}");
@@ -67,6 +87,7 @@ public class HeroInfo : MonoBehaviour
         exp = heroAccount.exp;
         rank = (RankType)heroAccount.rank;
         isSelected = heroAccount.isSelected;
+        UpgradeStone = upgradeStoneCount;
 
         var heroSO = HeroManager.Instance.GetHeroSO(id);
         if (heroSO == null)
@@ -78,6 +99,7 @@ public class HeroInfo : MonoBehaviour
         UpdateBasicInfo(heroSO);
 
         bool levelupReady = UpdateExpSlider();
+        UpdateUpgradeExpSlider();
         UpdateStats(heroSO, levelupReady);
         rankLabel.SetRank(rank);
 
@@ -239,6 +261,25 @@ public class HeroInfo : MonoBehaviour
             return false;//레벨업 준비 미완
         }
     }
+    private bool UpdateUpgradeExpSlider()
+    {
+        int expForNextLevel = HeroManager.Instance.MaxUpgradeExpSetting(rank);
+        upgrade_slider.maxValue = expForNextLevel;
+        upgrade_slider.value = Mathf.Min(UpgradeStone, expForNextLevel);
+        upgrade_slider_text.text = $"{UpgradeStone}/{upgrade_slider.maxValue}";
+        if(UpgradeStone == expForNextLevel)
+        {
+            upgrade_Slider_Fill.color = green_Color;
+            UpArrow_Upgrade.SetActive(true);
+            return true;//레벨업 준비 완
+        }
+        else
+        {
+            upgrade_Slider_Fill.color = blue_Color;
+            UpArrow_Upgrade.SetActive(false);
+            return false;//레벨업 준비 완
+        }
+    }
 
     public void ExpUpButton()
     {
@@ -298,6 +339,47 @@ public class HeroInfo : MonoBehaviour
         }
 
         return result;
+    }
+
+    public void Init_LevelInfo()
+    {
+        HeadView.SetActive(true);
+        MiddleView_Level.SetActive(true);
+        MiddleView_Rank.SetActive(false);
+        lines[0].SetActive(true);
+        lines[1].SetActive(true);
+        lines[2].SetActive(false);
+        BottomView_Level.SetActive(true);
+        BottomView_Rank.SetActive(false);
+        exp_slider.gameObject.SetActive(true);
+        upgrade_slider.gameObject.SetActive(false);
+        upgradeStoneLabel.gameObject.SetActive(false);
+
+        var p = MileStoneScroll.anchoredPosition;//스크롤 맨 위로
+        p.y = 0f;
+        MileStoneScroll.anchoredPosition = p;
+        LevelInfoButton.color = DarkPupple_Color;
+        RankInfoButton.color = Pupple_Color;
+    }
+    public void Init_RankInfo()
+    {
+        HeadView.SetActive(true);
+        MiddleView_Level.SetActive(false);
+        MiddleView_Rank.SetActive(true);
+        lines[0].SetActive(true);
+        lines[1].SetActive(false);
+        lines[2].SetActive(true);
+        BottomView_Level.SetActive(false);
+        BottomView_Rank.SetActive(true);
+        exp_slider.gameObject.SetActive(false);
+        upgrade_slider.gameObject.SetActive(true);
+        upgradeStoneLabel.gameObject.SetActive(true);
+
+        // var p = MileStoneScroll.anchoredPosition;//스크롤 맨 위로
+        // p.y = 0f;
+        // MileStoneScroll.anchoredPosition = p;
+        LevelInfoButton.color = Pupple_Color;
+        RankInfoButton.color = DarkPupple_Color;
     }
 
     [Header("Per Hero Run Clips (UI Image용)")]

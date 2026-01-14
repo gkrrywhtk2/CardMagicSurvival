@@ -173,4 +173,17 @@ public class HeroManager : MonoBehaviour
     {
         return level + 4; // 1레벨 필요량 5, 2레벨 필요량 6 ...
     }
+        public int MaxUpgradeExpSetting(RankType rank)
+    {
+        // Uncommon -> Rare : 5
+        // Rare -> Epic     : 10
+        // Epic -> Legendary: 15
+        // Legendary -> Mythic: 20
+        // Mythic은 다음 랭크가 없으니 필요량 0(또는 int.MaxValue로 막기)
+
+        if (rank >= RankType.Mythic)
+            return 0;
+
+        return ((int)rank + 1) * 5;
+    }
 }

@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class MockServer : MonoBehaviour
 {
-    [TextArea(10, 60)]
-    [SerializeField] private string mockJson = @"
+    [TextArea(10, 60)] private string mockJson = @"
     {
     ""accountCards"": [
         { ""cardId"": 0, ""quantity"": 3, ""isUnlocked"": true },
@@ -16,7 +15,6 @@ public class MockServer : MonoBehaviour
         { ""cardId"": 6, ""quantity"": 1, ""isUnlocked"": true },
         { ""cardId"": 7, ""quantity"": 1, ""isUnlocked"": true }
     ],
-
     ""deckSlots"": [
         { ""ID"": 1, ""currentRarity"": 0 },
         { ""ID"": 1, ""currentRarity"": 1 },
@@ -24,7 +22,6 @@ public class MockServer : MonoBehaviour
         { ""ID"": 2, ""currentRarity"": 3 },
         { ""ID"": 1, ""currentRarity"": 3 }
     ],
-
     ""heroAccounts"": [
         {
         ""heroId"": 0, ""level"": 3, ""rank"": 3, ""isUnlocked"": true, ""exp"": 3, ""isSelected"": true,
@@ -37,8 +34,7 @@ public class MockServer : MonoBehaviour
         ""cSkillExp"": 3, ""rSkillExp"": 3, ""eSkillExp"": 3, ""lSkillExp"": 3, ""mSkillExp"": 3
         }
     ],
-
-    ""Gold"": { ""Gold"": 9999999 }
+    ""Currency"": { ""Gold"": 9999999, ""UpgradeStone"": 9999999 }
     }";
 
     // ✅ 인게임에서 쓰는 "진짜 데이터(객체)" = Single Source of Truth
@@ -56,27 +52,27 @@ public class MockServer : MonoBehaviour
         try
         {
             root = JsonUtility.FromJson<ServerDataManager.ServerData>(mockJson);
-
-            // null 방지 (ServerDataManager에서도 하지만, 여기서도 안전하게)
-            if (root == null) root = new ServerDataManager.ServerData();
-            root.heroAccounts ??= Array.Empty<ServerDataManager.HeroAccount>();
-            root.accountCards ??= Array.Empty<ServerDataManager.AccountCard>();
-            root.deckSlots ??= Array.Empty<ServerDataManager.DeckSlot>();
-            root.Gold ??= new ServerDataManager.Currency_Gold { Gold = 0 };
-
-            Debug.Log("[MockServer] root loaded from mockJson");
         }
         catch (Exception e)
         {
             Debug.LogError($"[MockServer] Failed to parse mockJson: {e.Message}");
-            root = new ServerDataManager.ServerData
-            {
-                heroAccounts = Array.Empty<ServerDataManager.HeroAccount>(),
-                accountCards = Array.Empty<ServerDataManager.AccountCard>(),
-                deckSlots = Array.Empty<ServerDataManager.DeckSlot>(),
-                Gold = new ServerDataManager.Currency_Gold { Gold = 0 }
-            };
+            root = null;
         }
+
+        EnsureRootValid();
+        Debug.Log("[MockServer] root loaded from mockJson");
+    }
+
+    private void EnsureRootValid()
+    {
+        if (root == null) root = new ServerDataManager.ServerData();
+
+        root.heroAccounts ??= Array.Empty<ServerDataManager.HeroAccount>();
+        root.accountCards ??= Array.Empty<ServerDataManager.AccountCard>();
+        root.deckSlots ??= Array.Empty<ServerDataManager.DeckSlot>();
+
+        // ✅ Currency null 방지
+        root.Currency ??= new ServerDataManager.Currency { Gold = 0, UpgradeStone = 0 };
     }
 
     // ✅ 인게임 로직은 이걸로 객체를 직접 가져다 씀
@@ -96,30 +92,24 @@ public class MockServer : MonoBehaviour
     // (호환) 기존 코드가 GetServerJson을 호출해도 문제 없게 유지
     public string GetServerJson()
     {
-        Debug.Log("[MockServer] GetServerJson()");
         return ExportJson(true);
     }
 
     // (호환) 기존 코드가 SaveServerJson을 호출하면 root도 같이 갱신
     public void SaveServerJson(string json)
     {
-        Debug.Log($"[MockServer] SaveServerJson() len={json?.Length ?? 0}");
-
         mockJson = json;
 
         try
         {
             root = JsonUtility.FromJson<ServerDataManager.ServerData>(mockJson);
-
-            if (root == null) root = new ServerDataManager.ServerData();
-            root.heroAccounts ??= Array.Empty<ServerDataManager.HeroAccount>();
-            root.accountCards ??= Array.Empty<ServerDataManager.AccountCard>();
-            root.deckSlots ??= Array.Empty<ServerDataManager.DeckSlot>();
-            root.Gold ??= new ServerDataManager.Currency_Gold { Gold = 0 };
         }
         catch (Exception e)
         {
             Debug.LogError($"[MockServer] SaveServerJson parse failed: {e.Message}");
+            // 실패해도 기존 root 유지 or 새로 만들지 선택 가능
         }
+
+        EnsureRootValid();
     }
 }
