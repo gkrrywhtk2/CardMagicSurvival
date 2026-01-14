@@ -9,10 +9,6 @@ public class HeroCardManager : MonoBehaviour
     [SerializeField] private ServerDataManager serverDataManager;
     public HeroCard[] heroCards;
 
-    // 캐시 (옵션)
-    private string cachedJson;
-    private ServerDataManager.ServerData cachedData;
-
     // =====================
     // ✅ 영웅 카드 업데이트
     // =====================
@@ -24,26 +20,32 @@ public class HeroCardManager : MonoBehaviour
             return;
         }
 
-        var serverData = GetCachedServerData();
-
+        // ✅ root 단일 상태에서 바로 읽기
+        var serverData = serverDataManager.GetData();
         if (serverData == null || serverData.heroAccounts == null)
         {
-            Debug.LogError("[HeroCardManager] heroAccounts parse failed");
+            Debug.LogError("[HeroCardManager] serverData or heroAccounts is null");
             return;
         }
 
         // heroId -> HeroAccount 매핑
-        var map = new Dictionary<int, ServerDataManager.HeroAccount>();
+        var map = new Dictionary<int, ServerDataManager.HeroAccount>(serverData.heroAccounts.Length);
         foreach (var h in serverData.heroAccounts)
+        {
+            if (h == null) continue;
             map[h.heroId] = h;
+        }
 
         foreach (var card in heroCards)
         {
             if (card == null) continue;
 
-            if (map.TryGetValue(card.heroID, out var dto))
+            if (map.TryGetValue(card.heroID, out var dto) && dto != null)
             {
                 card.Init(dto.level, dto.exp, dto.rank, dto.isUnlocked, dto.isSelected);
+
+                // (선택) 카드가 가지고 있는 rank 필드가 따로 있다면 dto 기반으로 동기화해도 됨
+                // card.rank = (RankType)dto.rank;
             }
             else
             {
@@ -53,22 +55,9 @@ public class HeroCardManager : MonoBehaviour
         }
     }
 
-    private ServerDataManager.ServerData GetCachedServerData()
-    {
-        string currentJson = serverDataManager.GetServerJson();
-        
-        if (!string.IsNullOrEmpty(cachedJson) && cachedJson == currentJson && cachedData != null)
-            return cachedData;
-
-        cachedJson = currentJson;
-        cachedData = serverDataManager.GetParsedServerData();
-        return cachedData;
-    }
-
     // =====================
     // ✅ 정렬 기능
     // =====================
-
     private int RankOrder(RankType r)
     {
         return r switch
@@ -138,6 +127,7 @@ public class HeroCardManager : MonoBehaviour
     {
         for (int i = 0; i < heroCards.Length; i++)
         {
+            if (heroCards[i] == null) continue;
             heroCards[i].transform.SetSiblingIndex(i);
         }
     }

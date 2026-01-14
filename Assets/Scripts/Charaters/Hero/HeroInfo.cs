@@ -36,21 +36,38 @@ public class HeroInfo : MonoBehaviour
     public RankType rank;
     public bool isSelected;
 
-    public void Init(int heroId, int heroLevel, int heroExp, RankType heroRank, bool isSelected)
+        public void Init(int heroId, int heroLevel, int heroExp, RankType heroRank, bool isSelected)
     {
         id = heroId;
         level = heroLevel;
         exp = heroExp;
         rank = heroRank;
         this.isSelected = isSelected;
+
         IsSelectedButtonSetting(isSelected);
         AnimationSetup(id);
-        heroNameUI.BindHeroName(id);//이름 세팅
-        rankLocalization.BindRank(rank);//랭크 세팅
+        heroNameUI.BindHeroName(id);
+        rankLocalization.BindRank(rank);
+
+        // ✅ root 기준으로 최종 확정
+        RefreshUI();
     }
 
-    public void RefreshUI()
+        public void RefreshUI()
     {
+        // ✅ 항상 root(단일 상태)에서 최신 값으로 덮어쓰기
+        var heroAccount = ServerDataManager.instance.GetHeroAccount(id);
+        if (heroAccount == null)
+        {
+            Debug.LogWarning($"[HeroInfo] HeroAccount not found for id={id}");
+            return;
+        }
+
+        level = heroAccount.level;
+        exp = heroAccount.exp;
+        rank = (RankType)heroAccount.rank;
+        isSelected = heroAccount.isSelected;
+
         var heroSO = HeroManager.Instance.GetHeroSO(id);
         if (heroSO == null)
         {
@@ -64,19 +81,12 @@ public class HeroInfo : MonoBehaviour
         UpdateStats(heroSO, levelupReady);
         rankLabel.SetRank(rank);
 
-        // ✅ 마일스톤 UI 갱신
         RefreshMilestonesFixed(heroSO);
 
-        //선택 버튼 갱신
         SelectButtonSetting();
-
-        //3000보다 낮으면 텍스트 색상 빨간색으로
         UpdateRequireGoldColor();
-
-        //레벨업 버튼 세팅
         ExpUpButtonVisualSetting(levelupReady);
 
-        //등급정보 -> 스킬 프레임 세팅
         SettingHeroSkillFrame(id);
     }
 
@@ -96,45 +106,41 @@ public class HeroInfo : MonoBehaviour
     }
 
     public void SettingHeroSkillFrame(int heroId)
-{
-    var sdm = ServerDataManager.instance;
-    if (sdm == null) return;
-
-    var data = sdm.GetParsedServerData();
-    if (data == null || data.heroAccounts == null || data.heroAccounts.Length == 0) return;
-
-    // ✅ 터치한 영웅 ID로 찾기
-    var hero = System.Array.Find(data.heroAccounts, h => h.heroId == heroId);
-    if (hero == null)
     {
-        Debug.LogWarning($"[HeroInfo] heroId={heroId} not found. Fallback to first hero.");
-        hero = data.heroAccounts[0];
-        if (hero == null) return;
-    }
+        var sdm = ServerDataManager.instance;
+        if (sdm == null) return;
 
-    // ✅ 종자 판정: mSkillLevel로 M 슬롯 존재 여부 판단
-    bool canHaveMythicSkill = hero.mSkillLevel >= 1;
-
-    for (int i = 0; i < heroSkillFrames.Length; i++)
-    {
-        var frame = heroSkillFrames[i];
-        if (frame == null) continue;
-
-        bool isMythicFrame = frame.slotType == SkillSlotType.M;
-
-        if (isMythicFrame)
+        var hero = sdm.GetHeroAccount(heroId);
+        if (hero == null)
         {
-            frame.gameObject.SetActive(canHaveMythicSkill);
-            if (!canHaveMythicSkill) continue;
-        }
-        else
-        {
-            frame.gameObject.SetActive(true);
+            Debug.LogWarning($"[HeroInfo] heroId={heroId} not found.");
+            return;
         }
 
-        frame.Init(hero);
+        // ✅ 종자 판정: mSkillLevel로 M 슬롯 존재 여부 판단
+        bool canHaveMythicSkill = hero.mSkillLevel >= 1;
+
+        for (int i = 0; i < heroSkillFrames.Length; i++)
+        {
+            var frame = heroSkillFrames[i];
+            if (frame == null) continue;
+
+            bool isMythicFrame = frame.slotType == SkillSlotType.M;
+
+            if (isMythicFrame)
+            {
+                frame.gameObject.SetActive(canHaveMythicSkill);
+                if (!canHaveMythicSkill) continue;
+            }
+            else
+            {
+                frame.gameObject.SetActive(true);
+            }
+
+            frame.Init(hero); // ✅ hero는 root의 HeroAccount
+        }
     }
-}
+
 
     public void ExpUpButtonVisualSetting(bool ready)
     {
@@ -159,11 +165,13 @@ public class HeroInfo : MonoBehaviour
     }
     public void SelectButton()
     {
-        // 서버 데이터 업데이트
         ServerDataManager.instance.UpdateSelectedHero(this.id);
-        
-        // UI 갱신
+
+        // 카드 리스트 갱신
         GameManager.instance.herocardManager.UpdateAllHeroCardFrames();
+
+        // ✅ 이벤트 안 쓰니까: 내 패널도 직접 갱신
+        RefreshUI();
     }
 
     public void IsSelectedButtonSetting(bool selected)
@@ -241,68 +249,41 @@ public class HeroInfo : MonoBehaviour
             return;
         }
 
-        // 현재 레벨의 최대 경험치
         int maxExp = HeroManager.Instance.MaxExpSetting(level);
-        int nowExp = exp;
-        if (nowExp == maxExp)
+        if (exp >= maxExp)
         {
             CallLevelUp(id);
             return;
         }
-        
-        // 경험치 구매 시도
+
         bool success = ServerDataManager.instance.BuyExp(id, maxExp);
-        
+
         if (success)
         {
-            // 서버에서 최신 데이터 가져오기
-            var data = ServerDataManager.instance.GetParsedServerData();
-            var hero = System.Array.Find(data.heroAccounts, h => h.heroId == id);
-            
-            if (hero != null)
-            {
-                // 데이터 업데이트
-                level = hero.level;
-                exp = hero.exp;
-                
-                // UI 갱신 (RefreshUI 재활용)
-                RefreshUI();
-                
-                Debug.Log($"[HeroInfo] Exp purchased! Level: {level}, Exp: {exp}");
-            }
+            // ✅ root에서 값 다시 읽고 UI 갱신
+            RefreshUI();
+            Debug.Log($"[HeroInfo] Exp purchased! id={id}");
         }
         else
         {
             Debug.LogWarning("[HeroInfo] Failed to purchase exp - not enough gold!");
-            // 여기에 골드 부족 팝업 등 추가 가능
         }
     }
+
     public void CallLevelUp(int id)
     {
-        bool success =  ServerDataManager.instance.LevelUp(id);
+        bool success = ServerDataManager.instance.LevelUp(id);
         if (success)
         {
-            // 서버에서 최신 데이터 가져오기
-            var data = ServerDataManager.instance.GetParsedServerData();
-            var hero = System.Array.Find(data.heroAccounts, h => h.heroId == id);
-            
-            if (hero != null)
-            {
-                // 데이터 업데이트
-                level = hero.level;
-                exp = hero.exp;
-                
-                // UI 갱신 (RefreshUI 재활용)
-                RefreshUI();
-                
-                Debug.Log($"[HeroInfo] Exp purchased! Level: {level}, Exp: {exp}");
-            }
+            RefreshUI();
+            Debug.Log($"[HeroInfo] LevelUp success! id={id}");
         }
         else
         {
             Debug.LogWarning("[HeroInfo] Failed to level Up");
         }
     }
+
         private List<StatMod> GetActiveMilestoneMods(HeroScriptableObject heroSO, int currentLevel)
     {
         var result = new List<StatMod>();

@@ -14,6 +14,7 @@ public class HeroSkillFrame : MonoBehaviour
     public Slider expSlider;
     public TMP_Text text_exp;
     public Image upArrow;
+    public Image lockImage;//좌물쇠
 
     [Header("Type")]
     public SkillSlotType slotType;   // ✅ 인스펙터에서 C/R/E/L/M 지정
@@ -53,6 +54,9 @@ public class HeroSkillFrame : MonoBehaviour
 
         //프레임 세팅
         frame.color = RankDatas.GetColor(GetRankBySlotType());
+
+         // ✅ 잠금 처리: 현재 히어로 등급보다 높은 슬롯이면 잠금
+        UpdateLockState();
     }
         private Sprite GetSkillIconBySlotType()
     {
@@ -102,4 +106,19 @@ public class HeroSkillFrame : MonoBehaviour
         SkillSlotType.M => h.mSkillExp,
         _ => 0
     };
+
+        private void UpdateLockState()
+    {
+        if (lockImage == null) return;
+
+        RankType slotRank = GetRankBySlotType();           // 이 슬롯이 요구하는 등급
+        RankType heroOpenRank = (RankType)data.rank;       // 현재 오픈된 히어로 등급 (int라면 캐스팅)
+
+        bool isLocked = heroOpenRank < slotRank;           // 슬롯이 더 높으면 잠금
+        lockImage.gameObject.SetActive(isLocked);
+
+        // (선택) 잠겨있으면 레벨업 화살표도 숨기고 싶으면:
+        if (upArrow != null && isLocked)
+            upArrow.gameObject.SetActive(false);
+    }
 }

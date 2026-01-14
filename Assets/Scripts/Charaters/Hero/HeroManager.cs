@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.RankSystem;
@@ -8,72 +7,78 @@ public class HeroManager : MonoBehaviour
     public static HeroManager Instance { get; private set; }
 
     [Header("Refs")]
-    public MockServer mockServer;
     public HeroInfo heroInfo;
 
     [Header("Hero ScriptableObjects")]
-    public HeroScriptableObject[] heroes;   // ✅ 배열
+    public HeroScriptableObject[] heroes; // ✅ 배열
 
     private Dictionary<int, HeroScriptableObject> heroMap;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
     }
-    void Start()
+
+    private void Start()
     {
         BuildMap();
     }
 
-  private void BuildMap()
-{
-    heroMap = new Dictionary<int, HeroScriptableObject>();
-
-    Debug.Log($"[HeroManager] heroes length={(heroes==null? -1: heroes.Length)}", this); // ✅ return 전에
-
-    if (heroes == null) return;
-
-    foreach (var hero in heroes)
+    private void BuildMap()
     {
-        if (hero == null) continue;
+        heroMap = new Dictionary<int, HeroScriptableObject>();
 
-        if (heroMap.ContainsKey(hero.heroId))
+        Debug.Log($"[HeroManager] heroes length={(heroes == null ? -1 : heroes.Length)}", this);
+
+        if (heroes == null) return;
+
+        foreach (var hero in heroes)
         {
-            Debug.LogError($"[HeroManager] Duplicate heroId: {hero.heroId}", this);
-            continue;
+            if (hero == null) continue;
+
+            if (heroMap.ContainsKey(hero.heroId))
+            {
+                Debug.LogError($"[HeroManager] Duplicate heroId: {hero.heroId}", this);
+                continue;
+            }
+
+            heroMap.Add(hero.heroId, hero);
         }
 
-        heroMap.Add(hero.heroId, hero);
+        int nullCount = 0;
+        foreach (var h in heroes) if (h == null) nullCount++;
+        Debug.Log($"[HeroManager] null heroes count={nullCount}", this);
+        Debug.Log($"[HeroManager] heroMap count={heroMap.Count}", this);
     }
-
-    int nullCount = 0;
-    foreach (var h in heroes) if (h == null) nullCount++;
-    Debug.Log($"[HeroManager] null heroes count={nullCount}", this);
-    Debug.Log($"[HeroManager] heroMap count={heroMap.Count}", this);
-}
-
 
     public HeroScriptableObject GetHeroSO(int heroId)
     {
-        if (heroMap == null) BuildMap();
+        if (heroMap == null || heroMap.Count == 0) BuildMap();
 
-        if (heroMap.TryGetValue(heroId, out var hero))
+        if (heroMap != null && heroMap.TryGetValue(heroId, out var hero))
             return hero;
 
         Debug.LogError($"[HeroManager] HeroSO not found. heroId={heroId}", this);
         return null;
     }
 
-        public bool ApplyHeroToPlayer(int heroId)
+    /// <summary>
+    /// 플레이어에 영웅 적용 (root 단일 상태: ServerDataManager 기준)
+    /// </summary>
+    public bool ApplyHeroToPlayer(int heroId)
     {
-        if (mockServer == null)
+        if (ServerDataManager.instance == null)
         {
-            Debug.LogError("[HeroManager] mockServer is null", this);
+            Debug.LogError("[HeroManager] ServerDataManager.instance is null", this);
             return false;
         }
 
-        Player_Main player = GameManager.instance.player;
+        Player_Main player = GameManager.instance != null ? GameManager.instance.player : null;
         if (player == null)
         {
             Debug.LogError("[HeroManager] GameManager.instance.player is null", this);
@@ -83,12 +88,14 @@ public class HeroManager : MonoBehaviour
         var heroSO = GetHeroSO(heroId);
         if (heroSO == null) return false;
 
-        var acc = LoadHeroAccountFromServer(heroId);
+        // ✅ root에서 영웅 계정 가져오기
+        var acc = ServerDataManager.instance.GetHeroAccount(heroId);
         if (acc == null)
         {
             Debug.LogError($"[HeroManager] heroAccount not found. heroId={heroId}", this);
             return false;
         }
+
         if (!acc.isUnlocked)
         {
             Debug.LogWarning($"[HeroManager] hero locked. heroId={heroId}", this);
@@ -99,95 +106,71 @@ public class HeroManager : MonoBehaviour
 
         var calc = new ProgressionV2Calculator(heroSO);
         var stats = calc.GetStats(rankType, acc.level);
-        // ✅ Player_Main에 base로 저장만 (heroSO 인자 제거)
-        player.ApplyHeroStats(heroId, acc.level, rankType, acc.exp, stats);
-        player.autoAttackManager.Apply(heroId, rankType, acc.cSkillLevel,acc.rSkillLevel,acc.eSkillLevel, acc.lSkillLevel, acc.mSkillLevel);
 
-                // animator 적용(있으면)
+        // ✅ Player_Main에 base로 저장만
+        player.ApplyHeroStats(heroId, acc.level, rankType, acc.exp, stats);
+
+        // ✅ 스킬 레벨 적용
+        if (player.autoAttackManager != null)
+        {
+            player.autoAttackManager.Apply(
+                heroId,
+                rankType,
+                acc.cSkillLevel,
+                acc.rSkillLevel,
+                acc.eSkillLevel,
+                acc.lSkillLevel,
+                acc.mSkillLevel
+            );
+        }
+
+        // ✅ animator 적용(있으면)
         if (heroSO.animatorController != null)
         {
             var visual = player.GetComponent<PlayerVisual>();
-            if (visual != null)
-                visual.ApplyController(heroSO.animatorController);
-            else
-                Debug.LogWarning("[HeroManager] PlayerVisual not found on player.", this);
+            if (visual != null) visual.ApplyController(heroSO.animatorController);
+            else Debug.LogWarning("[HeroManager] PlayerVisual not found on player.", this);
         }
 
         return true;
     }
 
-        public bool ApplyHeroToHeroInfo(int heroId)
+    /// <summary>
+    /// HeroInfo 패널에 영웅 적용 (root 단일 상태)
+    /// </summary>
+    public bool ApplyHeroToHeroInfo(int heroId)
     {
-        if (mockServer == null)
+        if (ServerDataManager.instance == null)
         {
-            Debug.LogError("[HeroManager] mockServer is null", this);
-            return false;
-        }
-
-        Player_Main player = GameManager.instance.player;
-        if (player == null)
-        {
-            Debug.LogError("[HeroManager] GameManager.instance.player is null", this);
+            Debug.LogError("[HeroManager] ServerDataManager.instance is null", this);
             return false;
         }
 
         var heroSO = GetHeroSO(heroId);
         if (heroSO == null) return false;
 
-        var acc = LoadHeroAccountFromServer(heroId);
+        var acc = ServerDataManager.instance.GetHeroAccount(heroId);
         if (acc == null)
         {
             Debug.LogError($"[HeroManager] heroAccount not found. heroId={heroId}", this);
             return false;
         }
-        
+
         if (!acc.isUnlocked)
         {
             Debug.LogWarning($"[HeroManager] hero locked. heroId={heroId}", this);
             return false;
         }
 
-        var rankType = (RankType)acc.rank;
-        heroInfo.Init(heroId, acc.level, acc.exp, rankType, acc.isSelected);
+        // ✅ HeroInfo는 RefreshUI에서 root 기준으로 최종 덮어씀
+        heroInfo.Init(heroId, acc.level, acc.exp, (RankType)acc.rank, acc.isSelected);
         heroInfo.RefreshUI();
-        
+
         return true;
     }
 
     public int MaxExpSetting(int level)
     {
-         return level + 4; //1레벨에 필요량 5, 2레벨에 필요량 6 ...
-    }
-
-
-    // -------- MockServer JSON 읽기 --------
-    [Serializable] private class ServerData { public System.Collections.Generic.List<HeroAccount> heroAccounts; }
-    [Serializable] private class HeroAccount
-    {
-        public int heroId;
-        public int level;
-        public int rank;
-        public bool isUnlocked;
-        public int exp;
-        public bool isSelected;
-        public int cSkillLevel;
-        public int rSkillLevel;
-        public int eSkillLevel;
-        public int lSkillLevel;
-        public int mSkillLevel;
-    }
-
-    private HeroAccount LoadHeroAccountFromServer(int heroId)
-    {
-        string json = mockServer.GetServerJson();
-        var data = JsonUtility.FromJson<ServerData>(json);
-
-        if (data == null || data.heroAccounts == null) return null;
-
-        for (int i = 0; i < data.heroAccounts.Count; i++)
-            if (data.heroAccounts[i].heroId == heroId)
-                return data.heroAccounts[i];
-
-        return null;
+        return level + 4; // 1레벨 필요량 5, 2레벨 필요량 6 ...
     }
 }
