@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: HeroSkill Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: HeroSkill
+  m_TableCollectionNameGuidString: 7bff84bc1452f4af2b6e9803f52ebba8
+  m_Entries:
+  - m_Id: 7636770816
+    m_Key: HeroSkill.0.Uncommon.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 309375000576
+    m_Key: HeroSkill.0.Uncommon.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392082481152
+    m_Key: HeroSkill.0.Rare.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 512970711040
+    m_Key: HeroSkill.0.Rare.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 607938142208
+    m_Key: HeroSkill.0.Epic.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794043604992
+    m_Key: HeroSkill.0.Epic.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 854030540800
+    m_Key: HeroSkill.0.Legendary.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303525711872
+    m_Key: HeroSkill.0.Legendary.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642127120818176
+    m_Key: HeroSkill.1.Uncommon.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642165158961152
+    m_Key: HeroSkill.1.Uncommon.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642196888870912
+    m_Key: HeroSkill.1.Rare.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642294196723712
+    m_Key: HeroSkill.1.Rare.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642316497838080
+    m_Key: HeroSkill.1.Epic.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642345576947712
+    m_Key: HeroSkill.1.Epic.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642366829486080
+    m_Key: HeroSkill.1.Legendary.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642430020870144
+    m_Key: HeroSkill.1.Legendary.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 652409792618496
+    m_Key: HeroSkill.2.Uncommon.name
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6462810929232085103
+  references:
+    version: 2
+    RefIds:
+    - rid: 6462810929232085103
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1768396855830

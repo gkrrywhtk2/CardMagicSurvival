@@ -32,6 +32,8 @@ public class HeroInfo : MonoBehaviour
     public LevelUpStatUI[] levelUpStats;
     public StatBg[] statBg;//스탯 블럭들 0 공격력, 1 체력, 2 이동속도 3  치명타확률 , 4 치명타 배율
     public HeroSkillFrame[] heroSkillFrames;
+    public SkillPanel skillPanel;
+    
 
     [Header("Data")]
     public int id;
@@ -40,6 +42,7 @@ public class HeroInfo : MonoBehaviour
     public RankType rank;
     public bool isSelected;
     public int UpgradeStone;
+    public RankType nowTouchSkillFrame;//현재 터치된 스킬 프레임을 캐싱 -> 리프레싱UI할때 터치된 등급의 스킬을 계속 표시
 
     [Header("PanelControl")]
     public GameObject HeadView;
@@ -67,6 +70,7 @@ public class HeroInfo : MonoBehaviour
         AnimationSetup(id);
         heroNameUI.BindHeroName(id);
         rankLocalization.BindRank(rank);
+        nowTouchSkillFrame = RankType.Uncommon;
 
         // ✅ root 기준으로 최종 확정
         RefreshUI();
@@ -110,6 +114,13 @@ public class HeroInfo : MonoBehaviour
         ExpUpButtonVisualSetting(levelupReady);
 
         SettingHeroSkillFrame(id);
+        RefreshSkillPanel(nowTouchSkillFrame);
+    }
+    public void RefreshSkillPanel(RankType rank)
+    {
+        var heroAccount = ServerDataManager.instance.GetHeroAccount(id);
+        var upgradeStoneCount = ServerDataManager.instance.GetCurrentUpgradeStone();
+        skillPanel.Init(heroAccount,rank);
     }
 
     private void UpdateRequireGoldColor()

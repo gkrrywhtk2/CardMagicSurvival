@@ -33,6 +33,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e8de25e2a3874349bb3714174102b1c
+    m_Address: HeroSkill_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8fb52ddd7326844228ac555e32344fa7
+    m_Address: UI_Common_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: add0c01aad3764d79b94f23c2e3fdef8
     m_Address: PlayTable_en
     m_ReadOnly: 1

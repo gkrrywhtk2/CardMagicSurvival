@@ -27,6 +27,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko-KR
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e132157cdf424d39a3cd4bd43f2f2d4
+    m_Address: UI_Common_ko-KR
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko-KR
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0e4e1938bcd746f992d70b2e0fcbce2
+    m_Address: HeroSkill_ko-KR
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko-KR
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: db32f8022e45e4d30aa35f941667729b
     m_Address: PlayTable_ko-KR
     m_ReadOnly: 1

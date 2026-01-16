@@ -33,8 +33,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja-JP
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 987ec93271d1f42fa8569ebdd23fb30a
+    m_Address: UI_Common_ja-JP
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja-JP
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c079ec980b4074489b642969ede1360e
     m_Address: UI_Milestones_ja-JP
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja-JP
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cfb516dd0811946fe90cd673a822a935
+    m_Address: HeroSkill_ja-JP
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja-JP

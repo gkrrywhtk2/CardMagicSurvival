@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 using Game.RankSystem;
 
 public class RankLocalization : MonoBehaviour
@@ -34,6 +36,20 @@ public class RankLocalization : MonoBehaviour
         localizeEvent.StringReference = ls;
         localizeEvent.RefreshString();
     }
+    // ✅ 추가: RankType -> 현재 로케일의 등급명 문자열 반환
+    public static async Task<string> GetRankNameAsync(RankType rank)
+    {
+        string key = $"{RankKeyPrefix}{rank}";
+        string text = await LocalizationSettings.StringDatabase
+            .GetLocalizedStringAsync(Table, key).Task;
+
+        // 번역 누락 대비(키 그대로 나오면 enum으로)
+        if (string.IsNullOrEmpty(text) || text == key)
+            text = rank.ToString();
+
+        return text;
+    }
+
 
     private string GetRankKey(RankType rank)
     {

@@ -159,4 +159,10 @@ public class Hero0AutoAttack : HeroAutoAttackBase
         float reduced = lv * 0.05f;           // ✅ lv=1이면 0.05초 감소
         return Mathf.Max(1f, baseInterval - reduced);
     }
+    public float GetLSkillValue(int lv)
+    {
+        lv = Mathf.Max(1, lv);
+        float reduced = lv * 0.05f; 
+        return reduced; 
+    }
 }

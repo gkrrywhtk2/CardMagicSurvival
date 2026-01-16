@@ -5,7 +5,7 @@ using Game.RankSystem; // RankType
 public class AutoAttackManager : MonoBehaviour
 {
     [Header("Hero AutoAttack Scripts (attach to this object)")]
-    [SerializeField] private HeroAutoAttackBase[] heroAutoAttacks; // 인스펙터용
+    public HeroAutoAttackBase[] heroAutoAttacks; // 인스펙터용
 
     private Dictionary<int, HeroAutoAttackBase> map;
     private HeroAutoAttackBase current;

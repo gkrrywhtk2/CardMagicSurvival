@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: HeroSkill_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 7bff84bc1452f4af2b6e9803f52ebba8, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6462810929232085119
+  m_TableData:
+  - m_Id: 7636770816
+    m_Localized: Magic Missile
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 309375000576
+    m_Localized: Deals damage equal to {0}% of Attack to a single enemy.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 392082481152
+    m_Localized: Pierce Missile
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 512970711040
+    m_Localized: Magic Missile pierces {0} times.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 607938142208
+    m_Localized: Giant Blast
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 794043604992
+    m_Localized: Increases Magic Missile size by {0}%.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 854030540800
+    m_Localized: Triple Burst
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 1303525711872
+    m_Localized: Fires 3 Magic Missiles at once, and reduces the cooldown by {0}
+      seconds.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 642127120818176
+    m_Localized: Poison Mist
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 642165158961152
+    m_Localized: Releases a poison mist forward, dealing damage equal to {0}% of
+      Attack to enemies in range 3 times.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 642196888870912
+    m_Localized: Apply Venom
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 642294196723712
+    m_Localized: 'Enemies exposed to Poison Mist become <color=#33D17A>Venom</color>.
+      (<color=#33D17A>Venom</color>: Deals damage equal to {0}% of Attack per second
+      for 3 seconds.)'
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 642316497838080
+    m_Localized: Thick Poison Mist
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 642345576947712
+    m_Localized: "The mist spreads wider. Poison Mist\u2019s range increases by {0}%."
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 642366829486080
+    m_Localized: Unending Miasma
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 642430020870144
+    m_Localized: "Poison Mist\u2019s number of hits increases by {0}."
+    m_Metadata:
+      m_Items:
+      - rid: 6462810929232085119
+  - m_Id: 652409792618496
+    m_Localized: a
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6462810929232085119
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 7636770816
+        - id: 309375000576
+        - id: 392082481152
+        - id: 512970711040
+        - id: 607938142208
+        - id: 794043604992
+        - id: 854030540800
+        - id: 1303525711872
+        - id: 642127120818176
+        - id: 642165158961152
+        - id: 642196888870912
+        - id: 642294196723712
+        - id: 642316497838080
+        - id: 642345576947712
+        - id: 642366829486080
+        - id: 642430020870144

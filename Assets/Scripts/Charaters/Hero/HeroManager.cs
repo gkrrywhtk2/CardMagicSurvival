@@ -11,6 +11,7 @@ public class HeroManager : MonoBehaviour
 
     [Header("Hero ScriptableObjects")]
     public HeroScriptableObject[] heroes; // ✅ 배열
+    public AutoAttackManager autoAttackManager;
 
     private Dictionary<int, HeroScriptableObject> heroMap;
 
