@@ -30,9 +30,9 @@ public class HeroSkillFrame : MonoBehaviour
         if (data == null || skillFrame_Image == null) return;
 
         int lv = GetLevelByType(data, slotType);
-        int exp = GetExpByType(data, slotType);
+        int exp = ServerDataManager.instance.GetCurrentUpgradeStone();
 
-        int maxExp = 10; // TODO: 규칙으로 교체
+        int maxExp = HeroManager.Instance.GetRequirementsUpgradeStone(lv); // TODO: 규칙으로 교체
 
         Sprite icon = GetSkillIconBySlotType();
         Color frameColor = RankDatas.GetColor(GetRankBySlotType());

@@ -3,10 +3,12 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using Game.RankSystem;
+using Assets.PixelFantasy.PixelTileEngine.Scripts;
 
 public class SkillPanel : MonoBehaviour
 {
     [SerializeField] private string tableName = "HeroSkill";
+    [Header("REF")]
 
     public TMP_Text text_Name;
     public TMP_Text text_SubDesc;
@@ -15,9 +17,10 @@ public class SkillPanel : MonoBehaviour
     public RankLabelUI rankLabelUI;
     public GameObject lockBG;
     public TMP_Text lockText;
+    public SkillLevelUpButton skillLevelUpButton;
 
-    private ServerDataManager.HeroAccount data;
-    private RankType rank;
+    public ServerDataManager.HeroAccount data;
+    public RankType rank;
     public HeroScriptableObject heroScriptableObject;
     public RankLocalization rankLocalization;
     
@@ -50,31 +53,33 @@ public class SkillPanel : MonoBehaviour
             Arguments = args
         };
 
-        try
-    {
-        text_MainDesc.text = await localized.GetLocalizedStringAsync().Task;
-    }
-    catch (System.Exception ex)
-    {
-        Debug.LogError($"[LOC FAIL] key={Key("desc")}, rank={rank}, heroId={data.heroId}");
-        Debug.LogError(ex); // OperationException
-        if (ex.InnerException != null)
-            Debug.LogError("INNER => " + ex.InnerException); // ✅ 여기 진짜 원인이 뜸
+            try
+            {
+                text_MainDesc.text = await localized.GetLocalizedStringAsync().Task;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[LOC FAIL] key={Key("desc")}, rank={rank}, heroId={data.heroId}");
+                Debug.LogError(ex); // OperationException
+                if (ex.InnerException != null)
+                    Debug.LogError("INNER => " + ex.InnerException); // ✅ 여기 진짜 원인이 뜸
 
-        // args도 같이 찍어봐
-        if (args != null)
-        {
-            for (int i = 0; i < args.Length; i++)
-                Debug.LogError($"arg[{i}] = {args[i]} (type={args[i]?.GetType().Name})");
-        }
-    }
+                // args도 같이 찍어봐
+                if (args != null)
+                {
+                    for (int i = 0; i < args.Length; i++)
+                        Debug.LogError($"arg[{i}] = {args[i]} (type={args[i]?.GetType().Name})");
+                }
+            }
 
 
 
         int lv = GetLevelByType(data, rank);
-        int exp = GetExpByType(data, rank);
+        int exp = ServerDataManager.instance.GetCurrentUpgradeStone();
+        int maxExp = HeroManager.Instance.GetRequirementsUpgradeStone(lv);
 
-        int maxExp = 10; // TODO: 규칙으로 교체
+
+        skillLevelUpButton.Init(maxExp, lv);//레벨업 버튼 세팅
 
         Sprite icon = GetSkillIconBySlotType();
         Color frameColor = RankDatas.GetColor(rank);
@@ -89,6 +94,8 @@ public class SkillPanel : MonoBehaviour
             frameColor: frameColor,
             isLocked: isLocked
         );
+
+
         rankLabelUI.SetRank(rank);
         rankLocalization.BindRank(rank);
 
@@ -135,7 +142,9 @@ public class SkillPanel : MonoBehaviour
         return heroOpenRank < slotRank;
     }
 
-        private const string CommonTable = "UI_Common";
+
+
+    private const string CommonTable = "UI_Common";
     private const string UnlockKey = "UnlockAtRank";
 
     private async System.Threading.Tasks.Task UpdateLockUIAsync(bool isLocked)

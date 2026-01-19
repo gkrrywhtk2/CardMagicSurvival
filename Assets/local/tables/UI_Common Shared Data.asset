@@ -19,6 +19,26 @@ MonoBehaviour:
     m_Key: UnlockAtRank
     m_Metadata:
       m_Items: []
+  - m_Id: 323060409294848
+    m_Key: Skill.LevelUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 323151908036608
+    m_Key: Skill.MaxLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325209155428352
+    m_Key: EXPup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 327221209194496
+    m_Key: RankUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 329618253930496
+    m_Key: MaxRank
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

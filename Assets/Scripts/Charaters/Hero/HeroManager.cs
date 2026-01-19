@@ -14,6 +14,7 @@ public class HeroManager : MonoBehaviour
     public AutoAttackManager autoAttackManager;
 
     private Dictionary<int, HeroScriptableObject> heroMap;
+    public const int MAX_LEVEL = 20;
 
     private void Awake()
     {
@@ -174,6 +175,11 @@ public class HeroManager : MonoBehaviour
     {
         return level + 4; // 1레벨 필요량 5, 2레벨 필요량 6 ...
     }
+    public int GetRequirementsUpgradeStone(int level)
+    {
+        //스킬용
+        return Mathf.Min(level + 1, 10);
+    }
         public int MaxUpgradeExpSetting(RankType rank)
     {
         // Uncommon -> Rare : 5
@@ -187,4 +193,10 @@ public class HeroManager : MonoBehaviour
 
         return ((int)rank + 1) * 5;
     }
+    public int GetRequirementsGold(bool nowLevelUp)
+    {
+        return nowLevelUp ? 3000 : 1000;
+        //필요골드량 EXP + 1 = 1000, LevelUp = 3000
+    }
+    
 }

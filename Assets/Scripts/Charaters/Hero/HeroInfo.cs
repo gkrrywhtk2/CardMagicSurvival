@@ -25,14 +25,15 @@ public class HeroInfo : MonoBehaviour
         public TMP_Text upgrade_slider_text;
     public GameObject isSlectedButton;//선택중 버튼
     public GameObject isSelectButton;//선택 버튼
-    public GameObject expUpButton;//경험치업 버튼
-    public GameObject levelUpButton;//레벨업 버튼
+
     public TMP_Text requireGold;//경험치 증가 필요 골드량 텍스트
+    public RankUpButton rankUpButton;
 
     public LevelUpStatUI[] levelUpStats;
     public StatBg[] statBg;//스탯 블럭들 0 공격력, 1 체력, 2 이동속도 3  치명타확률 , 4 치명타 배율
     public HeroSkillFrame[] heroSkillFrames;
     public SkillPanel skillPanel;
+    public HeroLevelUpButton heroLevelUpButton;
     
 
     [Header("Data")]
@@ -111,10 +112,17 @@ public class HeroInfo : MonoBehaviour
 
         SelectButtonSetting();
         UpdateRequireGoldColor();
-        ExpUpButtonVisualSetting(levelupReady);
 
         SettingHeroSkillFrame(id);
         RefreshSkillPanel(nowTouchSkillFrame);
+
+        // 랭크업 버튼 세팅
+        int RequireUpgradeStone = HeroManager.Instance.MaxUpgradeExpSetting(rank);
+        rankUpButton.Init(RequireUpgradeStone);
+
+        //랭크 라벨 세팅
+        rankLocalization.BindRank(rank);
+        heroLevelUpButton.Init(heroAccount);
     }
     public void RefreshSkillPanel(RankType rank)
     {
@@ -175,21 +183,6 @@ public class HeroInfo : MonoBehaviour
     }
 
 
-    public void ExpUpButtonVisualSetting(bool ready)
-    {
-        //경험치 상승 버튼 레벨업 가능시 비주얼 변경
-        if (ready)
-        {
-            levelUpButton.SetActive(true);
-            expUpButton.SetActive(false);
-        }
-        else
-        {
-            levelUpButton.SetActive(false);
-            expUpButton.SetActive(true);
-        }
-        
-    }
 
     public void SelectButtonSetting()
     {
@@ -255,23 +248,36 @@ public class HeroInfo : MonoBehaviour
 
     private bool UpdateExpSlider()
     {
-        int expForNextLevel = HeroManager.Instance.MaxExpSetting(level);
-        exp_slider.maxValue = expForNextLevel;
-        exp_slider.value = Mathf.Min(exp, expForNextLevel);
-        slider_text.text = $"{exp_slider.value}/{exp_slider.maxValue}";
-        if(exp == expForNextLevel)
+        int nowlevel = ServerDataManager.instance.GetCurrentLevel(id);
+
+        // ✅ MAX 레벨이면 슬라이더/텍스트/화살표를 여기서 확정하고 끝
+        if (nowlevel >= HeroManager.MAX_LEVEL)
         {
-            exp_Slider_Fill.color = green_Color;
-            UpArrow_Exp.SetActive(true);
-            return true;//레벨업 준비 완
-        }
-        else
-        {
+            exp_slider.maxValue = 1f;           // 0 방지용 (원하면 유지해도 됨)
+            exp_slider.value = 1f;
+            slider_text.text = "MAX";
             exp_Slider_Fill.color = blue_Color;
             UpArrow_Exp.SetActive(false);
-            return false;//레벨업 준비 미완
+            return false; // MAX는 "레벨업 가능" 개념이 없다고 보면 false
         }
+
+        int expForNextLevel = HeroManager.Instance.MaxExpSetting(level);
+
+        // ✅ 안전장치 (혹시 0 반환하면 Slider가 이상해질 수 있음)
+        if (expForNextLevel <= 0) expForNextLevel = 1;
+
+        exp_slider.maxValue = expForNextLevel;
+        exp_slider.value = Mathf.Clamp(exp, 0, expForNextLevel);
+        slider_text.text = $"{(int)exp_slider.value}/{(int)exp_slider.maxValue}";
+
+        bool readyToLevelUp = exp >= expForNextLevel; // ✅ == 말고 >=
+
+        exp_Slider_Fill.color = readyToLevelUp ? green_Color : blue_Color;
+        UpArrow_Exp.SetActive(readyToLevelUp);
+
+        return readyToLevelUp;
     }
+
     private bool UpdateUpgradeExpSlider()
     {
         int expForNextLevel = HeroManager.Instance.MaxUpgradeExpSetting(rank);
@@ -288,51 +294,7 @@ public class HeroInfo : MonoBehaviour
         {
             upgrade_Slider_Fill.color = blue_Color;
             UpArrow_Upgrade.SetActive(false);
-            return false;//레벨업 준비 완
-        }
-    }
-
-    public void ExpUpButton()
-    {
-        var heroSO = HeroManager.Instance.GetHeroSO(id);
-        if (heroSO == null)
-        {
-            Debug.LogError($"[HeroInfo] Hero SO not found for id={id}");
-            return;
-        }
-
-        int maxExp = HeroManager.Instance.MaxExpSetting(level);
-        if (exp >= maxExp)
-        {
-            CallLevelUp(id);
-            return;
-        }
-
-        bool success = ServerDataManager.instance.BuyExp(id, maxExp);
-
-        if (success)
-        {
-            // ✅ root에서 값 다시 읽고 UI 갱신
-            RefreshUI();
-            Debug.Log($"[HeroInfo] Exp purchased! id={id}");
-        }
-        else
-        {
-            Debug.LogWarning("[HeroInfo] Failed to purchase exp - not enough gold!");
-        }
-    }
-
-    public void CallLevelUp(int id)
-    {
-        bool success = ServerDataManager.instance.LevelUp(id);
-        if (success)
-        {
-            RefreshUI();
-            Debug.Log($"[HeroInfo] LevelUp success! id={id}");
-        }
-        else
-        {
-            Debug.LogWarning("[HeroInfo] Failed to level Up");
+            return false;//레벨업 준비 미완
         }
     }
 
@@ -365,7 +327,8 @@ public class HeroInfo : MonoBehaviour
         exp_slider.gameObject.SetActive(true);
         upgrade_slider.gameObject.SetActive(false);
         upgradeStoneLabel.gameObject.SetActive(false);
-
+        rankUpButton.gameObject.SetActive(false);
+        heroLevelUpButton.gameObject.SetActive(true);
         var p = MileStoneScroll.anchoredPosition;//스크롤 맨 위로
         p.y = 0f;
         MileStoneScroll.anchoredPosition = p;
@@ -385,6 +348,10 @@ public class HeroInfo : MonoBehaviour
         exp_slider.gameObject.SetActive(false);
         upgrade_slider.gameObject.SetActive(true);
         upgradeStoneLabel.gameObject.SetActive(true);
+        rankUpButton.gameObject.SetActive(true);
+        heroLevelUpButton.gameObject.SetActive(false);
+        int RequireUpgradeStone = HeroManager.Instance.MaxUpgradeExpSetting(rank);
+        rankUpButton.Init(RequireUpgradeStone);
 
         // var p = MileStoneScroll.anchoredPosition;//스크롤 맨 위로
         // p.y = 0f;

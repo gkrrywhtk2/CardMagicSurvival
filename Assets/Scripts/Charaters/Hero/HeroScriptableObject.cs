@@ -49,7 +49,7 @@ public class HeroScriptableObject : ScriptableObject
     public int baseAttack = 15;
 
     [Header("Level Settings")]
-    public int maxLevel = 15;
+    public const int maxLevel = 20;
 
     [Tooltip("레벨업마다 항상 증가하는 공격력(예: +2)")]
     public int attackPerLevel = 2;

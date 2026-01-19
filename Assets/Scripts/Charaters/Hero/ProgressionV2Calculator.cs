@@ -27,7 +27,8 @@ public class ProgressionV2Calculator
 
     public StatBlock GetStats(RankType rank, int level)
     {
-        level = Mathf.Clamp(level, 1, data.maxLevel);
+        int MAXLEVEL = HeroManager.MAX_LEVEL;
+        level = Mathf.Clamp(level, 1, MAXLEVEL);
         var key = (rank, level);
 
         if (statCache.TryGetValue(key, out var cached))

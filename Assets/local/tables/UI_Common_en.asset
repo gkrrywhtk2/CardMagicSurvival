@@ -22,6 +22,26 @@ MonoBehaviour:
     m_Localized: Unlocks at {0} rank
     m_Metadata:
       m_Items: []
+  - m_Id: 323060409294848
+    m_Localized: Level Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 323151908036608
+    m_Localized: Max Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325209155428352
+    m_Localized: EXP +1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 327221209194496
+    m_Localized: RankUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 329618253930496
+    m_Localized: Max Rank
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

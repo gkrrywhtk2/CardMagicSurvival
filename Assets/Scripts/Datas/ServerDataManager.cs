@@ -1,4 +1,5 @@
 using System;
+using Game.RankSystem;
 using UnityEngine;
 
 public class ServerDataManager : MonoBehaviour
@@ -94,6 +95,20 @@ public class ServerDataManager : MonoBehaviour
         var h = GetSelectedHero();
         return h != null ? h.heroId : 0;
     }
+    public int GetCurrentLevel(int heroId)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        var hero = Array.Find(d.heroAccounts, h => h != null && h.heroId == heroId);
+        if (hero == null)
+        {
+            Debug.LogError($"[ServerDataManager] Hero {heroId} not found!");
+            return 0;
+        }
+
+        return hero.level;
+    }
 
     public int GetCurrentGold()
     {
@@ -133,6 +148,60 @@ public class ServerDataManager : MonoBehaviour
             hero.isSelected = (hero.heroId == newSelectedHeroId);
         }
     }
+    public bool TryChangeSelectedHeroSkillLevel(HeroAccount selectedHero, RankType rank, int delta, int min = 0, int max = 10)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        var hero = selectedHero;
+        if (hero == null)
+        {
+            Debug.LogWarning("[ServerDataManager] No selected hero.");
+            return false;
+        }
+
+        // 1) 현재 레벨 가져오기
+        int cur = GetSkillLevelBySlot(hero, rank);
+
+        // 2) 변경 + Clamp
+        int next = Mathf.Clamp(cur + delta, min, max);
+
+        // 변화 없으면 종료
+        if (next == cur) return false;
+
+        // 3) root(heroAccount)에 직접 세팅 (=> MockServer.root에 바로 반영됨)
+        SetSkillLevelBySlot(hero, rank, next);
+
+        Debug.Log($"[ServerDataManager] Selected Hero({hero.heroId}) {rank} skill level: {cur} -> {next}");
+        return true;
+    }
+
+    private static int GetSkillLevelBySlot(HeroAccount hero, RankType rank)
+    {
+        return rank switch
+        {
+            RankType.Uncommon => hero.cSkillLevel,
+            RankType.Rare => hero.rSkillLevel,
+            RankType.Epic => hero.eSkillLevel,
+            RankType.Legendary => hero.lSkillLevel,
+            RankType.Mythic => hero.mSkillLevel,
+            _ => hero.cSkillLevel
+        };
+    }
+
+    private static void SetSkillLevelBySlot(HeroAccount hero, RankType rank, int value)
+    {
+        switch (rank)
+        {
+            case RankType.Uncommon: hero.cSkillLevel = value; break;
+            case RankType.Rare: hero.rSkillLevel = value; break;
+            case RankType.Epic: hero.eSkillLevel = value; break;
+            case RankType.Legendary: hero.lSkillLevel = value; break;
+            case RankType.Mythic: hero.mSkillLevel = value; break;
+        }
+    }
+
+    
 
     /// <summary>
     /// 골드 추가/차감 (이벤트 있음)
@@ -161,6 +230,29 @@ public class ServerDataManager : MonoBehaviour
         OnGoldChanged?.Invoke(d.Currency.Gold);
     }
 
+    //영웅 등급 관련
+
+    public void HeroRankUp(int heroId, RankType rank)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+        d.heroAccounts[heroId].rank = (int)rank;
+    }
+
+    public RankType GetHeroRank(int heroId)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        var hero = Array.Find(d.heroAccounts, h => h != null && h.heroId == heroId);
+        if (hero == null)
+        {
+            Debug.LogError($"[ServerDataManager] Hero {heroId} not found!");
+            return RankType.Uncommon;
+        }
+
+        return (RankType)hero.rank;
+    }
     /// <summary>
     /// 강화석 추가/차감 (이벤트 있음)
     /// </summary>
@@ -188,9 +280,40 @@ public class ServerDataManager : MonoBehaviour
         OnUpgradeStoneChanged?.Invoke(d.Currency.UpgradeStone);
     }
 
+    public bool GetIsMythicHero(int heroId)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        var hero = Array.Find(d.heroAccounts, h => h != null && h.heroId == heroId);
+        if (hero == null)
+        {
+            Debug.LogError($"[ServerDataManager] Hero {heroId} not found!");
+            return false;
+        }
+
+        return hero.mSkillLevel >= 1;
+    }
+
     /// <summary>
     /// 레벨업 (이벤트 없음: UI는 호출한 쪽에서 Refresh)
     /// </summary>
+    /// 
+    ///
+    public int GetCurrentExp(int heroId)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        var hero = Array.Find(d.heroAccounts, h => h != null && h.heroId == heroId);
+        if (hero == null)
+        {
+            Debug.LogError($"[ServerDataManager] Hero {heroId} not found!");
+            return 0;
+        }
+
+        return hero.exp;
+    }
     public bool LevelUp(int heroId)
     {
         var d = Data;
@@ -203,6 +326,9 @@ public class ServerDataManager : MonoBehaviour
             return false;
         }
 
+        if(hero.level >= 20)
+            return false;
+
         hero.level += 1;
         hero.exp = 0;
         return true;
@@ -211,16 +337,10 @@ public class ServerDataManager : MonoBehaviour
     /// <summary>
     /// 경험치 구매: 골드 소비 + exp 1 증가 (골드 이벤트만 쏨)
     /// </summary>
-    public bool BuyExp(int heroId, int maxExp, int goldCost = 3000)
+    public bool BuyExp(int heroId, int maxExp, int GoldCost)
     {
         var d = Data;
         EnsureNonNull(d);
-
-        if (d.Currency.Gold < goldCost)
-        {
-            Debug.LogWarning($"[ServerDataManager] Not enough gold! Current: {d.Currency.Gold}, Required: {goldCost}");
-            return false;
-        }
 
         var hero = Array.Find(d.heroAccounts, h => h != null && h.heroId == heroId);
         if (hero == null)
@@ -229,10 +349,9 @@ public class ServerDataManager : MonoBehaviour
             return false;
         }
 
-        d.Currency.Gold -= goldCost;
         hero.exp += 1;
+        AddGold(-GoldCost);
 
-        Debug.Log($"[ServerDataManager] Hero {heroId} - Gold: -{goldCost}, Exp: {hero.exp}/{maxExp}, Level: {hero.level}");
 
         OnGoldChanged?.Invoke(d.Currency.Gold);
         return true;

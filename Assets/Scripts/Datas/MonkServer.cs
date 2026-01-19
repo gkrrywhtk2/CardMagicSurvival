@@ -30,7 +30,7 @@ public class MockServer : MonoBehaviour
         },
         {
         ""heroId"": 1, ""level"": 20, ""rank"": 0, ""isUnlocked"": true, ""exp"": 0, ""isSelected"": false,
-        ""cSkillLevel"": 1, ""rSkillLevel"": 1, ""eSkillLevel"": 1, ""lSkillLevel"": 11, ""mSkillLevel"": 0,
+        ""cSkillLevel"": 1, ""rSkillLevel"": 1, ""eSkillLevel"": 1, ""lSkillLevel"": 10, ""mSkillLevel"": 0,
         ""cSkillExp"": 3, ""rSkillExp"": 3, ""eSkillExp"": 3, ""lSkillExp"": 3, ""mSkillExp"": 3
         }
     ],

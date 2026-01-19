@@ -1000,6 +1000,9 @@ MonoBehaviour:
   icon: {fileID: 5029441463834114696}
   text_Lv: {fileID: 7018574845213188357}
   expSlider: {fileID: 7917670193423893247}
+  expFill: {fileID: 6639952248235912005}
+  blue_Color: {r: 0.2, g: 0.5254902, b: 1, a: 1}
+  green_Color: {r: 0.05490196, g: 1, b: 0.0627451, a: 1}
   text_exp: {fileID: 5761815296297366946}
   upArrow: {fileID: 8586710249553482517}
   lockImage: {fileID: 5077301637995743202}

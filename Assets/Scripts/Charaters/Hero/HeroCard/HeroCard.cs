@@ -20,7 +20,10 @@ public class HeroCard : MonoBehaviour
     public TMP_Text levelText;
     public TMP_Text nameText;
     public TMP_Text sliderText;
-    public Slider expSlider;
+    public Slider expSlider;    
+        public Color blue_Color;
+        public Color green_Color;
+        public Image Uparrow;
     public Image selectedImage;
 
     public void Init(int level, int exp, int rankInt, bool isUnlocked, bool isSelected)
@@ -37,21 +40,63 @@ public class HeroCard : MonoBehaviour
         SelectedImageSetting(isselected);
     }
 
-    public void SliderSetting()
+        public void SliderSetting()
     {
+        // ✅ MAX 레벨 처리
+        if (heroLevel >= HeroManager.MAX_LEVEL)
+        {
+            maxExp = HeroManager.Instance.MaxExpSetting(heroLevel);
+
+            if (expSlider != null)
+            {
+                expSlider.minValue = 0f;
+                expSlider.maxValue = 1f;
+                expSlider.value = 1f;
+            }
+
+            if (sliderText != null)
+                sliderText.text = "MAX";
+
+            // ✅ MAX는 업그레이드 개념 없음
+            if (Uparrow != null) Uparrow.gameObject.SetActive(false);
+
+            // ✅ 색상(요청대로 blue)
+            if (expSlider != null)
+            {
+                var fill = expSlider.fillRect ? expSlider.fillRect.GetComponent<Image>() : null;
+                if (fill != null) fill.color = blue_Color;
+            }
+
+            return;
+        }
+
+        // ✅ 일반 레벨 처리
         maxExp = HeroManager.Instance.MaxExpSetting(heroLevel);
-        float ratio = (maxExp <= 0) ? 0f : nowExp / (float)maxExp;
+        if (maxExp <= 0) maxExp = 1;
+
+        bool canLevelUp = nowExp >= maxExp; // ✅ == 말고 >= 안전
+        float ratio = Mathf.Clamp01(nowExp / (float)maxExp);
 
         if (expSlider != null)
         {
             expSlider.minValue = 0f;
             expSlider.maxValue = 1f;
             expSlider.value = ratio;
+
+            // ✅ Fill 색상 변경
+            var fill = expSlider.fillRect ? expSlider.fillRect.GetComponent<Image>() : null;
+            if (fill != null) fill.color = canLevelUp ? green_Color : blue_Color;
         }
 
         if (sliderText != null)
-            sliderText.text = (maxExp <= 0) ? "0/0" : $"{nowExp}/{maxExp}";
+            sliderText.text = $"{Mathf.Clamp(nowExp, 0, maxExp)}/{maxExp}";
+
+        // ✅ 업애로우 ON/OFF
+        if (Uparrow != null)
+            Uparrow.gameObject.SetActive(canLevelUp);
     }
+
+
 
     public void SelectedImageSetting(bool isSelected)
     {
