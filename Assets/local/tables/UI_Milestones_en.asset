@@ -29,6 +29,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6462810696509292694
+  - m_Id: 5107183053168640
+    m_Localized: Attack increases by +{value}.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810696509292694
+  - m_Id: 5107519453126656
+    m_Localized: Move Speed increases by {value}%.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810696509292694
+  - m_Id: 5107615712403456
+    m_Localized: Max HP increases by {value}%.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810696509292694
+  - m_Id: 5107726999871488
+    m_Localized: Max HP increases by +{value}.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810696509292694
+  - m_Id: 5107858487107584
+    m_Localized: Critical Chance increases by {value}%.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810696509292694
+  - m_Id: 5108257990369280
+    m_Localized: Critical Damage increases by {value}%.
+    m_Metadata:
+      m_Items:
+      - rid: 6462810696509292694
   references:
     version: 2
     RefIds:
@@ -39,3 +69,9 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 11038351360
         - id: 183688486912
+        - id: 5107183053168640
+        - id: 5107519453126656
+        - id: 5107615712403456
+        - id: 5107726999871488
+        - id: 5107858487107584
+        - id: 5108257990369280

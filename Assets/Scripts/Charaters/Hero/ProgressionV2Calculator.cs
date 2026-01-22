@@ -46,10 +46,9 @@ public class ProgressionV2Calculator
         // ✅ 매 레벨업 공격력 증가
         s.attack += (level - 1) * data.attackPerLevel;
 
-        // ✅ 퍼센트 합산(+10% +10% = +20%)
-        float hpPct = 0f, atkPct = 0f, spdPct = 0f, ccPct = 0f, cdPct = 0f;
+        // ✅ 퍼센트 합산(상대 증가용) - 치확/치피는 제외
+        float hpPct = 0f, atkPct = 0f, spdPct = 0f;
 
-        // ✅ Lv 3/6/9/12/15 마일스톤 적용
         foreach (var ms in data.levelMilestones)
         {
             if (ms.level > level) continue;
@@ -74,44 +73,47 @@ public class ProgressionV2Calculator
                         break;
 
                     case StatType.CritChance:
-                        if (mod.op == ModOp.Add) s.critChance += mod.value; // +0.10 = 10%p
-                        else ccPct += mod.value;
+                        if (mod.op == ModOp.Add)
+                            s.critChance += mod.value * 0.01f; // 10 => +0.10 (10%p)
                         break;
 
                     case StatType.CritDamage:
-                        if (mod.op == ModOp.Add) s.critDamage += mod.value;
-                        else cdPct += mod.value;
+                        if (mod.op == ModOp.Add)
+                            s.critDamage += mod.value * 0.01f; // 10 => +0.10 (150% -> 160% if base=1.5)
                         break;
                 }
             }
         }
 
-        // ✅ 합산 퍼센트 최종 반영
+        // ✅ 상대 증가 스탯만 곱 반영
         s.hp *= (1f + hpPct);
         s.moveSpeed *= (1f + spdPct);
         s.attack = Mathf.RoundToInt(s.attack * (1f + atkPct));
-        s.critChance = Mathf.Clamp01(s.critChance * (1f + ccPct));
-        s.critDamage *= (1f + cdPct);
+
+        // ✅ 치확/치피는 가산이므로 Clamp/방어만
+        s.critChance = Mathf.Clamp01(s.critChance);
+        s.critDamage = Mathf.Max(0f, s.critDamage);
+
 
         statCache[key] = s;
         return s;
     }
 
-    public IReadOnlyList<string> GetUnlockedSkills(RankType currentRank)
-    {
-        if (skillCache.TryGetValue(currentRank, out var cached))
-            return cached;
+    // public IReadOnlyList<string> GetUnlockedSkills(RankType currentRank)
+    // {
+    //     if (skillCache.TryGetValue(currentRank, out var cached))
+    //         return cached;
 
-        var list = new List<string>();
+    //     var list = new List<string>();
 
-        // ✅ 현재 랭크 이하 해금 전부 누적
-        foreach (var ru in data.rankUnlocks)
-        {
-            // if (ru.rank <= currentRank)
-            //     list.AddRange(ru.skillIds);
-        }
+    //     // ✅ 현재 랭크 이하 해금 전부 누적
+    //     foreach (var ru in data.rankUnlocks)
+    //     {
+    //         // if (ru.rank <= currentRank)
+    //         //     list.AddRange(ru.skillIds);
+    //     }
 
-        skillCache[currentRank] = list;
-        return list;
-    }
+    //     skillCache[currentRank] = list;
+    //     return list;
+    // }
 }

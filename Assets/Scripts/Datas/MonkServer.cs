@@ -34,7 +34,7 @@ public class MockServer : MonoBehaviour
         ""cSkillExp"": 3, ""rSkillExp"": 3, ""eSkillExp"": 3, ""lSkillExp"": 3, ""mSkillExp"": 3
         }
     ],
-    ""Currency"": { ""Gold"": 9999999, ""UpgradeStone"": 9999999 }
+    ""Currency"": { ""Gold"": 10000, ""UpgradeStone"": 100 }
     }";
 
     // ✅ 인게임에서 쓰는 "진짜 데이터(객체)" = Single Source of Truth

@@ -21,7 +21,6 @@ MonoBehaviour:
   critChance: 0.1
   critDamage: 2
   baseAttack: 15
-  maxLevel: 15
   attackPerLevel: 2
   levelMilestones:
   - level: 3
@@ -36,19 +35,19 @@ MonoBehaviour:
       value: 0.1
   - level: 9
     mods:
-    - stat: 1
+    - stat: 3
       op: 0
-      value: 0.2
+      value: 10
   - level: 12
     mods:
-    - stat: 2
-      op: 1
-      value: 0.1
+    - stat: 4
+      op: 0
+      value: 10
   - level: 15
     mods:
     - stat: 2
       op: 1
-      value: 0.1
+      value: 0.2
   rankUnlocks:
   - rank: 0
     skillIds: MagicMissile

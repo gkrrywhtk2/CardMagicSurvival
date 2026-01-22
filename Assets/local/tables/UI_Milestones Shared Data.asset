@@ -19,8 +19,32 @@ MonoBehaviour:
     m_Key: milestone.attack.percentAdd
     m_Metadata:
       m_Items: []
+  - m_Id: 5107183053168640
+    m_Key: milestone.attack.add
+    m_Metadata:
+      m_Items: []
   - m_Id: 183688486912
     m_Key: milestone.moveSpeed.add
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5107519453126656
+    m_Key: milestone.moveSpeed.percentAdd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5107615712403456
+    m_Key: milestone.maxHP.percentAdd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5107726999871488
+    m_Key: milestone.maxHP.add
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5107858487107584
+    m_Key: milestone.critChance.add
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5108257990369280
+    m_Key: milestone.critDamage.add
     m_Metadata:
       m_Items: []
   m_Metadata:

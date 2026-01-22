@@ -43,7 +43,15 @@ public class MilestoneRowUI : MonoBehaviour
         return stat switch
         {
             StatType.Attack when op == ModOp.PercentAdd => "milestone.attack.percentAdd",
+            StatType.Attack when op == ModOp.Add => "milestone.attack.add",
+            StatType.MoveSpeed when op == ModOp.PercentAdd => "milestone.moveSpeed.percentAdd",
             StatType.MoveSpeed when op == ModOp.Add     => "milestone.moveSpeed.add",
+            StatType.HP when op == ModOp.PercentAdd         => "milestone.maxHP.percentAdd",
+            StatType.HP when op == ModOp.Add         => "milestone.maxHP.add",
+            StatType.CritChance when op == ModOp.PercentAdd         => "milestone.critChance.percentAdd",
+            StatType.CritChance when op == ModOp.Add         => "milestone.critChance.add",
+            StatType.CritDamage when op == ModOp.PercentAdd         => "milestone.critDamage.percentAdd",
+            StatType.CritDamage when op == ModOp.Add         => "milestone.critDamage.add",
             _ => "milestone.unknown"
         };
     }
