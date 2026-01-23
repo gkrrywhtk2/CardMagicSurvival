@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class MockServer : MonoBehaviour
 {
+    //deckslot에서 -1 : 빈 슬롯을 의미 , -2 : 추가 가능 슬롯을 의미, -3 : 잠긴 슬롯을 의미, 0이상 : 카드 ID를 의미
     [TextArea(10, 60)] private string mockJson = @"
     {
     ""accountCards"": [
@@ -16,11 +17,22 @@ public class MockServer : MonoBehaviour
         { ""cardId"": 7, ""quantity"": 1, ""isUnlocked"": true }
     ],
     ""deckSlots"": [
+        { ""ID"": 0, ""currentRarity"": 0 },
         { ""ID"": 1, ""currentRarity"": 0 },
-        { ""ID"": 1, ""currentRarity"": 1 },
-        { ""ID"": 2, ""currentRarity"": 2 },
-        { ""ID"": 2, ""currentRarity"": 3 },
-        { ""ID"": 1, ""currentRarity"": 3 }
+        { ""ID"": 2, ""currentRarity"": 0 },
+        { ""ID"": 3, ""currentRarity"": 0 },
+        { ""ID"": 4, ""currentRarity"": 0 },
+        { ""ID"": -1, ""currentRarity"": 0 },
+        { ""ID"": -2, ""currentRarity"": 0 },
+        { ""ID"": -3, ""currentRarity"": 0 }
+    ],
+    ""accountSpellCards"": [
+        { ""id"": 0, ""stock"": 3, ""rank"": 0, ""isUnlocked"": true },
+        { ""id"": 1, ""stock"": 2, ""rank"": 0, ""isUnlocked"": true },
+        { ""id"": 2, ""stock"": 5, ""rank"": 0, ""isUnlocked"": true },
+        { ""id"": 3, ""stock"": 1, ""rank"": 0, ""isUnlocked"": true },
+        { ""id"": 4, ""stock"": 4, ""rank"": 0, ""isUnlocked"": true },
+        { ""id"": 5, ""stock"": 0, ""rank"": 0, ""isUnlocked"": false }
     ],
     ""heroAccounts"": [
         {

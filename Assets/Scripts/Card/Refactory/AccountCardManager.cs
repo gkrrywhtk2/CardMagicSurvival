@@ -10,10 +10,12 @@ public class AccountCardManager : MonoBehaviour
     public MockServer mockServer;
     
     // ✅ 계정 카드 풀 (보유 현황)
-    public List<AccountCard> accountCardPool = new();
-    
+
+    public List<ServerDataManager.AccountSpellCard> mergedCardList = new(); // ✅ 병합된 카드 리스트(서버 + 로컬)
+
     // ✅ 덱 슬롯 (PlayerCard로 유지 - 등급 정보 포함)
     public List<PlayerCard> deckSlots = new();
+    public List<ServerDataManager.DeckSlot> accountDeckSlots = new();//서버에서 불러온 덱 슬롯 정보, 처리전, UI용
 
    private void Awake()
 {
@@ -28,15 +30,12 @@ public class AccountCardManager : MonoBehaviour
     }
 
     // ✅ 계정 카드 풀에서 카드 정보 가져오기
-    public AccountCard GetAccountCardById(int cardId)
-    {
-        return accountCardPool.Find(card => card.cardId == cardId);
-    }
+  
     
     // ✅ 잠금 해제된 카드만 가져오기
-    public List<AccountCard> GetUnlockedCards()
+    public List<ServerDataManager.AccountSpellCard> GetUnlockedCards()
     {
-        return accountCardPool.FindAll(card => card.isUnlocked);
+        return mergedCardList.FindAll(card => card.isUnlocked);
     }
 
     // ✅ 덱 슬롯 ID 리스트 가져오기
@@ -47,40 +46,49 @@ public class AccountCardManager : MonoBehaviour
 
     public void LoadCardData()
     {
-        string json = mockServer.GetServerJson();
-        PlayerCardData data = JsonUtility.FromJson<PlayerCardData>(json);
-
-        accountCardPool.Clear();
-        foreach (var card in data.accountCards)
-        {
-            accountCardPool.Add(card);
-        }
-
-        deckSlots.Clear();
-        foreach (var card in data.deckSlots)
-        {
-            deckSlots.Add(card);
-        }
-
-        Debug.Log($"[AccountCardManager] 로드 완료 - 보유 카드: {accountCardPool.Count}장, 덱: {deckSlots.Count}장");
+        mergedCardList.Clear();
+        mergedCardList = BuildMergedCardList();
+        accountDeckSlots.Clear();
+        accountDeckSlots = ServerDataManager.instance.GetDeckSlots();
     }
-
-    public void SaveCardData()
+        public List<ServerDataManager.AccountSpellCard> BuildMergedCardList()//서버의 카드 데이터와 로컬의 카드 데이터를 병합
     {
-        PlayerCardData data = new PlayerCardData
+        // 서버 저장된 카드(없을 수도 있음)
+        var accountSpellCards = ServerDataManager.instance.GetListOfAccountSpellCards();
+
+        // 게임에 존재하는 모든 카드(기본값 0)
+        var allCards = LocalDataManager.Instance.cardData.cardScritableData;
+
+        // 1) 전체 카드 기본 리스트 생성 + id로 빠르게 찾을 딕셔너리 구축
+        var mergedList = new List<ServerDataManager.AccountSpellCard>(allCards.Length);
+        var byId = new Dictionary<int, ServerDataManager.AccountSpellCard>(allCards.Length);
+
+        foreach (var card in allCards)
         {
-            accountCards = accountCardPool.ToArray(),
-            deckSlots = deckSlots.ToArray()
-        };
+            var entry = new ServerDataManager.AccountSpellCard
+            {
+                id = card.cardId,
+                stock = 0,
+                rank = 0
+            };
+            mergedList.Add(entry);
+            byId[entry.id] = entry;
+        }
 
-        string json = JsonUtility.ToJson(data, true);
-        mockServer.SaveServerJson(json);
+        // 2) 서버 데이터로 덮어쓰기 (있으면 업데이트, 없으면 무시)
+        foreach (var saved in accountSpellCards)
+        {
+            if (byId.TryGetValue(saved.id, out var target))
+            {
+                target.stock = saved.stock;
+                target.rank  = saved.rank;
+            }
+            // else: 서버에만 있고 로컬에 없는 카드(삭제된 카드 등) -> 무시
+            // 필요하면 따로 로그 찍거나 보관 가능
+        }
+
+        return mergedList;
     }
-}
 
-[System.Serializable]
-public class PlayerCardData
-{
-    public AccountCard[] accountCards;  // ✅ 계정 카드 정보
-    public PlayerCard[] deckSlots;      // ✅ 덱 슬롯 (등급 포함)
+
 }

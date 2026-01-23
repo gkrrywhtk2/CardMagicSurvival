@@ -11,7 +11,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     public InGameCardManager inGameCardManager;
     
      // 카드 효과를 ID로 매핑하기 위한 딕셔너리
-    private Dictionary<int, ICardUse> cardAbility;
+    public Dictionary<int, ICardUse> cardAbility;
 
     private void Awake()
     {

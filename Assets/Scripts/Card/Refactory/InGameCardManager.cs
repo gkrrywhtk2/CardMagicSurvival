@@ -19,19 +19,30 @@ namespace Game.InGameCardManager
         public Image nextcardImage;
 
         public void InitDeck()
-        {
-            // ✅ AccountCardManager에서 덱 슬롯 가져오기 (PlayerCard 리스트)
-            List<PlayerCard> deckSlots = accountCardManager.deckSlots;
-            
-            // ✅ 인게임용 복사본 생성
-            InitDeckManage(deckSlots);
-            
-            // ✅ deck 큐 초기화 (deckManage 복사)
-            deck = new Queue<PlayerCard>(deckManage);
-            
-            ShuffleDeck();
-            HandInit();
-        }
+    {
+        // 1) 서버 덱 슬롯 가져오기 (저장 포맷)
+        var serverSlots = accountCardManager.accountDeckSlots ?? new List<ServerDataManager.DeckSlot>();
+
+        // 2) -1/-2/-3 제거
+        var invalidIds = new HashSet<int> { -1, -2, -3 };
+        var filtered = serverSlots.Where(s => !invalidIds.Contains(s.ID)).ToList();
+
+        // 3) 서버 슬롯 -> PlayerCard로 변환 (인게임에서 쓸 타입)
+        List<PlayerCard> inGameDeckSlots = filtered
+            .Select(s => new PlayerCard(s.ID, (RankType)s.currentRarity)) // currentRarity 타입에 맞게 캐스팅
+            .ToList();
+
+        // 4) 인게임 관리 리스트(깊은 복사)
+        InitDeckManage(inGameDeckSlots);
+
+        // 5) 큐 구성 (deckManage 기반으로 큐 만들면 업그레이드 반영도 자연스러움)
+        deck = new Queue<PlayerCard>(deckManage);
+
+        ShuffleDeck();
+        HandInit();
+    }
+
+
 
         // ✅ 인게임 덱 관리 리스트 초기화
         private void InitDeckManage(List<PlayerCard> deckSlots)

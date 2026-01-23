@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Game.RankSystem;
 using UnityEngine;
 
@@ -63,6 +64,22 @@ public class ServerDataManager : MonoBehaviour
     // =========================
     // Read APIs (UI/로직은 이것만 봄)
     // =========================
+
+
+    //Card 관련
+    public AccountSpellCard[] GetListOfAccountSpellCards()
+    {
+        var d = Data;
+        EnsureNonNull(d);
+        return d.accountSpellCards;
+    }
+    public List<DeckSlot> GetDeckSlots()
+    {
+        var d = Data;
+        EnsureNonNull(d);
+        return new List<DeckSlot>(d.deckSlots);
+    }
+
     public ServerData GetData()
     {
         var d = Data;
@@ -428,6 +445,7 @@ public class ServerDataManager : MonoBehaviour
         public DeckSlot[] deckSlots;
         public HeroAccount[] heroAccounts;
         public Currency Currency; // ✅ JSON의 "Currency"와 동일
+        public AccountSpellCard[] accountSpellCards;
     }
 
     [Serializable]
@@ -475,5 +493,13 @@ public class ServerDataManager : MonoBehaviour
     {
         public int ID;
         public int currentRarity;
+    }
+    [Serializable]
+    public class AccountSpellCard
+    {
+        public int id;
+        public int stock;
+        public int rank;
+        public bool isUnlocked;
     }
 }

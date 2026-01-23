@@ -24,22 +24,22 @@ public class CardSelect : MonoBehaviour
     {
         Time.timeScale = 0;
         
-        // ✅ 잠금 해제된 계정 카드만 가져오기
-        List<AccountCard> allCards = AccountCardManager.Instance.GetUnlockedCards();
-        Debug.Log($"[CardSelect] 보유 카드 수: {allCards.Count}개");
+        // ✅ 모든 카드 가져오기
+        List<ServerDataManager.AccountSpellCard> allCards = AccountCardManager.Instance.mergedCardList;
+
 
         // ✅ 이벤트 등급 결정 (3장 모두 이 등급으로)
         eventRank = GetRandomRank();
         Debug.Log($"<color=#FFFF00>==== 이벤트 등급: {eventRank} ====</color>");
 
         // ✅ 랜덤으로 3장 뽑기
-        List<AccountCard> randomCards = GetRandomCards(allCards, 3);
+        List<ServerDataManager.AccountSpellCard> randomCards = GetRandomCards(allCards, 3);
         
         Debug.Log("<color=#FFFF00>==== 랜덤으로 뽑힌 3장 ====</color>");
         
         for (int i = 0; i < randomCards.Count; i++)
         {
-            int cardId = randomCards[i].cardId;
+            int cardId = randomCards[i].id;
             
             // ✅ 카드 이미지 초기화
             selectCards[i].cardImage.Init(cardId);
@@ -112,15 +112,15 @@ public class CardSelect : MonoBehaviour
     }
     
     // ✅ AccountCard 리스트에서 랜덤 선택
-    private List<AccountCard> GetRandomCards(List<AccountCard> cardPool, int count)
+    private List<ServerDataManager.AccountSpellCard> GetRandomCards(List<ServerDataManager.AccountSpellCard> cardPool, int count)
     {
         if (cardPool.Count < count)
         {
             Debug.LogWarning($"[CardSelect] 카드풀({cardPool.Count}장)이 요청된 개수({count}장)보다 적습니다!");
-            return new List<AccountCard>(cardPool);
+            return new List<ServerDataManager.AccountSpellCard>(cardPool);
         }
 
-        List<AccountCard> shuffled = new List<AccountCard>(cardPool);
+        List<ServerDataManager.AccountSpellCard> shuffled = new List<ServerDataManager.AccountSpellCard>(cardPool);
         
         for (int i = shuffled.Count - 1; i > 0; i--)
         {
