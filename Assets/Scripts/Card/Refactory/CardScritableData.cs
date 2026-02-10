@@ -7,13 +7,14 @@ public class CardScritableData : ScriptableObject
   [Header("#Main Info")]
   public int cardId;
   public int cardCost;
+  public RankType rank;
   public string cardName;
   public string cardDesc_Main;
   public Sprite cardImage;
   public bool isRangeCard;
   public bool isDirCard;//방향 벡터가 필요한 카드인지? ex) 화염구
   public Sprite nextcardImage;
-  public Vector3[] hitRange;
+  public Vector3 hitRange;
 
   [Header("# Damage Info")]
     public float baseDamage; // 기본 공격력

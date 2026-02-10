@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Game.RankSystem;
 
 public class Card7_Heal : MonoBehaviour, ICardUse
 {
@@ -17,28 +16,29 @@ public class Card7_Heal : MonoBehaviour, ICardUse
         if (status == null || status.playerHP == null)
             return;
 
-        RankType rank = card.currentPlayerCard.currentRarity;
+        // ✅ 등급 대신 레벨 사용
+        int level = card.currentPlayerCard.LEVEL;
 
-        // 이펙트 연출 (원래 card6 이펙트 쓰고 있었는데, 네 프로젝트 사정상 유지)
+        // 이펙트 연출 (프로젝트 사정상 유지)
         GameManager.instance.player.playerEffect.card6_Effect0.SetActive(true);
 
-        // ✅ 최대 체력 기준 퍼센트 힐
-        float healPercent = GetHealPerByRank(rank);   // 10/20/30/40
+        // ✅ 최대 체력 기준 퍼센트 힐 (레벨 기반)
+        float healPercent = GetHealPercentByLevel(level); // Lv1=10%, Lv25=40%
         float healValue = status.playerHP.maxHealth * (healPercent / 100f);
 
-        // ✅ 체력 회복 (클램프는 playerHP.Heal 내부에서 처리)
+        // ✅ 체력 회복
         status.playerHP.Heal(healValue);
     }
 
-    private float GetHealPerByRank(RankType rank)
+    /// <summary>
+    /// ✅ 레벨 기반 힐 퍼센트 공식
+    /// - Lv1  : 10%
+    /// - Lv25 : 40%
+    /// 선형 증가: 10 + (L-1) * (30/24) = 10 + (L-1)*1.25
+    /// </summary>
+    private float GetHealPercentByLevel(int level)
     {
-        switch (rank)
-        {
-            case RankType.Uncommon:  return 10f;
-            case RankType.Rare:      return 20f;
-            case RankType.Epic:      return 30f;
-            case RankType.Legendary: return 40f;
-            default:                 return 10f;
-        }
+        level = Mathf.Clamp(level, 1, 99);
+        return 10f + (level - 1) * 1.25f; // Lv25 -> 40%
     }
 }

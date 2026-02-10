@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Game.RankSystem;
+using Assets.PixelFantasy.PixelTileEngine.Scripts;
 
 public class Card1_MeteorStrike : MonoBehaviour, ICardUse
 {
@@ -8,7 +9,8 @@ public class Card1_MeteorStrike : MonoBehaviour, ICardUse
     public void Use(PointerEventData eventData)
     {
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
-        var rank = card.currentPlayerCard.currentRarity;
+        int Level = card.level;
+        
         if (card == null)
         {
             Debug.LogError("MagicCard component is missing on pointerDrag object!");
@@ -26,7 +28,7 @@ public class Card1_MeteorStrike : MonoBehaviour, ICardUse
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
         targetPosition.z = 0;
 
-        meteor.Init(targetPosition, rank); 
+        meteor.Init(targetPosition, Level); 
 
         // 방향 벡터 계산
         Vector3 direction = targetPosition - startPosition;

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardId: 2
   cardCost: 3
+  rank: 1
   cardName: "\uB3C5\uBCD1"
   cardDesc_Main: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uB3C5 \uC9C0\uB300\uB97C
     \uC0DD\uC131\uD569\uB2C8\uB2E4"
@@ -21,11 +22,7 @@ MonoBehaviour:
   isRangeCard: 1
   isDirCard: 0
   nextcardImage: {fileID: 21300000, guid: 245ccf2f86ddcbb40be852e03db776d7, type: 3}
-  hitRange:
-  - {x: 1.5, y: 0.75, z: 1}
-  - {x: 1.5, y: 0.75, z: 1}
-  - {x: 1.5, y: 0.75, z: 1}
-  - {x: 1.5, y: 0.75, z: 1}
+  hitRange: {x: 2, y: 1, z: 1}
   baseDamage: 30
   growthValue: 10
   baseCount: 0

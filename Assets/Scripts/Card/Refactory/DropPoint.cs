@@ -80,7 +80,7 @@ public class DropPoint : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             if (card.currentPlayerCard != null)
             {
                 inGameCardManager.deck.Enqueue(card.currentPlayerCard);
-                Debug.Log($"[DropPoint] 카드 {card.id} (등급: {card.currentPlayerCard.currentRarity})를 덱 맨 아래로 이동");
+                Debug.Log($"[DropPoint] 카드 {card.id} (레벨: {card.currentPlayerCard.LEVEL})를 덱 맨 아래로 이동");
             }
             else
             {

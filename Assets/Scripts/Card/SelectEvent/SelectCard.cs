@@ -1,3 +1,4 @@
+using Game.CardData;
 using Game.RankSystem;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,12 +9,12 @@ public class SelectCard : MonoBehaviour
     public Image focus;
     public CardImage cardImage;
     public int cardId;//현재 저장되어있는 카드의 아이디
-    public RankType rank;
+    public int cardLevel;
 
-    public void Init(int id, RankType ranktype)
+    public void Init(int id, int Level)
     {
         cardId = id;
-        rank = ranktype;
+        cardLevel = Level;
     }
     
 

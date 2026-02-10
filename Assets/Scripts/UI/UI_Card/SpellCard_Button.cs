@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class SpellCard_Button : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public CardImage cardImage;
+    public SpellCardAccountImage spellCardAccountImage;
+    public int cardId;
+    
+    public void Init(int id)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.cardId = id;
+        cardImage.Init(id);
+        spellCardAccountImage.Init(id);
     }
 }

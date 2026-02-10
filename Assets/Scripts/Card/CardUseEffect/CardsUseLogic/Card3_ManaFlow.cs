@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Game.RankSystem;
 
 public class Card3_ManaFlow : MonoBehaviour, ICardUse
 {
@@ -13,46 +12,37 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
         if (card == null || card.currentPlayerCard == null)
             return;
 
-        RankType rank = card.currentPlayerCard.currentRarity;
+        // ✅ 등급(Rank) 대신 레벨(Level)
+        int level = card.currentPlayerCard.LEVEL;
 
         // 이펙트
         GameManager.instance.player.playerEffect.PlayManaUp();
 
-        // 지속시간 / 추가 회복량
-        float duration = GetDurationByRank(rank);
-        float bonusFlatRecovery = GetBonusFlatRecoveryByRank(rank);
+        // ✅ 지속시간 고정
+        float duration = 2.0f;
+
+        // ✅ 레벨 기반 마나 회복량
+        // 요구: Lv25쯤에서 체감 있게 증가시키기 (아래 공식: Lv1=1, Lv25=4)
+        float bonusFlatRecovery = GetBonusFlatRecoveryByLevel(level);
 
         // PlayerMana 가져오기
         PlayerMana mana = GameManager.instance.player.playerStatus.playerMana;
         if (mana == null)
             return;
 
-        // ✅ 핵심: "추가 회복량"을 시간제로 추가 (중첩 가능, 각자 만료)
+        // ✅ "추가 회복량"을 시간제로 추가 (중첩 가능, 각자 만료)
         mana.AddBonusManaRecoveryFlatTimed(bonusFlatRecovery, duration);
     }
 
-    private float GetDurationByRank(RankType rank)
+    /// <summary>
+    /// ✅ 레벨 기반 마나 회복량 공식
+    /// - Lv1  : +1
+    /// - Lv25 : +4
+    /// 선형 증가: 1 + (L-1) * (3/24) = 1 + (L-1)*0.125
+    /// </summary>
+    private float GetBonusFlatRecoveryByLevel(int level)
     {
-        switch (rank)
-        {
-            case RankType.Uncommon: return 1f;
-            case RankType.Rare: return 1.5f;
-            case RankType.Epic: return 2f;
-            case RankType.Legendary: return 2.5f;
-            default: return 1f;
-        }
-    }
-
-    // 등급별 추가 회복량(원하면 조절)
-    private float GetBonusFlatRecoveryByRank(RankType rank)
-    {
-        switch (rank)
-        {
-            case RankType.Uncommon: return 1f;
-            case RankType.Rare: return 1f;
-            case RankType.Epic: return 1f;
-            case RankType.Legendary: return 1f;
-            default: return 1f;
-        }
+        level = Mathf.Clamp(level, 1, 99);
+        return 1f + (level - 1) * 0.125f; // Lv25 -> 4
     }
 }

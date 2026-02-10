@@ -331,6 +331,52 @@ public class ServerDataManager : MonoBehaviour
 
         return hero.exp;
     }
+
+    //카드 관련 로직
+    public int GetCardStock(int cardId)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        var card = Array.Find(d.accountSpellCards, c => c != null && c.id == cardId);
+        if (card == null)
+        {
+            Debug.LogError($"[ServerDataManager] Card {cardId} not found!");
+            return 0;
+        }
+
+        return card.stock;
+    }
+    public int GetCardLevel(int cardId)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        var card = Array.Find(d.accountSpellCards, c => c != null && c.id == cardId);
+        if (card == null)
+        {
+            Debug.LogError($"[ServerDataManager] Card {cardId} not found!");
+            return 0;
+        }
+
+        return card.level;
+    }
+    public bool GetCardUnlocked(int cardId)
+    {
+        var d = Data;
+        EnsureNonNull(d);
+
+        var card = Array.Find(d.accountSpellCards, c => c != null && c.id == cardId);
+        if (card == null)
+        {
+            Debug.LogError($"[ServerDataManager] Card {cardId} not found!");
+            return false;
+        }
+
+        return card.isUnlocked;
+    }
+
+    //카드 관련 로직 끝
     public bool LevelUp(int heroId)
     {
         var d = Data;
@@ -378,18 +424,21 @@ public class ServerDataManager : MonoBehaviour
     // Debug
     // =========================
     [ContextMenu("Debug: Show Data (Root)")]
-    public void DebugShowServerData()
+        public void DebugShowServerData()
     {
         var d = Data;
         EnsureNonNull(d);
 
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        var sb = new System.Text.StringBuilder();
         sb.AppendLine("========== DATA(ROOT) STATUS ==========");
+
+        // Currency
         sb.AppendLine($"\n💰 GOLD: {d.Currency.Gold}");
         sb.AppendLine($"🪨 UPGRADE STONE: {d.Currency.UpgradeStone}");
 
+        // Heroes
         sb.AppendLine("\n👤 HERO ACCOUNTS:");
-        if (d.heroAccounts.Length > 0)
+        if (d.heroAccounts != null && d.heroAccounts.Length > 0)
         {
             foreach (var hero in d.heroAccounts)
             {
@@ -401,29 +450,49 @@ public class ServerDataManager : MonoBehaviour
         }
         else sb.AppendLine("  No heroes found");
 
-        sb.AppendLine("\n🃏 ACCOUNT CARDS:");
-        if (d.accountCards.Length > 0)
+        // ✅ Account Spell Cards (최신)
+        sb.AppendLine("\n🃏 ACCOUNT SPELL CARDS:");
+        if (d.accountSpellCards != null && d.accountSpellCards.Length > 0)
         {
-            foreach (var card in d.accountCards)
+            foreach (var card in d.accountSpellCards)
             {
+                // struct면 null 체크 불필요지만 안전하게 둠
                 if (card == null) continue;
                 string unlocked = card.isUnlocked ? "🔓" : "🔒";
-                sb.AppendLine($"  {unlocked} Card ID: {card.cardId} | Quantity: {card.quantity}");
+                sb.AppendLine($"  {unlocked} Card ID: {card.id} | Lv.{card.level} | Stock: {card.stock} | Unlocked: {card.isUnlocked}");
             }
         }
-        else sb.AppendLine("  No cards found");
+        else sb.AppendLine("  No accountSpellCards found");
 
-        sb.AppendLine("\n📋 DECK SLOTS:");
-        if (d.deckSlots.Length > 0)
+        // ✅ Deck Slots (ID-only)
+        sb.AppendLine("\n📋 DECK SLOTS (ID-only):");
+        if (d.deckSlots != null && d.deckSlots.Length > 0)
         {
             for (int i = 0; i < d.deckSlots.Length; i++)
             {
                 var slot = d.deckSlots[i];
-                if (slot == null) continue;
-                sb.AppendLine($"  Slot {i}: Card ID {slot.ID} | Rarity: {slot.currentRarity}");
+                if (slot == null)
+                {
+                    sb.AppendLine($"  Slot {i}: (null)");
+                    continue;
+                }
+
+                sb.AppendLine($"  Slot {i}: Card ID {slot.ID}");
             }
         }
         else sb.AppendLine("  No deck slots found");
+
+        // (선택) legacy accountCards가 남아있다면 비교 출력
+        if (d.accountCards != null && d.accountCards.Length > 0)
+        {
+            sb.AppendLine("\n🧩 LEGACY accountCards (optional):");
+            foreach (var c in d.accountCards)
+            {
+                if (c == null) continue;
+                string unlocked = c.isUnlocked ? "🔓" : "🔒";
+                sb.AppendLine($"  {unlocked} Card ID: {c.cardId} | Quantity: {c.quantity}");
+            }
+        }
 
         sb.AppendLine("\n=======================================");
         Debug.Log(sb.ToString());
@@ -481,25 +550,16 @@ public class ServerDataManager : MonoBehaviour
     }
 
     [Serializable]
-    public class AccountCard
-    {
-        public int cardId;
-        public int quantity;
-        public bool isUnlocked;
-    }
-
-    [Serializable]
     public class DeckSlot
     {
         public int ID;
-        public int currentRarity;
     }
     [Serializable]
     public class AccountSpellCard
     {
         public int id;
         public int stock;
-        public int rank;
+        public int level;
         public bool isUnlocked;
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Game.RankSystem;
 using Game.InGameCardManager;
+using Game.CardData;
 
 public class CardImage : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class CardImage : MonoBehaviour
     public void Init(PlayerCard playerCard)
     {
         cardId = playerCard.ID;
-        FrameInit(playerCard.currentRarity); // 등급 직접 전달
+        RankType rank = CardData.Instance.cardScritableData[cardId].rank;
+        FrameInit(rank); // 등급 직접 전달
         MainImageInit();
         CostInit();
     }
@@ -28,7 +30,7 @@ public class CardImage : MonoBehaviour
     public void Init(int id)
     {
         cardId = id;
-        FrameInit(); // 덱에서 찾기
+        FrameInit(CardData.Instance.cardScritableData[cardId].rank);
         MainImageInit();
         CostInit();
     }
@@ -36,23 +38,6 @@ public class CardImage : MonoBehaviour
     // ✅ 등급을 직접 받는 FrameInit
     public void FrameInit(RankType rank)
     {
-        UpdateFrameColor(rank);
-    }
-    
-    // ✅ 덱에서 찾는 FrameInit
-    public void FrameInit()
-    {
-        RankType rank = RankType.Uncommon; // 기본값
-        
-        if (GameManager.instance?.inGameCardManager?.deckManage != null)
-        {
-            PlayerCard inGameCard = GameManager.instance.inGameCardManager.deckManage.Find(c => c.ID == cardId);
-            if (inGameCard != null)
-            {
-                rank = inGameCard.currentRarity;
-            }
-        }
-        
         UpdateFrameColor(rank);
     }
     

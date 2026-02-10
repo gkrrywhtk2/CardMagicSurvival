@@ -6,11 +6,11 @@ public class PlayerCard
 {
     // ✅ 개별 카드 인스턴스 정보 (덱, 핸드에서 사용)
     public int ID;               // 카드 고유 ID
-    public RankType currentRarity;   // 현재 등급
+    public int LEVEL;   // 현재 카드 레벨
 
-    public PlayerCard(int cardId, RankType rarity)
+    public PlayerCard(int cardId, int level)
     {
         ID = cardId;
-        currentRarity = rarity;
+        LEVEL = level;
     }
 }

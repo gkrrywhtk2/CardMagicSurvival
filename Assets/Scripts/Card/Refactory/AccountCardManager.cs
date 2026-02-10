@@ -69,7 +69,7 @@ public class AccountCardManager : MonoBehaviour
             {
                 id = card.cardId,
                 stock = 0,
-                rank = 0
+                level = 1
             };
             mergedList.Add(entry);
             byId[entry.id] = entry;
@@ -80,14 +80,24 @@ public class AccountCardManager : MonoBehaviour
         {
             if (byId.TryGetValue(saved.id, out var target))
             {
+                target.id = saved.id;
                 target.stock = saved.stock;
-                target.rank  = saved.rank;
+                target.level = saved.level;
+                target.isUnlocked = saved.isUnlocked;
             }
             // else: 서버에만 있고 로컬에 없는 카드(삭제된 카드 등) -> 무시
             // 필요하면 따로 로그 찍거나 보관 가능
         }
 
         return mergedList;
+    }
+    public int GetRequiredCardsForLevelUp(int level)
+    {
+        // 안전장치 (레벨 1 미만 방지)
+        level = Mathf.Max(1, level);
+
+        // 1레벨 5개, 공차 3
+        return 5 + (level - 1) * 3;
     }
 
 

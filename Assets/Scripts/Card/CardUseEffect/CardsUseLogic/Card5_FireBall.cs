@@ -1,59 +1,53 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Game.RankSystem;
-
-
-
 
 public class Card5_FireBall : MonoBehaviour, ICardUse
 {
-   public void Use(PointerEventData eventData)
+    // ✅ 고정 크기
+    private static readonly Vector3 FixedScale = new Vector3(2.5f, 2.5f, 1f);
+
+    public void Use(PointerEventData eventData)
     {
+        if (eventData == null || eventData.pointerDrag == null) return;
+
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
-        RankType rank = card.currentPlayerCard.currentRarity;
+        if (card == null || card.currentPlayerCard == null) return;
+
+        // ✅ 등급 대신 레벨 사용
+        int level = card.currentPlayerCard.LEVEL;
+
         int fireBallNum = 7;
-       
         Bullet_2 fireBall = GameManager.instance.objectPooling.Get(fireBallNum).GetComponent<Bullet_2>();
-       // Vector2 cardVec = eventData.pointerDrag.GetComponent<Vector2>();
+
         Vector2 targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(eventData.position.x, eventData.position.y));
         Vector2 playerVec = GameManager.instance.player.playerCenterPivot.position;
 
-        //생성시 플레이어의 위치로 생성 
-        fireBall.GetComponent<Transform>().position = playerVec;
-        
+        // 생성 시 플레이어 위치
+        fireBall.transform.position = playerVec;
+
         Vector2 direction = (targetPosition - playerVec).normalized;
-        float bulletSpeed = 7;
-        int per = -1;//무한
-        //레벨에 따른 조정(데미지, 지속시간)   
-        float damage = GetDamageByRank(rank);
-        fireBall.ScaleSetting(GetScaleByRank(rank));
+        float bulletSpeed = 7f;
+        int per = -1; // 무한
 
+        // ✅ 레벨 기반 데미지
+        float damage = GetDamageByLevel(level);
 
-        //  float damage = GameManager.instance.deckManager.cardDatas[card.magicCard.ID].GetDamage(card.magicCard.STACK);
-        float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(damage,out bool isCritical);
-        fireBall.Init(direction,bulletSpeed,per,finalDamage,isCritical);
+        // ✅ 크기는 고정
+        fireBall.ScaleSetting(FixedScale);
+
+        float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(damage, out bool isCritical);
+        fireBall.Init(direction, bulletSpeed, per, finalDamage, isCritical);
     }
 
-      private int GetDamageByRank(RankType rank)
+    /// <summary>
+    /// ✅ 레벨 기반 데미지 공식
+    /// - Lv1  : 5
+    /// - Lv25 : 8
+    /// 선형 증가: 5 + (L-1) * (3/24) = 5 + (L-1)*0.125
+    /// </summary>
+    private float GetDamageByLevel(int level)
     {
-        switch (rank)
-        {
-            case RankType.Uncommon: return 5;
-            case RankType.Rare: return 6;
-            case RankType.Epic: return 7;
-            case RankType.Legendary: return 8;
-            default: return 5;
-        }
-    }
-      private Vector3 GetScaleByRank(RankType rank)
-    {
-        switch (rank)
-        {
-            case RankType.Uncommon: return new Vector3(1.5f,1.5f,1.5f);
-            case RankType.Rare: return new Vector3(2f,2f,1);
-            case RankType.Epic: return new Vector3(2.2f,2.2f,1);
-            case RankType.Legendary: return new Vector3(2.5f,2.5f,1);
-            default: return new Vector3(1,1,1);
-        }
+        level = Mathf.Clamp(level, 1, 99);
+        return 5f + (level - 1) * 0.125f; // Lv25 -> 8
     }
 }

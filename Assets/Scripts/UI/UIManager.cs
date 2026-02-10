@@ -8,12 +8,16 @@ public class UIManager : MonoBehaviour
     public GameObject UI_Card;
     public HeroInfo heroInfo;
 
+    [Header("Manager")]
+    public UICardManager uiCardManager;
     public void Open_UI_Card()
     {
         UI_Card.SetActive(true);
         heroInfo.gameObject.SetActive(false);
         lobby.SetActive(false);
         heroCard.SetActive(false);
+        uiCardManager.InitSpellCardButtons();
+
     }
      public void Open_HeroCard()
     {

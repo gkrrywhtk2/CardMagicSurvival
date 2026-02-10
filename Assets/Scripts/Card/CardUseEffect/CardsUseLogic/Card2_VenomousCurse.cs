@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Game.RankSystem;
 
 public class Card2_VenomousCurse : MonoBehaviour, ICardUse
 {
     public void Use(PointerEventData eventData)
     {
+        if (eventData == null || eventData.pointerDrag == null) return;
+
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
-        var rank = card.currentPlayerCard.currentRarity;
+        if (card == null) return;
+
+        // ✅ 레벨 기반 (프로젝트 구조에 맞춰 둘 중 하나 쓰면 됨)
+        // int level = card.level;  // 네가 쓰던 필드
+        int level = card.currentPlayerCard != null ? card.currentPlayerCard.LEVEL : card.level;
 
         int splashEffect = 4;
         int poisonZoneEffect = 5;
@@ -15,8 +20,9 @@ public class Card2_VenomousCurse : MonoBehaviour, ICardUse
         GameObject poisonSplash = GameManager.instance.effectPoolManager.Get(splashEffect);
         GameObject poisonZoneObj = GameManager.instance.effectPoolManager.Get(poisonZoneEffect);
 
-        // ✅ 변경: Bullet_ZonePoison 사용
+        // ✅ Bullet_ZonePoison 사용
         Bullet_ZonePoison poisonZone = poisonZoneObj.GetComponent<Bullet_ZonePoison>();
+        if (poisonZone == null) return;
 
         // 드랍 포인트
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(
@@ -27,55 +33,30 @@ public class Card2_VenomousCurse : MonoBehaviour, ICardUse
         poisonSplash.transform.position = targetPosition;
         poisonZoneObj.transform.position = targetPosition;
 
-        // 랭크별 스탯
-        float magicDamage = GetDamageByRank(rank);              // "초당 100%"의 기준 데미지 (dps)
-        float zoneDuration = GetZoneDurationByRank(rank);       // 장판 유지 시간
-        float poisonDuration = GetPoisonDurationByRank(rank);   // ✅ 중독 지속 시간
+        // ✅ 크기/지속시간은 그대로(고정 값)
+        float zoneDuration = 3f;     // 기존 Uncommon 기준이었는데 "그대로"라 했으니 고정
+        float poisonDuration = 10f;  // 기존 그대로 고정
+
+        // ✅ 레벨 기반 데미지 (초당 데미지 기준치)
+        float magicDamage = GetDamageByLevel(level);
 
         float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(
             magicDamage, out bool isCritical
         );
 
-        // ✅ poison은 크리 안 쓰는 정책이면 isCritical은 무시해도 됨
-        // ✅ 변경: (dps, zoneDuration, poisonDuration)
+        // poison이 크리 무시 정책이면 isCritical 무시 가능
         poisonZone.Init(finalDamage, zoneDuration, poisonDuration);
     }
 
-    private float GetDamageByRank(RankType rank)
+    /// <summary>
+    /// ✅ 레벨 기반 데미지 공식
+    /// - Lv1  : 1.0
+    /// - Lv25 : 2.5   (기존 Legendary 최대치에 맞춤)
+    /// 선형 증가: 1 + (L-1) * (1.5/24) = 1 + (L-1)*0.0625
+    /// </summary>
+    private float GetDamageByLevel(int level)
     {
-        switch (rank)
-        {
-            case RankType.Uncommon:  return 1f;
-            case RankType.Rare:      return 1.5f;
-            case RankType.Epic:      return 2f;
-            case RankType.Legendary: return 2.5f;
-            default:                return 1f;
-        }
-    }
-
-    // ✅ 기존 duration은 "장판 지속시간"으로 이름 바꿔주는게 명확함
-    private float GetZoneDurationByRank(RankType rank)
-    {
-        switch (rank)
-        {
-            case RankType.Uncommon:  return 3f;
-            case RankType.Rare:      return 4f;
-            case RankType.Epic:      return 5f;
-            case RankType.Legendary: return 6f;
-            default:                return 3f;
-        }
-    }
-
-    // ✅ 중독 지속시간은 따로 튜닝 가능
-    private float GetPoisonDurationByRank(RankType rank)
-    {
-        switch (rank)
-        {
-            case RankType.Uncommon:  return 10f;
-            case RankType.Rare:      return 10f;
-            case RankType.Epic:      return 10f;
-            case RankType.Legendary: return 10f;
-            default:                return 10f;
-        }
+        level = Mathf.Clamp(level, 1, 99);
+        return 1f + (level - 1) * 0.0625f; // Lv25 -> 2.5
     }
 }

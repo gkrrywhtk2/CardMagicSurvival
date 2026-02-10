@@ -23,6 +23,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //public Card magicCard;
     public PlayerCard currentPlayerCard; // ✅ 현재 카드 정보
     public int id;
+    public int level;
     public int fixedCardNumber;//012 어떤 위치의 카드인지
     public bool cardOn;//코스트 체크
     public bool cardDrawLock;//카드 드로우 애니메이션 연출시 카드 터치 금지용
@@ -81,6 +82,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         currentPlayerCard = playerCard; // ✅ 참조 저장
         id = currentPlayerCard.ID;
+        level = currentPlayerCard.LEVEL;
         
         cardScritableData = LocalDataManager.Instance.cardData.cardScritableData[id];
         cardOn = false;
@@ -90,7 +92,7 @@ public class MagicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         CardImageInit(currentPlayerCard);
         rangeOn = cardScritableData.isRangeCard;
             if(rangeOn)
-                range.GetComponent<RectTransform>().localScale = cardScritableData.hitRange[(int)currentPlayerCard.currentRarity];
+                range.GetComponent<RectTransform>().localScale = cardScritableData.hitRange;
 
         directionCard = cardScritableData.isDirCard;
         cardImage.CardAlpha1_Range();

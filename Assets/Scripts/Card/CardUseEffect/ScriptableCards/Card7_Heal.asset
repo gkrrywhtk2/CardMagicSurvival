@@ -14,23 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardId: 7
   cardCost: 1
-  rank: 0
-  infoTags: 06000000
+  rank: 4
   cardName: "\uAE09\uC18D \uCE58\uC720"
   cardDesc_Main: "\uCCB4\uB825\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   cardImage: {fileID: 21300000, guid: 67323d8f230d3094b8ae399f6f02e693, type: 3}
   isRangeCard: 0
   isDirCard: 0
-  rangeScale_Card: {x: 0, y: 0, z: 0}
   nextcardImage: {fileID: 21300000, guid: 67323d8f230d3094b8ae399f6f02e693, type: 3}
+  hitRange: {x: 0, y: 0, z: 0}
   baseDamage: 0
   growthValue: 0
   baseCount: 0
   growthValue_Count: 0
   baseDuration: 0
   growthValue_Duration: 0
-  rangeScale_: {x: 0, y: 0, z: 0}
-  growthValue_Range: 0
   baseManaRecovery: 0
   growthValue_ManaRecovery: 0
   baseSpeedUp: 0
