@@ -10,12 +10,15 @@ public class SpellCardAccountImage : MonoBehaviour
     public GameObject Uparrow;
     public Color blueColor;
     public Color greenColor;
+    public TMP_Text lv_Text;
 
         public void Init(int id)
     {
         int stock = ServerDataManager.instance.GetCardStock(id);
         int cardLevel = ServerDataManager.instance.GetCardLevel(id);
         int require = AccountCardManager.Instance.GetRequiredCardsForLevelUp(cardLevel);
+
+        lv_Text.text = "Lv. " + cardLevel;
 
         require = Mathf.Max(1, require);
 

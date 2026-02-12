@@ -12,4 +12,10 @@ public class SpellCard_Button : MonoBehaviour
         cardImage.Init(id);
         spellCardAccountImage.Init(id);
     }
+    public void CallCardInfo()
+    {
+        UICardManager.instance.cardInfoManager.gameObject.SetActive(true);
+        int level = ServerDataManager.instance.GetCardLevel(cardId);
+        UICardManager.instance.cardInfoManager.Init(cardId, level);
+    }
 }

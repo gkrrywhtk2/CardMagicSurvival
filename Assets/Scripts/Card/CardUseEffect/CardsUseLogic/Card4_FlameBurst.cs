@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using Unity.VisualScripting;
+using Game.CardData;
 
 public class Card4_FlameBurst : MonoBehaviour, ICardUse
 {
-    public Coroutine flameBurstCorutine;
+    [Header("# Data Reference")]
+    public CardScritableData data; // 인스펙터에서 해당 SO를 꼭 할당해주세요!
 
-    // ✅ 고정값
-    private const int RepeatCount = 6;
+    private Coroutine flameBurstCorutine;
     private static readonly Vector3 FixedScale = new Vector3(2f, 2f, 1f);
 
     public void Use(PointerEventData eventData)
@@ -17,7 +19,8 @@ public class Card4_FlameBurst : MonoBehaviour, ICardUse
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
         if (card == null || card.currentPlayerCard == null) return;
 
-        // ✅ 등급 대신 레벨 사용
+        data = card.cardScritableData;
+        // 카드에서 현재 레벨(Stack)을 가져옴
         int level = card.currentPlayerCard.LEVEL;
 
         // 기존 Coroutine이 실행 중이면 중단
@@ -30,29 +33,32 @@ public class Card4_FlameBurst : MonoBehaviour, ICardUse
 
     private IEnumerator FlameBurstRoutine(int level)
     {
-        float damage = GetDamageByLevel(level);
-        int flameburstObjectNum = 7; // 오브젝트 풀에서 가져올 ID
 
-        // ✅ 6회 고정
-        for (int i = 0; i < RepeatCount; i++)
+       // data = CardData.Instance.cardScritableData[4];
+        // ✅ SO에서 데이터 가져오기
+        float damage = data.GetDamage(level);
+        int repeatCount = data.GetCount(level); // SO의 baseCount와 growth 활용
+        int flameburstObjectNum = 7; 
+
+        for (int i = 0; i < repeatCount; i++)
         {
-            // 데미지 세팅
+            // 데미지 세팅 (플레이어 스탯 적용)
             float finalDamage = GameManager.instance.player.playerStatus
                 .DamageReturn(damage, out bool isCritical);
 
-            // FlameBurst 효과 생성
+            // FlameBurst 효과 생성 및 초기화
             GameObject flame = GameManager.instance.effectPoolManager.Get(flameburstObjectNum);
             flame.GetComponent<Melee>().Init(finalDamage, isCritical);
             flame.GetComponent<Melee>().ScaleSetting(FixedScale);
 
-            // 플레이어의 바로 앞 스킬이 연출될 좌표
+            // 위치 및 회전 설정
             Vector2 skillPosition = GameManager.instance.player.dirFront.skillPosition;
             float angle = GameManager.instance.player.dirFront.angle;
 
             flame.transform.position = skillPosition;
             flame.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            // 0.25초 마다 반복(기존 유지)
+            // 반복 간격
             yield return new WaitForSeconds(0.25f);
         }
 
@@ -60,14 +66,11 @@ public class Card4_FlameBurst : MonoBehaviour, ICardUse
     }
 
     /// <summary>
-    /// ✅ 레벨 기반 데미지 공식
-    /// - Lv1  : 5
-    /// - Lv25 : 8
-    /// 선형 증가: 5 + (L-1) * (3/24) = 5 + (L-1)*0.125
+    /// UI 등에서 설명을 출력할 때 호출하는 메서드
     /// </summary>
-    private float GetDamageByLevel(int level)
+    public string GetLocalizedDescription(int level)
     {
-        level = Mathf.Clamp(level, 1, 99);
-        return 5f + (level - 1) * 0.125f; // Lv25 -> 8
+        if (data == null) return "Data Missing";
+        return data.GetParsedDescription(level);
     }
 }

@@ -39,6 +39,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88502e04f6832400db0869d9c95eb80f
+    m_Address: SpellCardDesc_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8fb52ddd7326844228ac555e32344fa7
     m_Address: UI_Common_en
     m_ReadOnly: 1

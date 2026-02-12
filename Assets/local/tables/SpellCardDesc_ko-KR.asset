@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: SpellCardDesc_ko-KR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ko-KR
+  m_SharedData: {fileID: 11400000, guid: 40c1a0462d31345b08a36cce13e2ea71, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 5955707323896037482
+  m_TableData:
+  - m_Id: 100335083520
+    m_Localized: "\uBC14\uB77C\uBCF4\uB294 \uBC29\uD5A5\uC73C\uB85C \uD654\uC5FC\uC744
+      \uBD84\uCD9C\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 176591724544
+    m_Localized: "\uC804\uBC29\uC5D0 \uACF5\uACA9\uB825\uC758 {dmg}%\uC758 \uB370\uBBF8\uC9C0\uB85C
+      {cnt}\uBC88 \uD654\uC5FC \uD3ED\uBC1C\uC744 \uC77C\uC73C\uD0B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  references:
+    version: 2
+    RefIds:
+    - rid: 5955707323896037482
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 100335083520
+        - id: 176591724544

@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40c1a0462d31345b08a36cce13e2ea71
+    m_Address: Assets/local/tables/SpellCardDesc Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7bff84bc1452f4af2b6e9803f52ebba8
     m_Address: Assets/local/tables/HeroSkill Shared Data.asset
     m_ReadOnly: 1

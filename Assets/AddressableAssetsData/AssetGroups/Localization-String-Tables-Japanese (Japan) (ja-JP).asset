@@ -39,6 +39,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja-JP
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: adbf531ad312e4a4195a2ca18610766a
+    m_Address: SpellCardDesc_ja-JP
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja-JP
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c079ec980b4074489b642969ede1360e
     m_Address: UI_Milestones_ja-JP
     m_ReadOnly: 1

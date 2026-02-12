@@ -22,6 +22,45 @@ MonoBehaviour:
   isDirCard: 0
   nextcardImage: {fileID: 21300000, guid: 67323d8f230d3094b8ae399f6f02e693, type: 3}
   hitRange: {x: 0, y: 0, z: 0}
+  localizedDesc_Sub:
+    m_TableReference:
+      m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
+    m_TableEntryReference:
+      m_KeyId: 100335083520
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  localizedDesc_Main:
+    m_TableReference:
+      m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
+    m_TableEntryReference:
+      m_KeyId: 176591724544
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables:
+    - name: dmg
+      variable:
+        rid: 5955707323896037502
+    - name: cnt
+      variable:
+        rid: 5955707323896037503
+    - name: heal
+      variable:
+        rid: 5955707323896037504
+    - name: mana
+      variable:
+        rid: 5955707323896037505
+    - name: dur
+      variable:
+        rid: 5955707323896037506
+    - name: spd
+      variable:
+        rid: 5955707323896037507
+    - name: range
+      variable:
+        rid: 5955707323896037508
   baseDamage: 0
   growthValue: 0
   baseCount: 0
@@ -34,3 +73,34 @@ MonoBehaviour:
   growthValue_baseSpeedUp: 0
   heal: 10
   growthValue_heal: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 5955707323896037502
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0
+    - rid: 5955707323896037503
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0
+    - rid: 5955707323896037504
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 11
+    - rid: 5955707323896037505
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0
+    - rid: 5955707323896037506
+      type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0
+    - rid: 5955707323896037507
+      type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0
+    - rid: 5955707323896037508
+      type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0

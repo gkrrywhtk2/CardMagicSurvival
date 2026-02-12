@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko-KR
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21a2387c8e6af40baa49573af83afa44
+    m_Address: SpellCardDesc_ko-KR
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko-KR
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2d28b4a5a0cca44cd9218038073b385f
     m_Address: My Table_ko-KR
     m_ReadOnly: 1

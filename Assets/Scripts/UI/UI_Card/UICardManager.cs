@@ -8,13 +8,28 @@ public enum SortDirection { Asc, Desc }
 
 public class UICardManager : MonoBehaviour
 {
+    // ✅ 싱글톤 인스턴스
+    public static UICardManager instance;
     public SpellCard_Button[] spellCard_Buttons;
     public SortButton[] sortButtons; // Rank 버튼 1개, Level 버튼 1개 연결
 
     [Header("Current Sort State")]
     public SortKey currentSortKey = SortKey.Rank;
     public SortDirection currentSortDirection = SortDirection.Asc;
+    public CardInfoManager cardInfoManager;
 
+    private void Awake()
+    {
+        // ✅ 싱글톤 초기화
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void OnEnable()
     {
         // ✅ 화면이 켜질 때마다 현재 상태를 화살표에 반영
