@@ -23,6 +23,18 @@ MonoBehaviour:
     m_Key: card4.main
     m_Metadata:
       m_Items: []
+  - m_Id: 4755680043982848
+    m_Key: card0.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4755747907821568
+    m_Key: card0.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4755814031024128
+    m_Key: card0.main
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

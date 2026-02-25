@@ -30,6 +30,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 5955707323896037483
+  - m_Id: 4755680043982848
+    m_Localized: Haste
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037483
+  - m_Id: 4755747907821568
+    m_Localized: Temporarily increases movement speed.
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037483
+  - m_Id: 4755814031024128
+    m_Localized: Increases movement speed by {spd} for {dur} seconds.
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037483
   references:
     version: 2
     RefIds:
@@ -40,3 +55,6 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 100335083520
         - id: 176591724544
+        - id: 4755680043982848
+        - id: 4755747907821568
+        - id: 4755814031024128

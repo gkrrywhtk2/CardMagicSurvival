@@ -15,6 +15,9 @@ public class Card0_Haste : MonoBehaviour, ICardUse
         var card = eventData.pointerDrag.GetComponent<MagicCard>();
         if (card == null || card.currentPlayerCard == null)
             return;
+        
+        // ✅ SO에서 데이터 가져오기
+        var data = card.cardScritableData;
 
         // ✅ 등급(Rank) 대신 레벨(Level) 사용
         int level = card.currentPlayerCard.LEVEL;
@@ -23,11 +26,11 @@ public class Card0_Haste : MonoBehaviour, ICardUse
         GameManager.instance.player.playerEffect.HasteEffect();
 
         // ✅ 레벨 기반 지속시간 (원하면 나중에 공식화 가능)
-        float duration = GetDurationByLevel(level);
-
+        float duration = data.GetDuration(level);
+    
         // ✅ 레벨 기반 추가 이동속도
         // 요구사항: LEVEL 25쯤에서 추가 이동속도 ≈ 4
-        float speedUpValue = GetSpeedBonusByLevel(level);
+        float speedUpValue = data.GetSpeedUp(level);
 
         // ✅ 신규 로직: PlayerMoveSpeed가 시간제/중첩/만료 처리
         var moveSpeed = GameManager.instance.player.GetComponent<PlayerMoveSpeed>();
@@ -54,17 +57,4 @@ public class Card0_Haste : MonoBehaviour, ICardUse
     /// - Lv25 : +4.0
     /// 선형 증가: 1 + (L-1) * (3/24) = 1 + (L-1)*0.125
     /// </summary>
-    private float GetSpeedBonusByLevel(int level)
-    {
-        level = Mathf.Clamp(level, 1, 99);
-        return 1f + (level - 1) * 0.125f; // Lv25 -> 4.0
-    }
-
-    /// <summary>
-    /// ✅ 지속시간은 일단 고정(원하면 레벨 공식으로 바꿔도 됨)
-    /// </summary>
-    private float GetDurationByLevel(int level)
-    {
-        return 2.0f;
-    }
 }
