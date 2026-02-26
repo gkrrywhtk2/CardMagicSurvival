@@ -35,6 +35,82 @@ MonoBehaviour:
     m_Key: card0.main
     m_Metadata:
       m_Items: []
+  - m_Id: 5033851360370688
+    m_Key: card2.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5033977986408448
+    m_Key: card2.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5034174552465408
+    m_Key: card2.main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5034794546094080
+    m_Key: card1.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5034877513621504
+    m_Key: card1.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5035038713307136
+    m_Key: card1.main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5035806489042944
+    m_Key: card3.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5035858271920128
+    m_Key: card3.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5035898814062592
+    m_Key: card3.main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5040206561402880
+    m_Key: card5.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5040316238258176
+    m_Key: card5.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5040342100336640
+    m_Key: card5.main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5041129782239232
+    m_Key: card6.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5041174652903424
+    m_Key: card6.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5041240293761024
+    m_Key: card6.main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5042096074383360
+    m_Key: card7.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5042126676025344
+    m_Key: card7.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5042143314829312
+    m_Key: card7.main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5056066894159872
+    m_Key: card4.name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -12,6 +12,8 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
         if (card == null || card.currentPlayerCard == null)
             return;
 
+        var data = card.cardScritableData;
+
         // ✅ 등급(Rank) 대신 레벨(Level)
         int level = card.currentPlayerCard.LEVEL;
 
@@ -19,11 +21,11 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
         GameManager.instance.player.playerEffect.PlayManaUp();
 
         // ✅ 지속시간 고정
-        float duration = 2.0f;
+        float duration = data.GetDuration(level); // 레벨 기반 지속시간 (원하면 나중에 공식화 가능)
 
         // ✅ 레벨 기반 마나 회복량
         // 요구: Lv25쯤에서 체감 있게 증가시키기 (아래 공식: Lv1=1, Lv25=4)
-        float bonusFlatRecovery = GetBonusFlatRecoveryByLevel(level);
+        float bonusFlatRecovery = 2;
 
         // PlayerMana 가져오기
         PlayerMana mana = GameManager.instance.player.playerStatus.playerMana;
@@ -34,15 +36,4 @@ public class Card3_ManaFlow : MonoBehaviour, ICardUse
         mana.AddBonusManaRecoveryFlatTimed(bonusFlatRecovery, duration);
     }
 
-    /// <summary>
-    /// ✅ 레벨 기반 마나 회복량 공식
-    /// - Lv1  : +1
-    /// - Lv25 : +4
-    /// 선형 증가: 1 + (L-1) * (3/24) = 1 + (L-1)*0.125
-    /// </summary>
-    private float GetBonusFlatRecoveryByLevel(int level)
-    {
-        level = Mathf.Clamp(level, 1, 99);
-        return 1f + (level - 1) * 0.125f; // Lv25 -> 4
-    }
 }

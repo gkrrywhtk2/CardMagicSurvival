@@ -1,3 +1,4 @@
+using Game.CardData;
 using UnityEngine;
 
 public class Meteor : MonoBehaviour
@@ -16,7 +17,6 @@ public class Meteor : MonoBehaviour
     {
         targetPosition = target;
         LEVEL = level;
-        STACK = level; // 현재 로직 유지(필요 없으면 삭제 가능)
         isMoving = true; // 이동 시작
     }
 
@@ -37,30 +37,21 @@ public class Meteor : MonoBehaviour
 
     public void CreateImpactArea()
     {
+        
         int poolNumber = 3;
         GameObject impactArea = GameManager.instance.effectPoolManager.Get(poolNumber);
         impactArea.transform.position = targetPosition;
+
+        var data =  CardData.Instance.cardScritableData[1];
 
         // ✅ 크기는 고정
         impactArea.transform.localScale = ImpactScale;
 
         // ✅ 레벨 기반 데미지
-        float magicPower = GetDamageByLevel(LEVEL);
+        float magicPower = data.GetDamage(LEVEL);
         float damage = GameManager.instance.player.playerStatus.DamageReturn(magicPower, out bool isCritical);
         impactArea.GetComponent<Bullet_ExplosionNormal>().Init(damage, isCritical);
 
         gameObject.SetActive(false);
-    }
-
-    /// <summary>
-    /// ✅ 레벨 기반 데미지 공식
-    /// - Lv1  : 10
-    /// - Lv25 : 40
-    /// 선형 증가: 10 + (L-1) * (30/24) = 10 + (L-1)*1.25
-    /// </summary>
-    private float GetDamageByLevel(int level)
-    {
-        level = Mathf.Clamp(level, 1, 99);
-        return 10f + (level - 1) * 1.25f; // Lv25 -> 40
     }
 }

@@ -16,28 +16,44 @@ MonoBehaviour:
     m_Code: ko-KR
   m_SharedData: {fileID: 11400000, guid: a4664c1ae9bf64c67a3ff664d2b03b69, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 5955707638380495219
   m_TableData:
   - m_Id: 5908717568
     m_Localized: "\uC77C\uBC18"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495219
   - m_Id: 136104108032
     m_Localized: "\uB808\uC5B4"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495219
   - m_Id: 257789255680
     m_Localized: "\uC5D0\uD53D"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495219
   - m_Id: 341595643904
     m_Localized: "\uB808\uC804\uB354\uB9AC"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495219
   - m_Id: 436407885824
     m_Localized: "\uC2E0\uD654"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495219
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5955707638380495219
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 5908717568
+        - id: 136104108032
+        - id: 257789255680
+        - id: 341595643904
+        - id: 436407885824

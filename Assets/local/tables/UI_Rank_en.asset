@@ -16,28 +16,44 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: a4664c1ae9bf64c67a3ff664d2b03b69, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 5955707638380495220
   m_TableData:
   - m_Id: 5908717568
     m_Localized: Uncommon
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495220
   - m_Id: 136104108032
     m_Localized: Rare
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495220
   - m_Id: 257789255680
     m_Localized: Epic
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495220
   - m_Id: 341595643904
     m_Localized: Legendary
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495220
   - m_Id: 436407885824
     m_Localized: Mythic
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5955707638380495220
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5955707638380495220
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 5908717568
+        - id: 136104108032
+        - id: 257789255680
+        - id: 341595643904
+        - id: 436407885824

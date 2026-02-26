@@ -13,6 +13,8 @@ public class Card6_ArcaneOverDrive : MonoBehaviour, ICardUse
         if (card == null || card.currentPlayerCard == null)
             return;
 
+        var data = card.cardScritableData;
+
         // ✅ 등급 대신 레벨 사용
         int level = card.currentPlayerCard.LEVEL;
 
@@ -21,7 +23,7 @@ public class Card6_ArcaneOverDrive : MonoBehaviour, ICardUse
         GameManager.instance.player.playerEffect.card6_Effect1.SetActive(true);
 
         // ✅ 레벨 기반 지속시간
-        float duration = GetDurationByLevel(level);
+        float duration = data.GetDuration(level);
 
         // ✅ 추가 치명타 확률 (0~100 단위로 쓰는 구조)
         float bonusCritChance = 100f;
@@ -44,17 +46,5 @@ public class Card6_ArcaneOverDrive : MonoBehaviour, ICardUse
         GameManager.instance.player.playerEffect.card6_Effect1.SetActive(false);
         // 필요하면 Effect0도 끄기
         // GameManager.instance.player.playerEffect.card6_Effect0.SetActive(false);
-    }
-
-    /// <summary>
-    /// ✅ 레벨 기반 지속시간 공식
-    /// - Lv1  : 1초
-    /// - Lv25 : 4초   (기존 Legendary 최대치에 맞춤)
-    /// 선형 증가: 1 + (L-1) * (3/24) = 1 + (L-1)*0.125
-    /// </summary>
-    private float GetDurationByLevel(int level)
-    {
-        level = Mathf.Clamp(level, 1, 99);
-        return 1f + (level - 1) * 0.125f; // Lv25 -> 4초
     }
 }

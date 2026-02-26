@@ -13,6 +13,8 @@ public class Card5_FireBall : MonoBehaviour, ICardUse
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
         if (card == null || card.currentPlayerCard == null) return;
 
+        var data = card.cardScritableData;
+
         // ✅ 등급 대신 레벨 사용
         int level = card.currentPlayerCard.LEVEL;
 
@@ -30,7 +32,7 @@ public class Card5_FireBall : MonoBehaviour, ICardUse
         int per = -1; // 무한
 
         // ✅ 레벨 기반 데미지
-        float damage = GetDamageByLevel(level);
+        float damage = data.GetDamage(level);
 
         // ✅ 크기는 고정
         fireBall.ScaleSetting(FixedScale);
@@ -39,15 +41,4 @@ public class Card5_FireBall : MonoBehaviour, ICardUse
         fireBall.Init(direction, bulletSpeed, per, finalDamage, isCritical);
     }
 
-    /// <summary>
-    /// ✅ 레벨 기반 데미지 공식
-    /// - Lv1  : 5
-    /// - Lv25 : 8
-    /// 선형 증가: 5 + (L-1) * (3/24) = 5 + (L-1)*0.125
-    /// </summary>
-    private float GetDamageByLevel(int level)
-    {
-        level = Mathf.Clamp(level, 1, 99);
-        return 5f + (level - 1) * 0.125f; // Lv25 -> 8
-    }
 }

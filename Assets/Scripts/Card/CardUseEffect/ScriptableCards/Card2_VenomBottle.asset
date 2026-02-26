@@ -23,11 +23,20 @@ MonoBehaviour:
   isDirCard: 0
   nextcardImage: {fileID: 21300000, guid: 245ccf2f86ddcbb40be852e03db776d7, type: 3}
   hitRange: {x: 2, y: 1, z: 1}
+  locallizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
+    m_TableEntryReference:
+      m_KeyId: 5033851360370688
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   localizedDesc_Sub:
     m_TableReference:
       m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
     m_TableEntryReference:
-      m_KeyId: 100335083520
+      m_KeyId: 5033977986408448
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -36,11 +45,32 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
     m_TableEntryReference:
-      m_KeyId: 176591724544
+      m_KeyId: 5034174552465408
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
-    m_LocalVariables: []
+    m_LocalVariables:
+    - name: dmg
+      variable:
+        rid: 5955707638380495240
+    - name: cnt
+      variable:
+        rid: 5955707638380495241
+    - name: heal
+      variable:
+        rid: 5955707638380495242
+    - name: mana
+      variable:
+        rid: 5955707638380495243
+    - name: dur
+      variable:
+        rid: 5955707638380495244
+    - name: spd
+      variable:
+        rid: 5955707638380495245
+    - name: range
+      variable:
+        rid: 5955707638380495246
   baseDamage: 30
   growthValue: 10
   baseCount: 0
@@ -55,4 +85,32 @@ MonoBehaviour:
   growthValue_heal: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5955707638380495240
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: <color=#FFA500>50</color>
+    - rid: 5955707638380495241
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: <color=#FFA500>0</color>
+    - rid: 5955707638380495242
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: <color=#FFA500>0</color>
+    - rid: 5955707638380495243
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: <color=#FFA500>0</color>
+    - rid: 5955707638380495244
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: <color=#FFA500>7.0</color>
+    - rid: 5955707638380495245
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: <color=#FFA500>0.0</color>
+    - rid: 5955707638380495246
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: <color=#FFA500>2.0</color>

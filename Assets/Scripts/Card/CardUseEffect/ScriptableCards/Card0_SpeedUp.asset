@@ -22,6 +22,15 @@ MonoBehaviour:
   isDirCard: 0
   nextcardImage: {fileID: 21300000, guid: 4e5a6ec754ce5f04f820c5c076692f27, type: 3}
   hitRange: {x: 0, y: 0, z: 0}
+  locallizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
+    m_TableEntryReference:
+      m_KeyId: 4755680043982848
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   localizedDesc_Sub:
     m_TableReference:
       m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
@@ -42,25 +51,25 @@ MonoBehaviour:
     m_LocalVariables:
     - name: dmg
       variable:
-        rid: 5955707620184293618
+        rid: 5955707638380495233
     - name: cnt
       variable:
-        rid: 5955707620184293619
+        rid: 5955707638380495234
     - name: heal
       variable:
-        rid: 5955707620184293620
+        rid: 5955707638380495235
     - name: mana
       variable:
-        rid: 5955707620184293621
+        rid: 5955707638380495236
     - name: dur
       variable:
-        rid: 5955707620184293622
+        rid: 5955707638380495237
     - name: spd
       variable:
-        rid: 5955707620184293623
+        rid: 5955707638380495238
     - name: range
       variable:
-        rid: 5955707620184293624
+        rid: 5955707638380495239
   baseDamage: 0
   growthValue: 0
   baseCount: 0
@@ -76,31 +85,31 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5955707620184293618
-      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+    - rid: 5955707638380495233
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
-    - rid: 5955707620184293619
-      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+        m_Value: <color=#FFA500>0</color>
+    - rid: 5955707638380495234
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
-    - rid: 5955707620184293620
-      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+        m_Value: <color=#FFA500>0</color>
+    - rid: 5955707638380495235
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
-    - rid: 5955707620184293621
-      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+        m_Value: <color=#FFA500>0</color>
+    - rid: 5955707638380495236
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
-    - rid: 5955707620184293622
-      type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+        m_Value: <color=#FFA500>0</color>
+    - rid: 5955707638380495237
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 3.1000001
-    - rid: 5955707620184293623
-      type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+        m_Value: <color=#FFA500>3.1</color>
+    - rid: 5955707638380495238
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0.6
-    - rid: 5955707620184293624
-      type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+        m_Value: <color=#FFA500>0.6</color>
+    - rid: 5955707638380495239
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
+        m_Value: <color=#FFA500>0.0</color>

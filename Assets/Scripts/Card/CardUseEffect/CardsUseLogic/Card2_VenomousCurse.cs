@@ -10,6 +10,8 @@ public class Card2_VenomousCurse : MonoBehaviour, ICardUse
         MagicCard card = eventData.pointerDrag.GetComponent<MagicCard>();
         if (card == null) return;
 
+        var data = card.cardScritableData;
+
         // ✅ 레벨 기반 (프로젝트 구조에 맞춰 둘 중 하나 쓰면 됨)
         // int level = card.level;  // 네가 쓰던 필드
         int level = card.currentPlayerCard != null ? card.currentPlayerCard.LEVEL : card.level;
@@ -38,7 +40,7 @@ public class Card2_VenomousCurse : MonoBehaviour, ICardUse
         float poisonDuration = 10f;  // 기존 그대로 고정
 
         // ✅ 레벨 기반 데미지 (초당 데미지 기준치)
-        float magicDamage = GetDamageByLevel(level);
+        float magicDamage = data.GetDamage(level);
 
         float finalDamage = GameManager.instance.player.playerStatus.DamageReturn(
             magicDamage, out bool isCritical

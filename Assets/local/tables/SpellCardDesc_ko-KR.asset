@@ -46,6 +46,108 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 5955707323896037482
+  - m_Id: 5033851360370688
+    m_Localized: "\uB3C5\uBCD1"
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5033977986408448
+    m_Localized: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uB3C5 \uC9C0\uB300\uB97C
+      \uC0DD\uC131\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5034174552465408
+    m_Localized: "3\uCD08\uAC04 \uACF5\uACA9\uB825\uC758 {dmg}%\uC758 \uD53C\uD574\uB97C
+      1\uCD08\uB9C8\uB2E4 \uC785\uD788\uB294 \uB3C5 \uC9C0\uB300\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5034794546094080
+    m_Localized: "\uC6B4\uC11D\uB099\uD558"
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5034877513621504
+    m_Localized: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uC6B4\uC11D\uC744 \uB099\uD558\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5035038713307136
+    m_Localized: "\uBC94\uC704 \uB0B4\uC758 \uBAA8\uB4E0 \uC801\uC5D0\uAC8C \uACF5\uACA9\uB825\uC758
+      {dmg}% \uD53C\uD574\uB97C \uC785\uD788\uB294 \uC6B4\uC11D\uC744 \uB099\uD558\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5035806489042944
+    m_Localized: "\uBE44\uC804 \uD750\uB984"
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5035858271920128
+    m_Localized: "\uB9C8\uB098 \uD68C\uBCF5\uB7C9\uC774 \uD06C\uAC8C \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5035898814062592
+    m_Localized: "{dur}\uCD08 \uAC04 \uB9C8\uB098 \uD68C\uBCF5\uB7C9\uC774 \uD3ED\uBC1C\uC801\uC73C\uB85C
+      \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5040206561402880
+    m_Localized: "\uD654\uC5FC\uAD6C"
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5040316238258176
+    m_Localized: "\uAD00\uD1B5\uD558\uBA70 \uD53C\uD574\uB97C \uC8FC\uB294 \uD654\uC5FC\uC744
+      \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5040342100336640
+    m_Localized: "\uC9C0\uC815\uD55C \uBC29\uD5A5\uC73C\uB85C \uD654\uC5FC\uC744
+      \uB0A0\uB824 \uACF5\uACA9\uB825\uC758 {dmg}% \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5041129782239232
+    m_Localized: "\uBE44\uC804 \uD3ED\uC8FC"
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5041174652903424
+    m_Localized: "\uC77C\uC2DC\uC801\uC73C\uB85C \uBAA8\uB4E0 \uACF5\uACA9\uC5D0
+      \uCE58\uBA85\uD0C0 \uD53C\uD574\uAC00 \uC801\uC6A9\uB429\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5041240293761024
+    m_Localized: "{dur}\uCD08 \uAC04 \uCE58\uBA85\uD0C0 \uD655\uB960\uC774 100%\uB85C
+      \uACE0\uC815\uB429\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5042096074383360
+    m_Localized: "\uAE09\uC18D \uCE58\uC720"
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5042126676025344
+    m_Localized: "\uCCB4\uB825\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5042143314829312
+    m_Localized: "\uCCB4\uB825\uC744 {heal}\uB9CC\uD07C \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 5955707323896037482
+  - m_Id: 5056066894159872
+    m_Localized: "\uD654\uC5FC \uBD84\uCD9C"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -59,3 +161,21 @@ MonoBehaviour:
         - id: 4755680043982848
         - id: 4755747907821568
         - id: 4755814031024128
+        - id: 5033851360370688
+        - id: 5033977986408448
+        - id: 5034174552465408
+        - id: 5034794546094080
+        - id: 5035038713307136
+        - id: 5034877513621504
+        - id: 5035806489042944
+        - id: 5035858271920128
+        - id: 5035898814062592
+        - id: 5042143314829312
+        - id: 5042126676025344
+        - id: 5042096074383360
+        - id: 5041240293761024
+        - id: 5041174652903424
+        - id: 5041129782239232
+        - id: 5040342100336640
+        - id: 5040316238258176
+        - id: 5040206561402880

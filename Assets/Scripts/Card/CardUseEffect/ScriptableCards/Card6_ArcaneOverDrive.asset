@@ -23,11 +23,20 @@ MonoBehaviour:
   isDirCard: 0
   nextcardImage: {fileID: 21300000, guid: e2e2b5659263eb4439933700e9659bab, type: 3}
   hitRange: {x: 0, y: 0, z: 0}
+  locallizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
+    m_TableEntryReference:
+      m_KeyId: 5041129782239232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   localizedDesc_Sub:
     m_TableReference:
       m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
     m_TableEntryReference:
-      m_KeyId: 100335083520
+      m_KeyId: 5041174652903424
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -36,7 +45,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
     m_TableEntryReference:
-      m_KeyId: 176591724544
+      m_KeyId: 5041240293761024
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

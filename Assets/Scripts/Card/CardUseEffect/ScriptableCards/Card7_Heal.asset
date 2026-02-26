@@ -22,11 +22,20 @@ MonoBehaviour:
   isDirCard: 0
   nextcardImage: {fileID: 21300000, guid: 67323d8f230d3094b8ae399f6f02e693, type: 3}
   hitRange: {x: 0, y: 0, z: 0}
+  locallizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
+    m_TableEntryReference:
+      m_KeyId: 5042096074383360
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   localizedDesc_Sub:
     m_TableReference:
       m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
     m_TableEntryReference:
-      m_KeyId: 100335083520
+      m_KeyId: 5042126676025344
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -35,32 +44,32 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:40c1a0462d31345b08a36cce13e2ea71
     m_TableEntryReference:
-      m_KeyId: 176591724544
+      m_KeyId: 5042143314829312
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables:
     - name: dmg
       variable:
-        rid: 5955707323896037502
+        rid: 5955707638380494996
     - name: cnt
       variable:
-        rid: 5955707323896037503
+        rid: 5955707638380494997
     - name: heal
       variable:
-        rid: 5955707323896037504
+        rid: 5955707638380494998
     - name: mana
       variable:
-        rid: 5955707323896037505
+        rid: 5955707638380494999
     - name: dur
       variable:
-        rid: 5955707323896037506
+        rid: 5955707638380495000
     - name: spd
       variable:
-        rid: 5955707323896037507
+        rid: 5955707638380495001
     - name: range
       variable:
-        rid: 5955707323896037508
+        rid: 5955707638380495002
   baseDamage: 0
   growthValue: 0
   baseCount: 0
@@ -76,31 +85,31 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5955707323896037502
+    - rid: 5955707638380494996
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
-    - rid: 5955707323896037503
+    - rid: 5955707638380494997
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
-    - rid: 5955707323896037504
+    - rid: 5955707638380494998
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 11
-    - rid: 5955707323896037505
+    - rid: 5955707638380494999
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
-    - rid: 5955707323896037506
+    - rid: 5955707638380495000
       type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
-    - rid: 5955707323896037507
+    - rid: 5955707638380495001
       type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
-    - rid: 5955707323896037508
+    - rid: 5955707638380495002
       type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
