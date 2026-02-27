@@ -18,6 +18,9 @@ public class UICardManager : MonoBehaviour
     public SortDirection currentSortDirection = SortDirection.Asc;
     public CardInfoManager cardInfoManager;
 
+    [Header("SpellCards_Deck")]
+    public SpellCard_Deck[] spellCard_Decks;
+
     private void Awake()
     {
         // ✅ 싱글톤 초기화
@@ -35,6 +38,7 @@ public class UICardManager : MonoBehaviour
         // ✅ 화면이 켜질 때마다 현재 상태를 화살표에 반영
         // (Init 전에 불려도 상관없게)
         RefreshSortUI();
+        InitDecks();
     }
 
     public void InitSpellCardButtons()
@@ -148,6 +152,36 @@ public class UICardManager : MonoBehaviour
         {
             if (b == null) continue;
             b.ApplyState(currentSortKey, currentSortDirection);
+        }
+    }
+
+    // =========================
+    // Deck 관련 (초기화, 덱 슬롯 클릭)
+    // =========================
+    public void InitDecks()
+    {
+        if (spellCard_Decks == null || spellCard_Decks.Length == 0) return;
+
+        var decklist = AccountCardManager.Instance != null
+            ? AccountCardManager.Instance.GetDeckSlotIds()
+            : null;
+
+        if (decklist == null || decklist.Count == 0)
+        {
+            Debug.LogWarning("[UICardManager] decklist is empty. Skip deck UI init.");
+            return;
+        }
+
+        int initCount = Mathf.Min(spellCard_Decks.Length, decklist.Count);
+        if (decklist.Count < spellCard_Decks.Length)
+        {
+            Debug.LogWarning($"[UICardManager] deck slot count mismatch. UI:{spellCard_Decks.Length}, Data:{decklist.Count}");
+        }
+
+        for (int i = 0; i < initCount; i++)
+        {
+            if (spellCard_Decks[i] == null) continue;
+            spellCard_Decks[i].Init(decklist[i]);
         }
     }
 }

@@ -41,7 +41,17 @@ public class AccountCardManager : MonoBehaviour
     // ✅ 덱 슬롯 ID 리스트 가져오기
     public List<int> GetDeckSlotIds()
     {
-        return deckSlots.Select(card => card.ID).ToList();
+        if (accountDeckSlots != null && accountDeckSlots.Count > 0)
+        {
+            return accountDeckSlots.Select(slot => slot.ID).ToList();
+        }
+
+        if (deckSlots != null && deckSlots.Count > 0)
+        {
+            return deckSlots.Select(card => card.ID).ToList();
+        }
+
+        return new List<int>();
     }
 
     public void LoadCardData()
