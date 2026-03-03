@@ -6,6 +6,7 @@ using Game.RankSystem;
 public class AccountCardManager : MonoBehaviour
 {
     public static AccountCardManager Instance { get; private set; }
+    private const int DefaultDeckSlotCount = 5;
 
     public MockServer mockServer;
     
@@ -16,6 +17,7 @@ public class AccountCardManager : MonoBehaviour
     // ✅ 덱 슬롯 (PlayerCard로 유지 - 등급 정보 포함)
     public List<PlayerCard> deckSlots = new();
     public List<ServerDataManager.DeckSlot> accountDeckSlots = new();//서버에서 불러온 덱 슬롯 정보, 처리전, UI용
+    public List<ServerDataManager.DeckSlot> cachedCompleteDeckSlots = new();
 
    private void Awake()
 {
@@ -58,8 +60,8 @@ public class AccountCardManager : MonoBehaviour
     {
         mergedCardList.Clear();
         mergedCardList = BuildMergedCardList();
-        accountDeckSlots.Clear();
-        accountDeckSlots = ServerDataManager.instance.GetDeckSlots();
+        accountDeckSlots = CloneDeckSlots(ServerDataManager.instance.GetDeckSlots());
+        TryCacheCurrentDeckSlots(accountDeckSlots.Count > 0 ? accountDeckSlots.Count : DefaultDeckSlotCount);
     }
         public List<ServerDataManager.AccountSpellCard> BuildMergedCardList()//서버의 카드 데이터와 로컬의 카드 데이터를 병합
     {
@@ -110,5 +112,72 @@ public class AccountCardManager : MonoBehaviour
         return 5 + (level - 1) * 3;
     }
 
+    public bool TryCacheCurrentDeckSlots(int requiredSlotCount = DefaultDeckSlotCount)
+    {
+        if (!IsDeckComplete(requiredSlotCount))
+        {
+            return false;
+        }
+
+        cachedCompleteDeckSlots = CloneDeckSlots(accountDeckSlots);
+        return true;
+    }
+
+    public bool RestoreCachedDeckSlotsIfNeeded(int requiredSlotCount = DefaultDeckSlotCount)
+    {
+        if (IsDeckComplete(requiredSlotCount))
+        {
+            return false;
+        }
+
+        if (cachedCompleteDeckSlots == null || cachedCompleteDeckSlots.Count != requiredSlotCount)
+        {
+            Debug.LogWarning("[AccountCardManager] No valid cached deck slots to restore.");
+            return false;
+        }
+
+        accountDeckSlots = CloneDeckSlots(cachedCompleteDeckSlots);
+        SyncDeckSlotsToServerData();
+        return true;
+    }
+
+    public void SyncDeckSlotsToServerData()
+    {
+        if (ServerDataManager.instance == null)
+        {
+            return;
+        }
+
+        var data = ServerDataManager.instance.GetData();
+        if (data == null)
+        {
+            return;
+        }
+
+        data.deckSlots = CloneDeckSlots(accountDeckSlots).ToArray();
+    }
+
+    public bool IsDeckComplete(int requiredSlotCount = DefaultDeckSlotCount)
+    {
+        if (accountDeckSlots == null || accountDeckSlots.Count != requiredSlotCount)
+        {
+            return false;
+        }
+
+        return accountDeckSlots.All(slot => slot != null && slot.ID != -1);
+    }
+
+    private static List<ServerDataManager.DeckSlot> CloneDeckSlots(List<ServerDataManager.DeckSlot> source)
+    {
+        if (source == null)
+        {
+            return new List<ServerDataManager.DeckSlot>();
+        }
+
+        return source.Select(slot => new ServerDataManager.DeckSlot
+        {
+            ID = slot != null ? slot.ID : -1
+        }).ToList();
+    }
 
 }

@@ -16,6 +16,7 @@ public class SpellCard_Button : MonoBehaviour
     {
         UICardManager.instance.cardInfoManager.gameObject.SetActive(true);
         int level = ServerDataManager.instance.GetCardLevel(cardId);
-        UICardManager.instance.cardInfoManager.Init(cardId, level);
+        bool spellCard_Deck = false;//모든 카드 정보는 false
+        UICardManager.instance.cardInfoManager.Init(cardId, level,spellCard_Deck);
     }
 }

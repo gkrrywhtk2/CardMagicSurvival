@@ -41,6 +41,16 @@ public class UICardManager : MonoBehaviour
         InitDecks();
     }
 
+    private void OnDisable()
+    {
+        if (AccountCardManager.Instance == null || spellCard_Decks == null)
+        {
+            return;
+        }
+
+        AccountCardManager.Instance.RestoreCachedDeckSlotsIfNeeded(spellCard_Decks.Length);
+    }
+
     public void InitSpellCardButtons()
     {
         for (int i = 0; i < spellCard_Buttons.Length; i++)
@@ -181,7 +191,10 @@ public class UICardManager : MonoBehaviour
         for (int i = 0; i < initCount; i++)
         {
             if (spellCard_Decks[i] == null) continue;
+            spellCard_Decks[i].slotId = i;
             spellCard_Decks[i].Init(decklist[i]);
         }
+
+        AccountCardManager.Instance?.TryCacheCurrentDeckSlots(spellCard_Decks.Length);
     }
 }
