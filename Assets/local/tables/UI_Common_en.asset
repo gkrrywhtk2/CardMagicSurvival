@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 108427e276c9442b4af03e96447eaa33, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 6159138779148845267
   m_TableData:
   - m_Id: 40255873024
     m_Localized: Unlocks at {0} rank
@@ -54,6 +55,21 @@ MonoBehaviour:
     m_Localized: Unslot
     m_Metadata:
       m_Items: []
+  - m_Id: 17378557410926592
+    m_Localized: Starting Deck
+    m_Metadata:
+      m_Items:
+      - rid: 6159138779148845267
+  - m_Id: 17378729931038720
+    m_Localized: All Cards
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6159138779148845267
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 17378557410926592

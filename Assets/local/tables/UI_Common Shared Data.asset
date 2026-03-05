@@ -51,6 +51,14 @@ MonoBehaviour:
     m_Key: Unslot
     m_Metadata:
       m_Items: []
+  - m_Id: 17378557410926592
+    m_Key: Deck.Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17378729931038720
+    m_Key: Deck.AllCard
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

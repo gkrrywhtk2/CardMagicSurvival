@@ -19,6 +19,11 @@ public class CardInfoManager : MonoBehaviour
     public Button unslotButton;
     public int currentCardId;
     private bool isCurrentCardFromDeck;
+    //레벨업 버튼
+    public TMP_Text levelUpCostText;//3000 적혀있는 텍스트
+    public Image levelUpCostBg;//레벨업 버튼 배경 이미지 조건이 안되면 활성화
+    public Color levelUpCostAvailableColor = Color.black;
+    public Color levelUpCostUnavailableColor = Color.red;
 
     public void Init(int cardId, int currentLevel, bool isSpellCard_Deck)
     {
@@ -31,6 +36,7 @@ public class CardInfoManager : MonoBehaviour
         cardImage.Init(playerCard);
         spellCardAccountImage.Init(cardId);
         InitLvText(currentLevel);
+        SetLevelUpCostUI();
         ButtonSetting(cardId,isSpellCard_Deck);
     }
     public void InitLvText(int level)
@@ -68,6 +74,7 @@ public class CardInfoManager : MonoBehaviour
         {
             UICardManager.instance.spellCard_Decks[i].ModeToFocus();
         }
+        UICardManager.instance.backGroundFocusImage.gameObject.SetActive(true);//배경 어둡게
         this.gameObject.SetActive(false);
 
     }
@@ -158,6 +165,7 @@ public class CardInfoManager : MonoBehaviour
         }
 
         UICardManager.instance.InitDecks();
+        UICardManager.instance.backGroundFocusImage.gameObject.SetActive(false);//배경 원상복귀
     }
     public void ButtonSetting(int cardId, bool isSpellCard_Deck)
     {
@@ -174,5 +182,102 @@ public class CardInfoManager : MonoBehaviour
         {
             unslotButton.gameObject.SetActive(isSpellCard_Deck);
         }
+    }
+
+    private void SetLevelUpCostUI()
+    {
+        bool isUpgradeable = spellCardAccountImage != null && spellCardAccountImage.isUpgradeable;
+        const int levelUpCost = 3000;
+        int nowGold = ServerDataManager.instance != null ? ServerDataManager.instance.GetCurrentGold() : 0;
+        bool hasEnoughGold = nowGold >= levelUpCost;
+        bool canLevelUp = isUpgradeable && hasEnoughGold;
+
+
+        if (levelUpCostText != null)
+        {
+            levelUpCostText.text = levelUpCost.ToString();
+            levelUpCostText.color = hasEnoughGold ? levelUpCostAvailableColor : levelUpCostUnavailableColor;
+        }
+
+        if (levelUpCostBg != null)
+        {
+            levelUpCostBg.gameObject.SetActive(!canLevelUp);
+        }
+    }
+    public void OnClickLevelUp()
+    {
+        if (ServerDataManager.instance == null)
+        {
+            Debug.LogError("[CardInfoManager] ServerDataManager.instance is null.");
+            return;
+        }
+
+        var accountCardManager = AccountCardManager.Instance;
+        if (accountCardManager == null)
+        {
+            Debug.LogError("[CardInfoManager] AccountCardManager.Instance is null.");
+            return;
+        }
+
+        const int levelUpCost = 3000;
+        int currentLevel = ServerDataManager.instance.GetCardLevel(currentCardId);
+        int currentStock = ServerDataManager.instance.GetCardStock(currentCardId);
+        int requiredCards = accountCardManager.GetRequiredCardsForLevelUp(currentLevel);
+        int nowGold = ServerDataManager.instance.GetCurrentGold();
+
+        bool hasEnoughCards = currentStock >= requiredCards;
+        bool hasEnoughGold = nowGold >= levelUpCost;
+
+        if (!hasEnoughCards)
+        {
+            Debug.LogWarning($"[CardInfoManager] Not enough card materials. cardId={currentCardId}, stock={currentStock}, required={requiredCards}");
+        }
+
+        if (!hasEnoughGold)
+        {
+            Debug.LogWarning($"[CardInfoManager] Not enough gold to level up. currentGold={nowGold}, requiredGold={levelUpCost}");
+        }
+
+        if (!hasEnoughCards || !hasEnoughGold)
+        {
+            return;
+        }
+
+        var accountCards = ServerDataManager.instance.GetListOfAccountSpellCards();
+        var targetCard = System.Array.Find(accountCards, c => c != null && c.id == currentCardId);
+        if (targetCard == null)
+        {
+            Debug.LogError($"[CardInfoManager] Account spell card not found. cardId={currentCardId}");
+            return;
+        }
+
+        targetCard.level += 1;
+        targetCard.stock = Mathf.Max(0, targetCard.stock - requiredCards);
+        ServerDataManager.instance.AddGold(-levelUpCost);
+
+        if (accountCardManager.mergedCardList != null)
+        {
+            var merged = accountCardManager.mergedCardList.Find(c => c != null && c.id == currentCardId);
+            if (merged != null)
+            {
+                merged.level = targetCard.level;
+                merged.stock = targetCard.stock;
+                merged.isUnlocked = targetCard.isUnlocked;
+            }
+        }
+
+        if (UICardManager.instance != null && UICardManager.instance.spellCard_Buttons != null)
+        {
+            for (int i = 0; i < UICardManager.instance.spellCard_Buttons.Length; i++)
+            {
+                var button = UICardManager.instance.spellCard_Buttons[i];
+                if (button == null || button.cardId != currentCardId) continue;
+                button.Init(currentCardId);
+                break;
+            }
+        }
+
+        Init(currentCardId, targetCard.level, isCurrentCardFromDeck);
+        Debug.Log($"[CardInfoManager] Level up success. cardId={currentCardId}, level={targetCard.level}, stock={targetCard.stock}");
     }
 }

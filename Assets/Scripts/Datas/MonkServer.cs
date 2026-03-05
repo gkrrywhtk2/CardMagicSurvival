@@ -20,7 +20,7 @@ public class MockServer : MonoBehaviour
         { ""id"": 3, ""stock"": 1, ""level"": 1, ""isUnlocked"": true },
         { ""id"": 4, ""stock"": 4, ""level"": 10, ""isUnlocked"": true },
         { ""id"": 5, ""stock"": 0, ""level"": 4, ""isUnlocked"": true },
-        { ""id"": 6, ""stock"": 1, ""level"": 4, ""isUnlocked"": true },
+        { ""id"": 6, ""stock"": 100, ""level"": 4, ""isUnlocked"": true },
         { ""id"": 7, ""stock"": 0, ""level"": 1, ""isUnlocked"": false }
     ],
     ""heroAccounts"": [

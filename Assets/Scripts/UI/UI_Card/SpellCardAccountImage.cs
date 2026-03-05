@@ -11,6 +11,7 @@ public class SpellCardAccountImage : MonoBehaviour
     public Color blueColor;
     public Color greenColor;
     public TMP_Text lv_Text;
+    public bool isUpgradeable { get; private set; }
 
         public void Init(int id)
     {
@@ -30,7 +31,7 @@ public class SpellCardAccountImage : MonoBehaviour
         slider.value = Mathf.Clamp(stock, 0, require);
 
         Text_Slider.text = $"{stock}/{require}";
-        bool isUpgradeable = stock >= require;
+        isUpgradeable = stock >= require;
         sliderFill.color = isUpgradeable ? greenColor : blueColor;
         Uparrow.SetActive(isUpgradeable);
     }

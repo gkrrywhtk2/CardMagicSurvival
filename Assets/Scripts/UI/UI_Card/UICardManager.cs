@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using Game.RankSystem;
 using Game.CardData;
+using UnityEngine.UI;
 
 public enum SortKey { Rank, Level }
 public enum SortDirection { Asc, Desc }
@@ -20,6 +21,7 @@ public class UICardManager : MonoBehaviour
 
     [Header("SpellCards_Deck")]
     public SpellCard_Deck[] spellCard_Decks;
+    public Image backGroundFocusImage;// ✅ 덱 슬롯 선택 시 배경 이미지 활성화
 
     private void Awake()
     {
@@ -196,5 +198,13 @@ public class UICardManager : MonoBehaviour
         }
 
         AccountCardManager.Instance?.TryCacheCurrentDeckSlots(spellCard_Decks.Length);
+    }
+    public void OnClickBackGroundFocus()
+    {
+            for(int i = 0; i < UICardManager.instance.spellCard_Decks.Length; i++)
+            {
+                UICardManager.instance.spellCard_Decks[i].ModeToNormal();
+            }
+            UICardManager.instance.backGroundFocusImage.gameObject.SetActive(false);//배경 원상복귀
     }
 }
