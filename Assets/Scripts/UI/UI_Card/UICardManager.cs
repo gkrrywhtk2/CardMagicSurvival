@@ -201,10 +201,7 @@ public class UICardManager : MonoBehaviour
     }
     public void OnClickBackGroundFocus()
     {
-            for(int i = 0; i < UICardManager.instance.spellCard_Decks.Length; i++)
-            {
-                UICardManager.instance.spellCard_Decks[i].ModeToNormal();
-            }
-            UICardManager.instance.backGroundFocusImage.gameObject.SetActive(false);//배경 원상복귀
+        InitDecks();
+        backGroundFocusImage.gameObject.SetActive(false);//배경 원상복귀
     }
 }

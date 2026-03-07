@@ -47,6 +47,13 @@ public class SpellCard_Deck : MonoBehaviour
     }
     public void ModeToNormal()
     {
+        // 빈 슬롯(-1)은 항상 Plus 상태를 유지해야 한다.
+        if (currentCardId == -1)
+        {
+            ModeToPlus();
+            return;
+        }
+
         currentState = CardState.Normal;
         SetCardVisualActive(true);
         plusImage.gameObject.SetActive(false);
