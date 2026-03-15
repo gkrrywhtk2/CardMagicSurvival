@@ -37,6 +37,7 @@ public class bullet : MonoBehaviour
 
         // 10초 후 자동 비활성화 타이머 리셋
         StartLifeTimer();
+        
     }
 
     private void StartLifeTimer()
